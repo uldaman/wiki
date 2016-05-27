@@ -1,28 +1,27 @@
 <!DOCTYPE HTML>
 <html>
     <head>
-        <link rel="Stylesheet" type="text/css" href="{{ site.root }}/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="{{ site.root }}/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="{{ site.root }}/static/css/reset_typo.css">
         <link rel="Stylesheet" type="text/css" href="{{ site.root }}/static/css/tango.css">
-        <link rel="shortcut icon" href="{{ site.root }}/favicon.ico" type="image/x-icon">
-        <link rel="icon" href="{{ site.root }}/favicon.ico" type="image/x-icon">
-        <title>{% block title %}{{ site.title }}{% endblock %}</title>
+        <link rel="Stylesheet" type="text/css" href="{{ site.root }}/static/css/style.css">
+        <link rel="shortcut icon" href="{{ site.root }}/static/images/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="{{ site.root }}/static/images/favicon.ico" type="image/x-icon">
+        <title>{% block title %}{% endblock %}</title>
         <meta name="keywords" content="{{ site.keywords }}"/>
         <meta name="description" content="{{ site.description }}"/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     </head>
 
     <body>
-        <div id="container">
+        <div id="container" class="typo">
             {% block container %}
-                {{ page.content }}
             {% endblock %}
         </div>
         <div id="footer">
-            <span>
-                Copyright © {{ site.time.strftime("%Y") }} {{ site.author }}.
-                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
-            </span>
+              <p>
+                Copyright © 2012-{{ site.time.strftime("%Y") }} <a href="http://www.samllcpp.com/" target="_blank">{{ site.author }}</a> Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+              </p>
         </div>
-        {% include "stat.html" %}
     </body>
 </html>

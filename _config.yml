@@ -3,7 +3,7 @@
 
 url: http://wiki.smallcpp.com/
 title: Small Cpp | 山高月小, 水落石出.
-author: martin
+author: Martin
 
 deploy:
   - type: git
