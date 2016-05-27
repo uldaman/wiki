@@ -6,7 +6,7 @@ import os
 import sys
 import ftplib
 import getpass
-from fabric.api import env, local, task, settings
+from fabric.api import env, local, task, settings, lcd
 from fabric.colors import blue, red
 import fabric.contrib.project as project
 from simiki import config
@@ -58,8 +58,8 @@ if rsync_configs:
 def deploy_rsync(deploy_configs):
     '''for rsync'''
     project.rsync_project(
-        local_dir=env.local_output.rstrip("/")+"/",
-        remote_dir=env.remote_output.rstrip("/")+"/",
+        local_dir=env.local_output.rstrip("/") + "/",
+        remote_dir=env.remote_output.rstrip("/") + "/",
         delete=env.rsync_delete
     )
 
@@ -72,6 +72,8 @@ def deploy_git(deploy_configs):
             do_exit('Warning: ghp-import not installed! '
                     'run: `pip install ghp-import`')
     output_dir = configs['destination']
+    with lcd(output_dir):
+        local('echo wiki.smallcpp.com > CNAME')
     remote = deploy_configs.get('remote', 'origin')
     branch = deploy_configs.get('branch', 'gh-pages')
     # commit gh-pages branch and push to remote
