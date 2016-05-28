@@ -12,7 +12,6 @@ before_install:
 - git config --global user.email "351522453@qq.com"
 - git remote set-url --push origin git@github.com:z351522453/wiki.git
 - git fetch origin gh-pages:refs/remotes/origin/gh-pages
-- git branch gh-pages origin/gh-pages
 
 install:
 - sudo pip install fabric
