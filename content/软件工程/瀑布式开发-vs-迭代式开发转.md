@@ -1,5 +1,5 @@
 ---
-title: 瀑布式开发 VS 迭代式开发[转]
+title: 瀑布式开发 VS 迭代式开发
 layout: page
 date:2015-03-02 05:48
 ---
