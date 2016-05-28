@@ -12,9 +12,9 @@ before_install:
 - git config --global user.email "351522453@qq.com"
 
 install:
-- pip install fabric
-- pip install ghp-import
-- pip install simiki
+- sudo pip install fabric
+- sudo pip install ghp-import
+- sudo pip install simiki
 
 script:
 - simiki g
