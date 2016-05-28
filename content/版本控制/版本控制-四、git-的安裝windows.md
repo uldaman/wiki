@@ -1,5 +1,5 @@
 ---
-title: [版本控制] 四、Git 的安裝(Windows)
+title: 四、Git 的安裝(Windows)
 layout: page
 date: 2015-06-19 19:40
 ---

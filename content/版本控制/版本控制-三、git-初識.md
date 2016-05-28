@@ -1,5 +1,5 @@
 ---
-title: [版本控制] 三、Git 初識
+title: 三、Git 初識
 layout: page
 date: 2015-06-18 18:20
 ---

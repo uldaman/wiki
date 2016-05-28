@@ -1,5 +1,5 @@
 ---
-title: [版本控制] 二、SVN
+title: 二、版本控制之 SVN
 layout: page
 date: 2015-06-17 19:29
 ---

@@ -56,5 +56,14 @@ def deploy_git(deploy_configs):
           .format(_mesg, remote, branch, output_dir))
 ```
 <br>
+# 注意事项
+后期使用时发现一些问题要注意下:
+
+- 文件要以 `md` 后缀, 不能以 `markdown` 后缀
+- 文件头信息字段冒号后要空一格: `title: 标题`
+- 文件头信息特殊字符不能放在起始位置:
+    + `title: [折腾] Simiki` => 错误
+    + `title: Simiki [折腾]` => 正确
+
 # 补充
 可以使用 `Travis-ci` 自动化部署 Simiki 项目.

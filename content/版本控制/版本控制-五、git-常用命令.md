@@ -1,5 +1,5 @@
 ---
-title: [版本控制] 五、Git 常用命令
+title: 五、Git 常用命令
 layout: page
 date: 2015-06-20 08:05
 ---
