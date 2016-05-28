@@ -35,7 +35,7 @@ date: 2016-05-28 21:04
 ## 加密密钥
 因为上一步生成的 `id_rsa` 私钥是要发布到 Github 仓库供 Travis CI 拉回服务器的 (Travis CI 需要这个私钥来和 Github 通信), 为了安全, Travis CI 提供了一种加密手段, 也就是说这个私钥只有你的 Travis CI 账户才能解密使用, 就算被别人拿到了也没用, 除非他也拿到了你的 Travis CI 账户.
 
-此时需要使用到 [Travis Client](https://github.com/travis-ci/travis.rb) 了, Travis Client 基于 **Ruby**(>=1.9.3), 所以先检查下你的 Ruby 版本...Windows 用户直接用 [rubyinstaller](http://rubyinstaller.org/) 就好了, ubuntu 用户参考另一 wiki [ubuntu 升级 ruby 版本](http://wiki.smallcpp.com/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6/ubuntu%20%E5%8D%87%E7%BA%A7%20ruby%20%E7%89%88%E6%9C%AC.html)
+此时需要使用到 [Travis Client](https://github.com/travis-ci/travis.rb) 了, Travis Client 基于 **Ruby**(>=1.9.3), 所以先检查下你的 Ruby 版本...Windows 用户直接用 [rubyinstaller](http://rubyinstaller.org/) 就好了, ubuntu 用户参考另一 wiki [ubuntu 升级 ruby 版本](http://wiki.smallcpp.com/%E5%B7%A5%E5%85%B7%E9%85%8D%E7%BD%AE/ubuntu%20%E5%8D%87%E7%BA%A7%20ruby%20%E7%89%88%E6%9C%AC.html)
 
 确认好 Ruby 版本后, 首先要打磨下 **gem** 工具 [打磨 gem](http://wiki.smallcpp.com/%E5%B7%A5%E5%85%B7%E9%85%8D%E7%BD%AE/%E6%89%93%E7%A3%A8%20gem.html).
 
