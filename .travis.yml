@@ -3,11 +3,11 @@ python:
 
 before_install:
 - openssl aes-256-cbc -K $encrypted_67deb6670456_key -iv $encrypted_67deb6670456_iv
-  -in ~/.travis/id_rsa.enc -out ~/.ssh/id_rsa -d
+  -in .travis/id_rsa.enc -out ~/.ssh/id_rsa -d
 - chmod 600 ~/.ssh/id_rsa
 - eval $(ssh-agent)
 - ssh-add ~/.ssh/id_rsa
-- cp ~/.travis/ssh_config ~/.ssh/config
+- cp .travis/ssh_config ~/.ssh/config
 - git config --global user.name "z351522453"
 - git config --global user.email "351522453@qq.com"
 
