@@ -10,6 +10,7 @@ before_install:
 - cp .travis/ssh_config ~/.ssh/config
 - git config --global user.name "z351522453"
 - git config --global user.email "351522453@qq.com"
+- git remote set-url --push origin git@github.com:z351522453/wiki.git
 
 install:
 - sudo pip install fabric
