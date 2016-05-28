@@ -1,0 +1,29 @@
+---
+title: [版本控制] 六、分支管理
+layout: page
+date: 2015-06-20 12:17
+---
+
+[TOC]
+
+- `git branch` 查看當前分支
+- `git branch xx` 建立分支
+- `git checkout xx` 切換分支
+- `git checkout` 命令加上 –b 参数表示创建并切换, 相当于 branch + checkout.
+- `git show-branch` 查看當前分支和主分支的差異, 這裡要稍微說明一下.
+
+![](http://i57.tinypic.com/9zytf7.jpg)
+
+输出分为上下两部分, 使用短划线"--"分隔, 如果是三個分支則是"---", 以此類推, 這張圖是二個分支, 所以是"—".
+
+- 上面的部分用于显示分支列表, * 代表當前分支, 而 ! 則代表其它分支. 後面 [ ] 裡是分支名, 再接下來是最新的 commit 信息.
+- 下面的部分是詳細的 commit 歷史列表, * 表示後面的 [分支(当前分支)] 有此 commit, 而 + 表示後面的 [分支(非当前分支)] 有此commit, 還有可能出現 -, - 表示所在分支是经过 merge 得到的(- 在最新的 Git 中好像沒有了).
+
+- `git merge HEAD xx` 把 xx 分支的最新版本合併到當前分支.
+- `git checkout xx` + `git pull . yy` 也可以把 yy 分支合併到 xx 分支.
+
+合併的時候可能會出現衝突(多數情況是多人修改了同一份文件), 此時需要我們來解決衝突, 參考 [分支與合併@基礎](http://gitbook.liuhui998.com/3_3.html).
+
+- `git branch -d xx` 刪除分支
+
+**Git 创建、合并和删除分支非常快, 所以 Git 所鼓励的工作方式是: 通過使用分支完成日常任务, 合并后再删掉分支.**
