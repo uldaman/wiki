@@ -1,0 +1,123 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <title>卐 解吧! 叹息墙! — 优雅的翻墙 - Wiki | Small Cpp</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            
+            <a href="/">Home</a> » <a href="/#工具配置">工具配置</a> » 卐 解吧! 叹息墙! — 优雅的翻墙
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#_1">一. 介绍</a><ul>
+<li><a href="#openshift">Openshift</a></li>
+<li><a href="#_2">翻墙原理</a></li>
+</ul>
+</li>
+<li><a href="#_3">二. 开始翻墙</a><ul>
+<li><a href="#openshift_1">注册/登录 Openshift</a></li>
+<li><a href="#_4">创建应用</a></li>
+<li><a href="#ssh">配置 SSH</a></li>
+<li><a href="#securecrt">使用 SecureCRT</a></li>
+<li><a href="#socket5">配置浏览器 socket5 代理</a></li>
+</ul>
+</li>
+<li><a href="#_5">三. 测试效果</a></li>
+</ul>
+</div>
+<h2 id="_1">一. 介绍</h2>
+<h3 id="openshift">Openshift</h3>
+<p>OpenShift 是__红帽__的云开发平台即服务(<strong>PaaS</strong>).<br>
+在 OpenShift 上, 开发人员能够创建、测试和运行他们的应用程序, 并且可以把它们部署到云中.<br>
+Openshift 广泛支持多种编程语言和框架, 如 Java、Ruby 和 PHP 等, 另外它还提供了多种集成开发工具, 如 Eclipse integration、JBoss Developer Studio 和 Jenkins 等.</p>
+<p>OpenShift Online 服务构建在 Red Hat Enterprise Linux 上.<br>
+Red Hat Enterprise Linux 提供 集成应用程序、运行库和一个配置可伸缩的多用户单实例的 操作系统, 以满足企业级应用的各种需求.</p>
+<h3 id="_2">翻墙原理</h3>
+<p>由于在 OpenShift 上创建的应用可以通过 <strong>SSH</strong> 来访问, 而 <strong>SSH</strong> 的数据传输又是通过加密传输, 因此可以通过 socket5 把请求代理到本地然后再使用 <strong>SSH</strong> 隧道访问目标网页, 以此达到翻墙目的.</p>
+<h2 id="_3">二. 开始翻墙</h2>
+<h3 id="openshift_1">注册/登录 Openshift</h3>
+<p>Openshift 在国内是可以直接访问的(要不然怎么利用它代理翻墙..), 但是注册的时候可能会看不到__验证码__, 多刷新几次, 要是还不行的话你懂的...</p>
+<h3 id="_4">创建应用</h3>
+<p>由于目的不是建站, 因此随便创建一个运行环境就行, 比如说这里创建了一个 PHP 运行环境:</p>
+<p><img alt="" src="http://i67.tinypic.com/1075mhz.jpg" /></p>
+<p><br>
+然后填写下图中红框中的信息后, 一路下一步到创建成功.</p>
+<p><img alt="" src="http://i66.tinypic.com/116nhbq.jpg" /></p>
+<h3 id="ssh">配置 SSH</h3>
+<p>利用 <strong>SecureCRT</strong> 远程 OpenShift 需要使用到两个密钥(公钥和私钥), 这样使用的是现在的, 可以参考我的另一篇笔记: <a href="http://www.smallcpp.com/git-jian-ming-shou-ce.html#101-ssh-key">Git 简明手册</a></p>
+<p>通过 <a href="http://www.smallcpp.com/git-jian-ming-shou-ce.html#101-ssh-key">Git 简明手册</a> 拿到了两个密钥文件: <strong>id_rsa</strong>(私钥) 和 <strong>id_rsa.pub</strong>(公钥).</p>
+<p>现在需要到 <strong>OpenShift</strong> 上添加刚拿到的 SSH 公钥了:</p>
+<p><img alt="" src="http://i66.tinypic.com/2qk01ls.jpg" /></p>
+<p><br>
+把 <strong>id_rsa.pub</strong> 里的内容拷贝进去就可以了, Key name 随便写...</p>
+<p><img alt="" src="http://i64.tinypic.com/bfm5n6.jpg" /></p>
+<p><br>
+然后把 OpenShift PHP 应用的 <strong>主机名</strong> 和 <strong>用户名</strong> 拷贝下来.</p>
+<p><img alt="" src="http://i63.tinypic.com/15guky0.jpg" /></p>
+<h3 id="securecrt">使用 SecureCRT</h3>
+<p>打开 SecureCRT, 选择 <strong>选项</strong> -> <strong>全局选项</strong>:</p>
+<p><img alt="" src="http://i68.tinypic.com/2mgw3df.jpg" /></p>
+<p><br>
+<img alt="" src="http://i67.tinypic.com/sw6yrt.jpg" /></p>
+<p><br>
+<img alt="" src="http://i63.tinypic.com/34rjfvd.jpg" /></p>
+<p><br>
+<img alt="" src="http://i68.tinypic.com/5fiss1.jpg" /></p>
+<p><br>
+然后保存退回到主界面, 选择 <strong>连接</strong>, 打开 连接配置窗口, 再选择 <strong>新建会话</strong>:</p>
+<p><img alt="" src="http://i66.tinypic.com/2mebei0.jpg" /></p>
+<p><br>
+<img alt="" src="http://i66.tinypic.com/1gpsup.jpg" /></p>
+<p><br>
+<img alt="" src="http://i66.tinypic.com/2yott20.jpg" /></p>
+<p><br>
+<img alt="" src="http://i67.tinypic.com/t9yyrk.jpg" /></p>
+<p><br>
+<img alt="" src="http://i67.tinypic.com/sctmvl.jpg" /></p>
+<p><br>
+<img alt="" src="http://i64.tinypic.com/2m51k5y.jpg" /></p>
+<p><br>
+<img alt="" src="http://i67.tinypic.com/2cnb8lt.jpg" /></p>
+<p><br>
+<img alt="" src="http://i63.tinypic.com/1531x0p.jpg" /></p>
+<p><br>
+<img alt="" src="http://i63.tinypic.com/2lliueq.jpg" /></p>
+<p><br>
+<img alt="" src="http://i63.tinypic.com/2sbodaf.jpg" /></p>
+<p><br>
+至此, SecureCRT 到 Openshift 的会话就配好了, 保存退回到 <strong>连接</strong> 窗口, 点击 <strong>连接</strong>, 出现下面的提示就说明配对了...</p>
+<p><img alt="" src="http://i68.tinypic.com/e16bk9.jpg" /></p>
+<h3 id="socket5">配置浏览器 socket5 代理</h3>
+<p>本地代理环境已经搭好了, 现在开始配置 Chrome, 让 Chrome 通过代理来翻墙...</p>
+<p>这里选择的扩展程序是 <strong>SwitchyOmega</strong> 插件, 你也可以选择其它的.</p>
+<p>安装好扩展程序后, 进入插件设置面板, 添加一条 <strong>socket5</strong> 代理, 端口填刚才在 SecureCRT 里设置的__转发端口__, 我的是 1913, 然后给这个代理起个名字, 例如 <strong>openshift</strong>:</p>
+<p><img alt="" src="http://i68.tinypic.com/1zqy8me.jpg" /></p>
+<h2 id="_5">三. 测试效果</h2>
+<p><img alt="" src="http://i65.tinypic.com/23mxvl.jpg" /></p>
+    </div>
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2016 <a href="http://www.samllcpp.com/" target="_blank">Martin</a> Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+              </p>
+        </div>
+    </body>
+</html>

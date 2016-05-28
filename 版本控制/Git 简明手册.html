@@ -1,0 +1,412 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <title>Git 简明手册 - Wiki | Small Cpp</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            
+            <a href="/">Home</a> » <a href="/#版本控制">版本控制</a> » Git 简明手册
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#1-git">1. git 配置</a></li>
+<li><a href="#2">2. 初始化版本库</a></li>
+<li><a href="#3">3. 正常工作流程</a></li>
+<li><a href="#4">4. 分支</a></li>
+<li><a href="#5">5. 撤销</a><ul>
+<li><a href="#_1">未提交前的撤销</a><ul>
+<li><a href="#-">--版本层面上</a></li>
+<li><a href="#-_1">--文件层面上</a></li>
+</ul>
+</li>
+<li><a href="#_2">已提交后的撤销</a><ul>
+<li><a href="#-_2">--版本层面上</a><ul>
+<li><a href="#a">a. 删除一个提交</a></li>
+<li><a href="#b">b. 创建一个撤销了上次提交的新提交(推荐使用)</a></li>
+</ul>
+</li>
+<li><a href="#-_3">-- 文件层面上</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#6">6. 比较差异</a><ul>
+<li><a href="#beyond-compare-diff">整合 beyond compare 与 diff</a></li>
+</ul>
+</li>
+<li><a href="#7">7. 忽略文件</a></li>
+<li><a href="#8">8. 远程操作</a><ul>
+<li><a href="#81">8.1 新建/克隆版本库</a><ul>
+<li><a href="#811">8.1.1 新建版本库</a></li>
+<li><a href="#812">8.1.2 克隆版本库</a></li>
+</ul>
+</li>
+<li><a href="#82-pull">8.2 拉取更新(pull)</a></li>
+<li><a href="#83-fetch">8.3 获取更新(fetch)</a></li>
+</ul>
+</li>
+<li><a href="#9-git-in-windows">9. Git In Windows</a></li>
+<li><a href="#10-sourcetree-in-github">10. SourceTree In GitHub</a><ul>
+<li><a href="#101-ssh-key">10.1 创建 SSH Key</a></li>
+<li><a href="#102-github">10.2 设置 GitHub</a></li>
+<li><a href="#103-sourcetree">10.3 设置 SourceTree</a></li>
+<li><a href="#104">10.4 克隆项目</a></li>
+</ul>
+</li>
+<li><a href="#11-git-stash">11. git stash 贮藏</a></li>
+<li><a href="#12">12. 中文显示问题</a></li>
+</ul>
+</div>
+<h2 id="1-git">1. git 配置</h2>
+<ul>
+<li>git config --list</li>
+<li>git config --global user.name "your name"</li>
+<li>git config --global user.email "email@example.com"</li>
+<li>git config --global core.autocrlf  false // 关闭换行符检测, windows 的换行有点问题</li>
+</ul>
+<h2 id="2">2. 初始化版本库</h2>
+<p>打开 git bash, 进入目标目录, 执行 <strong>git init</strong>, 在目标目录下就会生成 <strong>.git</strong> 目录, 它存放的就是 git 版本库信息.</p>
+<h2 id="3">3. 正常工作流程</h2>
+<p>edit file (工作区) -> git add (暂存区/index/stage) -> git commit (commit)</p>
+<ul>
+<li>git add file1 file2<ul>
+<li>如果想将当前目录所有文件都加入 index, 可以用 git add . (点表示当前目录)</li>
+</ul>
+</li>
+<li>git diff --cached 可以查看哪些文件将被 commit, 即 index 里的文件<ul>
+<li>或者可以用 git status 查看当前版本库的状况</li>
+</ul>
+</li>
+<li>git commit -m "注释"</li>
+</ul>
+<blockquote>
+<p>如果不用 git add 命令, 可以用 git commit -a 参数来合并 add 和 commit 操作(不包括未加入版本控制的文件, 即新建立的文件).</p>
+</blockquote>
+<h2 id="4">4. 分支</h2>
+<p>创建一个新分支 -- git branch 分支名</p>
+<p>查看本地分支表 -- git branch, * 号表示当前所在分支</p>
+<p>查看所有分支表(包括远程) -- git branch -a</p>
+<p>切换分支 -- git checkout 分支名</p>
+<p>合并分支 -- git checkout master, git merge 分支名, 这样就把分支的内容合并的 master 分支了</p>
+<p>解决冲突 -- 如果产生了冲突, 先 git diff 查看冲突, 解决冲突后, git add, git commit 重新提交</p>
+<p>查看图形化时间线 -- gitk</p>
+<p>删除分支 -- git branch -d 分支名, 要先切换到其它分支</p>
+<p>强制删除分支 -- git branch -d 只能删除已经合并的分支, -D 可以强制删除一个分支</p>
+<p>比较分支 -- git diff 分支名..分支名</p>
+<h2 id="5">5. 撤销</h2>
+<p>撤销的情况比较复杂</p>
+<p>首先是 <strong>reset --参数 commit id</strong> 命令, 这个命令有三个参数:</p>
+<ul>
+<li>--mixed：此为默认方式, 回退到某个版本, 只保留工作区, 回退 commit 和 index</li>
+<li>--soft：回退到某个版本, 只回退了 commit, 保留工作区和 index</li>
+<li>--hard：彻底回退到某个版本, 工作区、commit 和 index 都会改变</li>
+</ul>
+<p>再就是 <strong>HEAD</strong> '指针', HEAD 表示当前版本, 上一个版本就是 HEAD^, 上上一个版本就是 HEAD^^, 当然往上100个版本写 100 个 ^ 比较容易数不过来, 所以写成 HEAD~100;</p>
+<p>另外还有个 <strong>ORIG_HEAD</strong> 指针, 它指向的是 HEAD 上一次所在的位置.</p>
+<p>使用 <strong>reset</strong> 命令, 就可以在各个版本之间穿梭了.<br>穿梭前, 用 <strong>git log</strong> 可以查看提交历史, 以便确定要回退到哪个版本, 使用 <strong>--pretty=oneline</strong> 参数可以比较清晰的看到 log, 不过要注意, 一但回到某个版本, 那该版本之后的那些版本通过 git log 就看不到了, 如果还想要重返未来, 可以用 <strong>git reflog</strong> 查看命令历史, 就可以得到'未来'的 commit id 了.</p>
+<h3 id="_1">未提交前的撤销</h3>
+<h4 id="-">--版本层面上</h4>
+<p>如果你修改了工作区, 甚至已经提交到 index, 只要你还没 commit, 就可以通过 <strong>git reset --hard HEAD</strong> 可以回退到当前版本的初始状态.</p>
+<h4 id="-_1">--文件层面上</h4>
+<p>还有一种情况, 就是修改了工作区, 提交到了 index, 然后又修改了工作区, 然后, 只需要撤掉第二次工作区的修改, 如果使用 git reset --hard HEAD 命令, 那就会把工作区和 index 都给撤掉了, 我们可以使用 <strong>checkout</strong> 命令.</p>
+<p>命令 <strong>git checkout -- readme.txt</strong> 意思就是, 把 readme.txt 文件在工作区的修改全部撤销, 它可以让这个文件回到最近一次 git commit 或 git add 时的状态.</p>
+<h3 id="_2">已提交后的撤销</h3>
+<h4 id="-_2">--版本层面上</h4>
+<p>如果已经 commit, 有__两种__方式来撤销.</p>
+<h5 id="a">a. 删除一个提交</h5>
+<p>通过 <strong>git reset --hard ORIG_HEAD</strong> 或者 <strong>git reset --hard HEAD^</strong> 来恢复到上一个版本.</p>
+<h5 id="b">b. 创建一个撤销了上次提交的新提交(推荐使用)</h5>
+<p>这个听起来有点绕口, 命令为 <strong>git revert commit id</strong>, 这个命令将 commit id 的提交撤销(即回退到上一个版本), 然后创建一个新的提交, 这是一种比较安全的作法, 推荐使用.</p>
+<p>所以这里要注意下, 假设现在有两个版本, A 版本 和 B 版本, A 是刚提交的版本, B 是上一个版本, 如果想撤销 A 的提交.</p>
+<ul>
+<li>用 <strong>reset</strong> 的话, 直接指定 B 版本的 commit id, 它会直接回退到 B 版本</li>
+<li>用 <strong>revert</strong> 的话, 指定的是 A 版本的 commit id, 它会将 A 版本的上一个版本做为一个新提交</li>
+</ul>
+<p>注意, revert 后其实并不会直接 commit, 而是保存在 index 中, 需要执行 git commit 才是真正的提交.</p>
+<p>在 revert 下, 如果已经修改了当前工作区, 那就有可能和撤销后的版本有冲突, 需要解决冲突后, 再提交.</p>
+<h4 id="-_3">-- 文件层面上</h4>
+<p>首先查看该文件的历史版本信息: git log default.txt</p>
+<p>记录下需要恢复的 commit 版本号, 如: 9aa51d89799716aa68cff3f30c26f8815408e926</p>
+<p>恢复该文件: <strong>git reset --hard 9aa51d89799716aa68cff3f30c26f8815408e926 default.txt</strong></p>
+<p>提交git: git commit -m "恢复单个文件"</p>
+<h2 id="6">6. 比较差异</h2>
+<p>之前也提到一些, 现在单独列出来:</p>
+<ul>
+<li>git diff 查看工作区与 index 的差异 (产生冲突时可以用该命令查看)</li>
+<li>git diff --cached, 查看 index 和 commit 的差异</li>
+<li>git diff 分支名..分支名, 比较分支</li>
+<li>git diff HEAD 查看 工作区 和 commit 的差异</li>
+<li>git diff 分支名, 查看工作区与另一个分支的差异</li>
+</ul>
+<h3 id="beyond-compare-diff">整合 beyond compare 与 diff</h3>
+<p>首先在 ~/bin/ 目录下新建一个 git-diff-wrapper.sh 文件</p>
+<p>window 系统的 git bash 的 git-diff-wrapper.sh</p>
+<div class="hlcode"><pre><span class="cp">#/bin/sh</span>
+<span class="cp"># diff is called by git with 7 parameters:</span>
+<span class="cp"># path old-file old-hex old-mode new-file new-hex new-mode</span>
+<span class="s">&quot;D:/martin/i/l/u/Beyond Compare/BCompare.exe&quot;</span> <span class="s">&quot;$2&quot;</span> <span class="s">&quot;$5&quot;</span> <span class="o">|</span> <span class="n">cat</span>
+</pre></div>
+
+
+<p>mac 系统的 git-diff-wrapper.sh</p>
+<div class="hlcode"><pre><span class="cp">#/bin/sh</span>
+<span class="cp"># diff is called by git with 7 parameters:</span>
+<span class="cp"># path old-file old-hex old-mode new-file new-hex new-mode</span>
+<span class="n">bcompare</span> <span class="s">&quot;$2&quot;</span> <span class="s">&quot;$5&quot;</span><span class="o">|</span><span class="n">cat</span>
+</pre></div>
+
+
+<p>注意：你在 mac 系统中装了 beyong compare 后需要在菜单栏点击 “Install Command Line Tools” 把它加入到命令行.</p>
+<p>在用户目录~下修改 .gitconfig 文件, 添加一行:</p>
+<div class="hlcode"><pre><span class="k">[diff]</span>
+<span class="na">external</span> <span class="o">=</span> <span class="s">~/bin/git-diff-wrapper.sh</span>
+</pre></div>
+
+
+<p>注意: Mac上运行 git diff 时, 由于系统要保存历史文件到临时目录再进行比较, 而在保存到临时目录又需要很高的权限, 所以在 git  diff 前加了 sudo 才能执行成功.</p>
+<h2 id="7">7. 忽略文件</h2>
+<p>即 .gitignore, 由于 windows 的特性, 可能无法直接新建这样文件名的文件, 可以在 git bash 中使用 linux 命令来新建.</p>
+<p>.gitignore 文件只对还没有加入版本管理的文件起作用, 如果之前已经在之前已经把这些文件加入了版本库, 忽略文件就不起作用了, 那么解决方法就是先把本地缓存删除(改变成未 track 状态), 然后再提交:</p>
+<div class="hlcode"><pre><span class="n">git</span> <span class="n">rm</span> <span class="o">-</span><span class="n">r</span> <span class="o">--</span><span class="n">cached</span> <span class="p">.</span>
+<span class="n">git</span> <span class="n">add</span> <span class="p">.</span>
+<span class="n">git</span> <span class="n">commit</span> <span class="o">-</span><span class="n">m</span> <span class="err">&#39;</span><span class="n">update</span> <span class="p">.</span><span class="n">gitignore</span><span class="err">&#39;</span>
+</pre></div>
+
+
+<p>这并不会改变已有的版本库历史信息, 可以放心使用.</p>
+<p>配置语法:</p>
+<ul>
+<li>以 "#" 开头的是注释</li>
+<li>以 "/" 开头表示目录</li>
+<li>以 "?" 通配单个字符</li>
+<li>以 "*" 通配多个字符</li>
+<li>以方括号 "[]" 包含单个字符的匹配列表, 如忽略所有的 *.txt 和 *.html 文件, *.[txthtml]</li>
+<li>以叹号 "!" 强制跟踪某个文件或目录</li>
+</ul>
+<p>例如在 .gitignore 写入 test.lib 后, 那么将忽略 test.lib 文件, 写入 /test(或者 /test/*) 就能忽略根目录下的 test 目录(包括这个目录下的所有內容).</p>
+<h2 id="8">8. 远程操作</h2>
+<h3 id="81">8.1 新建/克隆版本库</h3>
+<p>根据情况不同, 有两种操作.</p>
+<h4 id="811">8.1.1 新建版本库</h4>
+<p>现在的情景是, 你已经在本地创建了一个 Git 仓库后, 又想在 GitHub 创建一个 Git 仓库, 并且让这两个仓库进行远程同步, 这样, GitHub 上的仓库既可以作为备份, 又可以让其他人通过该仓库来协作, 真是一举多得.</p>
+<p>首先, 你要去 GitHub 上建立一个新的空版本库, 最好与本地的仓库同名, 好, 现在假设你已经建好了, 新库的地址为: git@github.com:xxx/yyy.git</p>
+<p>现在, 在本地打开 git bash(注意, 要进入本地待同步的仓库目录下), 执行下面的命令:</p>
+<div class="hlcode"><pre><span class="n">git</span> <span class="n">remote</span> <span class="n">add</span> <span class="n">origin</span> <span class="n">git</span><span class="err">@</span><span class="n">github</span><span class="p">.</span><span class="n">com</span><span class="o">:</span><span class="n">xxx</span><span class="o">/</span><span class="n">yyy</span><span class="p">.</span><span class="n">git</span>
+</pre></div>
+
+
+<p>这个命令可以理解成, 给远程仓库(git@github.com:xxx/yyy.git)指定一个简名 origin, 以后在本地仓库目录下, 操作 origin 即是操作远程仓库, origin 是默认的叫法, 也可以改成别的, 但是 origin 这个名字一看就知道是远程库, 通常情况下, 我们也是用这个名字.</p>
+<p>下一步, 就可以把本地库的所有内容推送到远程库上:</p>
+<div class="hlcode"><pre><span class="n">git</span> <span class="n">push</span> <span class="o">-</span><span class="n">u</span> <span class="n">origin</span> <span class="n">master</span><span class="o">:</span><span class="n">master</span>
+</pre></div>
+
+
+<p>推送到远程, 用 <strong>git push</strong> 命令.</p>
+<div class="hlcode"><pre><span class="n">git</span> <span class="n">push</span> <span class="o">&lt;</span><span class="err">远程主机名</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="err">本地分支名</span><span class="o">&gt;:&lt;</span><span class="err">远程分支名</span><span class="o">&gt;</span>
+</pre></div>
+
+
+<p>如果省略远程分支名, 则表示将本地分支推送与之存在”追踪关系”的远程分支, 通常两者同名, 如果该远程分支不存在, 则会被新建;</p>
+<p><strong>-u</strong> 参数相当于建立关联(追踪)关系, 将远程主机(这里是 origin)的 master 分支和本地仓库的 master 分支关联起来, 以后进行推送/拉取操作时就可以简化命令.<br><strong>如果你使用 branch -a 来查看当前所有分支, 则会看到这个关联(追踪)关系</strong>.</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">git</span> <span class="n">branch</span> <span class="o">-</span><span class="n">a</span>
+<span class="o">*</span> <span class="n">master</span>
+  <span class="n">remotes</span><span class="o">/</span><span class="n">origin</span><span class="o">/</span><span class="n">HEAD</span> <span class="o">-&gt;</span> <span class="n">origin</span><span class="o">/</span><span class="n">master</span>
+  <span class="n">remotes</span><span class="o">/</span><span class="n">origin</span><span class="o">/</span><span class="n">master</span>
+</pre></div>
+
+
+<blockquote>
+<p>remotes/origin/HEAD is the default branch for the remote named origin. This lets you simply say origin instead of origin/master.</p>
+</blockquote>
+<p><a href="http://www.yiibai.com/git/git_push.html">关于 git push 命令的详细参考链接</a></p>
+<p>推送成功后, 可以立刻在 GitHub 页面中看到远程库的内容已经和本地一模一样;</p>
+<p>从现在起, 只要本地作了提交, 就可以通过命令:</p>
+<div class="hlcode"><pre><span class="n">git</span> <span class="n">push</span>
+</pre></div>
+
+
+<p>把本地 master 分支的最新修改推送至 GitHub, 现在, 你就拥有了真正的分布式版本库.</p>
+<h4 id="812">8.1.2 克隆版本库</h4>
+<p>8.1.1 讲了先有本地库, 后有远程库的时候, 如何关联远程库, 现在, 假设已经有了一个远程库, 从远程库克隆到本地, 该如何操作.</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">git</span> <span class="n">clone</span> <span class="n">git</span><span class="err">@</span><span class="n">github</span><span class="p">.</span><span class="n">com</span><span class="o">:</span><span class="n">xxx</span><span class="o">/</span><span class="n">yyy</span><span class="p">.</span><span class="n">git</span>
+</pre></div>
+
+
+<p>如果是 clone 的方式, 那么, 我们就不需要手动去设置远程仓库的简名以及关联(追踪)关系了, 它会自动给它设置好, 我们可以通过 git config --list 查看.</p>
+<p>当然, 推送修改时, 你依然可以用 <strong>-u</strong> 参数来指定关联:</p>
+<div class="hlcode"><pre><span class="n">git</span> <span class="n">push</span> <span class="o">-</span><span class="n">u</span> <span class="n">origin</span> <span class="n">master</span><span class="o">:</span><span class="n">master</span>
+</pre></div>
+
+
+<h3 id="82-pull">8.2 拉取更新(pull)</h3>
+<p>该操作取回远程主机某个分支的更新, 再__与本地的指定分支合并__.</p>
+<p><a href="http://www.yiibai.com/git/git_pull.html">参考链接</a></p>
+<div class="hlcode"><pre><span class="n">git</span> <span class="n">pull</span> <span class="o">&lt;</span><span class="err">远程主机名</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="err">远程分支名</span><span class="o">&gt;:&lt;</span><span class="err">本地分支名</span><span class="o">&gt;</span>
+</pre></div>
+
+
+<p>如果我们设置了关联(追踪)关系(参考 8.1.1), 则可以省略命令, 直接写: <strong>git pull</strong> 就可以了.</p>
+<h3 id="83-fetch">8.3 获取更新(fetch)</h3>
+<p>该操作取回远程主机某个分支的更新, 但并__不与本地分支进行合并__.</p>
+<p><a href="http://www.yiibai.com/git/git_fetch.html">参考链接</a></p>
+<div class="hlcode"><pre><span class="n">git</span> <span class="n">fetch</span> <span class="o">&lt;</span><span class="err">远程主机名</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="err">分支名</span><span class="o">&gt;</span>
+</pre></div>
+
+
+<p>所取回的更新, 在本地主机上要用 "<strong>远程主机名/分支名</strong>" 的形式读取, 比如 origin 主机的 master, 就要用 origin/master 读取.</p>
+<p>git branch -a 查看所有分支:</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">git</span> <span class="n">branch</span> <span class="o">-</span><span class="n">a</span>
+<span class="o">*</span> <span class="n">master</span>
+  <span class="n">remotes</span><span class="o">/</span><span class="n">origin</span><span class="o">/</span><span class="n">master</span>
+</pre></div>
+
+
+<p>上面命令结果表示, 本地主机的当前分支是 master, 远程分支是 origin/master.</p>
+<div class="hlcode"><pre><span class="n">git</span> <span class="n">log</span> <span class="o">-</span><span class="n">p</span> <span class="n">master</span><span class="p">..</span><span class="n">origin</span><span class="o">/</span><span class="n">master</span>
+</pre></div>
+
+
+<p>取回远程主机的更新以后, 通过上面的命令比较本地仓库和远程参考的区别, 如果你需要详细的比较信息, 可以用 diff 命令:</p>
+<div class="hlcode"><pre><span class="n">git</span> <span class="n">diff</span> <span class="n">master</span><span class="p">..</span><span class="n">origin</span><span class="o">/</span><span class="n">master</span>
+</pre></div>
+
+
+<p>当检查修正完后, 使用 git merge 在本地分支上合并远程分支:</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">git</span> <span class="n">merge</span> <span class="n">origin</span><span class="o">/</span><span class="n">master</span>
+</pre></div>
+
+
+<p>上面命令表示在当前分支上, 合并 origin/master.</p>
+<h2 id="9-git-in-windows">9. Git In Windows</h2>
+<p>首先, 先安装 Msysgit 和 SourceTree, 因为服务器在国外, 下载起来非常慢, 我下载好一份放在云盘上, 地址在下面:</p>
+<p>Git For Windows(Msysgit):<br><a href="https://yunpan.cn/cYR2UcrFIwrKM">https://yunpan.cn/cYR2UcrFIwrKM</a> 访问密码 1d91</p>
+<p>SourceTree:<br><a href="https://yunpan.cn/cYR2i2zBPbzce">https://yunpan.cn/cYR2i2zBPbzce</a> 访问密码 45cd</p>
+<blockquote>
+<p>除了 SourceTree 外也还有其他的选择, 如 TortoiseGit, 然而试用过后, 还是 SourceTree 比较好.</p>
+</blockquote>
+<p>Git For Windows(Msysgit) 自带一个 <strong>git bash</strong> 和 <strong>git gui</strong>, 哦, 对了, 还有一个 <strong>gitk</strong>.</p>
+<ul>
+<li>git bash 就是一个模拟 linux 的终端</li>
+<li>git gui 是一个轻量级的图形操作界面</li>
+<li>gitk  是一个 git 浏览器, 主要用于用户查看仓库的各类信息(更改信息、提交信息、版本信息、图形显示等)</li>
+</ul>
+<p>Msysgit 的图形化界面, 虽然能满足日常需求, 但确实比较粗糙, 而 SourceTree 就是一个很好的替代方案, 日常操作就用 SourceTree, 需要用到命令行时就用 git bash.</p>
+<p>其实 SourceTree 也可以自动下载 git, 只不过速度不敢恭维, 还是我们自己手动下载、安装好了, 安装好 SourceTree 后, 首次运行, 会让你进行一个__初始化设置__, 请__直接跳过__;<br>因为我们已经安装好 Git 客服端了, 如果让 SourceTree 进行初始化, 它会给你重新下载一个 Git 还有 Mercurial.</p>
+<p>SourceTree 参考资料:</p>
+<ul>
+<li><a href="http://www.myexception.cn/other/1997033.html">用SourceTree轻巧Git项目图解</a></li>
+<li><a href="http://www.takobear.tw/2014/02/15/bear-git-flow-sourcetreegit-flow">如何在SOURCETREE使用GIT FLOW管理開發!</a></li>
+</ul>
+<h2 id="10-sourcetree-in-github">10. SourceTree In GitHub</h2>
+<p>假设已经有了 GitHub 上自己的远程仓库.</p>
+<h3 id="101-ssh-key">10.1 创建 SSH Key</h3>
+<p>首先, 到用户目录下(C:/Users/Administrator), 看看有没有 .ssh 目录, 如果有, 则进入这个目录, 看看有没有 <strong>id_rsa</strong>(私钥) 和 <strong>id_rsa.pub</strong>(公钥) 这两个文件, 如果有, 就可以跳过 10.1 后面的操作了, 直接开始 10.2, 如果没有, 则打开 gui bash, 运行下面的命令, 创建一个密钥对:</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">ssh</span><span class="o">-</span><span class="n">keygen</span> <span class="o">-</span><span class="n">t</span> <span class="n">rsa</span> <span class="o">-</span><span class="n">C</span> <span class="s">&quot;youremail@example.com&quot;</span> <span class="c1">// 后面的 -C 邮件 是注释, 也可以省略</span>
+</pre></div>
+
+
+<p>一路回车后, 就在刚才的目录下面生成了 <strong>id_rsa</strong>(私钥) 和 <strong>id_rsa.pub</strong>(公钥) 两个文件.</p>
+<h3 id="102-github">10.2 设置 GitHub</h3>
+<p>登录 GitHub 后, 设置 GitHub 的 "SSH Keys", 就是刚才生成的 <strong>id_rsa.pub</strong>(公钥) 里面的内容, 直接复制进去就可以了.</p>
+<p>设置完后, 可以在 git bash 中执行下面的命令看看有没有设置成功:</p>
+<div class="hlcode"><pre><span class="n">ssh</span> <span class="n">git</span><span class="err">@</span><span class="n">github</span><span class="p">.</span><span class="n">com</span>
+</pre></div>
+
+
+<h3 id="103-sourcetree">10.3 设置 SourceTree</h3>
+<p>打开 "工具"-&gt;"创建/导入SSH密钥", 打开 PuTTY 后, 点击 "Load" 按钮, 选择 9.1 中生成的 <strong>id_rsa</strong>(私钥) 文件, 然后点击 "Save private key" 按钮, 保存为 <strong>id_rsa.ppk</strong>.</p>
+<h3 id="104">10.4 克隆项目</h3>
+<p>到你的 GitHub 上拷贝一个项目的 SSH 下来, 打开 SourceTree, 点击 "克隆/新建", 填写好相关信息后, 点击 "克隆", 首次使用, 可能会克隆不下来, SourceTree 会报个错.</p>
+<div class="hlcode"><pre><span class="p">...</span>
+<span class="n">The</span> <span class="n">server</span><span class="err">&#39;</span><span class="n">s</span> <span class="n">rsa2</span> <span class="n">key</span> <span class="n">fingerprint</span> <span class="n">is</span><span class="o">:</span>
+<span class="n">ssh</span><span class="o">-</span><span class="n">rsa</span> <span class="mi">2048</span> <span class="mf">9f</span><span class="o">:</span><span class="n">a7</span><span class="o">:</span><span class="n">a4</span><span class="o">:</span><span class="mo">00</span><span class="o">:</span><span class="n">e4</span><span class="o">:</span><span class="n">f1</span><span class="o">:</span><span class="mi">7</span><span class="n">a</span><span class="o">:</span><span class="n">bc</span><span class="o">:</span><span class="n">aa</span><span class="o">:</span><span class="n">c1</span><span class="o">:</span><span class="n">d3</span><span class="o">:</span><span class="n">ea</span><span class="o">:</span><span class="mi">1</span><span class="n">e</span><span class="o">:</span><span class="n">d7</span><span class="o">:</span><span class="mi">4</span><span class="n">d</span><span class="o">:</span><span class="mi">79</span>
+<span class="n">If</span> <span class="n">you</span> <span class="n">trust</span> <span class="n">this</span> <span class="n">host</span><span class="p">,</span> <span class="n">enter</span> <span class="s">&quot;y&quot;</span> <span class="n">to</span> <span class="n">add</span> <span class="n">the</span> <span class="n">key</span> <span class="n">to</span>
+<span class="n">PuTTY</span><span class="err">&#39;</span><span class="n">s</span> <span class="n">cache</span> <span class="n">and</span> <span class="n">carry</span> <span class="n">on</span> <span class="n">connecting</span><span class="p">.</span>
+<span class="n">If</span> <span class="n">you</span> <span class="n">want</span> <span class="n">to</span> <span class="n">carry</span> <span class="n">on</span> <span class="n">connecting</span> <span class="n">just</span> <span class="n">once</span><span class="p">,</span> <span class="n">without</span>
+<span class="n">adding</span> <span class="n">the</span> <span class="n">key</span> <span class="n">to</span> <span class="n">the</span> <span class="n">cache</span><span class="p">,</span> <span class="n">enter</span> <span class="s">&quot;n&quot;</span><span class="p">.</span>
+<span class="n">If</span> <span class="n">you</span> <span class="k">do</span> <span class="n">not</span> <span class="n">trust</span> <span class="n">this</span> <span class="n">host</span><span class="p">,</span> <span class="n">press</span> <span class="n">Return</span> <span class="n">to</span> <span class="n">abandon</span> <span class="n">the</span>
+<span class="n">connection</span><span class="p">.</span>
+</pre></div>
+
+
+<blockquote>
+<p>其实这里是让你输 yes / no, 可惜 sourcetree 中输入不了,  得我们手动在 cmd 中操作</p>
+</blockquote>
+<p>这是因为首次连接一个使用 SSH 协议的 Git 服务器的时候, 因为远程 SSH 服务器的公钥没有经过确认而导致 git 命令执行失败, 解决方法是在__命令行__下找到 SourceTree 安装目录里的 PuTTy 工具, 例如 "C:/Program Files (x86)/Atlassian/SourceTree/tools/putty/plink.exe", 然后执行命令</p>
+<div class="hlcode"><pre><span class="n">plink</span><span class="p">.</span><span class="n">exe</span> <span class="n">git</span><span class="err">@</span><span class="n">github</span><span class="p">.</span><span class="n">com</span>
+</pre></div>
+
+
+<p>它会继续报刚才的错误, 我们在 cmd 中输入 yes 就可以了.</p>
+<p>然后重新在 SourceTree 中克隆项目, 然后它就会提示你, 让你选择私钥 key 文件, 点击桌面右下角任务栏的 "Pageant", 点击 "add key" 按钮, 选择 9.3 中生成的 <strong>id_rsa.ppk</strong> 即可.</p>
+<blockquote>
+<p>每次重新启动电脑后, Pageant 都会清空, 又要重新选择 key 文件 . . . , 等找到解决方法后再来更新笔记.</p>
+</blockquote>
+<p>已经找到解决方法:<br>点击 "工具"-&gt;"选项"-&gt;"一般", 在 SSH 密钥那一栏里选择我们的 <strong>id_rsa.ppk</strong>, 就不需要每次都要 "add key" 了.</p>
+<h2 id="11-git-stash">11. git stash 贮藏</h2>
+<p>git stash 的功能是保存当前工作目录和暂存区, 并 reset --hard HEAD, 即恢复成最新 commit 时的状态.</p>
+<p>需要恢复的时候, 使用 <strong>git stash apply</strong> 就将过去贮藏(stashed)的工作区快照恢复了, 和 merge 一样，git stash apply 之前要保证当前目录是干净的(没有未提交的改变), 否则会保错:</p>
+<div class="hlcode"><pre><span class="n">error</span><span class="o">:</span> <span class="n">Your</span> <span class="n">local</span> <span class="n">changes</span> <span class="n">to</span> <span class="n">the</span> <span class="n">following</span> <span class="n">files</span> <span class="n">would</span> <span class="n">be</span> <span class="n">overwritten</span> <span class="n">by</span> <span class="n">merge</span><span class="o">:</span> <span class="n">Please</span><span class="o">,</span> <span class="n">commit</span> <span class="n">your</span> <span class="n">changes</span> <span class="n">or</span> <span class="n">stash</span> <span class="n">them</span> <span class="n">before</span> <span class="n">you</span> <span class="n">can</span> <span class="n">merge</span><span class="o">.</span>
+</pre></div>
+
+
+<p>如果工作区在贮藏之后发生了变化(即更改过 file 并 commit 了), 恢复时就有可能产生冲突(conflict), 这种情况下 git stash apply 会对工作目录进行 merge 操作.</p>
+<p>git stash apply 只能恢复工作目录, 如果想把暂存区也按照贮藏时的暂存区恢复的话, 可以加上 <strong>--index</strong> 参数, 如果暂存区恢复时发生冲突了会怎么办呢? 它可不会让你进行 merge, 而是直接报错不允许你这么做:</p>
+<div class="hlcode"><pre><span class="n">Conflicts</span> <span class="n">in</span> <span class="n">index</span><span class="p">.</span> <span class="n">Try</span> <span class="n">without</span> <span class="o">--</span><span class="n">index</span><span class="p">.</span>
+</pre></div>
+
+
+<p>所以不要指望让 stash 去恢复暂存区, 如果暂存区有文件, 还是先 commit 的吧, 不然很可能就找不回来了...</p>
+<p>在使用 SourceTree 的 stash 功能过程中, 我误解了一点东西, 这里也记录下:</p>
+<p>SourceTree 的 stash 操作会让选择一个选项 -- "保存暂存的更改"</p>
+<p><img alt="" src="http://i67.tinypic.com/lees0.jpg" /></p>
+<p>我一开始以为, 这个选项是控制 --index 参数, 后来发现不管勾不勾这个选项, 恢复时都不会恢复暂存区的内容(估计 SourceTree 也认为不能指望让 stash 去恢复暂存区吧), 那这个选项是干什么的呢?</p>
+<ul>
+<li>不勾选, 就是正常的 git stash, 和我们使我 git bash 用命令一样的效果</li>
+<li>勾选, 贮藏后, 工作区的内容被回退到 HEAD, 但保留暂存区里的内容</li>
+</ul>
+<h2 id="12">12. 中文显示问题</h2>
+<p>参考: <a href="http://xstarcd.github.io/wiki/shell/git_chinese.html">http://xstarcd.github.io/wiki/shell/git_chinese.html</a></p>
+<p>解决 git status 和 push、pull 时, 中文文件名乱码, 如:</p>
+<div class="hlcode"><pre><span class="p">[</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">soft</span><span class="o">/</span><span class="n">xstarcd</span><span class="p">.</span><span class="n">github</span><span class="p">.</span><span class="n">io</span><span class="p">]</span><span class="err">$</span><span class="n">git</span> <span class="n">status</span>
+<span class="err">位于分支</span> <span class="n">master</span>
+<span class="err">您的分支与上游分支</span> <span class="err">&#39;</span><span class="n">origin</span><span class="o">/</span><span class="n">master</span><span class="err">&#39;</span> <span class="err">一致。</span>
+<span class="err">未跟踪的文件</span><span class="o">:</span>
+  <span class="err">（使用</span> <span class="s">&quot;git add &lt;文件&gt;...&quot;</span> <span class="err">以包含要提交的内容）</span>
+
+        <span class="s">&quot;</span><span class="se">\346\265\213\350\257\225</span><span class="s">.txt&quot;</span>
+
+<span class="err">提交为空，但是存在尚未跟踪的文件（使用</span> <span class="s">&quot;git add&quot;</span> <span class="err">建立跟踪）</span>
+</pre></div>
+
+
+<p>解决方式：</p>
+<div class="hlcode"><pre><span class="n">git</span> <span class="n">config</span> <span class="o">--</span><span class="n">global</span> <span class="n">core</span><span class="p">.</span><span class="n">quotepath</span> <span class="nb">false</span>
+</pre></div>
+    </div>
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2016 <a href="http://www.samllcpp.com/" target="_blank">Martin</a> Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+              </p>
+        </div>
+    </body>
+</html>

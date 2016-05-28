@@ -1,0 +1,93 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <title>折腾 Simiki - Wiki | Small Cpp</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            
+            <a href="/">Home</a> » <a href="/#工具配置">工具配置</a> » 折腾 Simiki
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#diy">DIY 主题</a></li>
+<li><a href="#diy_1">DIY 部署</a></li>
+<li><a href="#_1">补充</a></li>
+</ul>
+</div>
+<h1 id="diy">DIY 主题</h1>
+<p>Simiki 自带的主题稍微有点 low, 可以使用官网推荐的另一款主题: <a href="https://github.com/tankywoo/yasimple/tree/ce4af036ab95ef1d5235266d8231f97dc14dd871">yasimple</a>, Clone 到本地后替换掉 <code>~/themes/simple</code> 下的文件;</p>
+<p>这些主题都没有网站图标, 所以要再 DIY 一下, 先准备好网站图标, 如 <code>favicon.ico</code>, 放到 <code>~/themes/simple/static/images</code> 目录下 (没有 <code>images</code> 目录就新建一个), 然后打开 <code>~/themes/simple/base.html</code>, 在 <strong>head</strong> 标签中添加如下内容:</p>
+<div class="hlcode"><pre><span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;shortcut icon&quot;</span> <span class="na">href=</span><span class="s">&quot;{{ site.root }}/static/images/favicon.ico&quot;</span> <span class="na">type=</span><span class="s">&quot;image/x-icon&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;icon&quot;</span> <span class="na">href=</span><span class="s">&quot;{{ site.root }}/static/images/favicon.ico&quot;</span> <span class="na">type=</span><span class="s">&quot;image/x-icon&quot;</span><span class="nt">&gt;</span>
+</pre></div>
+
+
+<p><br></p>
+<h1 id="diy_1">DIY 部署</h1>
+<p>我使用的是 Github Project Page, 所以可以把 <strong>output</strong> 目录加入 <strong>.gitignore</strong> 来忽略每次生成时的变化.</p>
+<ul>
+<li><strong>master</strong> 分支托管源文件</li>
+<li><strong>gh-pages</strong> 分支放 <strong>output</strong> 的发布文件</li>
+</ul>
+<blockquote>
+<p>注意, 第一次使用时要先 <strong>push</strong> 一次 <strong>master</strong> 分支</p>
+</blockquote>
+<p>推送 <strong>gh-pages</strong> 分支这一步可以使用 <a href="https://github.com/davisp/ghp-import">ghp-import</a> 来简化操作, <strong>ghp-import</strong> 是一个 python 工具包, 能把一个文件夹里的内容推送到一个 branch 里, 不过 ghp-import 在 windows 下各种坑, 所以 windows 下就别想了...</p>
+<p>官方给出了自动化部署的 <code>fabfile.py</code> 文件 (依赖于 <strong>gh-pages</strong>, windows 下勿使用), 只需在 <code>_config.yml</code> 中添加如下内容:</p>
+<div class="hlcode"><pre><span class="nl">deploy:</span>
+  <span class="o">-</span> <span class="n">type</span><span class="o">:</span> <span class="n">git</span>
+</pre></div>
+
+
+<p><br>
+然后使用 <code>fab deploy</code> 就能自动把 <strong>output</strong> 目录推送到远程 <strong>gh-pages</strong> 分支.</p>
+<p>最后, 由于 Github Project Page 需要用到一个 <code>CNAME</code> 文件, 所以我修改了官方 <code>fabfile.py</code> 文件的 <code>deploy_git</code> 函数, 让部署时自动生成 <code>CNAME</code> 文件:</p>
+<div class="hlcode"><pre><span class="k">def</span> <span class="nf">deploy_git</span><span class="p">(</span><span class="n">deploy_configs</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;for pages service of such as github/gitcafe ...&#39;&#39;&#39;</span>
+    <span class="k">with</span> <span class="n">settings</span><span class="p">(</span><span class="n">warn_only</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">local</span><span class="p">(</span><span class="s">&#39;which ghp-import &gt; /dev/null 2&gt;&amp;1; echo $?&#39;</span><span class="p">,</span> <span class="n">capture</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">strip</span><span class="p">()):</span>
+            <span class="n">do_exit</span><span class="p">(</span><span class="s">&#39;Warning: ghp-import not installed! &#39;</span>
+                    <span class="s">&#39;run: `pip install ghp-import`&#39;</span><span class="p">)</span>
+    <span class="n">output_dir</span> <span class="o">=</span> <span class="n">configs</span><span class="p">[</span><span class="s">&#39;destination&#39;</span><span class="p">]</span>
+    <span class="k">with</span> <span class="n">lcd</span><span class="p">(</span><span class="n">output_dir</span><span class="p">):</span>  <span class="c"># 添加 CNAME 文件</span>
+        <span class="n">local</span><span class="p">(</span><span class="s">&#39;echo wiki.smallcpp.com &gt; CNAME&#39;</span><span class="p">)</span>
+    <span class="n">remote</span> <span class="o">=</span> <span class="n">deploy_configs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;remote&#39;</span><span class="p">,</span> <span class="s">&#39;origin&#39;</span><span class="p">)</span>
+    <span class="n">branch</span> <span class="o">=</span> <span class="n">deploy_configs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;branch&#39;</span><span class="p">,</span> <span class="s">&#39;gh-pages&#39;</span><span class="p">)</span>
+    <span class="c"># commit gh-pages branch and push to remote</span>
+    <span class="n">_mesg</span> <span class="o">=</span> <span class="s">&#39;Update output documentation&#39;</span>
+    <span class="n">local</span><span class="p">(</span><span class="s">&#39;ghp-import -p -m &quot;{0}&quot; -r {1} -b {2} {3}&#39;</span>
+          <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">_mesg</span><span class="p">,</span> <span class="n">remote</span><span class="p">,</span> <span class="n">branch</span><span class="p">,</span> <span class="n">output_dir</span><span class="p">))</span>
+</pre></div>
+
+
+<p><br></p>
+<h1 id="_1">补充</h1>
+<p>可以使用 <code>Travis-ci</code> 自动化部署 Simiki 项目.</p>
+    </div>
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2016 <a href="http://www.samllcpp.com/" target="_blank">Martin</a> Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+              </p>
+        </div>
+    </body>
+</html>

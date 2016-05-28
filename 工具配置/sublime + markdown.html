@@ -1,0 +1,252 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <title>sublime + markdown - Wiki | Small Cpp</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            
+            <a href="/">Home</a> » <a href="/#工具配置">工具配置</a> » sublime + markdown
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#_1">语法高亮</a></li>
+<li><a href="#_2">智能补全</a></li>
+<li><a href="#_3">表格辅助</a></li>
+<li><a href="#_4">预览</a></li>
+<li><a href="#_5">插入文件头</a></li>
+<li><a href="#_6">插入时间</a></li>
+</ul>
+</div>
+<h2 id="_1">语法高亮</h2>
+<p>Sublime Text 内置 Markdown 文档的语法高亮, 只是默认的太挫了...</p>
+<p><strong>Monokai Extended</strong> 和 <strong>Markdown Extended</strong> 是一套解决方案.</p>
+<p>安装完两个插件后, 首先在 [首选项] -> [主题方案] 里设置 <em>Monokai Extended</em>, 然后, 打开一个 *.md 文件, 在 Sublime 右下角显示文件语法那里点击选择 [打开具有当前扩展名的] -> [Markdown Extended], 或者在 [查看] -> [语法] -> [打开具有当前扩展名的] -> [Markdown Extended], 这样就将 *.md 文件与 Markdown Extended 关联起来了.</p>
+<h2 id="_2">智能补全</h2>
+<p><strong>Markdown Editing</strong> 插件</p>
+<p>Markdown Editing 也自带三种配色方案, 不过嘛, 略丑, 还是用 Monokai Extended 和 Markdown Extended 的好.</p>
+<p>Markdown Editing 常用功能如下:</p>
+<ul>
+<li>星号 、 下划线 和 反引号(键盘 1 旁边的那个键) 自动匹配<ul>
+<li>按 回退键 删除整个符号</li>
+<li>按 空格键 删除右边的符号</li>
+</ul>
+</li>
+<li>在列表的末尾回车, 下一行自动生成列表符号<ul>
+<li>在当前列表按 tab 键可生成子列表, 并循环使用 *, -, + 符号</li>
+<li>shift tab 键可以反向上面的操作</li>
+</ul>
+</li>
+<li>在引用的末尾回车, 下一行自动生成引用符号</li>
+<li>选取需要的内容后, 按 <em>&gt;</em> 能将选取的内容都加上引用</li>
+<li>Ctrl + Win + V 插入链接</li>
+<li>Ctrl + Win + R 插入参考式链接</li>
+<li>Shift + Win + K 插入图片(有冲突, 等下讲怎么处理)</li>
+<li>Ctrl + Shift + B / I 粗体 / 斜体</li>
+<li>Ctrl + 1~6 插入标题</li>
+</ul>
+<p>不过我用反引号时, 都是用三个反引号来指定编程语言, 单反引号貌似不能指定语言, 所以改了下 Markdown Editeing 的快捷键, [首选项] -> [插件设置] -> [Markdown Editing] -> [Key Bindings -- User]</p>
+<div class="hlcode"><pre>    <span class="p">{</span>
+        <span class="s2">&quot;keys&quot;</span><span class="p">:</span> <span class="err">[</span><span class="s2">&quot;`&quot;</span><span class="cp">]</span>, &quot;command&quot;: &quot;insert_snippet&quot;, &quot;args&quot;: {&quot;contents&quot;: &quot;```$0\n```\n<span class="nt">&lt;br&gt;</span>&quot;}, &quot;context&quot;:
+        <span class="cp">[</span>
+             <span class="p">{</span> <span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="s2">&quot;setting.auto_match_enabled&quot;</span><span class="p">,</span> <span class="s2">&quot;operator&quot;</span><span class="p">:</span> <span class="s2">&quot;equal&quot;</span><span class="p">,</span> <span class="s2">&quot;operand&quot;</span><span class="p">:</span> <span class="kc">true</span> <span class="p">},</span>
+             <span class="p">{</span> <span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="s2">&quot;selection_empty&quot;</span><span class="p">,</span> <span class="s2">&quot;operator&quot;</span><span class="p">:</span> <span class="s2">&quot;equal&quot;</span><span class="p">,</span> <span class="s2">&quot;operand&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="s2">&quot;match_all&quot;</span><span class="p">:</span> <span class="kc">true</span> <span class="p">},</span>
+             <span class="p">{</span> <span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="s2">&quot;following_text&quot;</span><span class="p">,</span> <span class="s2">&quot;operator&quot;</span><span class="p">:</span> <span class="s2">&quot;regex_contains&quot;</span><span class="p">,</span> <span class="s2">&quot;operand&quot;</span><span class="p">:</span> <span class="s2">&quot;^(?:</span><span class="se">\t</span><span class="s2">| |</span><span class="se">\\</span><span class="s2">)|]|</span><span class="se">\\</span><span class="s2">}|$)&quot;</span><span class="p">,</span> <span class="s2">&quot;match_all&quot;</span><span class="p">:</span> <span class="kc">true</span> <span class="p">},</span>
+             <span class="p">{</span> <span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="s2">&quot;preceding_text&quot;</span><span class="p">,</span> <span class="s2">&quot;operator&quot;</span><span class="p">:</span> <span class="s2">&quot;not_regex_contains&quot;</span><span class="p">,</span> <span class="s2">&quot;operand&quot;</span><span class="p">:</span> <span class="s2">&quot;[&#39;a-zA-Z0-9_`]$&quot;</span><span class="p">,</span> <span class="s2">&quot;match_all&quot;</span><span class="p">:</span> <span class="kc">true</span> <span class="p">},</span>
+             <span class="p">{</span> <span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="s2">&quot;eol_selector&quot;</span><span class="p">,</span> <span class="s2">&quot;operator&quot;</span><span class="p">:</span> <span class="s2">&quot;not_equal&quot;</span><span class="p">,</span> <span class="s2">&quot;operand&quot;</span><span class="p">:</span> <span class="s2">&quot;string.quoted.single&quot;</span><span class="p">,</span> <span class="s2">&quot;match_all&quot;</span><span class="p">:</span> <span class="kc">true</span> <span class="p">},</span>
+             <span class="p">{</span> <span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="s2">&quot;selector&quot;</span><span class="p">,</span> <span class="s2">&quot;operator&quot;</span><span class="p">:</span> <span class="s2">&quot;equal&quot;</span><span class="p">,</span> <span class="s2">&quot;operand&quot;</span><span class="p">:</span> <span class="s2">&quot;text.html.markdown&quot;</span><span class="p">,</span> <span class="s2">&quot;match_all&quot;</span><span class="p">:</span> <span class="kc">true</span> <span class="p">}</span>
+        <span class="cp">]</span>
+    },
+
+    {
+        &quot;keys&quot;: <span class="cp">[</span><span class="s2">&quot;`&quot;</span><span class="cp">]</span>, &quot;command&quot;: &quot;insert_snippet&quot;, &quot;args&quot;: {&quot;contents&quot;: &quot;```\n${0:$SELECTION}\n```&quot;}, &quot;context&quot;:
+        <span class="cp">[</span>
+            <span class="p">{</span> <span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="s2">&quot;setting.auto_match_enabled&quot;</span><span class="p">,</span> <span class="s2">&quot;operator&quot;</span><span class="p">:</span> <span class="s2">&quot;equal&quot;</span><span class="p">,</span> <span class="s2">&quot;operand&quot;</span><span class="p">:</span> <span class="kc">true</span> <span class="p">},</span>
+            <span class="p">{</span> <span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="s2">&quot;selection_empty&quot;</span><span class="p">,</span> <span class="s2">&quot;operator&quot;</span><span class="p">:</span> <span class="s2">&quot;equal&quot;</span><span class="p">,</span> <span class="s2">&quot;operand&quot;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span> <span class="s2">&quot;match_all&quot;</span><span class="p">:</span> <span class="kc">true</span> <span class="p">},</span>
+            <span class="p">{</span> <span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="s2">&quot;selector&quot;</span><span class="p">,</span> <span class="s2">&quot;operator&quot;</span><span class="p">:</span> <span class="s2">&quot;equal&quot;</span><span class="p">,</span> <span class="s2">&quot;operand&quot;</span><span class="p">:</span> <span class="s2">&quot;text.html.markdown&quot;</span><span class="p">,</span> <span class="s2">&quot;match_all&quot;</span><span class="p">:</span> <span class="kc">true</span> <span class="p">}</span>
+        <span class="cp">]</span>
+    },
+</pre></div>
+
+
+<p><br>
+另外, <strong>Shift + Win + K</strong> 插入图片快捷键和输入法有点冲突, 我们改成 <strong>ctrl + super + k</strong>, 一样的打开 [Key Bindings -- User]</p>
+<div class="hlcode"><pre>    <span class="p">{</span>
+        <span class="s2">&quot;keys&quot;</span><span class="o">:</span> <span class="cp">[</span><span class="s2">&quot;ctrl+super+k&quot;</span><span class="cp">]</span><span class="o">,</span> <span class="s2">&quot;command&quot;</span><span class="o">:</span> <span class="s2">&quot;reference_new_inline_image&quot;</span><span class="o">,</span> <span class="s2">&quot;context&quot;</span><span class="o">:</span>
+        <span class="cp">[</span>
+            <span class="p">{</span> <span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="s2">&quot;selector&quot;</span><span class="p">,</span> <span class="s2">&quot;operator&quot;</span><span class="p">:</span> <span class="s2">&quot;equal&quot;</span><span class="p">,</span> <span class="s2">&quot;operand&quot;</span><span class="p">:</span> <span class="s2">&quot;text.html.markdown&quot;</span><span class="p">,</span> <span class="s2">&quot;match_all&quot;</span><span class="p">:</span> <span class="kc">true</span> <span class="p">}</span>
+        <span class="cp">]</span>
+    <span class="p">}</span><span class="o">,</span>
+</pre></div>
+
+
+<p><br>
+最后, Markdown Editing 默认的粗体和斜体是用下划线控制的, 在 pelican 中转化成貌似有点问题, 所以改成了 *, [首选项] -> [插件设置] -> [Markdown Editing] -> [Bold and Italic Settings -- User]:</p>
+<div class="hlcode"><pre><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="cp">&lt;!DOCTYPE plist PUBLIC &quot;-//Apple Computer//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&gt;</span>
+<span class="nt">&lt;plist</span> <span class="na">version=</span><span class="s">&quot;1.0&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;dict&gt;</span>
+    <span class="nt">&lt;key&gt;</span>name<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>Bold and Italic Markers<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>scope<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>text.html.markdown<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>settings<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;dict&gt;</span>
+        <span class="nt">&lt;key&gt;</span>shellVariables<span class="nt">&lt;/key&gt;</span>
+        <span class="nt">&lt;array&gt;</span>
+            <span class="nt">&lt;dict&gt;</span>
+                <span class="nt">&lt;key&gt;</span>name<span class="nt">&lt;/key&gt;</span>
+                <span class="nt">&lt;string&gt;</span>MD_BOLD_MARKER<span class="nt">&lt;/string&gt;</span>
+                <span class="nt">&lt;key&gt;</span>value<span class="nt">&lt;/key&gt;</span>
+                <span class="nt">&lt;string&gt;</span>**<span class="nt">&lt;/string&gt;</span>
+            <span class="nt">&lt;/dict&gt;</span>
+            <span class="nt">&lt;dict&gt;</span>
+                <span class="nt">&lt;key&gt;</span>name<span class="nt">&lt;/key&gt;</span>
+                <span class="nt">&lt;string&gt;</span>MD_ITALIC_MARKER<span class="nt">&lt;/string&gt;</span>
+                <span class="nt">&lt;key&gt;</span>value<span class="nt">&lt;/key&gt;</span>
+                <span class="nt">&lt;string&gt;</span>*<span class="nt">&lt;/string&gt;</span>
+            <span class="nt">&lt;/dict&gt;</span>
+        <span class="nt">&lt;/array&gt;</span>
+    <span class="nt">&lt;/dict&gt;</span>
+    <span class="nt">&lt;key&gt;</span>uuid<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>E3F0F1B0-53C8-11E3-8F96-0800200C9A66<span class="nt">&lt;/string&gt;</span>
+<span class="nt">&lt;/dict&gt;</span>
+<span class="nt">&lt;/plist&gt;</span>
+</pre></div>
+
+
+<p><br></p>
+<h2 id="_3">表格辅助</h2>
+<p><strong>TableEditor</strong>: Markdown 中的表格书写体验真心不咋样, 所有有人为这个开发了一个插件, 具有较好的自适应性, 会自动对齐.</p>
+<p>首先需要用 <strong>ctrl + shift + p</strong> 打开这个功能:</p>
+<ul>
+<li>Table Editor: Enable for current syntax</li>
+<li>Table Editor: Enable for current view</li>
+</ul>
+<p>常用方法:</p>
+<p>输入下面的样式</p>
+<div class="hlcode"><pre><span class="o">|</span> <span class="n">Name</span> <span class="o">|</span> <span class="n">Phone</span> <span class="o">|</span>
+<span class="o">|-</span>
+</pre></div>
+
+
+<p>按 tab 键</p>
+<div class="hlcode"><pre><span class="o">|</span> <span class="n">Name</span> <span class="o">|</span> <span class="n">Phone</span> <span class="o">|</span>
+<span class="o">|------|-------|</span>
+<span class="o">|</span> <span class="n">_</span>    <span class="o">|</span>       <span class="o">|</span>
+</pre></div>
+
+
+<p>使用 <strong>tab</strong> 切换字段, 按 <strong>enter</strong> 新建新行</p>
+<hr />
+<p>输入下面的样式</p>
+<div class="hlcode"><pre><span class="o">|</span><span class="n">Name</span><span class="o">|</span><span class="n">Phone</span>
+</pre></div>
+
+
+<p>按 ctrl + k, enter (注意是先按 ctrl + k, 按完后再按 enter)</p>
+<div class="hlcode"><pre><span class="o">|</span> <span class="n">Name</span> <span class="o">|</span> <span class="n">Phone</span> <span class="o">|</span>
+<span class="o">|------|-------|</span>
+<span class="o">|</span> <span class="n">_</span>    <span class="o">|</span>       <span class="o">|</span>
+</pre></div>
+
+
+<hr />
+<p>行列操作</p>
+<p><strong>alt + shift + up</strong> 删除当前行</p>
+<p><strong>alt + shift + down</strong> 在当前行上面新建一行</p>
+<p><strong>alt + up/down</strong> 上下移动行</p>
+<p><strong>alt + shift + left</strong> 删除当前列</p>
+<p><strong>alt + shift + right</strong> 在当前列左边新建列</p>
+<p><strong>alt + right/left</strong> 左右移动列</p>
+<h2 id="_4">预览</h2>
+<p><strong>OmniMarkupPreviwer</strong> 可以实时在浏览器中预览</p>
+<ul>
+<li>Ctrl + Alt + O: Preview Markup in Browser.</li>
+<li>Ctrl + Alt + X: Export Markup as HTML.</li>
+<li>Ctrl + Alt + C: Copy Markup as HTML.</li>
+</ul>
+<p>还有个 <strong>Markdown Preview</strong> 插件也是可以预览 md 文件, 但是需要手动生成 + F5 的, 所以感觉用起来比较麻烦.</p>
+<p>OmniMarkupPreviwer 的默认配置已经满足日常需求了, 不过可以在配置文件中把 <strong>toc</strong> 打开, 这样就可以生成目录了.</p>
+<div class="hlcode"><pre><span class="s">&quot;extensions&quot;</span><span class="o">:</span> <span class="p">[</span><span class="s">&quot;tables&quot;</span><span class="p">,</span> <span class="s">&quot;strikeout&quot;</span><span class="p">,</span> <span class="s">&quot;fenced_code&quot;</span><span class="p">,</span> <span class="s">&quot;codehilite&quot;</span><span class="p">,</span> <span class="s">&quot;toc&quot;</span><span class="p">]</span> <span class="c1">// 这是 OmniMarkupPreviwer 配置文件的最后一行</span>
+</pre></div>
+
+
+<h2 id="_5">插入文件头</h2>
+<p>我们使用 Pelican 时, 要在每个 md 文件中添加文件头, 格式大概如下:</p>
+<div class="hlcode"><pre><span class="n">Title</span><span class="o">:</span> <span class="n">Git</span> <span class="err">简明手册</span>
+<span class="n">Author</span><span class="o">:</span> <span class="n">Martin</span>
+<span class="n">Date</span><span class="o">:</span> <span class="mi">2016</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">13</span> <span class="mi">13</span><span class="o">:</span><span class="mi">00</span>
+<span class="n">Summary</span><span class="o">:</span> <span class="n">Git</span> <span class="err">学习笔记</span><span class="o">,</span> <span class="err">记录一些常用的操作</span><span class="o">,</span> <span class="err">以及</span> <span class="n">SourceTree</span><span class="err">、</span><span class="n">Github</span> <span class="err">的用法</span><span class="o">.</span>
+</pre></div>
+
+
+<p>使用 sublime 提供的 code snippet 可以方便的完成添加操作.</p>
+<p>"工具"-&gt;"新代码片段":</p>
+<div class="hlcode"><pre><span class="nt">&lt;snippet&gt;</span>
+    <span class="nt">&lt;content&gt;</span><span class="cp">&lt;![CDATA[</span>
+<span class="cp">Title: ${1}</span>
+<span class="cp">Author: Martin</span>
+<span class="cp">Date: ${2}</span>
+<span class="cp">Summary:</span>
+
+<span class="cp">${3}</span>
+<span class="cp">]]&gt;</span><span class="nt">&lt;/content&gt;</span>
+    <span class="c">&lt;!-- Optional: Set a tabTrigger to define how to trigger the snippet --&gt;</span>
+    <span class="nt">&lt;tabTrigger&gt;</span>md<span class="nt">&lt;/tabTrigger&gt;</span>
+    <span class="c">&lt;!-- Optional: Set a scope to limit where the snippet will trigger --&gt;</span>
+    <span class="c">&lt;!-- &lt;scope&gt;source.python&lt;/scope&gt; --&gt;</span>
+<span class="nt">&lt;/snippet&gt;</span>
+</pre></div>
+
+
+<p><br>
+保存文件, 取名为 <strong>title-code.sublime-snippet</strong>, 此时, 在文本中, 输入 md, 然后按 tab 键, 就可以直接输入我们的文件头了.</p>
+<h2 id="_6">插入时间</h2>
+<p>在我们上一步的操作中, 我们还要手写时间, 这也比较麻烦, sublime 也没有提供直接的方法来插入时间, 不过还好, sublime 可以用插件的方式来扩展功能.</p>
+<p>"工具"-&gt;"新插件":</p>
+<div class="hlcode"><pre><span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">sublime</span><span class="o">,</span> <span class="nn">sublime_plugin</span>
+
+<span class="k">class</span> <span class="nc">AddCurrentTimeCommand</span><span class="p">(</span><span class="n">sublime_plugin</span><span class="o">.</span><span class="n">TextCommand</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">edit</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">run_command</span><span class="p">(</span><span class="s">&quot;insert_snippet&quot;</span><span class="p">,</span>
+            <span class="p">{</span>
+                <span class="s">&quot;contents&quot;</span><span class="p">:</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s">&quot;%Y-%m-</span><span class="si">%d</span><span class="s"> %H:%M&quot;</span><span class="p">)</span>
+            <span class="p">}</span>
+        <span class="p">)</span>
+</pre></div>
+
+
+<p>保存为 <strong>add_current_time.py</strong>, 然后打开用户的按键绑定设置, 在后添加一个新快捷键:</p>
+<div class="hlcode"><pre><span class="c1">// 插入时间</span>
+<span class="p">{</span>
+    <span class="s">&quot;keys&quot;</span><span class="o">:</span> <span class="p">[</span><span class="s">&quot;ctrl+shift+.&quot;</span><span class="p">],</span> <span class="s">&quot;command&quot;</span><span class="o">:</span><span class="s">&quot;add_current_time&quot;</span><span class="p">,</span>
+<span class="p">},</span>
+</pre></div>
+    </div>
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2016 <a href="http://www.samllcpp.com/" target="_blank">Martin</a> Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+              </p>
+        </div>
+    </body>
+</html>
