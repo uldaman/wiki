@@ -28,7 +28,8 @@
         <div class="toc"><span class="toctitle">Table of Contents</span><ul>
 <li><a href="#diy">DIY 主题</a></li>
 <li><a href="#diy_1">DIY 部署</a></li>
-<li><a href="#_1">补充</a></li>
+<li><a href="#_1">注意事项</a></li>
+<li><a href="#_2">补充</a></li>
 </ul>
 </div>
 <h1 id="diy">DIY 主题</h1>
@@ -79,7 +80,18 @@
 
 
 <p><br></p>
-<h1 id="_1">补充</h1>
+<h1 id="_1">注意事项</h1>
+<p>后期使用时发现一些问题要注意下:</p>
+<ul>
+<li>文件要以 <code>md</code> 后缀, 不能以 <code>markdown</code> 后缀</li>
+<li>文件头信息字段冒号后要空一格: <code>title: 标题</code></li>
+<li>文件头信息特殊字符不能放在起始位置:<ul>
+<li><code>title: [折腾] Simiki</code> =&gt; 错误</li>
+<li><code>title: Simiki [折腾]</code> =&gt; 正确</li>
+</ul>
+</li>
+</ul>
+<h1 id="_2">补充</h1>
 <p>可以使用 <code>Travis-ci</code> 自动化部署 Simiki 项目.</p>
     </div>
 
