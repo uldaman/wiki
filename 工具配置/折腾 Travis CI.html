@@ -1,0 +1,166 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <title>折腾 Travis CI - Wiki | Small Cpp</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            
+            <a href="/">Home</a> » <a href="/#工具配置">工具配置</a> » 折腾 Travis CI
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#_1">介绍</a></li>
+<li><a href="#github">关联 Github 仓库</a></li>
+<li><a href="#ssh">设置 SSH</a><ul>
+<li><a href="#_2">生成密钥</a></li>
+<li><a href="#_3">加密密钥</a></li>
+</ul>
+</li>
+<li><a href="#travisyml">配置 .travis.yml</a></li>
+<li><a href="#reference">Reference</a></li>
+</ul>
+</div>
+<h1 id="_1">介绍</h1>
+<p><a href="https://travis-ci.org/">Travis CI</a> 是在软件开发领域中的一个<strong>在线的</strong>、<strong>分布式</strong>的持续集成服务, 用来构建及测试在 <strong>Github</strong> 托管的代码, 简单的说, 就是它可以监控你 Github 仓库的某个分支, 当你提交修改到这个分支的时候, 它就会把你提交的分支 clone 到它的服务上进行构建, 你可以通过配置来决定构建完成后是否推送回 Github ~</p>
+<p>这里记录一些我在将 Simiki 项目和 Travis CI 结合过程中折腾过的坑, 以抛砖引玉...</p>
+<h1 id="github">关联 Github 仓库</h1>
+<p>访问 <a href="https://travis-ci.org/">Travis CI</a> 官网, 点击页面右上角 <strong>signing-in button-signingin</strong> 用 Github 账号登录 Travis CI.</p>
+<p>登录成功后, 点击页面左侧 <strong>My Repositories</strong> 旁边的 <strong>+</strong> 号.</p>
+<p><img alt="" src="http://i63.tinypic.com/dndmvt.jpg" /></p>
+<p>然后选择你要监控的仓库.</p>
+<p><img alt="" src="http://i65.tinypic.com/izcghc.jpg" /></p>
+<p>最后, 在本地的 Simiki 项目目录中添加一个 <code>.travis.yml</code> 文件并创建一个 <code>.travis</code> 子目录备用.</p>
+<h1 id="ssh">设置 SSH</h1>
+<h2 id="_2">生成密钥</h2>
+<p>在前面说过 Travis CI 可以通过配置来决定构建完成后是否推送回 Github, 由于我们需要把 Travis CI 的构建结果, 也就是 wiki 生成文件推送回 Github Project 的 <strong>gh-page</strong> 分支 (参考: <a href="http://wiki.smallcpp.com/%E5%B7%A5%E5%85%B7%E9%85%8D%E7%BD%AE/%E6%8A%98%E8%85%BE%20Simiki.html">折腾 Simiki</a>), 所以需要把 Travis CI 的公钥添加到 Simiki 项目的 <strong>Deploy Key</strong> 中 (<strong>注意</strong>, 你添加的是应该是项目的单独 <strong>Deploy Key</strong>, 而不是你 Github 账户的全局 Key).</p>
+<p>在本地的 Simiki 项目中生成一对单独密钥: <code>ssh-keygen -t rsa -C "youremail@example.com"</code> (因为这是 simiki 项目的单独密钥, 所以不要生成到系统的 .ssh 目录中去了).</p>
+<p>把生成的 <code>id_rsa.pub</code> 添加到你 Github 仓库上 Simiki 项目的 <strong>Deploy Key</strong> 中, 然后这个公钥就可以删掉了...</p>
+<h2 id="_3">加密密钥</h2>
+<p>因为上一步生成的 <code>id_rsa</code> 私钥是要发布到 Github 仓库供 Travis CI 拉回服务器的 (Travis CI 需要这个私钥来和 Github 通信), 为了安全, Travis CI 提供了一种加密手段, 也就是说这个私钥只有你的 Travis CI 账户才能解密使用, 就算被别人拿到了也没用, 除非他也拿到了你的 Travis CI 账户.</p>
+<p>此时需要使用到 <a href="https://github.com/travis-ci/travis.rb">Travis Client</a> 了, Travis Client 基于 <strong>Ruby</strong>(&gt;=1.9.3), 所以先检查下你的 Ruby 版本...Windows 用户直接用 <a href="http://rubyinstaller.org/">rubyinstaller</a> 就好了, ubuntu 用户参考另一 wiki <a href="http://wiki.smallcpp.com/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6/ubuntu%20%E5%8D%87%E7%BA%A7%20ruby%20%E7%89%88%E6%9C%AC.html">ubuntu 升级 ruby 版本</a></p>
+<p>确认好 Ruby 版本后, 首先要打磨下 <strong>gem</strong> 工具 <a href="http://wiki.smallcpp.com/%E5%B7%A5%E5%85%B7%E9%85%8D%E7%BD%AE/%E6%89%93%E7%A3%A8%20gem.html">打磨 gem</a>.</p>
+<p>然后, 安裝 Travis Client:</p>
+<div class="hlcode"><pre><span class="n">gem</span> <span class="n">install</span> <span class="n">travis</span>
+</pre></div>
+
+
+<p><br>
+在安裝完毕, 设置你的登录认证:</p>
+<div class="hlcode"><pre><span class="n">travis</span> <span class="n">login</span> <span class="o">--</span><span class="k">auto</span>
+</pre></div>
+
+
+<p><br>
+会要求输入账号密码, 如此一來, 就能通过 Travis Client 加密 <code>id_rsa</code> 了, Travis Client首先会产生一个新的 <code>id_rsa.enc</code> 文件, 然后在 <code>.travis.yml</code> 的 <code>before_install</code> 中插入解密指令.</p>
+<div class="hlcode"><pre><span class="n">travis</span> <span class="n">encrypt</span><span class="o">-</span><span class="n">file</span> <span class="n">id_rsa</span> <span class="o">--</span><span class="n">add</span>
+</pre></div>
+
+
+<p><br>
+注意要在你的 Simiki 项目路径执行上面的命令, 正常來說 Travis Client 會自動解析目前的 repo (並把 Private key 上傳到相對應的 repo), 但有時可能會秀逗, 這時你必須在指令後加上 -r 選項來指定 repo 名稱, 例如:</p>
+<div class="hlcode"><pre><span class="n">travis</span> <span class="n">encrypt</span><span class="o">-</span><span class="n">file</span> <span class="n">id_rsa</span> <span class="o">--</span><span class="n">add</span> <span class="o">-</span><span class="n">r</span> <span class="n">xxx</span><span class="o">/</span><span class="n">xxx</span>
+</pre></div>
+
+
+<p><br></p>
+<h1 id="travisyml">配置 .travis.yml</h1>
+<p>把剛剛製作的 <code>id_rsa.enc</code> 移至 <code>.travis/id_rsa.enc</code> (<code>.travis</code> 是在第一步中新建的子目录), 並在 <code>.travis</code> 目录中建立 <code>ssh_config</code> 文件, 用来指定 Travis 上的 SSH 設定.</p>
+<p><code>ssh_config</code>:</p>
+<div class="hlcode"><pre><span class="n">Host</span> <span class="n">github</span><span class="p">.</span><span class="n">com</span>
+  <span class="n">User</span> <span class="n">git</span>
+  <span class="n">StrictHostKeyChecking</span> <span class="n">no</span>
+  <span class="n">IdentityFile</span> <span class="o">~/</span><span class="p">.</span><span class="n">ssh</span><span class="o">/</span><span class="n">id_rsa</span>
+  <span class="n">IdentitiesOnly</span> <span class="n">yes</span>
+</pre></div>
+
+
+<p><br>
+因為剛剛修改了 id_rsa.enc 的位址, 所以我們要順帶修改剛剛 Travis 在 <code>.travis.yml</code> 幫我們插入的那條解密指令:</p>
+<div class="hlcode"><pre><span class="o">-</span> <span class="n">openssl</span> <span class="n">aes</span><span class="o">-</span><span class="mi">256</span><span class="o">-</span><span class="n">cbc</span> <span class="o">-</span><span class="n">K</span> <span class="err">$</span><span class="n">encrypted_06b8e90ac19b_key</span> <span class="o">-</span><span class="n">iv</span> <span class="err">$</span><span class="n">encrypted_06b8e90ac19b_iv</span>
+  <span class="o">-</span><span class="n">in</span> <span class="p">.</span><span class="n">travis</span><span class="o">/</span><span class="n">id_rsa</span><span class="p">.</span><span class="n">enc</span> <span class="o">-</span><span class="n">out</span> <span class="o">~/</span><span class="p">.</span><span class="n">ssh</span><span class="o">/</span><span class="n">id_rsa</span> <span class="o">-</span><span class="n">d</span>
+</pre></div>
+
+
+<p><br>
+這條指令會利用 openssl 解密你仓库 <code>.travis/id_rsa.enc</code> 文件, 並把解密後的文件放到 Travis 服务器的 <code>~/.ssh/id_rsa</code>, 这样 Travis 就能利用这个私钥和你的 Github 通信了.</p>
+<p>然后 <code>.travis.yml</code> 中还需要配置一些其他选项, 我的 simiki 完整 <code>.travis.yml</code> 如下:</p>
+<div class="hlcode"><pre><span class="nl">python:</span>
+<span class="o">-</span> <span class="err">&#39;</span><span class="mf">2.7</span><span class="err">&#39;</span>
+
+<span class="nl">before_install:</span>
+<span class="o">-</span> <span class="n">openssl</span> <span class="n">aes</span><span class="o">-</span><span class="mi">256</span><span class="o">-</span><span class="n">cbc</span> <span class="o">-</span><span class="n">K</span> <span class="err">$</span><span class="n">encrypted_67deb6670456_key</span> <span class="o">-</span><span class="n">iv</span> <span class="err">$</span><span class="n">encrypted_67deb6670456_iv</span>
+  <span class="o">-</span><span class="n">in</span> <span class="p">.</span><span class="n">travis</span><span class="o">/</span><span class="n">id_rsa</span><span class="p">.</span><span class="n">enc</span> <span class="o">-</span><span class="n">out</span> <span class="o">~/</span><span class="p">.</span><span class="n">ssh</span><span class="o">/</span><span class="n">id_rsa</span> <span class="o">-</span><span class="n">d</span>
+<span class="o">-</span> <span class="n">chmod</span> <span class="mi">600</span> <span class="o">~/</span><span class="p">.</span><span class="n">ssh</span><span class="o">/</span><span class="n">id_rsa</span>
+<span class="o">-</span> <span class="n">eval</span> <span class="err">$</span><span class="p">(</span><span class="n">ssh</span><span class="o">-</span><span class="n">agent</span><span class="p">)</span>
+<span class="o">-</span> <span class="n">ssh</span><span class="o">-</span><span class="n">add</span> <span class="o">~/</span><span class="p">.</span><span class="n">ssh</span><span class="o">/</span><span class="n">id_rsa</span>
+<span class="o">-</span> <span class="n">cp</span> <span class="p">.</span><span class="n">travis</span><span class="o">/</span><span class="n">ssh_config</span> <span class="o">~/</span><span class="p">.</span><span class="n">ssh</span><span class="o">/</span><span class="n">config</span>
+<span class="o">-</span> <span class="n">git</span> <span class="n">config</span> <span class="o">--</span><span class="n">global</span> <span class="n">user</span><span class="p">.</span><span class="n">name</span> <span class="s">&quot;z351522453&quot;</span>
+<span class="o">-</span> <span class="n">git</span> <span class="n">config</span> <span class="o">--</span><span class="n">global</span> <span class="n">user</span><span class="p">.</span><span class="n">email</span> <span class="s">&quot;351522453@qq.com&quot;</span>
+<span class="o">-</span> <span class="n">git</span> <span class="n">remote</span> <span class="n">set</span><span class="o">-</span><span class="n">url</span> <span class="o">--</span><span class="n">push</span> <span class="n">origin</span> <span class="n">git</span><span class="err">@</span><span class="n">github</span><span class="p">.</span><span class="n">com</span><span class="o">:</span><span class="n">z351522453</span><span class="o">/</span><span class="n">wiki</span><span class="p">.</span><span class="n">git</span>  <span class="err">#</span> <span class="n">hack</span> <span class="mi">1</span>
+<span class="o">-</span> <span class="n">git</span> <span class="n">fetch</span> <span class="n">origin</span> <span class="n">gh</span><span class="o">-</span><span class="n">pages</span><span class="o">:</span><span class="n">refs</span><span class="o">/</span><span class="n">remotes</span><span class="o">/</span><span class="n">origin</span><span class="o">/</span><span class="n">gh</span><span class="o">-</span><span class="n">pages</span>  <span class="err">#</span> <span class="n">hack</span> <span class="mi">2</span>
+
+<span class="nl">install:</span>
+<span class="o">-</span> <span class="n">sudo</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">fabric</span>
+<span class="o">-</span> <span class="n">sudo</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">ghp</span><span class="o">-</span><span class="n">import</span>
+<span class="o">-</span> <span class="n">sudo</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">simiki</span>
+
+<span class="nl">script:</span>
+<span class="o">-</span> <span class="n">simiki</span> <span class="n">g</span>
+<span class="o">-</span> <span class="n">fab</span> <span class="n">deploy</span>
+
+<span class="nl">branches:</span>
+  <span class="nl">only:</span>
+  <span class="o">-</span> <span class="n">master</span>  <span class="err">#</span> <span class="err">只监视</span> <span class="n">master</span> <span class="err">的提交</span>
+</pre></div>
+
+
+<p><br>
+大部分都好理解, 重点解释下 <strong>hack 1</strong> 和 <strong>hack 2</strong>.</p>
+<p><strong>hack 1</strong>, 因为 Travis CI 克隆是用的 <strong>http/https</strong> 协议, 所以在推送时就没法使用 SSH 模式了, 于是克隆下来后要改协议为 <strong>ssh/git</strong>.</p>
+<p><strong>hack 2</strong>, Travis CI 克隆项目指定了 --depth, 这样会只拉出当前 master 分支, 如果没有这条配置, 推送时就会报错, 因为这样相当于新建了 gh-pages 分支, 所以必然会提示冲突...加上 hack 2 从 origin 拉回 gh-pages 分支, 解决下面的错误.</p>
+<div class="hlcode"><pre><span class="n">To</span> <span class="n">git</span><span class="err">@</span><span class="n">github</span><span class="p">.</span><span class="n">com</span><span class="o">:</span><span class="n">tankywoo</span><span class="o">/</span><span class="n">wiki</span><span class="p">.</span><span class="n">tankywoo</span><span class="p">.</span><span class="n">com</span><span class="p">.</span><span class="n">git</span>
+ <span class="o">!</span> <span class="p">[</span><span class="n">rejected</span><span class="p">]</span>        <span class="n">gh</span><span class="o">-</span><span class="n">pages</span> <span class="o">-&gt;</span> <span class="n">gh</span><span class="o">-</span><span class="n">pages</span> <span class="p">(</span><span class="n">fetch</span> <span class="n">first</span><span class="p">)</span>
+<span class="nl">error:</span> <span class="n">failed</span> <span class="n">to</span> <span class="n">push</span> <span class="n">some</span> <span class="n">refs</span> <span class="n">to</span> <span class="err">&#39;</span><span class="n">git</span><span class="err">@</span><span class="n">github</span><span class="p">.</span><span class="n">com</span><span class="o">:</span><span class="n">tankywoo</span><span class="o">/</span><span class="n">wiki</span><span class="p">.</span><span class="n">tankywoo</span><span class="p">.</span><span class="n">com</span><span class="p">.</span><span class="n">git</span><span class="err">&#39;</span>
+<span class="nl">hint:</span> <span class="n">Updates</span> <span class="n">were</span> <span class="n">rejected</span> <span class="n">because</span> <span class="n">the</span> <span class="n">remote</span> <span class="n">contains</span> <span class="n">work</span> <span class="n">that</span> <span class="n">you</span> <span class="k">do</span>
+<span class="nl">hint:</span> <span class="n">not</span> <span class="n">have</span> <span class="n">locally</span><span class="p">.</span> <span class="n">This</span> <span class="n">is</span> <span class="n">usually</span> <span class="n">caused</span> <span class="n">by</span> <span class="n">another</span> <span class="n">repository</span> <span class="n">pushing</span>
+<span class="nl">hint:</span> <span class="n">to</span> <span class="n">the</span> <span class="n">same</span> <span class="n">ref</span><span class="p">.</span> <span class="n">You</span> <span class="n">may</span> <span class="n">want</span> <span class="n">to</span> <span class="n">first</span> <span class="n">integrate</span> <span class="n">the</span> <span class="n">remote</span> <span class="n">changes</span>
+<span class="nl">hint:</span> <span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">g</span><span class="p">.,</span> <span class="err">&#39;</span><span class="n">git</span> <span class="n">pull</span> <span class="p">...</span><span class="err">&#39;</span><span class="p">)</span> <span class="n">before</span> <span class="n">pushing</span> <span class="n">again</span><span class="p">.</span>
+<span class="nl">hint:</span> <span class="n">See</span> <span class="n">the</span> <span class="err">&#39;</span><span class="n">Note</span> <span class="n">about</span> <span class="n">fast</span><span class="o">-</span><span class="n">forwards</span><span class="err">&#39;</span> <span class="n">in</span> <span class="err">&#39;</span><span class="n">git</span> <span class="n">push</span> <span class="o">--</span><span class="n">help</span><span class="err">&#39;</span> <span class="k">for</span> <span class="n">details</span><span class="p">.</span>
+</pre></div>
+
+
+<p><br></p>
+<h1 id="reference">Reference</h1>
+<p><a href="https://github.com/travis-ci/travis.rb">Travis CI Github</a><br>
+<a href="https://blog.tankywoo.com/2016/02/19/simiki-with-travis-ci.html">Simiki基于Github Pages配合Travis CI做持续集成</a><br>
+<a href="https://xuanwo.org/2015/02/07/Travis-CI-Hexo-Autodeploy/">使用Travis CI自动部署Hexo</a><br>
+<a href="https://gorails.com/setup/ubuntu/14.04">Setup Ruby On Rails on Ubuntu 14.04 Trusty Tahr</a><br>
+<a href="http://www.cnblogs.com/ToDoToTry/p/4422454.html">gem install 出现Errno::ECONNRESET: Connection reset by peer - SSL_connect (https://api.rubygems.org)</a><br>
+<a href="https://ruby-china.org/topics/15260">修改 gem sources 后遇到的问题</a><br></p>
+    </div>
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2016 <a href="http://www.samllcpp.com/" target="_blank">Martin</a> Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+              </p>
+        </div>
+    </body>
+</html>
