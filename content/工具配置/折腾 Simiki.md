@@ -66,4 +66,4 @@ def deploy_git(deploy_configs):
     + `title: Simiki [折腾]` => 正确
 
 # 补充
-可以使用 `Travis-ci` 自动化部署 Simiki 项目.
+推荐使用 [Travis-ci](http://wiki.smallcpp.com/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6/%E6%8A%98%E8%85%BE%20Travis%20CI.html) 自动化部署 Simiki 项目.
