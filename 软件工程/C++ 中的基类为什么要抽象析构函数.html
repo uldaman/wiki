@@ -1,0 +1,101 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <title>C++ 中的基类为什么要抽象析构函数 - Wiki | Small Cpp</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            
+            <a href="/">Home</a> » <a href="/#软件工程">软件工程</a> » C++ 中的基类为什么要抽象析构函数
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <div class="toc"><span class="toctitle">Table of Contents</span><ul></ul>
+</div>
+<p>在 Google 编程规范 中提到过: 用来做基类的类, 其析构函数应该为虚函数.</p>
+<p>那么为什么呢? 看下面这个例子:</p>
+<div class="hlcode"><pre><span class="cp">#include &quot;stdafx.h&quot;</span>
+<span class="cp">#include &lt;iostream&gt;</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">ClxBase</span> <span class="p">{</span>
+<span class="nl">public:</span>
+    <span class="n">ClxBase</span><span class="p">()</span> <span class="p">{};</span>
+    <span class="k">virtual</span> <span class="o">~</span><span class="n">ClxBase</span><span class="p">()</span> <span class="p">{};</span>
+
+    <span class="k">virtual</span> <span class="kt">void</span> <span class="nf">DoSomething</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">cout</span> <span class="s">&quot;Do something in class ClxBase!&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+    <span class="p">};</span>
+<span class="p">};</span>
+
+<span class="k">class</span> <span class="nc">ClxDerived</span>
+    <span class="o">:</span> <span class="k">public</span> <span class="n">ClxBase</span> <span class="p">{</span>
+<span class="nl">public:</span>
+    <span class="n">ClxDerived</span><span class="p">()</span> <span class="p">{};</span>
+    <span class="o">~</span><span class="n">ClxDerived</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Output from the destructor of class ClxDerived!&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+    <span class="p">};</span>
+
+    <span class="kt">void</span> <span class="nf">DoSomething</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Do something in class ClxDerived!&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+    <span class="p">};</span>
+<span class="p">};</span>
+
+<span class="kt">int</span> <span class="nf">_tmain</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="n">_TCHAR</span><span class="o">*</span> <span class="n">argv</span><span class="p">[])</span> <span class="p">{</span>
+    <span class="n">ClxBase</span> <span class="o">*</span><span class="n">pTest</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ClxDerived</span><span class="p">;</span>
+    <span class="n">pTest</span><span class="o">-&gt;</span><span class="n">DoSomething</span><span class="p">();</span>
+    <span class="k">delete</span> <span class="n">pTest</span><span class="p">;</span>
+
+    <span class="n">system</span><span class="p">(</span><span class="s">&quot;PAUSE&quot;</span><span class="p">);</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p><br>
+输出结果是:</p>
+<div class="hlcode"><pre><span class="n">Do</span> <span class="n">something</span> <span class="n">in</span> <span class="n">class</span> <span class="n">ClxDerived</span><span class="o">!</span>
+
+<span class="n">Output</span> <span class="n">from</span> <span class="n">the</span> <span class="n">destructor</span> <span class="n">of</span> <span class="n">class</span> <span class="n">ClxDerived</span><span class="o">!</span>
+</pre></div>
+
+
+<p><br>
+这个很简单, 非常好理解.</p>
+<p><strong>但是,</strong> 如果把类 ClxBase 析构函数前的 virtual 去掉, 那输出结果就是下面的样子了:</p>
+<div class="hlcode"><pre><span class="n">Do</span> <span class="n">something</span> <span class="n">in</span> <span class="n">class</span> <span class="n">ClxDerived</span><span class="o">!</span>
+</pre></div>
+
+
+<p><br>
+也就是说类 ClxDerived 的析构函数根本没有被调用.</p>
+<p>为什么没有被调用, 这也很好理解, 因为 pTest 是 ClxBase 类型, 它的析构不是虚函数的话, 也就不能实现多态.</p>
+<p>一般情况下类的析构函数里面都是释放内存资源, 而析构函数不被调用的话就会造成内存泄漏.</p>
+<p>至于子类没有额外数据成员, 甚至父类也没有任何数据成员的特殊情况下, 析构函数的调用是否必要是语义争论, 从编程设计规范的角度看, 在含有虚函数的父类中, 定义虚析构函数绝对必要.</p>
+<p>当然, 并不是要把所有类的析构函数都写成虚函数. 因为当类里面有虚函数的时候, 编译器会给类添加一个虚函数表, 里面来存放虚函数指针, 这样就会增加类的存储空间.
+所以, 只有当一个类被用来作为基类的时候, 才把析构函数写成虚函数.</p>
+    </div>
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2016 <a href="http://www.samllcpp.com/" target="_blank">Martin</a> Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+              </p>
+        </div>
+    </body>
+</html>

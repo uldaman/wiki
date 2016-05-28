@@ -1,0 +1,245 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <title>VS 注释模板 - Wiki | Small Cpp</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            
+            <a href="/">Home</a> » <a href="/#软件工程">软件工程</a> » VS 注释模板
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#_1">函数注释</a></li>
+<li><a href="#_2">类注释</a></li>
+<li><a href="#_3">头文件注释</a></li>
+<li><a href="#_4">头文件 类内部注释</a></li>
+<li><a href="#_5">实现文件 外部注释</a></li>
+<li><a href="#_6">样例</a></li>
+</ul>
+</div>
+<h1 id="_1">函数注释</h1>
+<div class="hlcode"><pre><span class="cm">/************************************************************************</span>
+<span class="cm">◇  名称:      $SymbolName$</span>
+<span class="cm">◇  参数:      $MethodArg$</span>
+<span class="cm">◇  返回值:    $SymbolType$</span>
+<span class="cm">◇  功能:      $end$</span>
+<span class="cm">◇  说明:      $selected$</span>
+<span class="cm">************************************************************************/</span>
+</pre></div>
+
+
+<p><br>
+简单版:</p>
+<div class="hlcode"><pre><span class="c1">// 参数: $MethodArg$</span>
+<span class="c1">// 说明: $end$</span>
+</pre></div>
+
+
+<p><br></p>
+<p>设置方法:</p>
+<p>"VAssistX" –&gt; "Visual VAssistX Options" 然后选择 "Suggestions", 再点击 "Edit VA Snippets",</p>
+<p>在打开的窗口中选择  "Refactoring"  –&gt; "Document Method"</p>
+<p><img alt="" src="http://i58.tinypic.com/nn18p5.jpg" /></p>
+<h1 id="_2">类注释</h1>
+<div class="hlcode"><pre><span class="cm">/*-----------------------------------------------------------------------</span>
+<span class="cm">* 类名: $classname$</span>
+<span class="cm">* 说明: $end$</span>
+<span class="cm">-----------------------------------------------------------------------*/</span>
+</pre></div>
+
+
+<p><br></p>
+<h1 id="_3">头文件注释</h1>
+<div class="hlcode"><pre><span class="c1">/////////////////////////////////////////////////////////////////////////</span>
+<span class="c1">// 文件名:   $FILE_BASE$.$FILE_EXT$</span>
+<span class="c1">// 说明:     $end$</span>
+<span class="c1">// 创建时间: $DATE$ $HOUR_02$:$MINUTE$</span>
+<span class="c1">//</span>
+<span class="c1">// 更新日志:</span>
+<span class="c1">/////////////////////////////////////////////////////////////////////////</span>
+</pre></div>
+
+
+<p><br>
+设置方法:</p>
+<p>"VAssistX" –&gt; "Visual VAssistX Options" 然后选择 "Suggestions", 再点击 "Edit VA Snippets",</p>
+<p>在打开的窗口中选择  "With Title Only" , 然后选择 "Class Comment" 和 "Header Comment", 并修改.</p>
+<p><img alt="" src="http://i57.tinypic.com/zn0d1h.jpg" /></p>
+<h1 id="_4">头文件 类内部注释</h1>
+<div class="hlcode"><pre><span class="c1">//-----------------------------------------------------------</span>
+<span class="c1">//    $end$</span>
+<span class="c1">//-----------------------------------------------------------</span>
+</pre></div>
+
+
+<p><br></p>
+<h1 id="_5">实现文件 外部注释</h1>
+<div class="hlcode"><pre><span class="c1">/////////////////////////////////////////////////////////////////////////</span>
+<span class="c1">//    $end$</span>
+<span class="c1">/////////////////////////////////////////////////////////////////////////</span>
+</pre></div>
+
+
+<p><br>
+设置方法:</p>
+<p>"VAssistX" –&gt; "Visual VAssistX Options" 然后选择 "Suggestions", 再点击 "Edit VA Snippets", 在打开的窗口中选择  "All by Title" , 然后添加.</p>
+<h1 id="_6">样例</h1>
+<div class="hlcode"><pre><span class="c1">/////////////////////////////////////////////////////////////////////////</span>
+<span class="c1">// 文件名:   FindWay.h</span>
+<span class="c1">// 说明:     实现寻路功能的策略模式</span>
+<span class="c1">// 创建时间: 2015/03/12 21:27</span>
+<span class="c1">// 更新日志:</span>
+<span class="c1">//</span>
+<span class="c1">// 2015/03/12 21:31 -- 添加 Straight 策略, 实现直线走路, 目标和角色之间不</span>
+<span class="c1">//                     能有障碍.</span>
+<span class="c1">/////////////////////////////////////////////////////////////////////////</span>
+<span class="cp">#pragma once</span>
+<span class="cp">#include &lt;Windows.h&gt;</span>
+<span class="cp">#include &lt;memory&gt;</span>
+
+<span class="cm">/*-----------------------------------------------------------------------</span>
+<span class="cm"> + 类名: CFindWay</span>
+<span class="cm"> + 说明: 寻路策略模式中的抽象类</span>
+<span class="cm">-----------------------------------------------------------------------*/</span>
+<span class="k">class</span> <span class="nc">CFindWay</span> <span class="p">{</span>
+<span class="nl">public:</span>
+    <span class="n">CFindWay</span><span class="p">();</span>
+    <span class="k">virtual</span> <span class="o">~</span><span class="n">CFindWay</span><span class="p">();</span>
+
+    <span class="kt">double</span> <span class="n">m_dPointX</span><span class="p">;</span>
+    <span class="kt">double</span> <span class="n">m_dPointY</span><span class="p">;</span>
+    <span class="k">virtual</span> <span class="kt">void</span> <span class="n">GotoPoint</span><span class="p">()</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="cm">/*-----------------------------------------------------------------------</span>
+<span class="cm"> + 类名: CExplicit</span>
+<span class="cm"> + 说明: 具体寻路策略, 寻路模式</span>
+<span class="cm"> -----------------------------------------------------------------------*/</span>
+<span class="k">class</span> <span class="nc">CExplicit</span> <span class="o">:</span>
+    <span class="k">public</span> <span class="n">CFindWay</span> <span class="p">{</span>
+<span class="nl">public:</span>
+    <span class="n">CExplicit</span><span class="p">();</span>
+    <span class="o">~</span><span class="n">CExplicit</span><span class="p">();</span>
+
+    <span class="kt">void</span> <span class="nf">GotoPoint</span><span class="p">();</span>
+<span class="p">};</span>
+
+<span class="cm">/*-----------------------------------------------------------------------</span>
+<span class="cm"> + 类名: Straight</span>
+<span class="cm"> + 说明: 具体寻路策略, 直线走路模式</span>
+<span class="cm">-----------------------------------------------------------------------*/</span>
+<span class="k">class</span> <span class="nc">Straight</span> <span class="o">:</span>
+    <span class="k">public</span> <span class="n">CFindWay</span> <span class="p">{</span>
+<span class="nl">public:</span>
+    <span class="n">Straight</span><span class="p">();</span>
+    <span class="o">~</span><span class="n">Straight</span><span class="p">();</span>
+
+    <span class="kt">void</span> <span class="nf">GotoPoint</span><span class="p">();</span>
+<span class="p">};</span>
+
+<span class="cm">/*-----------------------------------------------------------------------</span>
+<span class="cm"> + 类名: CFwContext</span>
+<span class="cm"> + 说明: 策略模式的环境类, 维护一个 CFindWay 的引用.</span>
+<span class="cm">-----------------------------------------------------------------------*/</span>
+<span class="k">class</span> <span class="nc">CFwContext</span> <span class="p">{</span>
+<span class="nl">public:</span>
+    <span class="n">CFwContext</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">CFindWay</span><span class="o">&gt;</span> <span class="n">strategy</span><span class="p">);</span>
+    <span class="o">~</span><span class="n">CFwContext</span><span class="p">();</span>
+
+    <span class="kt">double</span> <span class="n">m_dPointX</span><span class="p">;</span>
+    <span class="kt">double</span> <span class="n">m_dPointY</span><span class="p">;</span>
+
+    <span class="kt">void</span> <span class="nf">GotoPoint</span><span class="p">();</span>
+
+<span class="nl">private:</span>
+    <span class="c1">//-----------------------------------------------------------</span>
+    <span class="c1">//    通过 shared_ptr(智能指针) 维护一个 CFindWay 的引用.</span>
+    <span class="c1">//-----------------------------------------------------------</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">CFindWay</span><span class="o">&gt;</span> <span class="n">m_strategy</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+
+
+<p><br></p>
+<div class="hlcode"><pre><span class="cp">#include &quot;FindWay.h&quot;</span>
+
+<span class="c1">/////////////////////////////////////////////////////////////////////////</span>
+<span class="c1">//    CFindWay 基类</span>
+<span class="c1">/////////////////////////////////////////////////////////////////////////</span>
+<span class="n">CFindWay</span><span class="o">::</span><span class="n">CFindWay</span><span class="p">()</span> <span class="p">{</span>
+<span class="p">}</span>
+
+<span class="n">CFindWay</span><span class="o">::~</span><span class="n">CFindWay</span><span class="p">()</span> <span class="p">{</span>
+<span class="p">}</span>
+
+<span class="c1">/////////////////////////////////////////////////////////////////////////</span>
+<span class="c1">//    CExplicit 策略类</span>
+<span class="c1">/////////////////////////////////////////////////////////////////////////</span>
+<span class="n">CExplicit</span><span class="o">::</span><span class="n">CExplicit</span><span class="p">()</span> <span class="p">{</span>
+<span class="p">}</span>
+
+<span class="n">CExplicit</span><span class="o">::~</span><span class="n">CExplicit</span><span class="p">()</span> <span class="p">{</span>
+<span class="p">}</span>
+
+<span class="c1">// 说明: 寻路模式 寻路到指定的明文坐标点</span>
+<span class="kt">void</span> <span class="n">CExplicit</span><span class="o">::</span><span class="n">GotoPoint</span><span class="p">()</span> <span class="p">{</span>
+
+<span class="p">}</span>
+
+<span class="c1">/////////////////////////////////////////////////////////////////////////</span>
+<span class="c1">//    Straight 策略类</span>
+<span class="c1">/////////////////////////////////////////////////////////////////////////</span>
+<span class="n">Straight</span><span class="o">::</span><span class="n">Straight</span><span class="p">()</span> <span class="p">{</span>
+<span class="p">}</span>
+
+<span class="n">Straight</span><span class="o">::~</span><span class="n">Straight</span><span class="p">()</span> <span class="p">{</span>
+<span class="p">}</span>
+
+<span class="c1">// 说明: 直线模式 直线走到指定的明文坐标点, 不能有障碍.</span>
+<span class="kt">void</span> <span class="n">Straight</span><span class="o">::</span><span class="n">GotoPoint</span><span class="p">()</span> <span class="p">{</span>
+
+<span class="p">}</span>
+
+<span class="c1">/////////////////////////////////////////////////////////////////////////</span>
+<span class="c1">//    CFwContext 环境类</span>
+<span class="c1">/////////////////////////////////////////////////////////////////////////</span>
+<span class="n">CFwContext</span><span class="o">::</span><span class="n">CFwContext</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">CFindWay</span><span class="o">&gt;</span> <span class="n">strategy</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">m_strategy</span> <span class="o">=</span> <span class="n">strategy</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">CFwContext</span><span class="o">::~</span><span class="n">CFwContext</span><span class="p">()</span> <span class="p">{</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">CFwContext</span><span class="o">::</span><span class="n">GotoPoint</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">m_strategy</span><span class="o">-&gt;</span><span class="n">m_dPointX</span> <span class="o">=</span> <span class="n">m_dPointX</span><span class="p">;</span>
+    <span class="n">m_strategy</span><span class="o">-&gt;</span><span class="n">m_dPointY</span> <span class="o">=</span> <span class="n">m_dPointY</span><span class="p">;</span>
+    <span class="n">m_strategy</span><span class="o">-&gt;</span><span class="n">GotoPoint</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+    </div>
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2016 <a href="http://www.samllcpp.com/" target="_blank">Martin</a> Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+              </p>
+        </div>
+    </body>
+</html>
