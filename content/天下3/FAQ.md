@@ -1,3 +1,9 @@
+---
+title: 天下3 念小攻男龙 FAQ
+layout: page
+date: 2016-06-11 19:50
+---
+
 [TOC]
 
 # 四色炼化
