@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <title>事务与锁 - Wiki | Small Cpp</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            
+            <a href="/">Home</a> » <a href="/#数据库">数据库</a> » 事务与锁
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <div class="toc"><span class="toctitle">Table of Contents</span><ul></ul>
+</div>
+<p>事务与锁是不同的, <strong>事务</strong>具有 <code>ACID</code> (原子性、一致性、<strong>隔离性</strong>和持久性), 而<strong>锁</strong>是用于解决其中<strong>隔离性</strong>的一种机制.</p>
+<p>事务的隔离级别通过锁的机制来实现.</p>
+<p>隔离级别, 一般有四种:</p>
+<ul>
+<li>读未提交 Read uncommitted</li>
+<li>读已提交 Read committed</li>
+<li>可重复读 Repeatable read</li>
+<li>可串行化 Serializable</li>
+</ul>
+<p>对用户来说, 只有当事务隔离级别无法解决一些并发问题和需求时, 才有必要在语句中手动设置锁.</p>
+<p>不适当的设置锁, 可能会导致严重的阻塞和死锁.</p>
+<p>建议, 只有在完全了解锁机制的情况下, 才可以在语句中手动设置锁, 否则应该使用事务隔离级别.</p>
+    </div>
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2016 <a href="http://www.samllcpp.com/" target="_blank">Martin</a> Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+              </p>
+        </div>
+    </body>
+</html>

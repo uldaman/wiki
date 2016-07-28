@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <title>字符编码 - Wiki | Small Cpp</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            
+            <a href="/">Home</a> » <a href="/#软件工程">软件工程</a> » 字符编码
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#_1">编码/解码</a></li>
+</ul>
+</div>
+<h1 id="_1">编码/解码</h1>
+<p>任何数据在内存中都是以二进制的形式保存, 也就是说一个文本文件, 不管你看到的是中文还是英文或者是法文, 它在内存也都是一串二进制数据 (或者说是一串字节数组), 那么当用一个文本浏览器打开一个文本文件时, 该文本浏览器就会拿它读出来的字节数组去 "查字典", 然后将查到的结果展现出来.</p>
+<p>这个 "查字典" 的动作就被称之为<strong>解码</strong>, 当然我们不叫它 "查字典", 而叫它查码表, 常见的码表有 ASCII、ISO-8859-1、GB2312、GBK、UTF-8、UTF-16 等.</p>
+<p>(解码, 解码, 可以理解成<strong>破解密码</strong>, 二进制数据相当于密码, 人眼不可识别, 你需要把这串密码破解出来才能知道它是什么内容, 所以叫解码).</p>
+<p>相对的, 将可识别的文字转换成字节数组的过程就称之为<strong>编码</strong>, 根据使用的码表不同, 同样的文字会被编码成不同的字节数组.</p>
+<p><img alt="" src="http://i64.tinypic.com/2012gz5.jpg" /></p>
+<p><strong>那么, 什么样才叫人眼可识别呢?</strong></p>
+<p>就像中国人有汉语, 英国人有英语, 日本人有日语, 计算机也有自己的"语言", 那就是 Unicode.</p>
+<p>来看下 Unicode 字符集的定义:<br>
+Unicode (统一码、万国码、单一码) 是一种在计算机上使用的字符集, 它为每种语言中的每个字符设定了统一并且唯一的二进制编码, 以满足跨语言、跨平台进行文本转换、处理的要求;<br>
+1990 年开始研发, 1994 年正式公布, 随着计算机工作能力的增强, Unicode 也在面世以来的十多年里得到普及.</p>
+<p>所以, <strong>编码</strong>就是将 Unicode "加密" 成字节数组, <strong>解码</strong>就是将字节数组 "破解" 成 Unicode.</p>
+    </div>
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2016 <a href="http://www.samllcpp.com/" target="_blank">Martin</a> Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+              </p>
+        </div>
+    </body>
+</html>
