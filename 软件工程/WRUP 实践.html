@@ -1,0 +1,1212 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <title>WRUP 实践 - Wiki | Small Cpp</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            
+            <a href="/">Home</a> » <a href="/#软件工程">软件工程</a> » WRUP 实践
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#rup">RUP 软件工程管理概述</a><ul>
+<li><a href="#_1">软件工程模型</a><ul>
+<li><a href="#_2">瀑布式开发</a></li>
+<li><a href="#_3">迭代式开发</a></li>
+<li><a href="#_4">敏捷开发模型</a></li>
+</ul>
+</li>
+<li><a href="#rup_1">RUP 软件工程</a><ul>
+<li><a href="#rup_2">RUP 初窥</a></li>
+<li><a href="#rup-4">RUP 4 阶段</a></li>
+<li><a href="#rup_3">RUP 周期</a></li>
+<li><a href="#_5">软件生命周期</a></li>
+<li><a href="#rup_4">RUP 中的核心流程</a></li>
+<li><a href="#rup_5">RUP 中的支持工作流</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#wrup">WRUP 最佳实践模型</a><ul>
+<li><a href="#_6">原则特征</a></li>
+<li><a href="#_7">核心流程</a><ul>
+<li><a href="#_8">项目评估</a></li>
+<li><a href="#_9">需求分析</a></li>
+<li><a href="#_10">概要设计</a></li>
+<li><a href="#_11">详细设计</a></li>
+<li><a href="#_12">编码实现</a></li>
+<li><a href="#_13">单元验证</a></li>
+<li><a href="#_14">集成构建</a></li>
+<li><a href="#_15">系统构建</a></li>
+<li><a href="#_16">项目交付</a></li>
+</ul>
+</li>
+<li><a href="#_17">静态结构</a><ul>
+<li><a href="#_18">角色</a><ul>
+<li><a href="#pm">PM (项目经理)</a></li>
+<li><a href="#pdm">PDM (项目开发经理)</a></li>
+<li><a href="#ptm">PTM (项目测试经理)</a></li>
+<li><a href="#se">SE (支持工程师)</a></li>
+<li><a href="#ued">UED (用户体验设计师)</a></li>
+<li><a href="#uie">UIE (用户接口工程师,前端工程师)</a></li>
+<li><a href="#pda">PDA (项目需求分析师)</a></li>
+<li><a href="#ad">AD (架构设计师)</a></li>
+<li><a href="#md">MD (模块设计师)</a></li>
+<li><a href="#de">DE (开发工程师)</a></li>
+<li><a href="#te">TE (测试工程师)</a></li>
+<li><a href="#dg">DG (开发组长)</a></li>
+<li><a href="#tg">TG (测试组长)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#sandy">Sandy 未写完, 只有这么多...</a></li>
+</ul>
+</li>
+<li><a href="#wrup_1">WRUP 最佳案例</a><ul>
+<li><a href="#_19">项目结构</a><ul>
+<li><a href="#design">Design 设计目录</a></li>
+</ul>
+</li>
+<li><a href="#_20">需求分析</a><ul>
+<li><a href="#_21">项目评估阶段</a></li>
+<li><a href="#_22">需求分析阶段</a><ul>
+<li><a href="#_23">需求阶段步骤</a></li>
+<li><a href="#_24">迭代式需求</a></li>
+<li><a href="#_25">三轴线</a></li>
+<li><a href="#_26">需求成文</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_27">系统设计</a><ul>
+<li><a href="#_28">什么是系统设计</a></li>
+<li><a href="#grasp-solid">GRASP &amp; SOLID</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<h1 id="rup">RUP 软件工程管理概述</h1>
+<h2 id="_1">软件工程模型</h2>
+<ul>
+<li>瀑布式开发</li>
+<li>迭代式开发</li>
+<li>敏捷开发模型</li>
+</ul>
+<h3 id="_2">瀑布式开发</h3>
+<p>传统的瀑布式开发, 也就是从需求到设计, 从设计到编码, 从编码到测试, 从测试到提交, 大概这样的流程;</p>
+<p>它要求每一个开发阶段都要做到最好, 特别是前期阶段, 设计的越完美, 提交后的成本损失就越少. 以前很多从事的外包项目就是这样的流程.<br>
+但是这里面有个问题, 就是开发途中发现之前的需求不合格、需要重新设计等问题, 都要留到下一个版本的开发中了.</p>
+<p><img alt="" src="http://i63.tinypic.com/29f9e87.jpg" /></p>
+<p>所以, 瀑布式开发的过程中是比较机械化的, 按流程走下来, 要求每一个流程都要按规范走完.<br>
+当然它也有好处的, 从开发者的角度上说, 当你进入开发阶段时, 项目的文档是非常详细的, 像每个按钮点击后, 前台发生什么变化, 后台又怎么处理, 都详细的描述, 开发者只需编码就可以了...</p>
+<h3 id="_3">迭代式开发</h3>
+<p>迭代式开发适合在一些需求信息不明确的项目中, 它不要求每一个阶段的任务做的都是最完美的, 而是明明知道还有很多不足的地方, 但先可以不去完善它, 而是把主要功能先搭建起来, 以最短的时间, 最少的损失先完成一个"不完美的成果物"直至提交.</p>
+<p>这样在开发过程中遇到需求的变化时, 所带来的影响要比瀑布式开发小.</p>
+<p>然后再通过客户或用户的反馈信息, 在这个"不完美的成果物"上逐步进行完善.</p>
+<p>而现在的很多项目中, 需求在项目进行中变化的事儿经常见, 所以显得迭代式开发的优势较瀑布式开发更明显一些.</p>
+<p>目前迭代式开发里面比较出名就是 <strong>RUP</strong>, 称为统一过程.</p>
+<h3 id="_4">敏捷开发模型</h3>
+<p>在迭代式开发时, 遇到比较小的项目, 就有人思考, 能不能"反应"更迅速一点, 文档再少一点, 迭代周期更减少一点...<br>
+于是敏捷开发模型就应运而生了, 可以说, 它是在迭代式开发的基础上"进化"而来, 是一种极限迭代, 比较出名的有下面两种开发模型:</p>
+<ul>
+<li>XP, Extreme Programming (极限编程)</li>
+<li>Scrum, Scrum 的英文意思是橄榄球运动的一个专业术语, 表示"争球"的动作, 把一个开发流程的名字取名为 Scrum, 我想它的意思是开发团队在开发一个项目时, 大家像打橄榄球一样迅速、富有战斗激情、人人你争我抢地完成它.</li>
+</ul>
+<blockquote>
+<p>这两个我们后面的笔记会详细介绍.</p>
+</blockquote>
+<h2 id="rup_1">RUP 软件工程</h2>
+<h3 id="rup_2">RUP 初窥</h3>
+<p>RUP (统一过程) 是一种以用例驱动、以体系结构为核心、迭代及增量的软件过程模型, 由 UML 方法和工具支持, 广泛应用于各类面向对象项目.</p>
+<p>如下就是一个标准的 RUP 软件工程图 (图__左上角__为原点):</p>
+<p><img alt="" src="http://i66.tinypic.com/bhg0th.jpg" /></p>
+<p><strong>纵轴</strong> 表示了工作流程的静态结构, 共 9 个工作流程, 前 6 个流程就是一个正常的__软件的生命周期__, 称为核心流程, 后面的 3 个流程是辅助流程, 将贯穿项目始终, 也称为支持流程, 像搭建版本控制系统、搭建问题追踪系统、管理开发日志等, 都是属于这个流程.</p>
+<p><strong>横轴</strong> 代表了制定开发过程的时间, 显示 RUP 的动态特征, 通过迭代式软件开发的周期、阶段、迭代和里程碑等动态信息表示, 它将纵轴上的每个工作流程都划分为 4 个阶段, 每个阶段以一个主要里程碑结束, 所以本质上说每个阶段都是两个里程碑之间的时间跨度.</p>
+<h3 id="rup-4">RUP 4 阶段</h3>
+<p><strong>初始阶段</strong><br>
+初始阶段的目标是为系统建立商业案例并确定项目的边界.<br>
+为了达到该目的必须识别所有与系统交互的外部实体, 在较高层次上定义交互的特性.<br>
+本阶段具有非常重要的意义, 在这个阶段中所关注的是整个项目进行中的业务和需求方面的主要风险.<br>
+对于建立在原有系统基础上的开发项目来讲, 初始阶段可能很短.<br>
+初始阶段结束时是第一个重要的__里程碑__: 生命周期目标 (Lifecycle Objective) 里程碑.<br>
+生命周期目标里程碑评价项目基本的生存能力.</p>
+<p><strong>细化阶段</strong><br>
+细化阶段的目标是分析问题领域, 建立健全的体系结构基础, 编制项目计划, 淘汰项目中最高风险的元素.<br>
+为了达到该目的, 必须在理解整个系统的基础上, 对体系结构作出决策, 包括其范围、主要功能和诸如性能等非功能需求.<br>
+同时为项目建立支持环境, 包括创建开发案例, 创建模板、准则并准备工具.<br>
+细化阶段结束时第二个重要的__里程碑__: 生命周期结构 (Lifecycle Architecture) 里程碑.<br>
+生命周期结构里程碑为系统的结构建立了管理基准并使项目小组能够在构建阶段中进行衡量.<br>
+此刻, 要检验详细的系统目标和范围、结构的选择以及主要风险的解决方案.</p>
+<p><strong>构造阶段</strong><br>
+在构建阶段, 所有剩余的构件和应用程序功能被开发并集成为产品, 所有的功能被详细测试.<br>
+从某种意义上说, 构建阶段是一个制造过程, 其重点放在管理资源及控制运作以优化成本、进度和质量.<br>
+构建阶段结束时是第三个重要的__里程碑__: 初始功能 (Initial Operational) 里程碑.<br>
+初始功能里程碑决定了产品是否可以在测试环境中进行部署.<br>
+此刻, 要确定软件、环境、用户是否可以开始系统的运作.<br>
+此时的产品版本也常被称为 "beta" 版.</p>
+<p><strong>交付阶段</strong><br>
+交付阶段的重点是确保软件对最终用户是可用的.<br>
+交付阶段可以跨越几次迭代, 包括为发布做准备的产品测试, 基于用户反馈的少量的调整.<br>
+在生命周期的这一点上, 用户反馈应主要集中在产品调整, 设置、安装和可用性问题, 所有主要的结构问题应该已经在项目生命周期的早期阶段解决了.<br>
+在交付阶段的终点是第四个__里程碑__: 产品发布 (Product Release) 里程碑.<br>
+此时, 要确定目标是否实现, 是否应该开始另一个开发周期.<br>
+在一些情况下这个里程碑可能与下一个周期的初始阶段的结束重合.</p>
+<h3 id="rup_3">RUP 周期</h3>
+<p>RUP 模型采用迭代开发, 通过多次迭代执行开发工作流, 逐步确定__一部分__需求分析和风险, 在设计、实现并确认这部分后, 再去做__下一部分__的需求分析、设计、实现和确认工作, 依次进行下去, 直到整个项目完成, 这样能够在逐步集成中更好的理解需求, 构建一个健壮的体系结构.</p>
+<p><img alt="" src="http://i66.tinypic.com/21bswhz.jpg" /></p>
+<h3 id="_5">软件生命周期</h3>
+<p>1、<strong>问题的定义及规划</strong> (上图中叫业务建模)<br>
+此阶段是软件开发方与需求方共同讨论, 主要确定软件的开发目标及其可行性.</p>
+<p>2、<strong>需求分析</strong><br>
+在确定软件开发可行的情况下, 对软件需要实现的各个功能进行详细分析. 需求分析阶段是一个很重要的阶段, 这一阶段做得好, 将为整个软件开发项目的成功打下良好的基础"唯一不变的是变化本身", 同样需求也是在整个软件开发过程中不断变化和深入的, 因此我们必须制定需求变更计划来应付这种变化, 以保护整个项目的顺利进行.</p>
+<p>3、<strong>软件设计</strong><br>
+此阶段主要根据需求分析的结果, 对整个软件系统进行设计, 如系统框架设计, 数据库设计等等. 软件设计一般分为总体设计和详细设计. 好的软件设计将为软件程序编写打下良好的基础.</p>
+<p>4、<strong>程序编码</strong><br>
+此阶段是将软件设计的结果转换成计算机可运行的程序代码. 在程序编码中必须要制定统一, 符合标准的编写规范. 以保证程序的可读性, 易维护性, 提高程序的运行效率.</p>
+<p>5、<strong>软件测试</strong><br>
+在软件设计完成后要经过严密的测试, 以发现软件在整个设计过程中存在的问题并加以纠正. 整个测试过程分单元测试、组装测试以及系统测试三个阶段进行. 测试的方法主要有白盒测试和黑盒测试两种. 在测试过程中需要建立详细的测试计划并严格按照测试计划进行测试, 以减少测试的随意性.</p>
+<p>6、<strong>运行维护</strong><br>
+软件维护是软件生命周期中持续时间最长的阶段. 在软件开发完成并投入使用后, 由于多方面的原因, 软件不能继续适应用户的要求. 要延续软件的使用寿命, 就必须对软件进行维护. 软件的维护包括纠错性维护和改进性维护两个方面.</p>
+<h3 id="rup_4">RUP 中的核心流程</h3>
+<p><strong>业务建模工作流</strong><br>
+产生五个工作产品, 即商业逻辑建模 (USE CASE)(ROSE)、业务需求说明书 (MS WORD)、专业词汇表 (英汉对照) (MS WORD)、风险说明 (MS WORD)、复审说明书.</p>
+<p><strong>需求工作流</strong><br>
+为了确保开发人员构建正确的系统, 要了解目标组织的结构及机制;<br>
+要明确目标组织中当前存在的问题并确定改进的可能性;<br>
+确保客户、最终用户和开发人员就目标组织达成共识;<br>
+导出支持目标组织所需的系统需求, 建立系统需求模型: 用例图.</p>
+<p><strong>分析设计工作流</strong><br>
+将系统需求转换为未来系统的设计, 逐步开放强壮的系统架构, 使设计适合于实施环境, 为提高性能而进行设计;<br>
+根据需求工作流中的用例图建立分析模型: 时序图等.</p>
+<p><strong>实施工作流</strong><br>
+要定义代码结构, 以构件的方式实施类和对象, 对已开发的构件按类和单元来测试, 并且将结果集成到可执行的系统中;<br>
+建立开发模型: 类图、状态图等.</p>
+<p><strong>测试工作流</strong><br>
+对各个类进行单元测试, 测试工作流包括核实对象之间的交互, 核实软件的所有构件是否正确集成, 核实所有需求是否已经正确实施, 确定缺陷, 确保在部署软件之前将风险降到最低.</p>
+<p><strong>部署工作流</strong><br>
+目的是成功的生成版本并将软件分发给最终用户, 部署工作流描述了那些与确保软件产品对最终用户具有可用性相关的活动, 包括: 软件打包、生成软件本身以外的产品、安装软件、为用户提供帮助, 在有些情况下, 还可能包括计划和进行 beta 测试版、移植现有的软件和数据以及正式验收.</p>
+<h3 id="rup_5">RUP 中的支持工作流</h3>
+<ul>
+<li>团队架构</li>
+<li>里程碑计划</li>
+<li>每日站会</li>
+<li>持续构建 (CI)</li>
+<li>问题追踪</li>
+<li>自动化部署</li>
+<li>版本控制</li>
+<li>文档控制</li>
+<li>需求变更控制</li>
+<li>资源变更控制</li>
+<li>问题、知识管理 (wiki)</li>
+<li>工具、资源共享</li>
+</ul>
+<h1 id="wrup">WRUP 最佳实践模型</h1>
+<p>WRUP 由麦子学院的 Sandy 老师从 RUP 的基础上进化而来, 主要是增加了 TDD 驱动开发 (测试驱动开发).</p>
+<h2 id="_6">原则特征</h2>
+<p>本模型描述了 WRUP 最佳实践方式, 它本身也是一套经过部署、验证有效的商业化软件开发方法.</p>
+<p>之所以称为 "最佳实践", 不仅仅是因为他们具有可以量化的价值, 并且被许多成功的机构、成功的项目所运用, 并且是在 Sundy 的十年开发生涯中不断积累的结果.</p>
+<p>为了使整个团队有效的利用最佳实践模型, 我们为每个团队成员提供了必要准则、工具和模板, 并且明确指出其原则特征:</p>
+<ul>
+<li>迭代的开发软件</li>
+<li>开发与质量控制 (TDD) 双线并行</li>
+<li>量化可追溯的需求管理</li>
+<li>标准且可视化的软件建模</li>
+<li>验证每一个步骤</li>
+<li>控制变更</li>
+</ul>
+<h2 id="_7">核心流程</h2>
+<p>WRUP 提出了 W 双线生产模型, 如下图:</p>
+<p><img alt="" src="http://i63.tinypic.com/213p6wj.jpg" /></p>
+<p>即: 开发与质量控制 (TDD) 双线并行.</p>
+<p>由 W 模型图可知, 项目生产过程包括两个主要过程: 开发 和 质量控制.</p>
+<p>二者之间是相互独立又是息息相关密不可分的, 例如开发过程的需求分析完成后, 质量控制过程也可以完成验收测试设计.</p>
+<p>质量控制过程又隐含着对开发阶段的审核, 开发过程大部分的审核皆由质量控制部门来实现.</p>
+<p>W 模型对上一节学到的 RUP 图形 <strong>Y</strong> 轴进行了拆分和细化:</p>
+<p><img alt="" src="http://i66.tinypic.com/bhg0th.jpg" /></p>
+<table>
+<thead>
+<tr>
+<th>RUP</th>
+<th>WRUP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>业务建模</td>
+<td>项目评估</td>
+</tr>
+<tr>
+<td>需求</td>
+<td>需求分析</td>
+</tr>
+<tr>
+<td>分析设计</td>
+<td>概要设计<br>详细设计</td>
+</tr>
+<tr>
+<td>实施</td>
+<td>编码<br>单元验证<br>集成构建<br>系统构建</td>
+</tr>
+<tr>
+<td>测试</td>
+<td>质量控制过程</td>
+</tr>
+<tr>
+<td>部署</td>
+<td>项目交付</td>
+</tr>
+</tbody>
+</table>
+<p>可以看到, 关键就是把测试移到专门的质量控制过程, 由质量控制部门来实现, 并贯穿始终, 这个应该可以认为是 TDD 驱动开发 (测试驱动开发) 的变种.</p>
+<h4 id="_8">项目评估</h4>
+<p>项目评估阶段的目标是: 评估项目的级别、风险、项目需要投入的资源, 并且出可行性方案.</p>
+<p>本阶段是非常重要的阶段, 是项目的基石, 若项目评估未通过, 则直接不再继续下面的步骤, 并且反馈给相关人; 若项目评估通过, 则需要确立项目级别、项目组织结构、项目从属事项等.</p>
+<p>这个阶段关注的是项目中进行工程的业务和需求方面的主要风险, 对于建立在原有系统上的开发项目来说, 项目评估阶段的时间可能很短.</p>
+<p><strong>本阶段的主要目标如下</strong>:</p>
+<ul>
+<li>明确客户各个阶段使用目标以及软件基本架构</li>
+<li>估计出潜在风险</li>
+<li>评估项目使用的人力，财力，物力等资源</li>
+<li>对整个项目做最初的项目成本及日程估计</li>
+<li>确立软件项目立项是否可行</li>
+</ul>
+<p><strong>这个阶段的产出是</strong>:</p>
+<ul>
+<li>项目评估表</li>
+<li>项目立项书 (若通过评估)，包括业务上下文，验收规范，成本预计等</li>
+<li>原始核心需求文档 (客户提供)</li>
+<li>项目计划 V1 (概要)</li>
+</ul>
+<p><strong>阶段结束是一个里程碑标准</strong>:</p>
+<ul>
+<li>就是否参与这个项目已经定论</li>
+<li>项目级别已经定论</li>
+<li>项目投入资源以及主要风险承担者已经定论</li>
+<li>风险承担者就范围定义，成本/日程估计达成共识</li>
+<li>项目开发环境搭建完成</li>
+</ul>
+<p>如果无法通过这些里程碑, 则项目可以被取消或者仔细地重新考虑.</p>
+<p><strong>阶段评审的工作和需要达到的状态列表</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>产品</th>
+<th>责任人</th>
+<th>应该达到的状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>项目评估表</td>
+<td>PS (Project Senate)</td>
+<td>完成</td>
+</tr>
+<tr>
+<td>项目立项书</td>
+<td>PM (Project Manager)</td>
+<td>完成</td>
+</tr>
+<tr>
+<td>概要原始需求书</td>
+<td>PM</td>
+<td>具备</td>
+</tr>
+<tr>
+<td>项目计划 V1 (包含项目开发计划，项目测试计划)</td>
+<td>PM / PDM / PTM</td>
+<td>完成项目计划的第一个版本, 也就是概要版本, 不细化到具体的人员分配和具体功能细节.</td>
+</tr>
+<tr>
+<td>开发服务器及开发环境</td>
+<td>SE (Support Engineer)</td>
+<td>完成或者确立</td>
+</tr>
+<tr>
+<td>项目管理服务器及管理环境</td>
+<td>SE (Support Engineer)</td>
+<td>完成或者确立</td>
+</tr>
+<tr>
+<td>项目仓库框架</td>
+<td>SE (Support Engineer)</td>
+<td>完成</td>
+</tr>
+<tr>
+<td>责任人确立</td>
+<td>PS (Project Senate)</td>
+<td>确立项目经理, 开发经理, 测试经理以及项目外的干系人 (客户方代表) 选.</td>
+</tr>
+<tr>
+<td>用户接口原型 (可选)</td>
+<td>UID (UI Designer)</td>
+<td>主要是界面原型</td>
+</tr>
+</tbody>
+</table>
+<h4 id="_9">需求分析</h4>
+<p>项目需求分析需要达到的目标是明确分析客户的需求, 并且量化成需求分析设计文档, 以达到确立商业用例及系统边界的目的.</p>
+<p>为了达到该目的, 必须对系统具有 "英里宽和英寸深" 的现象, 体系结构的决策必须在理解整个系统的基础上作出: 它的范围、主要功能和性能等非功能性需求.</p>
+<p>项目需求分析阶段是项目成功细化的关键保障, 我们对需求的确立也是我们后面阶段工作的前提保障, 常用的一句话: "正确的需求才有正确的软件".</p>
+<p><strong>本阶段需要达到的目标</strong>:</p>
+<ul>
+<li>置顶而下明确客户系统模块划分</li>
+<li>明确 80% 客户系统的商业用例</li>
+<li>明确角色分配以及流程走向</li>
+<li>使用UML用例量化需求，完成需求报告</li>
+</ul>
+<p><strong>这个阶段的产出</strong>:</p>
+<ul>
+<li>蓝图文档: 核心项目需求、关键特色、主要约束的总体蓝图</li>
+<li>原始用例模型</li>
+<li>原始项目术语表</li>
+<li>原始商业案例, 包括业务的上下文、验收规范、成本预计</li>
+<li>原始的风险评估</li>
+<li>一个或多个原型</li>
+</ul>
+<p><strong>阶段结束是一个里程碑标准</strong>:</p>
+<ul>
+<li>风险承担者就范围定义, 成本/日程估计达成共识</li>
+<li>以客观的主要用例证实对需求的理解</li>
+<li>成本/日程、优先级、风险和开发过程的可信度</li>
+<li>被开发体系结构原型的深度和广度</li>
+<li>实际开支与计划开支的比较</li>
+</ul>
+<p>如果无法通过这些里程碑, 则项目可能被取消或者仔细地重新考虑.</p>
+<p><strong>阶段评审工作需要达到的状态列表</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>产品</th>
+<th>责任人</th>
+<th>应该达到的状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>需求分析图 UML</td>
+<td>PDA (Project Demand Analyst)</td>
+<td>完成</td>
+</tr>
+<tr>
+<td>UI 原型</td>
+<td>UID (UI Designer)</td>
+<td>模型覆盖率 100%</td>
+</tr>
+<tr>
+<td>需求分析报告 (可选)</td>
+<td>PDA Leader</td>
+<td>具备</td>
+</tr>
+<tr>
+<td>项目计划 V2 (需求阶段的详细计划及执行情况)</td>
+<td>PDA</td>
+<td>细化到需求阶段的每日工作量和人员分配</td>
+</tr>
+<tr>
+<td>客户沟通记录及确认签字</td>
+<td>PDA, Customer</td>
+<td>每次沟通的记录表以及客户签字确认</td>
+</tr>
+</tbody>
+</table>
+<h4 id="_10">概要设计</h4>
+<p>项目概要设计阶段主要是指根据业务用例和用户需求所做的架构设计, 我们也称之为系统设计.</p>
+<p>这部分即包括设计的描述 (画出设计图), 也包括设计的实现 (编码实现), 概要设计也是项目的骨架搭建, 关注与接口与接口之间的端对端关系.</p>
+<p><strong>概要设计需要达到的目标</strong>:</p>
+<ul>
+<li>完成概要设计图</li>
+<li>明确模块以及模块之间的接口定义</li>
+<li>覆盖原型的所有主要功能模块</li>
+</ul>
+<p><strong>产出</strong>:</p>
+<ul>
+<li>概要设计图</li>
+<li>概要设计书 (可选)</li>
+<li>项目框架代码, 接口定义代码</li>
+</ul>
+<p><strong>里程碑</strong>:</p>
+<ul>
+<li>风险承担者对目前的项目框架方案达成一致</li>
+<li>架构设计基本完成</li>
+<li>模块与接口设计完成</li>
+<li>需求不断迭代确立</li>
+</ul>
+<p><strong>阶段评审工作所需要达到的状态列表</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>产品</th>
+<th>责任人</th>
+<th>应该达到的状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>概要设计图 UML</td>
+<td>AD (Architecture Designer)</td>
+<td>完成</td>
+</tr>
+<tr>
+<td>概要设计书</td>
+<td>(可选)</td>
+<td></td>
+</tr>
+<tr>
+<td>DBMS 实现</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>项目计划 V3 (架构设计阶段)</td>
+<td>PDA</td>
+<td>细化到概要设计阶段的每日工作量和人员分配</td>
+</tr>
+<tr>
+<td>概要设计评估表</td>
+<td>PS</td>
+<td>通过</td>
+</tr>
+<tr>
+<td>概要设计代码实现</td>
+<td>AD</td>
+<td>实现代码结构</td>
+</tr>
+</tbody>
+</table>
+<h4 id="_11">详细设计</h4>
+<p>详细设计主要是为了对各个功能模块和各个子系统进行细节__白盒设计__, 如果说概要设计是采用__黑盒__的分析方式, 则详细设计就要关注流程、路径和逻辑, 属于白盒的范畴.</p>
+<p>详细设计要完成对各个功能的函数级别的设计, 但无需完成具体代码.</p>
+<p><strong>详细设计需要达到的目标</strong>:</p>
+<ul>
+<li>详细设计需要达到的目标</li>
+<li>完成详细设计UML</li>
+<li>实现详细设计的代码</li>
+</ul>
+<p><strong>产出</strong>:</p>
+<ul>
+<li>详细设计图UML</li>
+<li>详细设计书</li>
+<li>详细的模块级别源代码</li>
+</ul>
+<p><strong>阶段评审工作所需要达到的状态列表</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>产品</th>
+<th>责任人</th>
+<th>应该达到的状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>各模块详细设计图 UML</td>
+<td>MD (Model Designer)</td>
+<td>完成数量不定的各个模块详细设计</td>
+</tr>
+<tr>
+<td>详细设计书 (可选)</td>
+<td>MD</td>
+<td></td>
+</tr>
+<tr>
+<td>DBMS实现</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>项目计划 V4 (详细设计阶段)</td>
+<td>PDA</td>
+<td>细化到概要设计阶段的每日工作量和人员分配</td>
+</tr>
+<tr>
+<td>详细设计评估表</td>
+<td>PS</td>
+<td>通过</td>
+</tr>
+<tr>
+<td>详细设计代码实现</td>
+<td>MD</td>
+<td>实现代码结构</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<blockquote>
+<p>关于概要设计和详细设计可参考我另一篇隙 &lt;&lt;12、WRUP 最佳案例>> 中的 [Design 设计目录]</p>
+</blockquote>
+<h4 id="_12">编码实现</h4>
+<p>编码实现是工程的最下层细化阶段, 其目的就是根据架构设计和详细设计实现和完成每个函数、每个类、每个模块、每个子系统、最终构成我们整个源代码部分.</p>
+<p>这个阶段, 所有剩余的构件和应用程序功能被开发并集成为产品, 所有的功能被详尽的单元测试.</p>
+<p><strong>编码实现的目标</strong>:</p>
+<ul>
+<li>根据设计完成具体函数的编写工作</li>
+<li>所有的功能代码被单元测试</li>
+</ul>
+<p><strong>产出</strong>:</p>
+<ul>
+<li>开发日志</li>
+<li>源代码及相关文件</li>
+<li>单元测试源代码文件</li>
+<li>Code Review 报告</li>
+</ul>
+<p><strong>阶段评审工作需要达到的状态列表</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>产品</th>
+<th>责任人</th>
+<th>应该达到的状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>开发日志</td>
+<td>持续填写</td>
+<td></td>
+</tr>
+<tr>
+<td>原地吗及相关文件</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>单元测试源代码</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>CodeReview</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h4 id="_13">单元验证</h4>
+<p>单元验证的目的是保证我们每个 Unit 编码的健壮性, 我们要求手动编码的单元验证函数覆盖率在 100%, 流程分支覆盖率在 80% 以上, 条件分支覆盖在 80% 以上, 边界值以及等价类覆盖在 50% 以上.</p>
+<p><strong>单元验证实现的目标</strong>:</p>
+<ul>
+<li>根据完成的功能函数进行单元测试，验证健全性</li>
+<li>对完成代码进行边界值验证，分支验证，等价类验证以及常规验证</li>
+</ul>
+<p><strong>产出</strong>:</p>
+<ul>
+<li>单元测试代码</li>
+</ul>
+<p><strong>阶段评审工作需要达到的状态列表</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>产品</th>
+<th>责任人</th>
+<th>应该达到的状态</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>单元测试源代码</td>
+<td>Developer</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>单元测试结果报告</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h4 id="_14">集成构建</h4>
+<p>集成构建主要是指非表现层的各个模块之间, 各个层次之间的接口组合.</p>
+<p><strong>集成构建实现的目标</strong>:</p>
+<ul>
+<li>除了界面层的最后搭建之外, 其余层次之间的接口组合要完成</li>
+<li>通过质量控制组的测试</li>
+</ul>
+<p><strong>产出</strong>:</p>
+<ul>
+<li>集成构建进度表</li>
+</ul>
+<p><strong>阶段评审工作需要达到的状态列表</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>产品</th>
+<th>责任人</th>
+<th>应该达到的状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>集成构建进度表</td>
+<td>Developer</td>
+<td></td>
+</tr>
+<tr>
+<td>集成构建覆盖表</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>集成构建评估表</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h4 id="_15">系统构建</h4>
+<p>系统构建首先是要对表现层与集成构建结果进行对接;</p>
+<p>其次, 系统构建要与非业务功能模块进行对接.</p>
+<p><strong>系统构建实现的目标</strong>:</p>
+<ul>
+<li>完成系统的整体构建, 达到内部测试的要求</li>
+</ul>
+<p><strong>产出</strong>:</p>
+<ul>
+<li>完整的系统产品</li>
+<li>系统构建的进度表</li>
+<li>系统构建覆盖表</li>
+<li>系统构建评估表</li>
+</ul>
+<p><strong>阶段评审工作需要达到的状态列表</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>产品</th>
+<th>责任人</th>
+<th>应该达到的状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>系统构建进度表</td>
+<td>Developer</td>
+<td></td>
+</tr>
+<tr>
+<td>完整的系统产品</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>系统构建覆盖表</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>系统构建评估表</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h4 id="_16">项目交付</h4>
+<p><strong>阶段评审工作需要达到的状态列表</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>产品</th>
+<th>责任人</th>
+<th>应该达到的状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>项目验收检查表</td>
+<td>Developer</td>
+<td></td>
+</tr>
+<tr>
+<td>项目竣工表</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>项目用户手册</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>项目内侧报告</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="_17">静态结构</h2>
+<p>开发流程定义了 <strong>谁</strong>? <strong>何时</strong>? <strong>如何</strong>? <strong>做某事</strong>? 四种主要的建模元素来表达.</p>
+<h4 id="_18">角色</h4>
+<p>角色及职能如下, 注意, 这只是职能描述, 在多数情况下, 有些角色可以忽略, 有些可以一人兼任多职.</p>
+<h6 id="pm">PM (项目经理)</h6>
+<p>工作职能描述:</p>
+<ol>
+<li>项目及产品研发管理,对项目成败直接负责.</li>
+<li>项目用人建议及学生的挑选.</li>
+<li>项目参与人员的培养和训练.</li>
+<li>与外包客户的沟通,包括售前,售后 .</li>
+<li>参与售前项目需求工作</li>
+</ol>
+<p>担任此角色能力界定:</p>
+<ol>
+<li>3年以上的相关软件开发经验</li>
+<li>熟悉相关项目语言</li>
+<li>带领过8人以上团队开发过成熟商业项目,有成功案例.</li>
+</ol>
+<h6 id="pdm">PDM (项目开发经理)</h6>
+<p>工作职能描述:</p>
+<ol>
+<li>项目及产品开发管理,主要管理项目中的开发团队 .直接对项目经理负责.</li>
+<li>积极接受培养及自我培养 . 负责对各个小组的组长直接管理 .</li>
+<li>制定产品开发计划,把握产品开发进度.</li>
+<li>协调与测试团队的合作,紧密的与测试经理配合.</li>
+</ol>
+<p>担任此角色能力界定:</p>
+<ol>
+<li>2 年以上相关软件开发经验.</li>
+<li>熟悉相关项目语言</li>
+<li>能独立完成同类项目.</li>
+<li>具有多个商业项目开发成功案例</li>
+</ol>
+<h6 id="ptm">PTM (项目测试经理)</h6>
+<p>工作职能描述:</p>
+<ol>
+<li>项目及产品测试管理,主要管理项目中的测试团队 ,直接对项目经理负责</li>
+<li>积极接受培养及自我培养,负责对各个测试小组的组长直接管理</li>
+<li>制定产品测试计划,带领测试团队完成测试任务.把握产品测试计划</li>
+<li>监控产品开发进度,监控开发团队开发质量</li>
+<li>协调与开发团队的合作,紧密把握开发团队质量及进度</li>
+</ol>
+<p>担任此角色能力界定:</p>
+<ol>
+<li>2年以上相关软件开发及软件测试经验.</li>
+<li>熟悉相关项目语言</li>
+<li>能独立完成同类项目.</li>
+<li>具有多个商业项目开发及测试成功案例</li>
+<li>熟悉软件测试各个流程</li>
+<li>具备一定的技术管理能力</li>
+</ol>
+<h6 id="se">SE (支持工程师)</h6>
+<p>工作职能描述:</p>
+<ol>
+<li>开发服务器及开发环境平台搭建</li>
+<li>项目管理服务器及管理环境搭建</li>
+<li>项目仓库构建</li>
+<li>进行每日构建</li>
+<li>项目中相关文档的收集,整理及汇总</li>
+<li>进行项目配置管理</li>
+</ol>
+<p>担任此角色能力界定:</p>
+<ol>
+<li>熟悉各类服务器系统,Windows , Linux ,Unix</li>
+<li>熟悉各操作系统上开发环境的搭建</li>
+<li>熟悉网络基础</li>
+<li>熟练掌握各版本控制系统的管理</li>
+<li>系统的学习过软件配置管理内容.</li>
+<li>熟练搭建各类应用服务器,Web服务器</li>
+<li>具有软件开发能力,能进行每日构建工作</li>
+</ol>
+<h6 id="ued">UED (用户体验设计师)</h6>
+<p>工作职能描述:</p>
+<ol>
+<li>根据用户体验设计软件布局,美化等工作</li>
+<li>根据需求原型文档,做出美化后的软件界面效果图.</li>
+<li>参与到需求过程中,设计用户体验</li>
+<li>根据设计的效果图,发布成静态网页,并且提供切好的素材(包括Logo,按钮等)</li>
+</ol>
+<p>担任此角色能力界定:</p>
+<ol>
+<li>具有较强的客户沟通能力</li>
+<li>具有较强的美术功底及审美能力</li>
+<li>具有软件界面设计经验</li>
+<li>熟练掌握各类设计工具(PS,Dreamwaver,Corldraw等)</li>
+<li>具有强烈的改善客户体验意识</li>
+</ol>
+<h6 id="uie">UIE (用户接口工程师,前端工程师)</h6>
+<p>工作职能描述:</p>
+<ol>
+<li>根据UED提供的效果图及素材,规划整体页面设计 .</li>
+<li>编写DIV+CSS的界面实现</li>
+<li>公用界面组件的编写和规划</li>
+<li>Masterpage公用模板的编写及规划</li>
+<li>公用界面客户端脚本库的编写</li>
+</ol>
+<p>担任此角色能力界定:</p>
+<ol>
+<li>身后的网页制作功底</li>
+<li>对Photoshop,Fireworks等工具基本掌握</li>
+<li>熟练编写DIV+CSS的页面布局方式</li>
+<li>熟练编写Javascript等客户端脚本</li>
+<li>熟悉项目相关语言及开发工具,有一定的后端代码编写能力</li>
+</ol>
+<h6 id="pda">PDA (项目需求分析师)</h6>
+<p>工作职能描述:</p>
+<ol>
+<li>项目需求阶段进行需求分析的主要人员</li>
+<li>与项目经理,UED一起参与项目的需求阶段</li>
+<li>负责需求阶段素材及资料的收集整理</li>
+<li>负责需求阶段与客户确认工作</li>
+<li>完成功能规格说明书的编写</li>
+<li>配合UED完成界面原型的设计和实现</li>
+<li>负责需求分析报告的编写</li>
+</ol>
+<p>担任此角色能力界定:</p>
+<ol>
+<li>较强的沟通能力及逻辑思维</li>
+<li>熟练使用Rose等UML建模工具</li>
+<li>熟练使用Office等各类制图,成文工具</li>
+<li>有较强的方案文字功底</li>
+<li>系统的学习和研究过软件需求分析过程与技能 .</li>
+<li>有较强的自我学习能力</li>
+</ol>
+<h6 id="ad">AD (架构设计师)</h6>
+<p>工作职能描述:</p>
+<ol>
+<li>项目及产品的架构设计</li>
+<li>完成项目概要设计</li>
+<li>完成项目概要设计相关文档</li>
+<li>制定各类继承接口</li>
+</ol>
+<p>担任此角色能力界定:</p>
+<ol>
+<li>3个以上项目的架构设计经验</li>
+<li>熟悉软件开发各类模式,并且善于总结模式</li>
+<li>熟练使用UML工具</li>
+<li>熟悉项目开发语言及工具</li>
+<li>具有较强的编程功底</li>
+</ol>
+<h6 id="md">MD (模块设计师)</h6>
+<p>工作职能描述:</p>
+<ol>
+<li>根据概要设计,完成分配的模块的详细设计</li>
+<li>详细设计文档的实现</li>
+<li>详细设计代码的实现</li>
+</ol>
+<p>担任此角色能力界定:</p>
+<ol>
+<li>熟练使用UML工具</li>
+<li>熟悉项目开发语言及工具</li>
+<li>具有较强的编程功底</li>
+</ol>
+<h6 id="de">DE (开发工程师)</h6>
+<p>工作职能描述:</p>
+<ol>
+<li>根据详细设计进行编码实现</li>
+<li>完成自己模块的单元测试</li>
+<li>填写开发日志</li>
+</ol>
+<p>担任此角色能力界定:</p>
+<ol>
+<li>熟悉项目开发语言及工具</li>
+<li>能正面压力工作</li>
+<li>不排斥加班</li>
+<li>熟练使用UML及版本控制工具</li>
+</ol>
+<h6 id="te">TE (测试工程师)</h6>
+<p>工作职能描述:</p>
+<ol>
+<li>根据开发工程师提交代码进行各阶段测试</li>
+<li>设计测试用例</li>
+<li>执行测试工作</li>
+<li>填写Buglist .</li>
+<li>填写测试日志</li>
+</ol>
+<p>担任此角色能力界定:</p>
+<ol>
+<li>熟悉项目开发语言及工具</li>
+<li>能正面压力工作</li>
+<li>不排斥加班</li>
+<li>熟练使用UML及版本控制工具</li>
+<li>熟悉测试理论</li>
+<li>熟练编写测试用力</li>
+<li>熟练使用各类测试工具(loadrunner等)</li>
+</ol>
+<h6 id="dg">DG (开发组长)</h6>
+<p>工作职能描述:</p>
+<ol>
+<li>管理7人以内的开发工程师</li>
+<li>指定短期目标点</li>
+<li>抓小组成员执行力,监督小组开发工作</li>
+<li>也是一名开发工程师,参与开发</li>
+<li>制定小组开发计划</li>
+</ol>
+<p>担任此角色能力界定:</p>
+<ol>
+<li>熟悉项目开发语言及工具</li>
+<li>能正面压力工作</li>
+<li>不排斥加班</li>
+<li>熟练使用UML及版本控制工具</li>
+<li>具有较强的责任心</li>
+<li>具有一定的组织能力</li>
+</ol>
+<h6 id="tg">TG (测试组长)</h6>
+<p>工作职能描述:</p>
+<ol>
+<li>管理7人以内的测试工程师</li>
+<li>指定短期目标点</li>
+<li>抓小组成员执行力,监督小组测试工作</li>
+<li>也是一名测试工程师,参与测试</li>
+<li>制定小组测试计划</li>
+</ol>
+<p>担任此角色能力界定:</p>
+<ol>
+<li>熟悉项目开发语言及工具</li>
+<li>能正面压力工作</li>
+<li>不排斥加班</li>
+<li>熟练使用UML及版本控制工具</li>
+<li>熟悉测试理论</li>
+<li>熟练编写测试用力</li>
+<li>熟练使用各类测试工具(loadrunner等)</li>
+<li>具有较强的责任心</li>
+<li>具有一定的组织能力</li>
+</ol>
+<h2 id="sandy">Sandy 未写完, 只有这么多...</h2>
+<p>其实总结起来的话, 也就几点:</p>
+<p><strong>业务建模</strong>, 一般就是客户、市场等前线人员出具的 <strong>word 文档</strong>...</p>
+<p><strong>需求阶段</strong>, 以用例驱动, 也就是根据业务建模的 word 文档建立__用例图__及__原型图__.</p>
+<p><strong>设计阶段</strong>, 以类驱动, 根据需求阶段的产物建立__时序图__、<strong>类图</strong>、__状态图__等.</p>
+<p><strong>开发阶段</strong>, 就是根据设计阶段的产物去具体实现了.</p>
+<p>当然, 现在大部分开发会把 <strong>设计阶段</strong> 和 <strong>开发阶段</strong> 结合, 一边开发开边设计 (重构).</p>
+<p>测试、部署、交付就没什么可说的了...</p>
+<h1 id="wrup_1">WRUP 最佳案例</h1>
+<p>Sandy 共享了一份项目案例, 我放到了我的<a href="http://share.weiyun.com/5aa283a41c6887a9ee974995d3f9a499">微云</a>上.</p>
+<h2 id="_19">项目结构</h2>
+<p>首先, Sandy 推荐的项目结构如下图所示:</p>
+<p><img alt="" src="http://i63.tinypic.com/aabv2f.jpg" /></p>
+<ul>
+<li><strong>工程根目录</strong><ul>
+<li><strong>Design</strong>: 设计目录<ul>
+<li>数据库建模、系统设计 (系统设计分为概要设计和详细设计, 说明比较长, 这里说不清, 下面单独说 <a href="#design">Design 设计目录</a>)</li>
+</ul>
+</li>
+<li><strong>Help</strong>: 使用帮助目录<ul>
+<li>使用培训、帮助文档等等</li>
+</ul>
+</li>
+<li><strong>Logs</strong>: 日志目录<ul>
+<li>构建日志、个人日志等等</li>
+</ul>
+</li>
+<li><strong>Planning</strong>: 计划目录<ul>
+<li>会议记录、邮件沟通记录、周报 (针对整个项目的周报, 非个人)、个人日计划等等</li>
+</ul>
+</li>
+<li><strong>Publish</strong>: 发布目录<ul>
+<li>安装包、安装必读、客户验收文档等等</li>
+</ul>
+</li>
+<li><strong>Requirement</strong>: 需求目录<ul>
+<li>需求说明书、词汇对照表、风险说明、用例图、UI 原型、需求变更等等</li>
+</ul>
+</li>
+<li><strong>Source</strong>: 源码目录</li>
+<li><strong>Study</strong>: 学习目录<ul>
+<li>开发新项目, 或多或少都会学习到新的知识, 参考新的源码, 这些项目的参考、学习文件都放在这</li>
+</ul>
+</li>
+<li><strong>Test</strong>: 测试目录<ul>
+<li>Bug List 管理、测试报告 (测试用例) 等</li>
+</ul>
+</li>
+<li><strong>Readme.txt</strong>: 工程说明<ul>
+<li>这份源码是用来做什么的</li>
+<li>如何去使用</li>
+<li>项目中重要的文件和子目录的结构信息</li>
+<li>每个目录都可以有个 Readme, 用来对当前目录的子目录做解释</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>以上仅为 Sandy 推荐的结构, 实际可按照需要进行<strong>调整</strong>, 例如:</p>
+<ul>
+<li><strong>Help</strong> (使用帮助目录) 可以归纳到 <strong>Publish</strong> (发布目录) 里</li>
+<li><strong>Logs</strong>  (日志目录) 可以归纳到 <strong>Planning</strong> (计划目录) 里, 特别像<em>个人日志</em>和<em>个人日计划</em>完全可以结合, 每天早上先写好昨天的日志, 然后安排好今天的计划</li>
+<li>上面列出来的产出 (各种文档、报告) 不是必须的, 根据需要补充, 例如 <strong>Test</strong> (测试目录) 里的 Bug List, 如果你采用 Redmine 或者 Bugzilla 等问题追踪系统, 完全可以去除 Bug List</li>
+<li>如果你有完善的版本控制体系, 要求每天写提交日志, 那么<strong>个人日志</strong>也可以考虑省略, 演变成<strong>个人周报</strong></li>
+</ul>
+<h3 id="design">Design 设计目录</h3>
+<p>参考文章:<br>
+<a href="http://www.tuicool.com/articles/FVFFniy">UML在项目实施中的使用心得(概要设计阶段)</a><br>
+<a href="http://www.tuicool.com/articles/ArYzM3V">UML在项目实施中的使用心得(详细设计阶段)</a></p>
+<p><strong>上面两篇文章大概总结为:</strong></p>
+<p>在<strong>概要设计</strong>阶段使用 <strong>Deployment</strong> 图、<strong>Component</strong> 图、<strong>Sequence</strong> 图、<strong>StateMachine</strong> 图、<strong>Activity</strong> 图描述清楚技术架构、部署方式、内外接口、主要流程和数据库结构等等;</p>
+<p>而在<strong>详细设计</strong>阶段使用 <strong>Class</strong> 图、<strong>Sequence</strong> 图、<strong>StateMachine</strong> 图、<strong>Activity</strong> 图与代码设计相结合, 描述实际代码中方法、属性间的关系及协作流程, 甚至需要伪代码.</p>
+<p>可以看出来:</p>
+<ul>
+<li><strong>概要设计</strong>是黑盒设计, 体现的是各模块间的关系</li>
+<li><strong>详细设计</strong>是白盒设计, 体现代码中类、实例、方法、属性间的关系</li>
+</ul>
+<p>一些人以为 UML 建模一上来就要画许多很精细的图, 这是<strong>误解</strong> !!<br>
+如今敏捷开发一般<strong>不</strong>推荐<strong>详细设计</strong>, 将系统设计、概要设计、详细设计合并为<strong>架构</strong> (Architecture) 设计, 对系统和架构作出一种初步、稳定的分解，是常见的一种敏捷开发、敏捷建模实践;<br>
+而且程序猿个个都有极强的创造精神, 有相当一部分不大喜欢别人把详细设计做的太细, 以便发挥下自己的创造力 (初级设计能力);</p>
+<p>不过仁者见仁, 智者见智, 因为一个初级的程序猿如果先是看别人的设计, 然后再开始自己的设计, 也许学习曲线就不会那么陡峭, 日子也会过的舒服一点儿也未可知.</p>
+<p>所以说, 如果一个团队里的新手较多, 还是推荐使用<strong>详细设计</strong>的, 否则不推荐使用.</p>
+<h2 id="_20">需求分析</h2>
+<h3 id="_21">项目评估阶段</h3>
+<p>项目评估是做需求分析的首要条件, 当接到一个需求, 我们要先对这个需求做下评估, 确定能不能做, 如果能做的话, 才会去做需求分析.</p>
+<ul>
+<li>项目的设想和业务案例参考</li>
+<li>是否可行</li>
+<li>粗略估计成本</li>
+<li>能获取到的支持</li>
+<li>......</li>
+</ul>
+<p>这个阶段一般是很快速的, 最短可能就是一次项目可行性研讨会...</p>
+<p>产出:</p>
+<ul>
+<li>评估报告</li>
+<li>立项</li>
+<li>资源计划</li>
+<li>技术难点重点</li>
+</ul>
+<h3 id="_22">需求分析阶段</h3>
+<h5 id="_23">需求阶段步骤</h5>
+<ul>
+<li>第一次需求及设计 (评估及非功能)</li>
+<li>第二次需求及设计 (领域边界, 即系统可能包含哪些模块, 子系统)</li>
+<li>第三次需求及设计 (功能)</li>
+<li>第四次需求及设计 (界面)</li>
+<li>不断迭代</li>
+</ul>
+<p>以上是细分后的情况, 大部分情况下, 可以只有 <strong>功能</strong> 和 <strong>界面</strong>.</p>
+<h5 id="_24">迭代式需求</h5>
+<p><img alt="" src="http://i66.tinypic.com/bhg0th.jpg" /></p>
+<p>我们依照 RUP 流程, 先启 -> 精化 -> 构建 -> 产品化 的 4 个阶段, 总结出需求的四要素及五原则:</p>
+<p>四要素:</p>
+<ul>
+<li>环境和前提 (给谁用, 用多久, 用在什么地方, 需不需要暴露接口等等)</li>
+<li>R (静态), 系统、子系统、模块、子模块 (用例图中的 <strong>Package</strong>)</li>
+<li>P (动态), 即上一步的静态结构的动态行为, 与上一步结合就形成了完整的<strong>用例图</strong></li>
+<li>界面原型, 可用工具有 Visio、Axure、Mockups、Blend 等</li>
+</ul>
+<p>五原则:</p>
+<ul>
+<li>沟通、建模、成文</li>
+<li>文不如表、表不如图</li>
+<li>至顶而下, 逐层细分</li>
+<li>业务 = (R &amp; P)</li>
+<li>拥抱变化, 不断重构</li>
+</ul>
+<h5 id="_25">三轴线</h5>
+<p>三轴线框架: X 横向功能需求, Y 纵向功能需求, Z非功能需求</p>
+<p>X 轴是贯穿整个系统模块的, 是被依赖的功能模块, 比如权限系统</p>
+<p>Y 轴是相对独立的功能需求, 例如菜单的顶层结构, 互不影响, 可以算是单独的功能性需求, 它不依赖别的模块</p>
+<p>Z 轴是我们的非功能模块, 比如安全性, 健壮性, 美观性等等, 包括我们的日志系统, 也是非功能性需求</p>
+<h5 id="_26">需求成文</h5>
+<p>在开发者角度, UML 就是文档、是"文".</p>
+<p>但是最终你还是要给客户、给老板需求报告, 虽说 "文不如表、表不如图", 但他们看不懂 UML 图, 这时就需要把 UML 图转成 Word 文档了...</p>
+<p><strong>注意</strong>, 这里的需求文档, 不是客户给的原始需求文档, 而你根据 UML 转化而来的文档, 是要提供给客户、老板的, 所以在大纲上, 也是遵循需求 4 要素, 简单的说, 就是用 word 文档解释 UML.</p>
+<h2 id="_27">系统设计</h2>
+<h3 id="_28">什么是系统设计</h3>
+<p>到了这一步, 说明你最起码已经迭代过一轮需求分析了, 而系统设计, 就是根据需求分析阶段的产出 (即系统模块、功能要求等), 设计出一个符合 <strong>GRASP</strong> &amp; <strong>SOLID</strong> 的软件架构 (什么是 GRASP &amp; SOLID, 后面再介绍).</p>
+<p>这个阶段的任务是:</p>
+<ul>
+<li>设计软件系统的模块层次结构</li>
+<li>设计数据库的结构</li>
+<li>设计模块的控制流程</li>
+</ul>
+<p>这个阶段又分两个步骤: <strong>概要设计</strong>和<strong>详细设计</strong>.</p>
+<p>概要设计是<strong>黑盒</strong>设计, 解决软件系统的模块划分和模块的层次机构以及数据库设计, 详细设计是<strong>白盒</strong>设计, 解决每个模块的控制流程, 内部算法和数据结构的设计.</p>
+<p>现在有些敏捷开发思想, 不推荐使用<em>详细设计</em>, 将系统设计阶段统称为<strong>架构设计</strong>.<br>
+也就是说, 这个阶段的任务从上面的三条, 变为两条 (即不进行详细设计, 不涉及具体算法、流程):</p>
+<ul>
+<li>设计软件系统的模块层次结构</li>
+<li>设计数据库的结构</li>
+</ul>
+<p>另外要注意, 在需求阶段, 我们用用例图中的__Package__来表达系统、子系统、模块、子模块间的关系, 但这和系统设计阶段的模块层次<strong>不是</strong>一一对应的, 确切的说需求阶段的模块划分表达的是更上层的东西, 即功能模块的划分, 而系统设计阶段的模块划分则是从软件工程角度出发, 应该按 GRASP &amp; SOLID, 是两种完全不同的概念.</p>
+<blockquote>
+<p>关于系统设计, 我在另一篇笔记 <a href="https://www.smallcpp.com/12-wrup-zui-jia-an-li.html#design">12、WRUP 最佳案例</a> 中也提到了一些, 可以去参考下.</p>
+</blockquote>
+<h3 id="grasp-solid">GRASP &amp; SOLID</h3>
+<p><strong>SOLID</strong>, 这是描述设计原则的一个专业术语, 由我们可爱的代码整洁之道传教者鲍勃 (罗伯特C. 马丁) 大叔提出, 是一组用于指导我们如何写出"好代码"的原则.</p>
+<p>SOLID 的解释为:</p>
+<ul>
+<li>Single responsibility principle (单一职责原则)</li>
+<li>Open/closed principle (打开/关闭原则)</li>
+<li>Liskov substitution principle (里氏替换原则)</li>
+<li>Interface segregation principle (接口隔离原则)</li>
+<li>Dependency inversion principle (依赖倒置原则)</li>
+</ul>
+<blockquote>
+<p>关于这几个原则的定义, 参考我另一篇笔记: <a href="http://www.smallcpp.com/6-cliu-da-she-ji-yuan-ze.html">六大设计原则</a></p>
+</blockquote>
+<p><strong>GRASP</strong>, 全称为General Responsibility Assignment Software Pattern, 即<strong>通用职责分配软件模式</strong>, 它由《UML 和模式应用》 (Applying UML and Patterns) 一书作者 Craig Larman 提出.</p>
+<p>GRASP 是对象职责分配的基本原则, 其核心思想是<strong>职责分配</strong> (Responsibility Assignment), 用职责设计对象 (Designing Objects with Responsibilities).</p>
+<p>GRASP 包括以下内容:</p>
+<ul>
+<li>Information Expert (信息专家模式)</li>
+<li>Creator (创造者模式)</li>
+<li>Controller (控制器模式)</li>
+<li>Low Coupling (低耦合模式)</li>
+<li>High Cohesion (高内聚模式)</li>
+<li>Polymorphism (多态模式)</li>
+<li>Pure Fabrication (纯虚构模式)</li>
+<li>Indirection (中介模式)</li>
+<li>Protected Variations (受保护变化模式)</li>
+</ul>
+<blockquote>
+<p>关于这几个模式的定义, 参考我另一篇笔记: <a href="http://www.smallcpp.com/3-cshe-ji-mo-shi-yu-grasp.html">设计模式与 GRASP</a></p>
+</blockquote>
+<p>GRASP 与 SOLID 是有相通的地方的:</p>
+<ul>
+<li>Information Expert 与 Single responsibility principle</li>
+<li>Protected Variations 与 Open/closed principle</li>
+</ul>
+<p>GRASP &amp; SOLID 是 GOF (二十三种设计模式) 的基础, GOF 只是在某些情景下对 GRASP &amp; SOLID 的具体实践.</p>
+<p>GRASP 以<strong>职责驱动设计</strong>, 什么是职责呢?</p>
+<p>简单地说, 一个类或构件的职责包括两个方面: 一个是<strong>知道</strong>的事, 对于一个类来说就是他的属性; 一个是<strong>能做</strong>的事, 对于一个类来说就是他的方法.</p>
+<ul>
+<li>"知道"职责 —— 表示这个类, 它"知道"些什么<ul>
+<li>了解私有封装数据</li>
+<li>了解关联的对象</li>
+<li>了解能够派生或计算的事物</li>
+</ul>
+</li>
+<li>"行为"职责 —— 表示这类类, 它可以"做"什么<ul>
+<li>完成对象初始化</li>
+<li>执行一些控制行为</li>
+</ul>
+</li>
+</ul>
+<p>职责的分配可使用<strong>时序图</strong>或<strong>协作图</strong>来表达, 面向对象设计过程就是将责任分配给类的过程.</p>
+<p><strong>例子:</strong> 在一个销售软件中存在一个交费行为, 此时, 就可将交费识别为一个"行为"职责.</p>
+<ul>
+<li>"行为"职责表示交费的行为, 需要创建一个付款记录的对象 Payment</li>
+<li>"知道"职责必须知道付款记录类 Payment，知道如何记录及计算 Payment 类中的数据</li>
+</ul>
+<p><img alt="" src="http://i67.tinypic.com/nmxmyp.jpg" /></p>
+<ul>
+<li>发现具有交费行为的对象 Sale</li>
+<li>发现了该类还关联另一个类对象 Payment</li>
+</ul>
+    </div>
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2016 <a href="http://www.samllcpp.com/" target="_blank">Martin</a> Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+              </p>
+        </div>
+    </body>
+</html>

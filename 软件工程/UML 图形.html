@@ -1,0 +1,610 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <title>UML 图形.md - Wiki | Small Cpp</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            
+            <a href="/">Home</a> » <a href="/#软件工程">软件工程</a> » UML 图形.md
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#uml-staruml">UML 架构及 StarUML</a><ul>
+<li><a href="#uml">UML 架构</a></li>
+<li><a href="#staruml">StarUML</a></li>
+</ul>
+</li>
+<li><a href="#uml_1">UML 用例图</a><ul>
+<li><a href="#_1">用例卡片</a></li>
+<li><a href="#staruml_1">StarUML 用例图</a></li>
+</ul>
+</li>
+<li><a href="#uml_2">UML 状态图</a><ul>
+<li><a href="#_2">状态图概述</a></li>
+<li><a href="#_3">核心要素</a></li>
+<li><a href="#_4">状态动作</a></li>
+<li><a href="#_5">复合状态</a></li>
+<li><a href="#_6">退出/进入节点</a></li>
+<li><a href="#_7">子节点</a></li>
+<li><a href="#_8">历史状态</a></li>
+<li><a href="#_9">同步</a></li>
+</ul>
+</li>
+<li><a href="#uml_3">UML 时序图</a><ul>
+<li><a href="#_10">时序图概述</a></li>
+<li><a href="#object">Object</a></li>
+<li><a href="#lifeline-focus-of-control">Lifeline 与 Focus of Control</a></li>
+<li><a href="#stimulus">Stimulus</a><ul>
+<li><a href="#_11">消息类型</a></li>
+<li><a href="#_12">消息约束</a></li>
+</ul>
+</li>
+<li><a href="#combined-fragment">Combined Fragment</a></li>
+</ul>
+</li>
+<li><a href="#uml_4">UML 协作图、活动图</a><ul>
+<li><a href="#_13">协作图</a></li>
+<li><a href="#_14">活动图</a></li>
+<li><a href="#_15">总结</a></li>
+</ul>
+</li>
+<li><a href="#uml_5">UML 类图</a><ul>
+<li><a href="#_16">类图概述</a></li>
+</ul>
+</li>
+<li><a href="#uml_6">UML 部署图</a></li>
+<li><a href="#uml_7">UML 组件图</a></li>
+</ul>
+</div>
+<h1 id="uml-staruml">UML 架构及 StarUML</h1>
+<h2 id="uml">UML 架构</h2>
+<p>UML 图形分类:</p>
+<ul>
+<li>对象图<ul>
+<li>类图</li>
+<li>组件图</li>
+<li>部署图</li>
+</ul>
+</li>
+<li>交互图<ul>
+<li>用例图</li>
+<li>时序图</li>
+<li>协作图</li>
+<li>活动图</li>
+</ul>
+</li>
+<li>状态图<ul>
+<li>状态图</li>
+</ul>
+</li>
+</ul>
+<p><a href="http://www.ibm.com/developerworks/cn/rational/r-uml/">参考文档</a></p>
+<p>这里重点学习 <strong>用例图、时序图 和 类图</strong> 三张图.</p>
+<h2 id="staruml">StarUML</h2>
+<p>StarUML 5.0 貌似是最后一个免费版本...</p>
+<p>安装好后运行, 会让选一个 approach (入口), 直接点 Cancel 就好, 会以默认的视图打开 StarUML.</p>
+<p><img alt="" src="http://i66.tinypic.com/dde2rr.jpg" /></p>
+<p>也可以选择 Rational, 这种 approach 用的也比较多.</p>
+<p><img alt="" src="http://i65.tinypic.com/260psvn.jpg" /></p>
+<p><img alt="" src="http://i64.tinypic.com/14t6iyh.jpg" /></p>
+<ul>
+<li>
+<p><strong>用例视图</strong>(Use Case View), 包含系统中所有的参与者、用例和用例图, Use Case View 在系统中可以看成是一个独立的实现, 它侧重用高级别的视图表明系统做什么, 而不用考虑具体的实现</p>
+</li>
+<li>
+<p><strong>逻辑视图</strong>(Logical View), 重点描述在系统中如何实现用例, 它提供系统各模块的详细视图, 并描述这些模块之间的关系, Logical View 包含对一些类图、时序图和状态图, 通过这些具体的元素, 开发者可以对系统构建具体的设计</p>
+</li>
+<li>
+<p><strong>组件视图</strong>(Component View), 包含的信息有代码库、可执行文件、运行时库，还有在模型中的其他组件, 一个组件就是一个物理的编码模块</p>
+</li>
+<li>
+<p><strong>发布视图</strong>(Deployment View), 关于系统的物理发布, 它不同于系统的逻辑架构</p>
+</li>
+</ul>
+<h1 id="uml_1">UML 用例图</h1>
+<p>用例, 是帮助角色确定<strong>系统使用情况</strong>的 UML 组件</p>
+<p>用例组, 是从用户角度出发对<strong>如何使用系统的描述</strong></p>
+<p>用例图, 用图形的方式来描述情景, 主要用来描述 "<strong>用户</strong>、<strong>需求</strong>、<strong>系统功能单元</strong>" 之间的关系, 它展示了一个外部用户能够观察到的系统功能模型, 也就是说, 它应该是从<strong>用户</strong>的角度来描述系统, 而非开发者.</p>
+<h2 id="_1">用例卡片</h2>
+<p>在用例图出现之前, 当需要去客户那讨论某些功能的需求时, 常常会带上一堆的 "卡片", 每张卡片上都是一张<strong>用例表单</strong>, 讨论过程中按照客户的要求填写这个表单, 等讨论结束, 就按这个表单的内容进行开发, 这个记录了需求表单的卡片, 就叫它 "<strong>用例卡片</strong>", 下面是一个<strong>登录功能</strong>的用例卡片.</p>
+<p><img alt="用例图" src="http://i63.tinypic.com/2u53yvb.jpg" /></p>
+<p>通过这张卡片, 可以总结出一些<strong>用例要素</strong>:</p>
+<ul>
+<li>参与者<ul>
+<li>包括使用者、系统用户和其它交互的系统</li>
+</ul>
+</li>
+<li>前置条件</li>
+<li>场景中的步骤<ul>
+<li>事件流</li>
+</ul>
+</li>
+<li>后置条件</li>
+</ul>
+<h2 id="staruml_1">StarUML 用例图</h2>
+<p>打开 StarUML, 选择 <strong>Rational Approach</strong>.</p>
+<p>StarUML 界面右侧的 <strong>Model Explorer</strong> 中 &lt;&lt;<strong>use case view</strong>>> 就是用例图 view, 我们要添加用例图, 就要在这个 view 下添加.</p>
+<p>&lt;&lt;<strong>use case view</strong>>> 自带了一个 <strong>Main</strong> 用例图, 点击下 &lt;&lt;<strong>use case view</strong>>> 下的 Main, 在StarUML 界面左侧, 就打开了用例图工具栏.</p>
+<p><img alt="" src="http://i66.tinypic.com/9uwxo1.jpg" /></p>
+<table>
+<thead>
+<tr>
+<th>StarUML</th>
+<th>翻译</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Package</td>
+<td>包</td>
+<td>分类、模块、子模块<br>类比文件夹的功能</td>
+</tr>
+<tr>
+<td>UseCase</td>
+<td>用例</td>
+<td>描述一个用户的具体动作<br>要求是<strong>动宾短语</strong></td>
+</tr>
+<tr>
+<td>Actor</td>
+<td>角色</td>
+<td>执行者<br>包括用户、后台系统员或者其他系统</td>
+</tr>
+<tr>
+<td>Association</td>
+<td>关联</td>
+<td>表示参与者与用例之间可以通信</td>
+</tr>
+<tr>
+<td>DirecteAssociation</td>
+<td>定向关联</td>
+<td>也表示参与者与用例之间可以通信, 但是用箭头表示通信方向<br><strong>箭头</strong>指向消息接收方</td>
+</tr>
+<tr>
+<td>Generalization</td>
+<td>泛化</td>
+<td>继承关系<br>子用例和父用例相似, 但表现出更特别的行为<br>子用例将继承父用例的所有结构、行为和关系<br><strong>箭头</strong>指向父用例</td>
+</tr>
+<tr>
+<td>Dependency</td>
+<td>依赖</td>
+<td>源用例依赖于目标用例<br>如冰箱依赖插头, 去食堂吃饭依赖于有餐卡<br><strong>箭头</strong>指向目标用例</td>
+</tr>
+<tr>
+<td>Include</td>
+<td>包含</td>
+<td>用来把一个较复杂用例所表示的功能进行分解<br>包含属于依赖的一种<br><strong>箭头</strong>指向分解出来的子用例</td>
+</tr>
+<tr>
+<td>Extend</td>
+<td>扩展</td>
+<td>指用例功能的延伸<br>相当于在<strong>一定条件下</strong>为基础用例提供一个附加功能<br>如, 只有在书籍丢失用例成立的情况下才会触发补偿用例<br><strong>箭头</strong>指向基础用例</td>
+</tr>
+<tr>
+<td>System Boundary</td>
+<td>系统边界</td>
+<td>用来把一些联系紧密的用例包含起来<br>一般认为被包含的用例共同完成某一功能<br>而边界外的用例则与这个功能无关</td>
+</tr>
+</tbody>
+</table>
+<p>Extend (扩展) 图样示例:</p>
+<p><img alt="" src="http://i63.tinypic.com/bdn036.jpg" /></p>
+<p>只有当 "<strong>失书</strong>" 的扩展点发生后, 才会触发补偿的用例.</p>
+<blockquote>
+<p>小技巧:<br>
+当发现线条不规整时, 可选中该线条, 按 <strong>Ctrl + L</strong> 来自动规整.</p>
+</blockquote>
+<p>对于每个图样, 可以在 StarUML <strong>右下方</strong>设置其属性:</p>
+<p><img alt="" src="http://i67.tinypic.com/2le6rnp.jpg" /></p>
+<p>对于用例图来说, 我们只关心它的 Name 和 Stereotype 属性, 后面的 Visibility、IsAbstract、Attributes、Operations 在画类图的时候才会有所体现.</p>
+<p>当然你也可以在 &lt;&lt;<strong>use case view</strong>>> 上右键选择新添加用例图:<br>
+&lt;&lt;<strong>use case view</strong>>> --> Add Diagram --> Use Case Diagram</p>
+<p><img alt="" src="http://i66.tinypic.com/2zp5n6h.jpg" /></p>
+<p>在 StarUML 左侧, 除了 UseCase 的工具栏外, 还有一个<strong>注释</strong>工具栏 (Annotation), 这个工具栏是所有 UML 图形通用的:</p>
+<table>
+<thead>
+<tr>
+<th>StarUML</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Text</td>
+<td>文本</td>
+</tr>
+<tr>
+<td>Note</td>
+<td>注释</td>
+</tr>
+<tr>
+<td>NoteLink</td>
+<td>注释连接线</td>
+</tr>
+<tr>
+<td>Rectangle</td>
+<td>矩形</td>
+</tr>
+<tr>
+<td>Elipse</td>
+<td>椭圆</td>
+</tr>
+<tr>
+<td>Rounded Rectangle</td>
+<td>圆角矩形</td>
+</tr>
+</tbody>
+</table>
+<p>这里我们常用的是 <strong>Note</strong> 和 <strong>NoteLink</strong>.</p>
+<blockquote>
+<p>小技巧:<br>
+当使用图形时, 可以在工具栏上设置图形的层次.<br>
+<img alt="" src="http://i63.tinypic.com/ipbcd1.jpg" /></p>
+</blockquote>
+<p><strong>关于删除</strong><br>
+如果你在 StarUML 画布上拖入某个图样, 那么直接在画布上删除仅仅是在画布上删除它, 它还是在右边的 Model Explorer 中, 必须要在 Model Explorer 中删除才是真的删除, 或者在画布上 Ctrl + Del 删除.</p>
+<p><strong>关于用例图设计</strong><br>
+通常情况下, 一个系统可能会被我们分为几个<strong>模块</strong>, 每个模块都完成独立的功能, 我们把这些模块用 <strong>Package</strong> 表示, 在 <strong>Main</strong> 视图下列出大纲, 然后在每个 <strong>Package</strong> 下画各自的 <strong>UseCase</strong>, 如下图所示:</p>
+<p><img alt="" src="http://i67.tinypic.com/2moa45i.jpg" /></p>
+<h1 id="uml_2">UML 状态图</h1>
+<h2 id="_2">状态图概述</h2>
+<p>状态图是一种"开关", 描述的是<strong>状态变化</strong>的图形, 即<strong>一个</strong>对象<strong>状态</strong>与<strong>状态的转变</strong>, 并且给出了状态变化的<strong>起点</strong>和<strong>终点</strong>, 类比<strong>流程图</strong>.</p>
+<blockquote>
+<p><strong>使用场景</strong><br>
+需要描述一个对象的状态跟踪的时候, 比如一个表单在不同环节审批的状态</p>
+</blockquote>
+<p>在 StarUML 中新建状态图:<br>
+打开 StarUML, 选择 <strong>Rational Approach</strong>.<br>
+&lt;&lt;<strong>Logical View</strong>>> --> Add Diagram --> Statechart Diagram<br>
+界面左边就出现了 Statechart 工具栏.</p>
+<table>
+<thead>
+<tr>
+<th>StarUML</th>
+<th>翻译</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>State</td>
+<td>状态节点</td>
+</tr>
+<tr>
+<td>SubmachineState</td>
+<td>状态子节点</td>
+</tr>
+<tr>
+<td>InitialState</td>
+<td>初始状态</td>
+</tr>
+<tr>
+<td>FinalState</td>
+<td>结束状态</td>
+</tr>
+<tr>
+<td>JunctionPoint</td>
+<td>交汇点(两条状态传递线交汇处)</td>
+</tr>
+<tr>
+<td>ChoicePoint</td>
+<td>选择点(又叫进入节点)</td>
+</tr>
+<tr>
+<td>ShallowHistory</td>
+<td>浅层历史状态</td>
+</tr>
+<tr>
+<td>DeepHistory</td>
+<td>深层历史状态</td>
+</tr>
+<tr>
+<td>Synchronization</td>
+<td>同步</td>
+</tr>
+<tr>
+<td>Flow Final</td>
+<td>对象流程结束(退出节点)</td>
+</tr>
+<tr>
+<td>Transition</td>
+<td>状态传递</td>
+</tr>
+<tr>
+<td>SelfTransition</td>
+<td>自我状态传递</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_3">核心要素</h2>
+<p>对于状态图来说, 最为<strong>核心</strong>的元素无外乎是两个:</p>
+<ul>
+<li>一个是用圆角矩形表示的状态(State)</li>
+<li>一个则是在状态之间的、包含一些文字描述的有向箭头线(Transition), 这些箭头线称为状态传递</li>
+</ul>
+<p><img alt="" src="http://i63.tinypic.com/29z3ifl.jpg" /></p>
+<p><img alt="" src="http://i67.tinypic.com/2rcy7v6.jpg" /></p>
+<ul>
+<li>源状态: 即受转换影响的状态</li>
+<li>目标状态: 当转换完成后对象的状态</li>
+<li>触发事件: 用来为转换定义一个事件, 包括调用、改变、信号、时间四类事件</li>
+<li>监护条件: 布尔表达式, 决定是否激活转换</li>
+<li>动作: 转换激活时的操作</li>
+</ul>
+<h2 id="_4">状态动作</h2>
+<p><strong>状态节点有三个内部动作</strong>:</p>
+<ul>
+<li>EntryActiors, 进入状态时触发的动作</li>
+<li>DoActions, 状态中执行的动作</li>
+<li>ExitActions, 退出状态时触发的动作</li>
+</ul>
+<p>当然, 这三个事件都不是必须的, 根据需求来填写.<br>
+例如在上例中, 对象状态转移后的动作(<strong>烧水</strong>), 是显示在箭头线上, 也可以定义<strong>进入动作</strong>(EntryActions)来描述转换激活时的操作</p>
+<p><img alt="" src="http://i64.tinypic.com/fuuwb4.jpg" /></p>
+<h2 id="_5">复合状态</h2>
+<p>另外, 在某些时候, 还可以使用<strong>复合状态</strong>, 它表示在某一状态中, 还维护着其它的状态.<br>
+如, 在电脑运行的时候, 还会维护一个待机的状态.</p>
+<p><img alt="" src="http://i68.tinypic.com/34qmj9v.jpg" /></p>
+<h2 id="_6">退出/进入节点</h2>
+<p>上面的图中, 除了用到了<strong>复合状态</strong>外, 还使用了<strong>退出节点</strong>(Flow Final), 它表示状态可以有多个退出事件, 如<strong>上图</strong>中的 <em>长按电源键</em> 或者 <em>断电</em>, 都会触发 running 状态的退出.</p>
+<p>除了<strong>退出节点</strong>(Flow Final)外, 还有个 <strong>ChoicePoint</strong>(选择节点, 又叫进入节点), 它表示一个状态有多个进入事件, 就不放图举例了.</p>
+<h2 id="_7">子节点</h2>
+<p>再来看看 <strong>SubmachineState</strong>(状态子节点), 它所以表示的是该状态是另一个状态(称之为母状态)的子状态, 母状态中以<strong>引用</strong>的方式把一个已经存在的状态作为自己子状态, 在母状态机中子机状态作为一个子状态, 但它自身仍是一个<strong>完整的状态</strong>.</p>
+<p><img alt="" src="http://i65.tinypic.com/14tylx3.jpg" /></p>
+<h2 id="_8">历史状态</h2>
+<p><strong>ShallowHistory</strong>(历史状态), 为一个状态提供了一种在退出状态时记忆当前活动所处的子状态, 并能够返回到该子状态的机制.<br>
+例如下图, 当发生暂停时, 记住播放状态, 当继续播放时就直接进入播放状态.</p>
+<p><img alt="" src="http://i63.tinypic.com/15wjlmh.jpg" /></p>
+<blockquote>
+<p>StarUML 中有 <strong>ShallowHistory</strong> 和 <strong>DeepHistory</strong>, 但在大多情况下是随便用哪个, 并没有做太多要求, 只要表达清楚这里是一个"历史"就可以了.</p>
+</blockquote>
+<h2 id="_9">同步</h2>
+<p><strong>Synchronization</strong> 又分两种, 分叉与汇合.</p>
+<ul>
+<li>分叉: 指将一个转换分成两个或多个转换, 用来描述需要<strong>并发</strong>的状态</li>
+<li>汇合: 指将从并发状态来的转换合并形成一个转换, 用来描述多个并发状态的控制<strong>同步</strong></li>
+</ul>
+<p><img alt="" src="http://i68.tinypic.com/2aafsxy.jpg" /></p>
+<h1 id="uml_3">UML 时序图</h1>
+<h2 id="_10">时序图概述</h2>
+<p><strong>何谓时序图</strong>:<br>
+简单的说, 就是描述一个时间段内不同对象之间的业务情况(时间顺序).<br>
+时序图的重点在<strong>消息时序</strong>上, 也就是说, 描述<strong>消息</strong>是如何在对象间发送和接收的, 表示了对象之间传递消息的时间顺序.</p>
+<p><strong>时序图与用例图</strong>:<br>
+时序图表示了<strong>系统</strong>与<strong>参与者</strong>互动执行某一个<strong>用例</strong>期间, 系统内部对象间的协作情况.<br>
+对于程序设计来说, 一个用例就对应一个时序图, 时序图是对系统的内部行为进行描述, 用于用例分析和设计阶段.<br>
+在项目的需求阶段, 架构师会根据把<strong>用例图</strong>细化为一个或者更多的时序图.</p>
+<p>虽然在开发者看来, 时序图描述的是模块(类)间的交互, 然而, 现在时序图也常常被<strong>业务人员</strong>用来描述业务的流程.</p>
+<p><strong>在 StarUML 中新建时序图</strong>:<br>
+打开 StarUML, 选择 <strong>Rational Approach</strong>.<br>
+&lt;&lt;<strong>Logical View</strong>>> --> Add Diagram --> Sequence Diagram<br>
+界面左边就出现了 Sequence 工具栏.</p>
+<table>
+<thead>
+<tr>
+<th>StarUML</th>
+<th>翻译</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Object</td>
+<td>对象</td>
+</tr>
+<tr>
+<td>Stimulus</td>
+<td>消息传递</td>
+</tr>
+<tr>
+<td>SelfStimulus</td>
+<td>自我消息传递</td>
+</tr>
+<tr>
+<td>Combined Fragment</td>
+<td>组合碎片</td>
+</tr>
+<tr>
+<td>Interaction Operand</td>
+<td>交互操作域</td>
+</tr>
+<tr>
+<td>Frame</td>
+<td>框架</td>
+</tr>
+</tbody>
+</table>
+<h2 id="object">Object</h2>
+<p>时序图中 Object 的命令遵循下面的格式:</p>
+<div class="hlcode"><pre><span class="err">实体名</span> <span class="o">:</span> <span class="err">类名</span>
+</pre></div>
+
+
+<p><br></p>
+<p>大部分情况下, 我们可能只关心<strong>类名</strong>, 所以可以简写成 <strong>: 类名</strong>.</p>
+<h2 id="lifeline-focus-of-control">Lifeline 与 Focus of Control</h2>
+<p><strong>生命线</strong>在时序图中表示为从对象图标向下延伸的一条<strong>虚线</strong>, 表示对象存在的时间.</p>
+<p>而<strong>控制焦点</strong>是<strong>生命线</strong>中表示时间段的符号, 在这个时间段内对象将执行相应的操作, 用小矩形表示.</p>
+<p><img alt="" src="http://i63.tinypic.com/2lxi9s1.jpg" /></p>
+<h2 id="stimulus">Stimulus</h2>
+<h3 id="_11">消息类型</h3>
+<p>消息一般分为<strong>同步消息</strong>(Synchronous Message), <strong>异步消息</strong>(Asynchronous Message)和<strong>返回消息</strong>(Return Message).<br>
+如下图所示:</p>
+<p><img alt="" src="http://i66.tinypic.com/euh6hi.jpg" /></p>
+<ul>
+<li>同步消息: 消息的发送者把控制传递给消息的接收者, 然后停止活动, 等待消息的接收者放弃或者返回控制</li>
+<li>异步消息: 消息发送者通过消息把信号传递给消息的接收者, 然后继续自己的活动, 不等待接受者返回消息或者控制</li>
+<li>返回消息: 返回消息表示从过程调用返回</li>
+</ul>
+<p>对于 StarUML 而言, 同步消息的 Stimulus 为 <strong>Call</strong>, 异步消息的 Stimulus 为 <strong>Send</strong>, 返回消息的 Stimulus 为 <strong>Return</strong>.</p>
+<p><img alt="" src="http://i68.tinypic.com/fc06mw.jpg" /></p>
+<h3 id="_12">消息约束</h3>
+<p>当为对象的交互建模时, 有时候必须满足一个条件消息才会传递给对象.</p>
+<p>为了在一个序列图上画一个约束, 你把约束元件放在约束的消息线上, 消息名字之前.</p>
+<p><img alt="" src="http://i64.tinypic.com/14e9vo6.jpg" /></p>
+<p>注意 Stimulus 上的 <strong>[restraint == true]</strong>.</p>
+<h2 id="combined-fragment">Combined Fragment</h2>
+<p>Combined Fragment 用来描述一批 Stimulus 的约束, 如上面 <strong>消息约束</strong> 中的 <strong>[restraint == true]</strong>, 如果想要其对多条 Stimulus 生效, 就可以使用 Combined Fragment.</p>
+<p><img alt="" src="http://i68.tinypic.com/b7kubs.jpg" /></p>
+<p>只有当 restraint == true 时, Combined Fragment 里的 Stimulus 才会被触发.</p>
+<p>Combined Fragment 左上角的 <strong>opt</strong> 表示选择约束, 除了 opt 外, 还有 <strong>loop</strong>(循环), 甚至还支持 <strong>if else</strong> 结构(<strong>alt</strong>).</p>
+<p>不过要使用 <strong>alt</strong>, 就要配合 <strong>Interaction Operand</strong> 了, 把 <strong>Interaction Operand</strong> 拖放到 Combined Fragment 里就可以对 Combined Fragment 进行拆分了, 效果如下:</p>
+<p><img alt="" src="http://i66.tinypic.com/2w7pto8.jpg" /></p>
+<p>如果 restraint == true, 则执行 call_1(), 否则执行 call_2().</p>
+<h1 id="uml_4">UML 协作图、活动图</h1>
+<h2 id="_13">协作图</h2>
+<p><strong>协作图</strong> 与 <strong>时序图</strong> 是可以互转的, 只不过一个重点表达时序的先后关系, 一个重点表达对象间交互关系.</p>
+<p>通常 <strong>时序图</strong> 用的更多, 而<strong>协作图</strong>的主要作用是显示某个组件/对象是否有过多的交互, 是否应该继续分拆, 它可以当作<strong>时序图</strong>的辅助形式.</p>
+<h2 id="_14">活动图</h2>
+<p><strong>活动图</strong> 就是最早就接触过的 <strong>流程图</strong>, 至少在画法上, 活动图和流程图很相似, 但 UML 活动图是面向对象, 表示的是对象间的流程.</p>
+<p>从存在意义上说, <strong>活动图</strong>和<strong>时序图</strong>一样, 都是对<strong>用例图</strong>的再分析, 不同的是, <strong>时序图</strong>是从计算机角度出发, 而<strong>活动图</strong>是从用户角度出发, 因此, 对于我们开发者来说, 活动图在表示上"<strong>不够技术性</strong>", 但对业务人员来说, 往往能够更快速地理解它们.</p>
+<p><strong>根据我的经验</strong>, 当我们拿到用例图后, 可以先用时序图来尝试, 当发现用时序图不怎么好实现时, 再转向使用活动图, 毕竟有些复杂的交互, 用计算机的角度并不一定能描述清楚.</p>
+<h2 id="_15">总结</h2>
+<p><strong>协作图</strong> 与 <strong>活动图</strong> 两张图不做太多要求, 知道下就好.</p>
+<h1 id="uml_5">UML 类图</h1>
+<h2 id="_16">类图概述</h2>
+<p>类图, 豪不夸张的说, 是 UML 里最复杂的图了...</p>
+<p>类图在需求阶段和设计阶段具有不同的含义, 参考我之前的一篇笔记: <a href="http://www.smallcpp.com/15-c-zheng-que-bian-xi-lei-tu-de-liang-chong-cun-zai-xing-shi-zhuan.html">正确辨析类图的两种存在形式</a></p>
+<p>对于我们开发者来说, 我觉得重点还是在设计阶段的类图.</p>
+<p><strong>在 StarUML 中新建类图</strong>:<br>
+打开 StarUML, 选择 <strong>Rational Approach</strong>.<br>
+&lt;&lt;<strong>Logical View</strong>>> --> Add Diagram --> Class Diagram<br>
+界面左边就出现了 Class 工具栏.</p>
+<table>
+<thead>
+<tr>
+<th>StarUML</th>
+<th>翻译</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Subsystem</td>
+<td>子系统</td>
+</tr>
+<tr>
+<td>Package</td>
+<td>包</td>
+</tr>
+<tr>
+<td>Class</td>
+<td>类</td>
+</tr>
+<tr>
+<td>Interface</td>
+<td>接口</td>
+</tr>
+<tr>
+<td>Enumeration</td>
+<td>枚举</td>
+</tr>
+<tr>
+<td>Signal</td>
+<td>信号</td>
+</tr>
+<tr>
+<td>Exception</td>
+<td>异常</td>
+</tr>
+<tr>
+<td>Port</td>
+<td>端口</td>
+</tr>
+<tr>
+<td>Part</td>
+<td>局部</td>
+</tr>
+<tr>
+<td>Association</td>
+<td>关联</td>
+</tr>
+<tr>
+<td>DirectedAssociation</td>
+<td>定向关联</td>
+</tr>
+<tr>
+<td>Aggregation</td>
+<td>聚合</td>
+</tr>
+<tr>
+<td>Composition</td>
+<td>组合</td>
+</tr>
+<tr>
+<td>Generalization</td>
+<td>泛化</td>
+</tr>
+<tr>
+<td>Dependency</td>
+<td>依赖</td>
+</tr>
+<tr>
+<td>Realization</td>
+<td>实现</td>
+</tr>
+<tr>
+<td>AssociationClass</td>
+<td>关系类</td>
+</tr>
+<tr>
+<td>Connector</td>
+<td>连接</td>
+</tr>
+<tr>
+<td>Object</td>
+<td>对象</td>
+</tr>
+<tr>
+<td>Link</td>
+<td>链接</td>
+</tr>
+</tbody>
+</table>
+<h1 id="uml_6">UML 部署图</h1>
+<p>是用来建模系统的物理部署, 例如计算机和设备, 以及它们之间是如何连接的, 部署图的使用者是开发人员、系统集成人员和测试人员.</p>
+<p>如果含有依赖关系的构件实例放置在不同节点上, 部署视图可以展示出执行过程中的瓶颈.</p>
+<h1 id="uml_7">UML 组件图</h1>
+<p>描述代码构件的物理结构以及各种组件之间的依赖关系, 在组件图中, 组件可以是一个文件、产品、可执行文件或脚本等.</p>
+<p>在 UML 2 中, 组件被认为是独立的, 在一个系统或子系统中的封装单位, 提供一个或多个接口.<br>
+虽然 UML 2 规范没有严格地声明它, 但组件是呈现事物的更大的设计单元, 这些事物一般将使用可更换的组件来实现.<br>
+主要思想是, 你能容易地在你的设计中重用或替换一个不同的组件实现, 因为一个组件封装了行为, 实现了特定接口.</p>
+<p>在这里, 初学者很容易将组件图和类图搞混, 那么<strong>组件图和类图</strong>的区别如下:</p>
+<ul>
+<li>类表示的是逻辑的抽象, 构件是存在于计算机中的物理抽象, 组件是可部署的, 而类不行</li>
+<li>组件表示的是物理模块, 类是逻辑模块, 组件是由一组类协作而成的</li>
+<li>类可以直接拥有操作和属性, 组件仅拥有可以通过其接口访问的操作</li>
+</ul>
+<p><img alt="" src="http://i68.tinypic.com/1zpidfd.jpg" /></p>
+<p><a href="http://www.ibm.com/developerworks/cn/rational/rationaledge/content/feb05/bell/bell.html">参考文档</a></p>
+<p>部署图和组件图:</p>
+<ul>
+<li>部署图表现组件实例, 偏向于描述组件在节点中运行时的状态, 描述了组件运行的环境</li>
+<li>组件图表现组件类型的定义, 偏向于描述构件之间相互依赖支持的基本关系</li>
+</ul>
+<p>先有部署图还是组件图?
+依照 top down 原则, 所以是从部署图到构件图, 实际上也应该如此, 因为我们在需求确定后, 一般就会确定大体的技术架构、程序模块划分, 而此时一般系统集成的工作也要相应的启动: 要买主机、网络设备;<br>所以要提供给系统集成人员相应的资料, 那么就需要先把部署图做出来, 然后再细化构件图.</p>
+    </div>
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2016 <a href="http://www.samllcpp.com/" target="_blank">Martin</a> Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+              </p>
+        </div>
+    </body>
+</html>
