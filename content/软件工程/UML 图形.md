@@ -1,5 +1,5 @@
 ---
-title: UML 图形.md
+title: UML 图形
 layout: page
 date: 2016-07-29 11:07
 ---
