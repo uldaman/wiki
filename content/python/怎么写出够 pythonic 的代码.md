@@ -10,7 +10,8 @@ date: 2016-05-15 16:09
 
 所以才有了这篇 wiki, 相当于对之前学过的知识做个小结, 并且收集一些 Pythonic 的代码.
 
-> 注意, 部分内容收集自互联网.
+> 注意, 部分内容收集自互联网;<br>
+> 另外推荐本书: [<<编写高质量代码 - 改善 Python 程序的 91 个建议>>](https://yunpan.cn/c6mPavfeDzHYK)  **访问密码** 9f75
 
 # References:<br>
 [python 性能调优](https://github.com/xuelangZF/CS_Offer/blob/master/Python.md)<br>
