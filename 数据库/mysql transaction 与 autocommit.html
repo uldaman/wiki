@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <title>mysql transaction 与 autocommit - Wiki | Small Cpp</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            
+            <a href="/">Home</a> » <a href="/#数据库">数据库</a> » mysql transaction 与 autocommit
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <div class="toc"><span class="toctitle">Table of Contents</span><ul></ul>
+</div>
+<p>在默认的情况下, MySQL 从自动提交 (autocommit) 模式运行, 这种模式会在每条语句执行完毕后把它作出的修改立刻提交给数据库并使之永久化. 事实上, 这相当于把每一条语句都<strong>隐含</strong>地当做一个<strong>事务</strong>来执行.</p>
+<p>如果你想明确地执行事务, 需要<strong>禁用</strong>自动提交模式并告诉 MySQL 你想让它在何时提交或回滚有关的修改.</p>
+<p><strong>禁用</strong>自动提交模式有两种方式:</p>
+<p><strong>一种</strong>是直接设置 <code>autocommit</code> 为 <code>false</code>, 此时, 在提交或回滚前的所有 sql 语句都会当成同一个事务来处理;</p>
+<p><strong>另一种</strong>常用的办法是发出一条 <code>START TRANSACTION</code> (或 BEGIN) 语句临时<strong>挂起</strong>自动提交模式, 在事务被提交或回滚之后, 该模式将恢复到开始本次事务的 <code>START TRANSACTION</code> 语句被执行之前的状态. (如果自动提交模式原来是激活的, 结束事务将回到自动提交模式; 如果它原来是禁用的, 结束当前事务将<strong>自动</strong>开始下一个事务.)</p>
+    </div>
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2016 <a href="http://www.samllcpp.com/" target="_blank">Martin</a> Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+              </p>
+        </div>
+    </body>
+</html>

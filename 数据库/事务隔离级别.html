@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <title>事务隔离级别 - Wiki | Small Cpp</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            
+            <a href="/">Home</a> » <a href="/#数据库">数据库</a> » 事务隔离级别
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#_1">事务并发引起的问题</a></li>
+<li><a href="#_2">隔离级别</a></li>
+</ul>
+</div>
+<h1 id="_1">事务并发引起的问题</h1>
+<p><strong>脏读</strong> (Drity Read): 某个事务已更新一份数据, 另一个事务在此时读取了同一份数据, 由于某些原因, 前一个 RollBack 了操作, 则后一个事务所读取的数据就会是不正确的.</p>
+<p><strong>不可重复读</strong> (Non-repeatable read): 在一个事务的两次查询之中数据不一致, 这可能是两次查询过程中间被另一个事务<strong>更新</strong>了原有的数据.</p>
+<p><strong>幻读</strong> (Phantom Read): 和不可重复读很像, 在一个事务的两次查询中数据笔数不一致, 这可能是两次查询过程中间被一个事务<strong>插入</strong>了新的数据.</p>
+<h1 id="_2">隔离级别</h1>
+<p>为了解决上面事务并发引起的问题, 数据库的事务系统一般提供了隔离级别的设定:</p>
+<ul>
+<li>读未提交 Read Uncommitted, 对应值为 <code>1</code>, 最低级别, 会导致脏读、不可重复读、幻读</li>
+<li>读已提交 Read Committed, 设置为 <code>2</code>, 避免脏读</li>
+<li>可重复读 Repeatable Read, 设置为 <code>4</code>, 避免脏读、不可重复读</li>
+<li>可串行化 Serializable, 设置为 <code>8</code>, 最高级别, 所谓串行化, 就是完全避免了并发, 脏读、不可重复读、幻读都不会发生</li>
+</ul>
+<p>MySQL 默认是 4</p>
+<blockquote>
+<p>因为数据库对隔离级别的实现有所差别, 貌似 MySQL 设置成 4 时也能避免幻读.</p>
+</blockquote>
+<p>查看隔离级别:</p>
+<div class="hlcode"><pre><span class="k">select</span> <span class="o">@@</span><span class="k">global</span><span class="p">.</span><span class="n">tx_isolation</span><span class="p">;</span>    <span class="c1">-- 全局隔离级别</span>
+<span class="k">select</span> <span class="o">@@</span><span class="k">session</span><span class="p">.</span><span class="n">tx_isolation</span><span class="p">;</span>   <span class="c1">-- 当前会话的隔离级别</span>
+</pre></div>
+
+
+<p><br>
+设置隔离级别 (谁读设置谁):</p>
+<div class="hlcode"><pre><span class="k">SET</span> <span class="p">[</span><span class="k">GLOBAL</span> <span class="o">|</span> <span class="k">SESSION</span><span class="p">]</span> <span class="n">TRANSACTION</span> <span class="k">ISOLATION</span> <span class="k">LEVEL</span> <span class="err">{</span> <span class="k">READ</span> <span class="k">UNCOMMITTED</span> <span class="o">|</span> <span class="k">READ</span> <span class="k">COMMITTED</span> <span class="o">|</span> <span class="k">REPEATABLE</span> <span class="k">READ</span> <span class="o">|</span> <span class="k">SERIALIZABLE</span> <span class="err">}</span>
+</pre></div>
+    </div>
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2016 <a href="http://www.samllcpp.com/" target="_blank">Martin</a> Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+              </p>
+        </div>
+    </body>
+</html>
