@@ -46,6 +46,7 @@
 <blockquote>
 <p>因为数据库对隔离级别的实现有所差别, 貌似 MySQL 设置成 4 时也能避免幻读.</p>
 </blockquote>
+<p><img alt="" src="http://i64.tinypic.com/2a7twk8.jpg" /></p>
 <p>查看隔离级别:</p>
 <div class="hlcode"><pre><span class="k">select</span> <span class="o">@@</span><span class="k">global</span><span class="p">.</span><span class="n">tx_isolation</span><span class="p">;</span>    <span class="c1">-- 全局隔离级别</span>
 <span class="k">select</span> <span class="o">@@</span><span class="k">session</span><span class="p">.</span><span class="n">tx_isolation</span><span class="p">;</span>   <span class="c1">-- 当前会话的隔离级别</span>
