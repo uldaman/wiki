@@ -850,8 +850,6 @@ Z 轴是我们的非功能模块, 比如安全性, 健壮性, 美观性等等, �
 
 另外要注意, 在需求阶段, 我们用用例图中的__Package__来表达系统、子系统、模块、子模块间的关系, 但这和系统设计阶段的模块层次**不是**一一对应的, 确切的说需求阶段的模块划分表达的是更上层的东西, 即功能模块的划分, 而系统设计阶段的模块划分则是从软件工程角度出发, 应该按 GRASP & SOLID, 是两种完全不同的概念.
 
-> 关于系统设计, 我在另一篇笔记 [12、WRUP 最佳案例](https://www.smallcpp.com/12-wrup-zui-jia-an-li.html#design) 中也提到了一些, 可以去参考下.
-
 ### GRASP & SOLID
 **SOLID**, 这是描述设计原则的一个专业术语, 由我们可爱的代码整洁之道传教者鲍勃 (罗伯特C. 马丁) 大叔提出, 是一组用于指导我们如何写出"好代码"的原则.
 
@@ -881,7 +879,7 @@ GRASP 包括以下内容:
 - Indirection (中介模式)
 - Protected Variations (受保护变化模式)
 
-> 关于这几个模式的定义, 参考我另一篇笔记: [设计模式与 GRASP](http://www.smallcpp.com/3-cshe-ji-mo-shi-yu-grasp.html)
+> 关于这几个模式的定义, 参考我另一篇笔记: [设计模式与 GRASP](http://blog.smallcpp.com/3-cshe-ji-mo-shi-yu-grasp.html)
 
 GRASP 与 SOLID 是有相通的地方的:
 

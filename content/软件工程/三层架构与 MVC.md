@@ -8,13 +8,13 @@ date: 2016-07-29 11:24
 
 > 近来对架构这块又有了新认识, MVC 也好, 三层也罢, 都是结构性模式, 由于结构化, 而可能忽视了行为事件, 这类的架构大多是一种 "失血"、"贫血" 模式.<br>
 > 现在, 我更推荐职责驱动设计.<br>
-> 推荐本书: [UML和模式应用](https://share.weiyun.com/ffebfff0ea72831e6d0a96905f359d06), 这本书介绍了对象职责的分配原则<br>
+> 推荐本书: [UML 和模式应用](https://share.weiyun.com/ffebfff0ea72831e6d0a96905f359d06), 这本书介绍了对象职责的分配原则<br>
 >
 > 参考资料:<br>
 > [对象的责任与职责](http://www.jdon.com/38045)<br>
-> [DCI架构是什么？](http://www.jdon.com/37976)<br>
+> [DCI 架构是什么？](http://www.jdon.com/37976)<br>
 > [如何从职责和协作中发现丰富对象？](http://www.jdon.com/38071)<br>
-> [MVC模式已死](http://www.jdon.com/38448)
+> [MVC 模式已死](http://www.jdon.com/38448)
 
 [TOC]
 
