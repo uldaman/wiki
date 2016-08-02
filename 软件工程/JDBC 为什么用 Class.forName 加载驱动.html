@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <title>JDBC 为什么用 Class.forName 加载驱动 - Wiki | Small Cpp</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            
+            <a href="/">Home</a> » <a href="/#软件工程">软件工程</a> » JDBC 为什么用 Class.forName 加载驱动
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#_1">原因一</a></li>
+<li><a href="#_2">原因二</a></li>
+</ul>
+</div>
+<p>JDBC 中注册驱动为什么使用 <code>Class.forName("com.mysql.jdbc.Driver")</code> 而不使用 <code>new com.mysql.jdbc.Driver()</code>?</p>
+<p>其原因有二.</p>
+<h3 id="_1">原因一</h3>
+<p><code>new</code> 一个类需要 <code>import</code> 它的包, 而各大数据库提供的驱动不一样, 使用 <code>new</code> 的方式就十分依赖 <code>import</code> 驱动的 jar 包, 这样一旦换了数据库驱动, 还要修改 <code>import</code> 语句, 而使用 <code>Class.forName("com.mysql.jdbc.Driver")</code> 的话, 可以把 "com.mysql.jdbc.Driver" 写入配置文件, 这样换数据库驱动的话, 只要修改配置文件就行了.</p>
+<h3 id="_2">原因二</h3>
+<p>首先, JDBC 规范要求各厂商必须在<strong>静态代码块</strong>中将自己 (Driver) 使用 <code>DriverManager.registerDriver</code> 方法注册到 <code>DriverManager</code> 中去, 最终使用 <code>DriverManager</code> 来操作数据库, 如下图.</p>
+<p><img alt="" src="http://i67.tinypic.com/10fw3no.jpg" /></p>
+<p>根据 Java 类加载规则, 一个 java 文件从被加载到被卸载这个生命过程, 总共要经历5个阶段:</p>
+<ul>
+<li><strong>装载</strong></li>
+<li><strong>链接</strong><ul>
+<li>验证</li>
+<li>准备</li>
+<li>解析</li>
+</ul>
+</li>
+<li><strong>初始化</strong> (对类的静态变量, 静态代码块执行初始化操作)</li>
+<li><strong>使用</strong> (即实例化)</li>
+<li><strong>卸载</strong></li>
+</ul>
+<blockquote>
+<p>关于类的加载参考 blog: <a href="http://blog.smallcpp.com/018-dai-ma-kuai-he-lei-jia-zai.html">018、代码块和类加载</a></p>
+</blockquote>
+<p>类的加载指的是 <strong>装载</strong> -> <strong>链接</strong> -> <strong>初始化</strong> 这<strong>三</strong>个阶段, 而使用 <code>Class.forName()</code> 方法就是完成类的加载、执行 Driver 中的静态代码块.</p>
+<p><code>new</code> 语法实际是和 <code>Class.forName().newInstances()</code> 差不多的, 是 <strong>装载</strong> -> <strong>链接</strong> -> <strong>初始化</strong> -> <strong>使用</strong> 这<strong>四</strong>个阶段, 也就是获取一个实例对象, 但我们只需要加载类、注册好驱动就可以了, 并不需要实例化它 (因为并不使用 <code>Driver</code> 的实例对象操作数据库, 而是使用 <code>DriverManager</code>).</p>
+    </div>
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2016 <a href="http://www.samllcpp.com/" target="_blank">Martin</a> Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+              </p>
+        </div>
+    </body>
+</html>
