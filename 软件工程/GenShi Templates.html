@@ -1,0 +1,539 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <title>GenShi Templates - Wiki | Small Cpp</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            
+            <a href="/">Home</a> » <a href="/#软件工程">软件工程</a> » GenShi Templates
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#genshi-xml-template-language">Genshi XML Template Language</a></li>
+<li><a href="#1-template-directives">1 Template Directives</a><ul>
+<li><a href="#11-conditional-sections">1.1 Conditional Sections</a><ul>
+<li><a href="#111-pyif">1.1.1 py:if</a></li>
+<li><a href="#112-pychoose">1.1.2 py:choose</a></li>
+</ul>
+</li>
+<li><a href="#12-looping">1.2 Looping</a><ul>
+<li><a href="#121-pyfor">1.2.1 py:for</a></li>
+</ul>
+</li>
+<li><a href="#13-snippet-reuse">1.3 Snippet Reuse</a><ul>
+<li><a href="#131-pydef">1.3.1 py:def</a></li>
+<li><a href="#132-pymatch">1.3.2 py:match</a></li>
+</ul>
+</li>
+<li><a href="#14-variable-binding">1.4 Variable Binding</a><ul>
+<li><a href="#141-pywith">1.4.1 py:with</a></li>
+</ul>
+</li>
+<li><a href="#15-structure-manipulation">1.5 Structure Manipulation</a><ul>
+<li><a href="#151-pyattrs">1.5.1 py:attrs</a></li>
+<li><a href="#152-pycontent">1.5.2   py:content</a></li>
+<li><a href="#153-pyreplace">1.5.3 py:replace</a></li>
+<li><a href="#154-pystrip">1.5.4 py:strip</a></li>
+</ul>
+</li>
+<li><a href="#16-processing-order">1.6 Processing Order</a></li>
+</ul>
+</li>
+<li><a href="#2-includes">2 Includes</a><ul>
+<li><a href="#21-dynamic-includes">2.1 Dynamic Includes</a></li>
+<li><a href="#22-including-text-templates">2.2 Including Text Templates</a></li>
+</ul>
+</li>
+<li><a href="#3-comments">3 Comments</a></li>
+</ul>
+</div>
+<h1 id="genshi-xml-template-language">Genshi XML Template Language</h1>
+<p>Genshi provides a XML-based template language that is heavily inspired by Kid, which in turn was inspired by a number of existing template languages, namely XSLT, TAL, and PHP.</p>
+<p>This document describes the template language and will be most useful as reference to those developing Genshi XML templates. Templates are XML files of some kind (such as XHTML) that include processing directives (elements or attributes identified by a separate namespace) that affect how the template is rendered, and template expressions that are dynamically substituted by variable data.</p>
+<p>See Genshi Templating Basics for general information on embedding Python code in templates.</p>
+<h1 id="1-template-directives">1 Template Directives</h1>
+<p>Directives are elements and/or attributes in the template that are identified by the namespace http://genshi.edgewall.org/. They can affect how the template is rendered in a number of ways: Genshi provides directives for conditionals and looping, among others.</p>
+<p>To use directives in a template, the namespace must be declared, which is usually done on the root element:</p>
+<div class="hlcode"><pre><span class="nt">&lt;html</span> <span class="na">xmlns=</span><span class="s">&quot;http://www.w3.org/1999/xhtml&quot;</span>
+      <span class="na">xmlns:py=</span><span class="s">&quot;http://genshi.edgewall.org/&quot;</span>
+      <span class="na">lang=</span><span class="s">&quot;en&quot;</span><span class="nt">&gt;</span>
+  ...
+<span class="nt">&lt;/html&gt;</span>
+</pre></div>
+
+
+<p><br>
+In this example, the default namespace is set to the XHTML namespace, and the namespace for Genshi directives is bound to the prefix “py”.</p>
+<p>All directives can be applied as attributes, and some can also be used as elements. The if directives for conditionals, for example, can be used in both ways:</p>
+<div class="hlcode"><pre><span class="nt">&lt;html</span> <span class="na">xmlns=</span><span class="s">&quot;http://www.w3.org/1999/xhtml&quot;</span>
+      <span class="na">xmlns:py=</span><span class="s">&quot;http://genshi.edgewall.org/&quot;</span>
+      <span class="na">lang=</span><span class="s">&quot;en&quot;</span><span class="nt">&gt;</span>
+  ...
+  <span class="nt">&lt;div</span> <span class="na">py:if=</span><span class="s">&quot;foo&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;p&gt;</span>Bar<span class="nt">&lt;/p&gt;</span>
+  <span class="nt">&lt;/div&gt;</span>
+  ...
+<span class="nt">&lt;/html&gt;</span>
+</pre></div>
+
+
+<p><br>
+This is basically equivalent to the following:</p>
+<div class="hlcode"><pre><span class="nt">&lt;html</span> <span class="na">xmlns=</span><span class="s">&quot;http://www.w3.org/1999/xhtml&quot;</span>
+      <span class="na">xmlns:py=</span><span class="s">&quot;http://genshi.edgewall.org/&quot;</span>
+      <span class="na">lang=</span><span class="s">&quot;en&quot;</span><span class="nt">&gt;</span>
+  ...
+  <span class="nt">&lt;py:if</span> <span class="na">test=</span><span class="s">&quot;foo&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;div&gt;</span>
+      <span class="nt">&lt;p&gt;</span>Bar<span class="nt">&lt;/p&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+  <span class="nt">&lt;/py:if&gt;</span>
+  ...
+<span class="nt">&lt;/html&gt;</span>
+</pre></div>
+
+
+<p><br>
+The rationale behind the second form is that directives do not always map naturally to elements in the template. In such cases, the py:strip directive can be used to strip off the unwanted element, or the directive can simply be used as an element.</p>
+<h2 id="11-conditional-sections">1.1 Conditional Sections</h2>
+<h3 id="111-pyif">1.1.1 py:if</h3>
+<p>The element and its content is only rendered if the expression evaluates to a truth value:</p>
+<div class="hlcode"><pre><span class="nt">&lt;div&gt;</span>
+  <span class="nt">&lt;b</span> <span class="na">py:if=</span><span class="s">&quot;foo&quot;</span><span class="nt">&gt;</span>${bar}<span class="nt">&lt;/b&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+</pre></div>
+
+
+<p><br>
+Given the data foo=True and bar='Hello' in the template context, this would produce:</p>
+<div class="hlcode"><pre><span class="nt">&lt;div&gt;</span>
+  <span class="nt">&lt;b&gt;</span>Hello<span class="nt">&lt;/b&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+</pre></div>
+
+
+<p><br>
+But setting foo=False would result in the following output:</p>
+<div class="hlcode"><pre><span class="nt">&lt;div&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+</pre></div>
+
+
+<p><br>
+This directive can also be used as an element:</p>
+<div class="hlcode"><pre><span class="nt">&lt;div&gt;</span>
+  <span class="nt">&lt;py:if</span> <span class="na">test=</span><span class="s">&quot;foo&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;b&gt;</span>${bar}<span class="nt">&lt;/b&gt;</span>
+  <span class="nt">&lt;/py:if&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+</pre></div>
+
+
+<p><br></p>
+<h3 id="112-pychoose">1.1.2 py:choose</h3>
+<p>The py:choose directive, in combination with the directives py:when and py:otherwise provides advanced conditional processing for rendering one of several alternatives. The first matching py:when branch is rendered, or, if no py:when branch matches, the py:otherwise branch is rendered.</p>
+<p>If the py:choose directive is empty the nested py:when directives will be tested for truth:</p>
+<div class="hlcode"><pre><span class="nt">&lt;div</span> <span class="na">py:choose=</span><span class="s">&quot;&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;span</span> <span class="na">py:when=</span><span class="s">&quot;0 == 1&quot;</span><span class="nt">&gt;</span>0<span class="nt">&lt;/span&gt;</span>
+  <span class="nt">&lt;span</span> <span class="na">py:when=</span><span class="s">&quot;1 == 1&quot;</span><span class="nt">&gt;</span>1<span class="nt">&lt;/span&gt;</span>
+  <span class="nt">&lt;span</span> <span class="na">py:otherwise=</span><span class="s">&quot;&quot;</span><span class="nt">&gt;</span>2<span class="nt">&lt;/span&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+</pre></div>
+
+
+<p><br>
+This would produce the following output:</p>
+<div class="hlcode"><pre><span class="nt">&lt;div&gt;</span>
+  <span class="nt">&lt;span&gt;</span>1<span class="nt">&lt;/span&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+</pre></div>
+
+
+<p><br>
+If the py:choose directive contains an expression the nested py:when directives will be tested for equality to the parent py:choose value:</p>
+<div class="hlcode"><pre><span class="nt">&lt;div</span> <span class="na">py:choose=</span><span class="s">&quot;1&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;span</span> <span class="na">py:when=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>0<span class="nt">&lt;/span&gt;</span>
+  <span class="nt">&lt;span</span> <span class="na">py:when=</span><span class="s">&quot;1&quot;</span><span class="nt">&gt;</span>1<span class="nt">&lt;/span&gt;</span>
+  <span class="nt">&lt;span</span> <span class="na">py:otherwise=</span><span class="s">&quot;&quot;</span><span class="nt">&gt;</span>2<span class="nt">&lt;/span&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+</pre></div>
+
+
+<p><br>
+This would produce the following output:</p>
+<div class="hlcode"><pre><span class="nt">&lt;div&gt;</span>
+  <span class="nt">&lt;span&gt;</span>1<span class="nt">&lt;/span&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+</pre></div>
+
+
+<p><br>
+These directives can also be used as elements:</p>
+<div class="hlcode"><pre><span class="nt">&lt;py:choose</span> <span class="na">test=</span><span class="s">&quot;1&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;py:when</span> <span class="na">test=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>0<span class="nt">&lt;/py:when&gt;</span>
+  <span class="nt">&lt;py:when</span> <span class="na">test=</span><span class="s">&quot;1&quot;</span><span class="nt">&gt;</span>1<span class="nt">&lt;/py:when&gt;</span>
+  <span class="nt">&lt;py:otherwise&gt;</span>2<span class="nt">&lt;/py:otherwise&gt;</span>
+<span class="nt">&lt;/py:choose&gt;</span>
+</pre></div>
+
+
+<p><br></p>
+<h2 id="12-looping">1.2 Looping</h2>
+<h3 id="121-pyfor">1.2.1 py:for</h3>
+<p>The element is repeated for every item in an iterable:</p>
+<div class="hlcode"><pre><span class="nt">&lt;ul&gt;</span>
+  <span class="nt">&lt;li</span> <span class="na">py:for=</span><span class="s">&quot;item in items&quot;</span><span class="nt">&gt;</span>${item}<span class="nt">&lt;/li&gt;</span>
+<span class="nt">&lt;/ul&gt;</span>
+</pre></div>
+
+
+<p><br>
+Given items=[1, 2, 3] in the context data, this would produce:</p>
+<div class="hlcode"><pre><span class="nt">&lt;ul&gt;</span>
+  <span class="nt">&lt;li&gt;</span>1<span class="nt">&lt;/li&gt;&lt;li&gt;</span>2<span class="nt">&lt;/li&gt;&lt;li&gt;</span>3<span class="nt">&lt;/li&gt;</span>
+<span class="nt">&lt;/ul&gt;</span>
+</pre></div>
+
+
+<p><br>
+This directive can also be used as an element:</p>
+<div class="hlcode"><pre><span class="nt">&lt;ul&gt;</span>
+  <span class="nt">&lt;py:for</span> <span class="na">each=</span><span class="s">&quot;item in items&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;li&gt;</span>${item}<span class="nt">&lt;/li&gt;</span>
+  <span class="nt">&lt;/py:for&gt;</span>
+<span class="nt">&lt;/ul&gt;</span>
+</pre></div>
+
+
+<p><br></p>
+<h2 id="13-snippet-reuse">1.3 Snippet Reuse</h2>
+<h3 id="131-pydef">1.3.1 py:def</h3>
+<p>The py:def directive can be used to create macros, i.e. snippets of template code that have a name and optionally some parameters, and that can be inserted in other places:</p>
+<div class="hlcode"><pre><span class="nt">&lt;div&gt;</span>
+  <span class="nt">&lt;p</span> <span class="na">py:def=</span><span class="s">&quot;greeting(name)&quot;</span> <span class="na">class=</span><span class="s">&quot;greeting&quot;</span><span class="nt">&gt;</span>
+    Hello, ${name}!
+  <span class="nt">&lt;/p&gt;</span>
+  ${greeting(&#39;world&#39;)}
+  ${greeting(&#39;everyone else&#39;)}
+<span class="nt">&lt;/div&gt;</span>
+</pre></div>
+
+
+<p><br>
+The above would be rendered to:</p>
+<div class="hlcode"><pre><span class="nt">&lt;div&gt;</span>
+  <span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">&quot;greeting&quot;</span><span class="nt">&gt;</span>
+    Hello, world!
+  <span class="nt">&lt;/p&gt;</span>
+  <span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">&quot;greeting&quot;</span><span class="nt">&gt;</span>
+    Hello, everyone else!
+  <span class="nt">&lt;/p&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+</pre></div>
+
+
+<p><br>
+If a macro doesn't require parameters, it can be defined without the parenthesis. For example:</p>
+<div class="hlcode"><pre><span class="nt">&lt;div&gt;</span>
+  <span class="nt">&lt;p</span> <span class="na">py:def=</span><span class="s">&quot;greeting&quot;</span> <span class="na">class=</span><span class="s">&quot;greeting&quot;</span><span class="nt">&gt;</span>
+    Hello, world!
+  <span class="nt">&lt;/p&gt;</span>
+  ${greeting()}
+<span class="nt">&lt;/div&gt;</span>
+</pre></div>
+
+
+<p><br>
+The above would be rendered to:</p>
+<div class="hlcode"><pre><span class="nt">&lt;div&gt;</span>
+  <span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">&quot;greeting&quot;</span><span class="nt">&gt;</span>
+    Hello, world!
+  <span class="nt">&lt;/p&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+</pre></div>
+
+
+<p><br>
+This directive can also be used as an element:</p>
+<div class="hlcode"><pre><span class="nt">&lt;div&gt;</span>
+  <span class="nt">&lt;py:def</span> <span class="na">function=</span><span class="s">&quot;greeting(name)&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">&quot;greeting&quot;</span><span class="nt">&gt;</span>Hello, ${name}!<span class="nt">&lt;/p&gt;</span>
+  <span class="nt">&lt;/py:def&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+</pre></div>
+
+
+<p><br></p>
+<h3 id="132-pymatch">1.3.2 py:match</h3>
+<p>This directive defines a match template: given an XPath expression, it replaces any element in the template that matches the expression with its own content.</p>
+<p>For example, the match template defined in the following template matches any element with the tag name “greeting”:</p>
+<div class="hlcode"><pre><span class="nt">&lt;div&gt;</span>
+  <span class="nt">&lt;span</span> <span class="na">py:match=</span><span class="s">&quot;greeting&quot;</span><span class="nt">&gt;</span>
+    Hello ${select(&#39;@name&#39;)}
+  <span class="nt">&lt;/span&gt;</span>
+  <span class="nt">&lt;greeting</span> <span class="na">name=</span><span class="s">&quot;Dude&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+</pre></div>
+
+
+<p><br>
+This would result in the following output:</p>
+<div class="hlcode"><pre><span class="nt">&lt;div&gt;</span>
+  <span class="nt">&lt;span&gt;</span>
+    Hello Dude
+  <span class="nt">&lt;/span&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+</pre></div>
+
+
+<p><br>
+Inside the body of a py:match directive, the select(path) function is made available so that parts or all of the original element can be incorporated in the output of the match template. See Using XPath for more information about this function.</p>
+<p>Match templates are applied both to the original markup as well to the generated markup. The order in which they are applied depends on the order they are declared in the template source: a match template defined after another match template is applied to the output generated by the first match template. The match templates basically form a pipeline.</p>
+<p>This directive can also be used as an element:</p>
+<div class="hlcode"><pre><span class="nt">&lt;div&gt;</span>
+  <span class="nt">&lt;py:match</span> <span class="na">path=</span><span class="s">&quot;greeting&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;span&gt;</span>Hello ${select(&#39;@name&#39;)}<span class="nt">&lt;/span&gt;</span>
+  <span class="nt">&lt;/py:match&gt;</span>
+  <span class="nt">&lt;greeting</span> <span class="na">name=</span><span class="s">&quot;Dude&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+</pre></div>
+
+
+<p><br>
+When used this way, the py:match directive can also be annotated with a couple of optimization hints. For example, the following informs the matching engine that the match should only be applied once:</p>
+<div class="hlcode"><pre><span class="nt">&lt;py:match</span> <span class="na">path=</span><span class="s">&quot;body&quot;</span> <span class="na">once=</span><span class="s">&quot;true&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;body</span> <span class="na">py:attrs=</span><span class="s">&quot;select(&#39;@*&#39;)&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;header&quot;</span><span class="nt">&gt;</span>...<span class="nt">&lt;/div&gt;</span>
+    ${select(&quot;*|text()&quot;)}
+    <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;footer&quot;</span><span class="nt">&gt;</span>...<span class="nt">&lt;/div&gt;</span>
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/py:match&gt;</span>
+</pre></div>
+
+
+<p><br>
+The following optimization hints are recognized:</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>buffer</td>
+<td>true</td>
+<td>Whether the matched content should be buffered in memory. Buffering can improve performance a bit at the cost of needing more memory during rendering. Buffering is ''required'' for match templates that contain more than one invocation of the select() function. If there is only one call, and the matched content can potentially be very long, consider disabling buffering to avoid excessive memory use.</td>
+</tr>
+<tr>
+<td>once</td>
+<td>false</td>
+<td>Whether the engine should stop looking for more matching elements after the first match. Use this on match templates that match elements that can only occur once in the stream, such as the <head> or <body> elements in an HTML template, or elements with a specific ID.</td>
+</tr>
+<tr>
+<td>recursive</td>
+<td>true</td>
+<td>Whether the match template should be applied to its own output. Note that once implies non-recursive behavior, so this attribute only needs to be set for match templates that don't also have once set.</td>
+</tr>
+</tbody>
+</table>
+<p>Note</p>
+<p>The py:match optimization hints were added in the 0.5 release. In earlier versions, the attributes have no effect.</p>
+<h2 id="14-variable-binding">1.4 Variable Binding</h2>
+<h3 id="141-pywith">1.4.1 py:with</h3>
+<p>The py:with directive lets you assign expressions to variables, which can be used to make expressions inside the directive less verbose and more efficient. For example, if you need use the expression author.posts more than once, and that actually results in a database query, assigning the results to a variable using this directive would probably help.</p>
+<p>For example:</p>
+<div class="hlcode"><pre><span class="nt">&lt;div&gt;</span>
+  <span class="nt">&lt;span</span> <span class="na">py:with=</span><span class="s">&quot;y=7; z=x+10&quot;</span><span class="nt">&gt;</span>$x $y $z<span class="nt">&lt;/span&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+</pre></div>
+
+
+<p><br>
+Given x=42 in the context data, this would produce:</p>
+<div class="hlcode"><pre><span class="nt">&lt;div&gt;</span>
+  <span class="nt">&lt;span&gt;</span>42 7 52<span class="nt">&lt;/span&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+</pre></div>
+
+
+<p><br>
+This directive can also be used as an element:</p>
+<div class="hlcode"><pre><span class="nt">&lt;div&gt;</span>
+  <span class="nt">&lt;py:with</span> <span class="na">vars=</span><span class="s">&quot;y=7; z=x+10&quot;</span><span class="nt">&gt;</span>$x $y $z<span class="nt">&lt;/py:with&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+</pre></div>
+
+
+<p><br>
+Note that if a variable of the same name already existed outside of the scope of the py:with directive, it will not be overwritten. Instead, it will have the same value it had prior to the py:with assignment. Effectively, this means that variables are immutable in Genshi.</p>
+<h2 id="15-structure-manipulation">1.5 Structure Manipulation</h2>
+<h3 id="151-pyattrs">1.5.1 py:attrs</h3>
+<p>This directive adds, modifies or removes attributes from the element:</p>
+<div class="hlcode"><pre><span class="nt">&lt;ul&gt;</span>
+  <span class="nt">&lt;li</span> <span class="na">py:attrs=</span><span class="s">&quot;foo&quot;</span><span class="nt">&gt;</span>Bar<span class="nt">&lt;/li&gt;</span>
+<span class="nt">&lt;/ul&gt;</span>
+</pre></div>
+
+
+<p><br>
+Given foo={'class': 'collapse'} in the template context, this would produce:</p>
+<div class="hlcode"><pre><span class="nt">&lt;ul&gt;</span>
+  <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">&quot;collapse&quot;</span><span class="nt">&gt;</span>Bar<span class="nt">&lt;/li&gt;</span>
+<span class="nt">&lt;/ul&gt;</span>
+</pre></div>
+
+
+<p><br>
+Attributes with the value None are omitted, so given foo={'class': None} in the context for the same template this would produce:</p>
+<div class="hlcode"><pre><span class="nt">&lt;ul&gt;</span>
+  <span class="nt">&lt;li&gt;</span>Bar<span class="nt">&lt;/li&gt;</span>
+<span class="nt">&lt;/ul&gt;</span>
+</pre></div>
+
+
+<p><br>
+This directive can only be used as an attribute.</p>
+<h3 id="152-pycontent">1.5.2   py:content</h3>
+<p>This directive replaces any nested content with the result of evaluating the expression:</p>
+<div class="hlcode"><pre><span class="nt">&lt;ul&gt;</span>
+  <span class="nt">&lt;li</span> <span class="na">py:content=</span><span class="s">&quot;bar&quot;</span><span class="nt">&gt;</span>Hello<span class="nt">&lt;/li&gt;</span>
+<span class="nt">&lt;/ul&gt;</span>
+</pre></div>
+
+
+<p><br>
+Given bar='Bye' in the context data, this would produce:</p>
+<div class="hlcode"><pre><span class="nt">&lt;ul&gt;</span>
+  <span class="nt">&lt;li&gt;</span>Bye<span class="nt">&lt;/li&gt;</span>
+<span class="nt">&lt;/ul&gt;</span>
+</pre></div>
+
+
+<p><br>
+This directive can only be used as an attribute.</p>
+<h3 id="153-pyreplace">1.5.3 py:replace</h3>
+<p>This directive replaces the element itself with the result of evaluating the expression:</p>
+<div class="hlcode"><pre><span class="nt">&lt;div&gt;</span>
+  <span class="nt">&lt;span</span> <span class="na">py:replace=</span><span class="s">&quot;bar&quot;</span><span class="nt">&gt;</span>Hello<span class="nt">&lt;/span&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+</pre></div>
+
+
+<p><br>
+Given bar='Bye' in the context data, this would produce:</p>
+<div class="hlcode"><pre><span class="nt">&lt;div&gt;</span>
+  Bye
+<span class="nt">&lt;/div&gt;</span>
+</pre></div>
+
+
+<p><br>
+This directive can also be used as an element (since version 0.5):</p>
+<div class="hlcode"><pre><span class="nt">&lt;div&gt;</span>
+  <span class="nt">&lt;py:replace</span> <span class="na">value=</span><span class="s">&quot;title&quot;</span><span class="nt">&gt;</span>Placeholder<span class="nt">&lt;/py:replace&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+</pre></div>
+
+
+<p><br></p>
+<h3 id="154-pystrip">1.5.4 py:strip</h3>
+<p>This directive conditionally strips the top-level element from the output. When the value of the py:strip attribute evaluates to True, the element is stripped from the output:</p>
+<div class="hlcode"><pre><span class="nt">&lt;div&gt;</span>
+  <span class="nt">&lt;div</span> <span class="na">py:strip=</span><span class="s">&quot;True&quot;</span><span class="nt">&gt;&lt;b&gt;</span>foo<span class="nt">&lt;/b&gt;&lt;/div&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+</pre></div>
+
+
+<p><br>
+This would be rendered as:</p>
+<div class="hlcode"><pre><span class="nt">&lt;div&gt;</span>
+  <span class="nt">&lt;b&gt;</span>foo<span class="nt">&lt;/b&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+</pre></div>
+
+
+<p><br>
+As a shorthand, if the value of the py:strip attribute is empty, that has the same effect as using a truth value (i.e. the element is stripped).</p>
+<h2 id="16-processing-order">1.6 Processing Order</h2>
+<p>It is possible to attach multiple directives to a single element, although not all combinations make sense. When multiple directives are encountered, they are processed in the following order:</p>
+<ul>
+<li>py:def</li>
+<li>py:match</li>
+<li>py:when</li>
+<li>py:otherwise</li>
+<li>py:for</li>
+<li>py:if</li>
+<li>py:choose</li>
+<li>py:with</li>
+<li>py:replace</li>
+<li>py:content</li>
+<li>py:attrs</li>
+<li>py:strip</li>
+</ul>
+<h1 id="2-includes">2 Includes</h1>
+<p>To reuse common snippets of template code, you can include other files using XInclude.</p>
+<p>For this, you need to declare the XInclude namespace (commonly bound to the prefix “xi”) and use the <xi:include> element where you want the external file to be pulled in:</p>
+<div class="hlcode"><pre><span class="nt">&lt;html</span> <span class="na">xmlns=</span><span class="s">&quot;http://www.w3.org/1999/xhtml&quot;</span>
+      <span class="na">xmlns:py=</span><span class="s">&quot;http://genshi.edgewall.org/&quot;</span>
+      <span class="na">xmlns:xi=</span><span class="s">&quot;http://www.w3.org/2001/XInclude&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xi:include</span> <span class="na">href=</span><span class="s">&quot;base.html&quot;</span> <span class="nt">/&gt;</span>
+  ...
+<span class="nt">&lt;/html&gt;</span>
+</pre></div>
+
+
+<p><br>
+Include paths are relative to the filename of the template currently being processed. So if the example above was in the file "myapp/index.html" (relative to the template search path), the XInclude processor would look for the included file at "myapp/base.html". You can also use Unix-style relative paths, for example "../base.html" to look in the parent directory.</p>
+<p>Any content included this way is inserted into the generated output instead of the <xi:include> element. The included template sees the same context data. Match templates and macros in the included template are also available to the including template after the point it was included.</p>
+<p>By default, an error will be raised if an included file is not found. If that's not what you want, you can specify fallback content that should be used if the include fails. For example, to to make the include above fail silently, you'd write:</p>
+<p><code>&lt;xi:include href="base.html"&gt;&lt;xi:fallback /&gt;&lt;/xi:include&gt;</code></p>
+<p>See the XInclude specification for more about fallback content. Note though that Genshi currently only supports a small subset of XInclude.</p>
+<h2 id="21-dynamic-includes">2.1 Dynamic Includes</h2>
+<p>Incudes in Genshi are fully dynamic: Just like normal attributes, the href attribute accepts expressions, and directives can be used on the <xi:include /> element just as on any other element, meaning you can do things like conditional includes:</p>
+<div class="hlcode"><pre><span class="nt">&lt;xi:include</span> <span class="na">href=</span><span class="s">&quot;${name}.html&quot;</span> <span class="na">py:if=</span><span class="s">&quot;not in_popup&quot;</span>
+            <span class="na">py:for=</span><span class="s">&quot;name in (&#39;foo&#39;, &#39;bar&#39;, &#39;baz&#39;)&quot;</span> <span class="nt">/&gt;</span>
+</pre></div>
+
+
+<p><br></p>
+<h2 id="22-including-text-templates">2.2 Including Text Templates</h2>
+<p>The parse attribute of the <xi:include> element can be used to specify whether the included template is an XML template or a text template (using the new syntax added in Genshi 0.5):</p>
+<p><code>&lt;xi:include href="myscript.js" parse="text" /&gt;</code></p>
+<p>This example would load the myscript.js file as a NewTextTemplate. See text templates for details on the syntax of text templates.</p>
+<h1 id="3-comments">3 Comments</h1>
+<p>Normal XML/HTML comment syntax can be used in templates:</p>
+<p><code>&lt;!-- this is a comment --&gt;</code></p>
+<p>However, such comments get passed through the processing pipeline and are by default included in the final output. If that's not desired, prefix the comment text with an exclamation mark:</p>
+<p><code>&lt;!-- !this is a comment too, but one that will be stripped from the output --&gt;</code></p>
+<p>Note that it does not matter whether there's whitespace before or after the exclamation mark, so the above could also be written as follows:</p>
+<p><code>&lt;!--! this is a comment too, but one that will be stripped from the output --&gt;</code></p>
+    </div>
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2016 <a href="http://www.samllcpp.com/" target="_blank">Martin</a> Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+              </p>
+        </div>
+    </body>
+</html>
