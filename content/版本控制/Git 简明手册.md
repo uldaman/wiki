@@ -110,7 +110,7 @@ edit file (工作区) \-\> git add (暂存区/index/stage) \-\> git commit (comm
 - git diff 分支名, 查看工作区与另一个分支的差异
 
 ### 整合 beyond compare 与 diff
-首先在 ~/bin/ 目录下新建一个 git-diff-wrapper.sh 文件
+首先在 `~/bin/` 目录下 (windows 是用户主目录, 如 `C:\Users\Administrator`) 新建一个 git-diff-wrapper.sh 文件
 
 window 系统的 git bash 的 git\-diff\-wrapper.sh
 
