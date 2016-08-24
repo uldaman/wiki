@@ -34,6 +34,23 @@
 <p><strong>另一种</strong>常用的办法是发出一条 <code>START TRANSACTION</code> (或 BEGIN) 语句临时<strong>挂起</strong>自动提交模式, 在事务被提交或回滚之后, 该模式将恢复到开始本次事务的 <code>START TRANSACTION</code> 语句被执行之前的状态. (如果自动提交模式原来是激活的, 结束事务将回到自动提交模式; 如果它原来是禁用的, 结束当前事务将<strong>自动</strong>开始下一个事务.)</p>
     </div>
 
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="mysql transaction 与 autocommit" data-title="mysql transaction 与 autocommit" data-url="http://wiki.smallcpp.com/数据库/mysql transaction 与 autocommit.html"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:"smallwiki"};
+        (function() {
+            var ds = document.createElement('script');
+            ds.type = 'text/javascript';ds.async = true;
+            ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+            ds.charset = 'UTF-8';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+    </script>
+    <!-- 多说公共JS代码 end -->
+
+
         </div>
         <div id="footer">
               <p>

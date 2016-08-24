@@ -27,7 +27,8 @@
     <div id="content">
         <div class="toc"><span class="toctitle">Table of Contents</span><ul>
 <li><a href="#diy">DIY 主题</a></li>
-<li><a href="#diy_1">DIY 部署</a></li>
+<li><a href="#diy_1">DIY 评论</a></li>
+<li><a href="#diy_2">DIY 部署</a></li>
 <li><a href="#_1">注意事项</a></li>
 <li><a href="#_2">补充</a></li>
 </ul>
@@ -41,7 +42,52 @@
 
 
 <p><br></p>
-<h1 id="diy_1">DIY 部署</h1>
+<h1 id="diy_1">DIY 评论</h1>
+<p>我用的是<a href="http://duoshuo.com/">多说评论系统</a> (来必力也是一个不错的评论系统, 可以去试试), 首先去<a href="http://duoshuo.com/">多说官网</a>注册一个账号, 然后为我们的 wiki 添加一个站点.</p>
+<p><img alt="" src="http://i63.tinypic.com/fdd182.jpg" /></p>
+<p>添加好后, 在管理页面会看到如下信息:</p>
+<p><img alt="" src="http://i67.tinypic.com/2cg2dxy.jpg" /></p>
+<p>打开 Simiki 主题目录下的 <code>page.html</code> 文件, 在 <code>{% endblock %}</code> 上面添加上图中的代码, 我这里改成了:</p>
+<div class="hlcode"><pre>{% extends &quot;base.html&quot; %}
+
+{% block title %}{{ page.title }} - {{ site.title }}{% endblock %}
+
+{% block container %}
+    <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;header&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;post-nav&quot;</span><span class="nt">&gt;</span>
+            {% if not default_home_page %}
+            <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;{{ site.root }}/&quot;</span><span class="nt">&gt;</span>Home<span class="nt">&lt;/a&gt;</span>{%- if page.category %} » <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;{{ site.root }}/#{{ page.category }}&quot;</span><span class="nt">&gt;</span>{{ page.category }}<span class="nt">&lt;/a&gt;</span>
+{%- endif %} » {{ page.title }}
+            {% endif %}
+        <span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;clearfix&quot;</span><span class="nt">&gt;&lt;/div&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;content&quot;</span><span class="nt">&gt;</span>
+        {{ page.content }}
+    <span class="nt">&lt;/div&gt;</span>
+
+    <span class="c">&lt;!-- 多说评论框 start --&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;ds-thread&quot;</span> <span class="na">data-thread-key=</span><span class="s">&quot;{{ page.title }}&quot;</span> <span class="na">data-title=</span><span class="s">&quot;{{ page.title }}&quot;</span> <span class="na">data-url=</span><span class="s">&quot;{{ site.url }}/{{ page.category }}/{{ page.title }}.html&quot;</span><span class="nt">&gt;&lt;/div&gt;</span>
+    <span class="c">&lt;!-- 多说评论框 end --&gt;</span>
+    <span class="c">&lt;!-- 多说公共JS代码 start (一个网页只需插入一次) --&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span><span class="nt">&gt;</span>
+    <span class="kd">var</span> <span class="nx">duoshuoQuery</span> <span class="o">=</span> <span class="p">{</span><span class="nx">short_name</span><span class="o">:</span><span class="s2">&quot;smallwiki&quot;</span><span class="p">};</span>
+        <span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">ds</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;script&#39;</span><span class="p">);</span>
+            <span class="nx">ds</span><span class="p">.</span><span class="nx">type</span> <span class="o">=</span> <span class="s1">&#39;text/javascript&#39;</span><span class="p">;</span><span class="nx">ds</span><span class="p">.</span><span class="nx">async</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+            <span class="nx">ds</span><span class="p">.</span><span class="nx">src</span> <span class="o">=</span> <span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">protocol</span> <span class="o">==</span> <span class="s1">&#39;https:&#39;</span> <span class="o">?</span> <span class="s1">&#39;https:&#39;</span> <span class="o">:</span> <span class="s1">&#39;http:&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;//static.duoshuo.com/embed.js&#39;</span><span class="p">;</span>
+            <span class="nx">ds</span><span class="p">.</span><span class="nx">charset</span> <span class="o">=</span> <span class="s1">&#39;UTF-8&#39;</span><span class="p">;</span>
+            <span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByTagName</span><span class="p">(</span><span class="s1">&#39;head&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">||</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByTagName</span><span class="p">(</span><span class="s1">&#39;body&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]).</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">ds</span><span class="p">);</span>
+        <span class="p">})();</span>
+    <span class="nt">&lt;/script&gt;</span>
+    <span class="c">&lt;!-- 多说公共JS代码 end --&gt;</span>
+
+{% endblock %}
+</pre></div>
+
+
+<p><br></p>
+<h1 id="diy_2">DIY 部署</h1>
 <p>我使用的是 Github Project Page, 所以可以把 <strong>output</strong> 目录加入 <strong>.gitignore</strong> 来忽略每次生成时的变化.</p>
 <ul>
 <li><strong>master</strong> 分支托管源文件</li>
@@ -94,6 +140,23 @@
 <h1 id="_2">补充</h1>
 <p>推荐使用 <a href="http://wiki.smallcpp.com/%E5%B7%A5%E5%85%B7%E9%85%8D%E7%BD%AE/%E6%8A%98%E8%85%BE%20Travis%20CI.html">Travis-ci</a> 自动化部署 Simiki 项目.</p>
     </div>
+
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="折腾 Simiki" data-title="折腾 Simiki" data-url="http://wiki.smallcpp.com/工具配置/折腾 Simiki.html"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:"smallwiki"};
+        (function() {
+            var ds = document.createElement('script');
+            ds.type = 'text/javascript';ds.async = true;
+            ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+            ds.charset = 'UTF-8';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+    </script>
+    <!-- 多说公共JS代码 end -->
+
 
         </div>
         <div id="footer">
