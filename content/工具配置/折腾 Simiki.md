@@ -16,6 +16,55 @@ Simiki 自带的主题稍微有点 low, 可以使用官网推荐的另一款主�
 <link rel="icon" href="{{ site.root }}/static/images/favicon.ico" type="image/x-icon">
 ```
 <br>
+# DIY 评论
+我用的是[多说评论系统](http://duoshuo.com/) (来必力也是一个不错的评论系统, 可以去试试), 首先去[多说官网](http://duoshuo.com/)注册一个账号, 然后为我们的 wiki 添加一个站点.
+
+![](http://i63.tinypic.com/fdd182.jpg)
+
+添加好后, 在管理页面会看到如下信息:
+
+![](http://i67.tinypic.com/2cg2dxy.jpg)
+
+打开 Simiki 主题目录下的 `page.html` 文件, 在 `{% endblock %}` 上面添加上图中的代码, 我这里改成了:
+
+```html
+{% extends "base.html" %}
+
+{% block title %}{{ page.title }} - {{ site.title }}{% endblock %}
+
+{% block container %}
+    <div id="header">
+        <div id="post-nav">
+            {% if not default_home_page %}
+            <a href="{{ site.root }}/">Home</a>{%- if page.category %} » <a href="{{ site.root }}/#{{ page.category }}">{{ page.category }}</a>
+{%- endif %} » {{ page.title }}
+            {% endif %}
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        {{ page.content }}
+    </div>
+
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="{{ page.title }}" data-title="{{ page.title }}" data-url="{{ site.url }}/{{ page.category }}/{{ page.title }}.html"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:"smallwiki"};
+        (function() {
+            var ds = document.createElement('script');
+            ds.type = 'text/javascript';ds.async = true;
+            ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+            ds.charset = 'UTF-8';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+    </script>
+    <!-- 多说公共JS代码 end -->
+
+{% endblock %}
+```
+<br>
 # DIY 部署
 我使用的是 Github Project Page, 所以可以把 **output** 目录加入 **.gitignore** 来忽略每次生成时的变化.
 
