@@ -110,29 +110,72 @@ edit file (工作区) \-\> git add (暂存区/index/stage) \-\> git commit (comm
 - git diff 分支名, 查看工作区与另一个分支的差异
 
 ### 整合 beyond compare 与 diff
+安装好 BCompare 后, 打开用户目录~下的 `.gitconfig` 文件, 进行如下修改:
+
+```
+[diff]
+    tool = bc3
+[difftool]
+    prompt = false
+[difftool "bc3"]
+    cmd = "\"D:/martin/i/l/u/Beyond Compare/BCompare.exe\" \"$LOCAL\" \"$REMOTE\""
+
+[merge]
+    tool = bc3
+[mergetool]
+    prompt = false
+    keepBackup = false
+[mergetool "bc3"]
+    cmd = "\"D:/martin/i/l/u/Beyond Compare/BCompare.exe\" \"$LOCAL\" \"$REMOTE\" \"$BASE\" \"$MERGED\""
+    trustExitCode = true
+```
+<br>
+参数说明:
+
+- **prompt**: 打开 tool 前是否出现提示 "是否打开 xx ?", 一般不需要
+- **keepBackup**: 解决冲突时会生成一个原来冲突文件的备份, 一般也不需要
+- **trustExitCode**: 是否接受 tool 的成功解决冲突通知, 如果设为 false, 解决冲突后 git 还会再问一次 "是否解决冲突了?", 简直多余, 所以也不需要
+
+三路合并:
+
+- **LOCAL**: your file with the changes you’ve made to it
+- **REMOTE**: the file you’re merging in, possibly authored by someone else
+- **BASE**: the common ancestor file that LOCAL and REMOTE came from
+- **MERGE_RESULT**: the file resulting from the merge where you resolve conflicts
+
+You often need to see all four of these pieces of information to make intelligent choices. Where you came from (LOCAL), where the other person’s changes came from (REMOTE), where you both started (BASE) and where you are now (MERGE_RESULT).
+
+**下面是之前的方法, 现在已经不用了, 仅留个备份.**
+
 首先在 `~/bin/` 目录下 (windows 是用户主目录, 如 `C:\Users\Administrator`) 新建一个 git-diff-wrapper.sh 文件
 
 window 系统的 git bash 的 git\-diff\-wrapper.sh
 
-    #/bin/sh
-    # diff is called by git with 7 parameters:
-    # path old-file old-hex old-mode new-file new-hex new-mode
-    "D:/martin/i/l/u/Beyond Compare/BCompare.exe" "$2" "$5" | cat
-
+```
+#/bin/sh
+# diff is called by git with 7 parameters:
+# path old-file old-hex old-mode new-file new-hex new-mode
+"D:/martin/i/l/u/Beyond Compare/BCompare.exe" "$2" "$5" | cat
+```
+<br>
 mac 系统的 git\-diff\-wrapper.sh
 
-    #/bin/sh
-    # diff is called by git with 7 parameters:
-    # path old-file old-hex old-mode new-file new-hex new-mode
-    bcompare "$2" "$5"|cat
-
+```
+#/bin/sh
+# diff is called by git with 7 parameters:
+# path old-file old-hex old-mode new-file new-hex new-mode
+bcompare "$2" "$5"|cat
+```
+<br>
 注意：你在 mac 系统中装了 beyong compare 后需要在菜单栏点击 “Install Command Line Tools” 把它加入到命令行.
 
 在用户目录~下修改 .gitconfig 文件, 添加一行:
 
-    [diff]
-    external = ~/bin/git-diff-wrapper.sh
-
+```
+[diff]
+external = ~/bin/git-diff-wrapper.sh
+```
+<br>
 注意: Mac上运行 git diff 时, 由于系统要保存历史文件到临时目录再进行比较, 而在保存到临时目录又需要很高的权限, 所以在 git  diff 前加了 sudo 才能执行成功.
 
 ## 7. 忽略文件
