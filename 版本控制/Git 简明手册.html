@@ -100,16 +100,59 @@
 <p>如果不用 git add 命令, 可以用 git commit -a 参数来合并 add 和 commit 操作(不包括未加入版本控制的文件, 即新建立的文件).</p>
 </blockquote>
 <h2 id="4">4. 分支</h2>
-<p>创建一个新分支 -- git branch 分支名</p>
-<p>查看本地分支表 -- git branch, * 号表示当前所在分支</p>
-<p>查看所有分支表(包括远程) -- git branch -a</p>
-<p>切换分支 -- git checkout 分支名</p>
-<p>合并分支 -- git checkout master, git merge 分支名, 这样就把分支的内容合并的 master 分支了</p>
-<p>解决冲突 -- 如果产生了冲突, 先 git diff 查看冲突, 解决冲突后, git add, git commit 重新提交</p>
-<p>查看图形化时间线 -- gitk</p>
-<p>删除分支 -- git branch -d 分支名, 要先切换到其它分支</p>
-<p>强制删除分支 -- git branch -d 只能删除已经合并的分支, -D 可以强制删除一个分支</p>
-<p>比较分支 -- git diff 分支名..分支名</p>
+<ul>
+<li>创建一个新分支<ul>
+<li><code>git branch</code> 分支名</li>
+</ul>
+</li>
+<li>查看本地分支表<ul>
+<li><code>git branch</code>, * 号表示当前所在分支</li>
+</ul>
+</li>
+<li>查看所有分支表(包括远程)<ul>
+<li><code>git branch -a</code></li>
+</ul>
+</li>
+<li>切换分支<ul>
+<li><code>git checkout</code> 分支名</li>
+</ul>
+</li>
+<li>合并分支<ul>
+<li><code>git checkout master</code>, <code>git merge</code> 分支名, 这样就把分支的内容合并的 master 分支了</li>
+</ul>
+</li>
+<li>解决冲突<ul>
+<li>如果产生了冲突, 先 <code>git diff</code> 查看冲突, 解决冲突后, <code>git add</code>, <code>git commit</code> 重新提交</li>
+</ul>
+</li>
+<li>查看图形化时间线<ul>
+<li><code>gitk</code></li>
+</ul>
+</li>
+<li>比较分支<ul>
+<li><code>git diff</code> 分支名..分支名</li>
+</ul>
+</li>
+<li>重命名本地分支<ul>
+<li><code>git branch -m</code> 原名 新名</li>
+</ul>
+</li>
+<li>删除本地分支<ul>
+<li><code>git branch -d</code> 分支名, 删除已经合并的分支</li>
+<li><code>git branch -D</code> 分支名, 强制删除分支, 不管有没有合并过</li>
+</ul>
+</li>
+<li>删除远程分支<ul>
+<li>方法一: <code>git push --delete origin branch-name</code></li>
+<li>方法二: <code>git push origin :branch-name</code></li>
+</ul>
+</li>
+<li>清理本地的远程分支追踪 (使用场景: 某一个远程分支被另一个开发删除)<ul>
+<li>方法一: <code>git fetch -p</code></li>
+<li>方法二: <code>git remote prune origin</code></li>
+</ul>
+</li>
+</ul>
 <h2 id="5">5. 撤销</h2>
 <p>撤销的情况比较复杂</p>
 <p>首先是 <strong>reset --参数 commit id</strong> 命令, 这个命令有三个参数:</p>
