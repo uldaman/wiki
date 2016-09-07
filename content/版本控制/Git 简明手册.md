@@ -28,25 +28,33 @@ edit file (工作区) \-\> git add (暂存区/index/stage) \-\> git commit (comm
 > 如果不用 git add 命令, 可以用 git commit -a 参数来合并 add 和 commit 操作(不包括未加入版本控制的文件, 即新建立的文件).
 
 ## 4. 分支
-创建一个新分支 \-\- git branch 分支名
-
-查看本地分支表 \-\- git branch, * 号表示当前所在分支
-
-查看所有分支表(包括远程) \-\- git branch \-a
-
-切换分支 \-\- git checkout 分支名
-
-合并分支 \-\- git checkout master, git merge 分支名, 这样就把分支的内容合并的 master 分支了
-
-解决冲突 \-\- 如果产生了冲突, 先 git diff 查看冲突, 解决冲突后, git add, git commit 重新提交
-
-查看图形化时间线 \-\- gitk
-
-删除分支 \-\- git branch -d 分支名, 要先切换到其它分支
-
-强制删除分支 \-\- git branch \-d 只能删除已经合并的分支, \-D 可以强制删除一个分支
-
-比较分支 \-\- git diff 分支名..分支名
+- 创建一个新分支
+    + `git branch` 分支名
+- 查看本地分支表
+    + `git branch`, * 号表示当前所在分支
+- 查看所有分支表(包括远程)
+    + `git branch -a`
+- 切换分支
+    + `git checkout` 分支名
+- 合并分支
+    + `git checkout master`, `git merge` 分支名, 这样就把分支的内容合并的 master 分支了
+- 解决冲突
+    + 如果产生了冲突, 先 `git diff` 查看冲突, 解决冲突后, `git add`, `git commit` 重新提交
+- 查看图形化时间线
+    + `gitk`
+- 比较分支
+    + `git diff` 分支名..分支名
+- 重命名本地分支
+    + `git branch -m` 原名 新名
+- 删除本地分支
+    + `git branch -d` 分支名, 删除已经合并的分支
+    + `git branch -D` 分支名, 强制删除分支, 不管有没有合并过
+- 删除远程分支
+    + 方法一: `git push --delete origin branch-name`
+    + 方法二: `git push origin :branch-name`
+- 清理本地的远程分支追踪 (使用场景: 某一个远程分支被另一个开发删除)
+    + 方法一: `git fetch -p`
+    + 方法二: `git remote prune origin`
 
 ## 5. 撤销
 撤销的情况比较复杂
