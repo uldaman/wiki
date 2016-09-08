@@ -14,7 +14,9 @@ date: 2016-07-29 11:24
 > [对象的责任与职责](http://www.jdon.com/38045)<br>
 > [DCI 架构是什么？](http://www.jdon.com/37976)<br>
 > [如何从职责和协作中发现丰富对象？](http://www.jdon.com/38071)<br>
-> [MVC 模式已死](http://www.jdon.com/38448)
+> [MVC 模式已死](http://www.jdon.com/38448)<br>
+> [分享我对领域驱动设计 (DDD) 的学习成果](http://kb.cnblogs.com/page/117717/)<br>
+> [别在领域模型迷失了自己](http://www.cnblogs.com/tsoukw/archive/2007/09/28/908983.html)
 
 [TOC]
 
