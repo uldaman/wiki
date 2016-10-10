@@ -1,0 +1,92 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <title>vector、deque、list 三者的区别 - Wiki | Small Cpp</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            
+            <a href="/">Home</a> » <a href="/#软件工程">软件工程</a> » vector、deque、list 三者的区别
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#vector">vector</a></li>
+<li><a href="#list">list</a></li>
+<li><a href="#deque">deque</a></li>
+<li><a href="#_1">总结</a></li>
+</ul>
+</div>
+<p>stl 提供了三个最基本的容器: vector, list, deque.</p>
+<h1 id="vector">vector</h1>
+<p>vector 为存储的对象分配一块连续的地址空间, 因此对 vector 中的元素随机访问效率很高.</p>
+<p>在 vecotor 中插入或者删除某个元素, 需要将现有元素进行复制, 移动. 如果 vector 中存储的对象很大, 或者构造函数复杂, 则在对现有元素进行拷贝时开销较大, 因为拷贝对象要调用拷贝构造函数. 对于简单的小对象, vector 的效率优于 list.</p>
+<p>vector 在每次扩张容量的时候, 将容量扩展 2 倍, 这样对于小对象来说, 效率是很高的.</p>
+<h1 id="list">list</h1>
+<p>list 就是数据结构中的双向链表 (根据 sgi stl 源代码), 因此它的内存空间可以是不连续的, 通过指针来进行数据的访问, 这个特点使得它的随即存取变的非常<strong>没有</strong>效率, 因此它
+没有提供 <code>[ ]</code> 操作符的重载; 但由于链表的特点, 它可以以很好的效率支持任意地方的删除和插入.</p>
+<p>就 Vector 和 List 而言:</p>
+<ul>
+<li><code>vector</code> 适用: 对象数量变化少, 简单对象, 随机访问元素频繁</li>
+<li><code>list</code> 适用: 对象数量变化大, 对象复杂, 插入和删除频繁</li>
+</ul>
+<h1 id="deque">deque</h1>
+<p>deque 是一个双向队列, 它的具体实现不太清楚, 但知道它具有以下两个特点:</p>
+<ul>
+<li>它支持 <code>[ ]</code> 操作符, 也就是支持随即存取, 并且和 vector 的效率相差无几</li>
+<li>它支持在两端的操作: <code>push_back</code>, <code>push_front</code>, <code>pop_back</code>, <code>pop_front</code> 等, 并且在两端操作上与 list 的效率也差不多.</li>
+</ul>
+<p>因此在实际使用时, 如何选择这三个容器中哪一个, 应根据你的需要而定, 一般应遵循下面的原则:</p>
+<ul>
+<li>如果你需要高效的随即存取, 而不在乎插入和删除的效率, 使用 vector</li>
+<li>如果你需要大量的插入和删除, 而不关心随即存取, 则应使用 list</li>
+<li>如果你需要随即存取, 而且关心两端数据的插入和删除, 则应使用 deque</li>
+</ul>
+<h1 id="_1">总结</h1>
+<ul>
+<li>vector 表示一段连续的内存区域, 每个元素被顺序存储在这段内存中, 对 vector 的随机访问效率很高, 但对非末尾元素的插入和删除则效率非常低.</li>
+<li>deque 也表示一段连续的内存区域, 但与 vector 不同的是它支持高效地在其首部插入和删除元素, 它通过两级数组结构来实现, 一级表示实际的容器, 第二级指向容器的首和尾.</li>
+<li>list 表示非连续的内存区域并通过一对指向首尾元素的指针双向链接起来, 插入删除效率高, 随机访问效率低.</li>
+</ul>
+    </div>
+
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="vector、deque、list 三者的区别" data-title="vector、deque、list 三者的区别" data-url="http://wiki.smallcpp.com/软件工程/vector、deque、list 三者的区别.html"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:"smallwiki"};
+        (function() {
+            var ds = document.createElement('script');
+            ds.type = 'text/javascript';ds.async = true;
+            ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+            ds.charset = 'UTF-8';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+    </script>
+    <!-- 多说公共JS代码 end -->
+
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2016 <a href="http://www.samllcpp.com/" target="_blank">Martin</a> Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+              </p>
+        </div>
+    </body>
+</html>
