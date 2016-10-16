@@ -65,11 +65,18 @@
 </ul>
 </li>
 <li><a href="#5-ssh">5. 配置 SSH 免密码登录</a><ul>
-<li><a href="#51-itcast01">5.1 配置 itcast01</a></li>
-<li><a href="#52-itcast02-itcast03">5.2 配置 itcast02 和 itcast03</a></li>
+<li><a href="#51-itcast01">5.1. 配置 itcast01</a></li>
+<li><a href="#52-itcast02-itcast03">5.2. 配置 itcast02 和 itcast03</a></li>
 </ul>
 </li>
-<li><a href="#5">5. 测试环境</a></li>
+<li><a href="#6">6. 启动集群</a></li>
+<li><a href="#7">7. 测试集群</a><ul>
+<li><a href="#71">7.1. 上传文件</a></li>
+<li><a href="#72">7.2. 下载文件</a></li>
+<li><a href="#73-mr">7.3. 测试 MR 作业</a></li>
+</ul>
+</li>
+<li><a href="#references">References</a></li>
 </ul>
 </div>
 <h1 id="1-iphosts-iptables">1. 固定 IP、主机名、Hosts 和 iptables</h1>
@@ -96,11 +103,11 @@
 </ul>
 <p>但是需要注意, 并不所有的都是 <code>eth0</code>, 采用的 Ubuntu 版本不同, 也有可能是其他的接口, 如 <code>ens32</code>; 可以先使用 <code>ifconfig</code> 看下系统使用的是哪个接口.</p>
 <p><img alt="" src="http://wiki.smallcpp.com/static/images/搭建Hadoop分布式实验环境/ifconfig.png" /></p>
-<p>另外就是 gateway (网关), 虚拟机的网关可以通过虚拟网络编辑器查看.</p>
+<p>另外就是 <strong>gateway</strong> (网关), 虚拟机的网关可以通过虚拟网络编辑器查看.</p>
 <p><img alt="" src="http://wiki.smallcpp.com/static/images/搭建Hadoop分布式实验环境/虚拟网络编辑器.png" /></p>
 <p><img alt="" src="http://wiki.smallcpp.com/static/images/搭建Hadoop分布式实验环境/NAT.png" /></p>
 <p><img alt="" src="http://wiki.smallcpp.com/static/images/搭建Hadoop分布式实验环境/gateway.png" /></p>
-<p>所以上面的第八行的 gateway 要填: <code>192.168.142.2</code>.</p>
+<p>所以上面的第八行的 <strong>gateway</strong> 要填: <code>192.168.142.2</code>.</p>
 <h2 id="dns">DNS</h2>
 <p><strong>sudo vim /etc/resolv.conf</strong>, 编辑 DNS 解析文件.</p>
 <div class="hlcode"><pre><span class="n">nameserver</span> <span class="mf">8.8.8.8</span>
@@ -111,7 +118,8 @@
 
 <p><br>
 第 3 行填 <strong>gateway</strong> (网关) ip;</p>
-<p>改完上面, 如果重启的话, DNS 还是会变为原来的样子, 网上给出的方法是执行 <code>sudo vim /etc/resolvconf/resolv.conf.d/base</code> 输入和 DNS 解析文件相同的内容.</p>
+<p>改完上面, 如果重启的话, DNS 还是会变为原来的样子;</p>
+<p>网上给出的方法是执行 <code>sudo vim /etc/resolvconf/resolv.conf.d/base</code> 输入和 DNS 解析文件相同的内容.</p>
 <p>实际操作后重启发现好像并没生效, 又找到了另一个方法, 执行 <code>sudo vim /etc/resolvconf/resolv.conf.d/tail</code> 输入和 DNS 解析文件相同的内容.</p>
 <p>最后, 通过 <code>sudo resolvconf -u</code> 刷新 <strong>resolv.conf</strong> 文件, 再用 <code>sudo /etc/init.d/networking restart</code> 重启网络.</p>
 <h2 id="hosts">Hosts</h2>
@@ -119,6 +127,8 @@
 <p><code>sudo vim /etc/hosts</code> 修改 [ip 域名] 对应表.</p>
 <div class="hlcode"><pre><span class="mf">127.0.0.1</span>       <span class="n">localhost</span>
 <span class="mf">192.168.31.200</span>  <span class="n">itcast01</span>
+<span class="mf">192.168.31.201</span>  <span class="n">itcast02</span>
+<span class="mf">192.168.31.201</span>  <span class="n">itcast03</span>
 </pre></div>
 
 
@@ -288,7 +298,7 @@
 <p><code>vim ~/.bashrc</code></p>
 <div class="hlcode"><pre><span class="n">export</span> <span class="n">JAVA_HOME</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">java</span><span class="o">/</span><span class="n">jdk1</span><span class="mf">.8.0</span><span class="n">_101</span>
 <span class="n">export</span> <span class="n">HADOOP_HOME</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">itcast</span><span class="o">/</span><span class="n">hadoop</span><span class="o">-</span><span class="mf">2.7.3</span>
-<span class="n">export</span> <span class="n">PATH</span><span class="o">=</span><span class="err">$</span><span class="n">PATH</span><span class="o">:</span><span class="err">$</span><span class="n">JAVA_HOME</span><span class="o">/</span><span class="n">bin</span><span class="o">:</span><span class="err">$</span><span class="n">HADOOP_HOME</span><span class="o">/</span><span class="n">bin</span>
+<span class="n">export</span> <span class="n">PATH</span><span class="o">=</span><span class="err">$</span><span class="n">PATH</span><span class="o">:</span><span class="err">$</span><span class="n">JAVA_HOME</span><span class="o">/</span><span class="n">bin</span><span class="o">:</span><span class="err">$</span><span class="n">HADOOP_HOME</span><span class="o">/</span><span class="n">bin</span><span class="o">:</span><span class="err">$</span><span class="n">HADOOP_HOME</span><span class="o">/</span><span class="n">sbin</span>
 </pre></div>
 
 
@@ -312,13 +322,13 @@
 配好后重启, 在三台虚拟机间互 Ping 测试下.</p>
 <h1 id="5-ssh">5. 配置 SSH 免密码登录</h1>
 <p>Ubuntu 默认并没有安装 <strong>ssh</strong> 服务, 需要自己手动安装 <strong>openssh-server</strong>, 可以通过 <code>ssh localhost</code> 判断是否安装 ssh 服务; 如果没有安装则通过 <code>sudo apt-get install openssh-server</code> 安装即可.</p>
-<h2 id="51-itcast01">5.1 配置 itcast01</h2>
+<h2 id="51-itcast01">5.1. 配置 itcast01</h2>
 <p>在 itcast01 上安装好 <strong>ssh</strong> 服务后.</p>
 <p><code>cd ~</code> 进入根目录</p>
 <p><code>ls -la</code> 查看下当前目录文件, 可以看到有个隐藏的 <code>.ssh</code> 文件夹 (如果没有自己新建个)</p>
 <p><code>cd .ssh/</code> 进入 <code>.ssh</code> 目录, <code>ls</code> 一下, 看看该目录下有没有 <code>id_rsa</code>、<code>id_rsa.pub</code> 两个文件, 如果没有, 就用 <code>ssh-keygen -t rsa</code> 生成一对 (一路回车就好).</p>
 <p><code>cp id_rsa.pub authorized_keys</code></p>
-<h2 id="52-itcast02-itcast03">5.2 配置 itcast02 和 itcast03</h2>
+<h2 id="52-itcast02-itcast03">5.2. 配置 itcast02 和 itcast03</h2>
 <p>首先也是先安装好 <strong>ssh</strong> 服务生成一对 <code>id_rsa</code>、<code>id_rsa.pub</code> 文件;</p>
 <p>然后<strong>不要</strong>执行 <code>cp id_rsa.pub authorized_keys</code>, 而是执行 <code>ssh-copy-id -i ~/.ssh/id_rsa.pub martin@itcast01</code> 将公钥追加到 <strong>itcast01</strong> 的 <strong>authorized_keys</strong> 中.</p>
 <p>操作好后到 itcast01 中 <code>vim authorized_keys</code> 可以看到里面已经多出了 itcast02 和 itcast03 的公钥了.</p>
@@ -329,33 +339,89 @@
 
 
 <p><br></p>
-<h1 id="5">5. 测试环境</h1>
-<p>hdfs namenode -format</p>
-<p><strong>初始化 HDFS</strong><br><strong>命令: hdfs namenode -format</strong><br>以前是用 hdfs namenode –format, 格式化后, hadoop 根目录下就多出了 tmp 目录(在上一步第二个配置文件里设置的).</p>
-<p><strong>启动 hadoop 服务</strong></p>
-<div class="hlcode"><pre><span class="n">cd</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">itcast</span><span class="o">/</span><span class="n">hadoop</span><span class="o">-</span><span class="mf">2.7.3</span><span class="o">/</span><span class="n">sbin</span><span class="o">/</span>
-<span class="p">.</span><span class="o">/</span><span class="n">start</span><span class="o">-</span><span class="n">all</span><span class="p">.</span><span class="n">sh</span>
+<h1 id="6">6. 启动集群</h1>
+<p>首次启动需要先在 NameNode 节点 (itcast01) 执行 NameNode 的格式化:</p>
+<div class="hlcode"><pre><span class="n">hdfs</span> <span class="n">namenode</span> <span class="o">-</span><span class="n">format</span>       <span class="err">#</span> <span class="err">首次运行需要执行初始化，之后不需要</span>
 </pre></div>
 
 
-<p>输入一堆 yes 和 密码后, 输入 <strong> jps</strong>, 如果看到 NameNode、ResourceManager、NodeManager、SecondaryNameNode 和 DataNod 六个进程, 就表示启动成功了.</p>
-<p>不过有点需要注意, ./start-all.sh 和 hdfs namenode –format 一样, 也是个过时命令, 新的命令是 <strong>start-dfs.sh </strong>和 <strong>start-yarn.sh.</strong></p>
-<p>itcast01:50070 -- hdfs 管理界面</p>
-<p>itcast01:8088 -- yarn 管理界面</p>
-<p><strong>先测试 hdfs</strong> -- <a href="http://itcast01:50070">http://itcast01:50070</a></p>
+<p><br>
+格式化成功后就可以通过以下命令启动集群了:</p>
+<div class="hlcode"><pre><span class="n">start</span><span class="o">-</span><span class="n">dfs</span><span class="p">.</span><span class="n">sh</span>
+<span class="n">start</span><span class="o">-</span><span class="n">yarn</span><span class="p">.</span><span class="n">sh</span>
+<span class="n">mr</span><span class="o">-</span><span class="n">jobhistory</span><span class="o">-</span><span class="n">daemon</span><span class="p">.</span><span class="n">sh</span> <span class="n">start</span> <span class="n">historyserver</span>
+</pre></div>
+
+
+<p><br>
+或者:</p>
+<div class="hlcode"><pre><span class="n">start</span><span class="o">-</span><span class="n">all</span><span class="p">.</span><span class="n">sh</span>
+<span class="n">mr</span><span class="o">-</span><span class="n">jobhistory</span><span class="o">-</span><span class="n">daemon</span><span class="p">.</span><span class="n">sh</span> <span class="n">start</span> <span class="n">historyserver</span>
+</pre></div>
+
+
+<p><br>
+集群成功启动后可以在终端用 <code>JPS</code> 查看当前有哪些 Java 进程, NameNode 节点上应该有以下进程:</p>
+<div class="hlcode"><pre><span class="n">NameNode</span>
+<span class="n">SecondaryNameNode</span>
+<span class="n">ResourceManager</span>
+<span class="n">JobHistoryServer</span>
+</pre></div>
+
+
+<p><br>
+而 DataNode 上应该有以下进程:</p>
+<div class="hlcode"><pre><span class="n">DataNode</span>
+<span class="n">NodeManager</span>
+</pre></div>
+
+
+<p><br>
+停止集群命令如下:</p>
+<div class="hlcode"><pre><span class="n">stop</span><span class="o">-</span><span class="n">yarn</span><span class="p">.</span><span class="n">sh</span>
+<span class="n">stop</span><span class="o">-</span><span class="n">dfs</span><span class="p">.</span><span class="n">sh</span>
+<span class="n">mr</span><span class="o">-</span><span class="n">jobhistory</span><span class="o">-</span><span class="n">daemon</span><span class="p">.</span><span class="n">sh</span> <span class="n">stop</span> <span class="n">historyserver</span>
+</pre></div>
+
+
+<p><br>
+或者:</p>
+<div class="hlcode"><pre><span class="n">stop</span><span class="o">-</span><span class="n">all</span><span class="p">.</span><span class="n">sh</span>
+<span class="n">mr</span><span class="o">-</span><span class="n">jobhistory</span><span class="o">-</span><span class="n">daemon</span><span class="p">.</span><span class="n">sh</span> <span class="n">stop</span> <span class="n">historyserver</span>
+</pre></div>
+
+
+<p><br></p>
+<h1 id="7">7. 测试集群</h1>
+<p>集群启动成功后会提供 Web 界面来管理集群.</p>
+<ul>
+<li><a href="http://itcast01:50070">itcast01:50070</a> -- hdfs 管理界面</li>
+<li><a href="http://itcast01:8088">itcast01:8088</a> -- yarn 管理界面</li>
+<li><a href="http://itcast01:19888">itcast01:19888</a> -- jobhistory 管理界面</li>
+</ul>
+<p><strong>hdfs 管理界面</strong></p>
 <p><img alt="" src="http://i61.tinypic.com/10fcr2s.jpg" /></p>
-<p><strong>hadoop fs -put</strong> /home/itcast/桌面/hadoop-2.7.3.tar.gz hdfs://itcast01:9000/hadoop<br>上传文件到 hdfs://itcast01:9000/ 并命名为 hadoop<br>同样功能的命令除了 put 还有 copyFromLocal (过时).</p>
-<p><img alt="" src="http://i59.tinypic.com/35b9yqr.jpg" /></p>
-<p><img alt="" src="http://i58.tinypic.com/x2ns0h.jpg" /></p>
-<p><strong>hadoop fs -get</strong> hdfs://itcast01:9000/hadoop /home/itcast/桌面/hadoop.tar.gz<br>下载文件到桌面, 并命名为 hadoop.tar.gz</p>
-<p>执行命令的时候, 可能会出现提示: WARN hdfs.DFSClient: DFSInputStream has been closed already
-不用管它, apache 也给出了说明:</p>
+<p>hadoop fs -ls /
+hdfs://itcast01:9000</p>
+<h2 id="71">7.1. 上传文件</h2>
+<p>在 itcast01 (不一定是 itcast01, 可以集群中的任意一台进行测试) 的桌面上准备了一份大文件, 如 <code>ubuntu-16.04-desktop-amd64.iso</code>, 现在把它上传到 Hadoop 的 HDFS 文件系统上去.</p>
+<p><code>hadoop fs -put /home/martin/桌面/ubuntu-16.04-desktop-amd64.iso hdfs://itcast01:9000/ubuntu-amd64.iso</code></p>
+<p>上传文件到 <code>hdfs://itcast01:9000/</code> 并命名为 <code>ubuntu-amd64.iso</code>; 同样功能的命令除了 <code>put</code> 还有 <code>copyFromLocal</code> (过时).</p>
+<p><code>hdfs://itcast01:9000/</code> 表示的是 HDFS 的<strong>根目录</strong>, 可以简写成 <code>/</code>, 如上面的上传文件命令可以写成这样:</p>
+<p><code>hadoop fs -put /home/martin/桌面/ubuntu-16.04-desktop-amd64.iso /ubuntu-amd64.iso</code></p>
+<p>Hadoop 的 <strong>HDFS</strong> 系统使用起来就像是 Linux 的文件系统, 如 <code>hadoop fs -ls /</code> 查看的就是 HDFS 根目录下的列表, 切不要将它们混淆了, HDFS 的根目录可不在 Linux 的根目录 (<code>/</code>) 下, 是两套完全不同的体系.</p>
+<p>上传完毕后可以在 Web 界面的文件管理模块可以看到变化:</p>
+<p><img alt="" src="http://wiki.smallcpp.com/static/images/搭建Hadoop分布式实验环境/hadoopfile.png" /></p>
+<p><img alt="" src="http://wiki.smallcpp.com/static/images/搭建Hadoop分布式实验环境/hadoopinfo.png" /></p>
+<h2 id="72">7.2. 下载文件</h2>
+<p><code>hadoop fs -get /ubuntu-amd64.iso /home/martin/桌面/ubuntu-amd64.iso</code></p>
+<p>下载文件到 Linux 系统.</p>
+<p>执行命令的时候, 可能会出现提示: <code>WARN hdfs.DFSClient: DFSInputStream has been closed already</code>.</p>
+<p>不用管它, apache 也给出了说明:</p>
 <p><img alt="" src="http://i61.tinypic.com/344ql4k.jpg" /></p>
-<p><strong>再测试 mr(jar 包) 和 yarn</strong></p>
-<p>MR 给出了一些测试 jar, 它们在: /usr/itcast/hadoop-2.7.3/<strong>share</strong>/hadoop/mapreduce 目录下.</p>
-<p><strong>cd /usr/itcast/hadoop-2.7.3/share/hadoop/mapreduce</strong></p>
-<p>创建一个文件, 输入内容</p>
-<p><strong>vim words.txt</strong></p>
+<h2 id="73-mr">7.3. 测试 MR 作业</h2>
+<p>MR 使用 Java 进行开发, Hadoop 预置了一些测试 MR 作业 (就是一些 jar 包), 它们在: <code>/usr/itcast/hadoop-2.7.3/share/hadoop/mapreduce</code> 目录下.</p>
+<p>创建一个文件 <code>vim words.txt</code>, 输入内容:</p>
 <div class="hlcode"><pre><span class="n">hello</span> <span class="n">tom</span>
 <span class="n">hello</span> <span class="n">jerry</span>
 <span class="n">hello</span> <span class="n">kitty</span>
@@ -364,32 +430,49 @@
 </pre></div>
 
 
-<p>所有的 MR 都是执行在 hdfs 上的, 所以要先上传文件.</p>
-<p><strong>hadoop fs -put words.txt hdfs://itcast01:9000/words.txt</strong></p>
-<p>/usr/itcast/hadoop-2.7.3/share/hadoop/mapreduce 目录下有个 hadoop-mapreduce-examples-2.7.1.jar, 里面有个 wordcount, 可以用来统计单词个数.
-<strong>hadoop jar hadoop-mapreduce-examples-2.7.1.jar wordcount hdfs://itcast01:9000/words.txt hdfs://itcast01:9000/result.txt</strong>
-第一个参数是待统计文件, 第二个参数是保存结果的文件路径.</p>
-<p>执行完毕后, 查看下 hdfs:</p>
-<p><strong>hadoop fs -ls hdfs://itcast01:9000/</strong></p>
+<p><br>
+所有的 MR 都是执行在 <strong>hdfs</strong> 上的, 所以要先上传文件: <code>hadoop fs -put words.txt /words.txt</code></p>
+<p><code>/usr/itcast/hadoop-2.7.3/share/hadoop/mapreduce</code> 目录下有个 <code>hadoop-mapreduce-examples-2.7.3.jar</code>, 里面有个 <code>wordcount</code> 方法, 可以用来统计单词个数.</p>
+<div class="hlcode"><pre><span class="n">cd</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">itcast</span><span class="o">/</span><span class="n">hadoop</span><span class="o">-</span><span class="mf">2.7.3</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">hadoop</span><span class="o">/</span><span class="n">mapreduce</span>
+<span class="n">hadoop</span> <span class="n">jar</span> <span class="n">hadoop</span><span class="o">-</span><span class="n">mapreduce</span><span class="o">-</span><span class="n">examples</span><span class="o">-</span><span class="mf">2.7.3</span><span class="p">.</span><span class="n">jar</span> <span class="n">wordcount</span> <span class="o">/</span><span class="n">words</span><span class="p">.</span><span class="n">txt</span> <span class="o">/</span><span class="n">result</span>
+</pre></div>
+
+
+<p><br>
+第一个参数是待统计文件, 第二个参数是保存结果的目录.</p>
+<p>执行完毕后, 查看下 hdfs 系统: <code>hadoop fs -ls /</code></p>
 <div class="hlcode"><pre><span class="n">Found</span> <span class="mi">4</span> <span class="n">items</span>
-<span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span><span class="n">r</span><span class="o">--</span> <span class="mi">1</span> <span class="n">itcast</span> <span class="n">supergroup</span> <span class="mi">210606807</span> <span class="mi">2015</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">19</span> <span class="mi">11</span><span class="o">:</span><span class="mo">02</span> <span class="n">hdfs</span><span class="o">:</span><span class="c1">//itcast01:9000/hadoop</span>
-<span class="n">drwxr</span><span class="o">-</span><span class="n">xr</span><span class="o">-</span><span class="n">x</span> <span class="o">-</span> <span class="n">itcast</span> <span class="n">supergroup</span> <span class="mi">0</span> <span class="mi">2015</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">19</span> <span class="mi">11</span><span class="o">:</span><span class="mi">47</span> <span class="n">hdfs</span><span class="o">:</span><span class="c1">//itcast01:9000/result.txt</span>
-<span class="n">drwx</span><span class="o">------</span> <span class="o">-</span> <span class="n">itcast</span> <span class="n">supergroup</span> <span class="mi">0</span> <span class="mi">2015</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">19</span> <span class="mi">11</span><span class="o">:</span><span class="mi">46</span> <span class="n">hdfs</span><span class="o">:</span><span class="c1">//itcast01:9000/tmp</span>
-<span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span><span class="n">r</span><span class="o">--</span> <span class="mi">1</span> <span class="n">itcast</span> <span class="n">supergroup</span> <span class="mi">59</span> <span class="mi">2015</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">19</span> <span class="mi">11</span><span class="o">:</span><span class="mi">42</span> <span class="n">hdfs</span><span class="o">:</span><span class="c1">//itcast01:9000/words.txt</span>
+<span class="n">drwxr</span><span class="o">-</span><span class="n">xr</span><span class="o">-</span><span class="n">x</span>   <span class="o">-</span> <span class="n">martin</span> <span class="n">supergroup</span>          <span class="mi">0</span> <span class="mi">2016</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">16</span> <span class="mi">21</span><span class="o">:</span><span class="mi">33</span> <span class="o">/</span><span class="n">result</span>
+<span class="n">drwxrwx</span><span class="o">---</span>   <span class="o">-</span> <span class="n">martin</span> <span class="n">supergroup</span>          <span class="mi">0</span> <span class="mi">2016</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">16</span> <span class="mi">20</span><span class="o">:</span><span class="mi">27</span> <span class="o">/</span><span class="n">tmp</span>
+<span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span><span class="n">r</span><span class="o">--</span>   <span class="mi">2</span> <span class="n">martin</span> <span class="n">supergroup</span> <span class="mi">1485881344</span> <span class="mi">2016</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">16</span> <span class="mi">21</span><span class="o">:</span><span class="mo">01</span> <span class="o">/</span><span class="n">ubuntu</span><span class="o">-</span><span class="n">amd64</span><span class="p">.</span><span class="n">iso</span>
+<span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span><span class="n">r</span><span class="o">--</span>   <span class="mi">2</span> <span class="n">martin</span> <span class="n">supergroup</span>         <span class="mi">59</span> <span class="mi">2016</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">16</span> <span class="mi">21</span><span class="o">:</span><span class="mi">30</span> <span class="o">/</span><span class="n">words</span><span class="p">.</span><span class="n">txt</span>
 </pre></div>
 
 
-<p>也可以直接通过 浏览器 查看:</p>
-<p><img alt="" src="http://i60.tinypic.com/117qrh2.jpg" /></p>
-<p><img alt="" src="http://i59.tinypic.com/15xo7qa.jpg" /></p>
-<p>第一个 _SUCCESS 表示执行结果, 这里是成功, 第二个是内容, 把第二个下载下来并打开:</p>
-<div class="hlcode"><pre><span class="n">hello</span> <span class="mi">5</span>
-<span class="n">jerry</span> <span class="mi">1</span>
-<span class="n">kitty</span> <span class="mi">1</span>
-<span class="n">martin</span> <span class="mi">1</span>
-<span class="n">tom</span> <span class="mi">1</span>
-<span class="n">world</span> <span class="mi">1</span>
+<p><br>
+<code>/result</code> 就是刚生成的结果目录, 用 <code>hadoop fs -ls /result</code> 查看下里面的内容:</p>
+<div class="hlcode"><pre><span class="n">Found</span> <span class="mi">2</span> <span class="n">items</span>
+<span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span><span class="n">r</span><span class="o">--</span>   <span class="mi">2</span> <span class="n">martin</span> <span class="n">supergroup</span>          <span class="mi">0</span> <span class="mi">2016</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">16</span> <span class="mi">21</span><span class="o">:</span><span class="mi">36</span> <span class="o">/</span><span class="n">result</span><span class="o">/</span><span class="n">_SUCCESS</span>
+<span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span><span class="n">r</span><span class="o">--</span>   <span class="mi">2</span> <span class="n">martin</span> <span class="n">supergroup</span>         <span class="mi">47</span> <span class="mi">2016</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">16</span> <span class="mi">21</span><span class="o">:</span><span class="mi">36</span> <span class="o">/</span><span class="n">result</span><span class="o">/</span><span class="n">part</span><span class="o">-</span><span class="n">r</span><span class="o">-</span><span class="mo">00000</span>
 </pre></div>
+
+
+<p><br>
+其中 <code>_SUCCESS</code> 表示 MR 作业执行成功, <code>part-r-00000</code> 为结果文件, 用 <code>hadoop fs -cat /result/part-r-00000</code> 查看下:</p>
+<div class="hlcode"><pre><span class="n">hello</span>   <span class="mi">5</span>
+<span class="n">jerry</span>   <span class="mi">1</span>
+<span class="n">kitty</span>   <span class="mi">1</span>
+<span class="n">martin</span>  <span class="mi">1</span>
+<span class="n">tom</span>     <span class="mi">1</span>
+<span class="n">world</span>   <span class="mi">1</span>
+</pre></div>
+
+
+<p><br>
+当然也可以直接通过 Web 查看.</p>
+<h1 id="references">References</h1>
+<p><a href="http://www.powerxing.com/install-hadoop/">Hadoop 安装教程_单机/伪分布式配置_Hadoop2.6.0/Ubuntu14.04</a><br>
+<a href="http://www.powerxing.com/install-hadoop-cluster/">Hadoop 集群安装配置教程_Hadoop2.6.0/Ubuntu14.04</a></p>
     </div>
 
     <!-- 多说评论框 start -->
