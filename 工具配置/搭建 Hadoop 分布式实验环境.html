@@ -1,0 +1,316 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <title>搭建 Hadoop 分布式实验环境 - Wiki | Small Cpp</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            
+            <a href="/">Home</a> » <a href="/#工具配置">工具配置</a> » 搭建 Hadoop 分布式实验环境
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <p><strong>实验最终成品</strong>:</p>
+<ul>
+<li>宿主机: win7 64位, 16G</li>
+<li>虚拟化工具: VMware Workstation</li>
+<li>虚拟机系统: Ubuntu 32位, 1.5G, 20G, NAT</li>
+<li>Java 版本: jdk-8u101-linux-i586</li>
+<li>Hadoop 版本: hadoop-2.7.3</li>
+</ul>
+<p>关于虚拟机的网络模式解释下, 推荐的是使用<strong>桥接</strong>模式, 因为桥接模式可以让虚拟机和宿主机处于同一网段, 而 <strong>NAT</strong> 模式则是虚拟机单独分配一个网段;<br>然而我实验时发现<strong>桥接</strong>模式虚拟机能 ping 通局域网内所有其他 ip 及外网 ip, 但就是不能和宿主机互 ping, 搞了好久没搞定, 万般无奈选择了 <strong>NAT</strong> 模式.</p>
+<p>虚拟机的安装参考另一篇 wiki: <a href="http://wiki.smallcpp.com/%E5%B7%A5%E5%85%B7%E9%85%8D%E7%BD%AE/VMware%20%E5%AE%89%E8%A3%85%20Ubuntu.html">使用 VMware 安装 Ubuntu  、VM Tools 和 Fcitx 输入法</a></p>
+<p>安装好后虚拟机后, 开始搭建 Hadoop 分布式实验环境.</p>
+<div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#1-ip-hosts">1. 修改固定 IP 、主机名 及 hosts</a><ul>
+<li><a href="#ip">固定 IP</a></li>
+<li><a href="#dns">DNS</a></li>
+</ul>
+</li>
+<li><a href="#2">2. 关闭防火墙</a></li>
+<li><a href="#3-jdk">3. 安装 JDK</a></li>
+<li><a href="#4-hadoop">4. 下载安装 Hadoop</a></li>
+<li><a href="#5">5. 测试环境</a></li>
+</ul>
+</div>
+<p>编辑hosts文件
+关闭防火墙
+安装JDK
+下载hadoop 2.x幵解压
+修改配置文件
+类似linux的方法，配置ssh免密码
+分収hadoop到各个节点 (拷贝虚拟机)
+部署免密码ssh
+格式化namenoede
+吭劢hadoop集群
+用jps检验各后台迚程是否成功吭劢</p>
+<h1 id="1-ip-hosts">1. 修改固定 IP 、主机名 及 hosts</h1>
+<h2 id="ip">固定 IP</h2>
+<p><strong>sudo vim /etc/network/interfaces</strong>, 编辑 interfaces 文件, 这是 Ubuntu 网上配置文件.</p>
+<div class="hlcode"><pre><span class="k">auto</span> <span class="n">lo</span>
+<span class="n">iface</span> <span class="n">lo</span> <span class="n">inet</span> <span class="n">loopback</span>
+
+<span class="k">auto</span> <span class="n">eth0</span>
+<span class="n">iface</span> <span class="n">eth0</span> <span class="n">inet</span> <span class="k">static</span>
+<span class="n">address</span> <span class="mf">192.168.31.200</span>
+<span class="n">netmask</span> <span class="mf">255.255.255.0</span>
+<span class="n">gateway</span> <span class="mf">192.168.31.2</span>
+</pre></div>
+
+
+<p><br>
+初始文件只有前面两行, 后面的是要添加的内容.</p>
+<ul>
+<li>第 <strong>1</strong> 行跟第 <strong>4</strong> 行说明 <code>lo</code> 接口跟 <code>eth0</code> 接口会在系统启动时被自动配置;</li>
+<li>第 <strong>2</strong> 行将 <code>lo</code> 接口设置为一个本地回环 (loopback) 地址;</li>
+<li>第 <strong>5</strong> 行指出 <code>eth0</code> 接口具有一个静态的 (static) IP 配置;</li>
+<li>第 <strong>6</strong> 行-第 <strong>8</strong> 行分别设置 <code>eth0</code> 接口的 ip、掩码和网关.</li>
+</ul>
+<p>但是需要注意, 并不所有的都是 <code>eth0</code>, 采用的 Ubuntu 版本不同, 也有可能是其他的接口, 如 <code>ens32</code>; 可以先使用 <code>ifconfig</code> 看下系统使用的是哪个接口.</p>
+<p><img alt="" src="static/images/搭建" title="Hadoop 分布式实验环境/ifconfig.png" /></p>
+<h2 id="dns">DNS</h2>
+<p><strong>sudo vim /etc/resolv.conf</strong>, 编辑 DNS 解析文件.</p>
+<div class="hlcode"><pre><span class="n">nameserver</span> <span class="mf">8.8.8.8</span>
+<span class="n">nameserver</span> <span class="mf">8.8.4.4</span>
+<span class="n">nameserver</span> <span class="mf">192.168.31.1</span>
+</pre></div>
+
+
+<p>改完上面, 如果重启的话, DNS 还是会变为原来的样子, 所以要让其永久改变, 因此, 执行: <br><strong>vim /etc/resolvconf/resolv.conf.d/base</strong>. <br>输入和 DNS 解析文件相同的内容.</p>
+<p><strong>vim /etc/hostname</strong>, 修改主机名.</p>
+<p><strong>vim /etc/hosts</strong>, 修改 [ip 域名] 对应表.</p>
+<div class="hlcode"><pre><span class="mf">127.0.0.1</span>       <span class="n">localhost</span>
+<span class="mf">192.168.31.200</span>  <span class="n">itcast01</span>
+</pre></div>
+
+
+<h1 id="2">2. 关闭防火墙</h1>
+<p>iptables 是 linux 下一个简单实用的防火墙组件. <br><strong>service iptables status</strong>, 先检查下 iptables 状态, 确认是否安装. <br>如果提示: <strong>iptables：unrecognized service</strong>, 则没有安装 iptables, 那就别管它了; <br>如果 iptables 是安装了的, 那么就要查看它的状态, 及是否自启动等等. <br>暂且略过.</p>
+<p>都设置好后, <strong>reboot</strong> 重启系统, <strong>ifconfig</strong> 查看 ip 是否变为我们设置的, hostname 查看主机名.</p>
+<h1 id="3-jdk">3. 安装 JDK</h1>
+<p>访问 oracle 官网 : <a href="http://www.oracle.com/index.html">http://www.oracle.com/index.html</a></p>
+<p>我们安装的 jdk 1.7 版本, 因为 1.8 版本太新, 和 hadoop 的兼容性不是很好.</p>
+<p><img alt="" src="http://i58.tinypic.com/28gt2bm.jpg" /></p>
+<p><img alt="" src="http://i60.tinypic.com/e5lqps.jpg" /></p>
+<p><strong>向下翻到最后:</strong></p>
+<p><img alt="" src="http://i57.tinypic.com/2w69oat.jpg" /></p>
+<p><img alt="" src="http://i58.tinypic.com/ny7bck.jpg" /></p>
+<p><img alt="" src="http://i60.tinypic.com/i3w7k2.jpg" /></p>
+<p><img alt="" src="http://i59.tinypic.com/111896r.jpg" /></p>
+<p>下载好后, 弄到 Ubuntu 里, 解压, 然后在 usr 目录下新建一个 java 目录, 把解压好的文件复制进去.</p>
+<p><strong>注意, 在接下来的操作前, 需要将用户切回 itcast (命令: sudo itcat)</strong></p>
+<div class="hlcode"><pre><span class="n">root</span><span class="err">@</span><span class="n">itcast01</span><span class="o">:/</span><span class="n">home</span><span class="o">/</span><span class="n">itcast</span><span class="err">#</span> <span class="n">mkdir</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">java</span>
+<span class="n">root</span><span class="err">@</span><span class="n">itcast01</span><span class="o">:/</span><span class="n">home</span><span class="o">/</span><span class="n">itcast</span><span class="err">#</span> <span class="n">mv</span> <span class="err">桌面</span><span class="o">/</span><span class="n">jdk1</span><span class="mf">.7.0</span><span class="n">_80</span><span class="o">/</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">java</span><span class="o">/</span>
+<span class="n">vim</span> <span class="o">~/</span><span class="p">.</span><span class="n">bashrc</span>
+</pre></div>
+
+
+<p>打开 VIM 编辑器后, 翻到最后一行, 在后面添加:</p>
+<div class="hlcode"><pre><span class="n">export</span> <span class="n">JAVA_HOME</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">java</span><span class="o">/</span><span class="n">jdk1</span><span class="mf">.7.0</span><span class="n">_80</span>
+<span class="n">export</span> <span class="n">PATH</span><span class="o">=</span><span class="err">$</span><span class="n">PATH</span><span class="o">:</span><span class="err">$</span><span class="n">JAVA_HOME</span><span class="o">/</span><span class="n">bin</span>
+</pre></div>
+
+
+<p>“=”左右两边不能有空格.</p>
+<div class="hlcode"><pre><span class="n">source</span> <span class="o">~/</span><span class="p">.</span><span class="n">bashrc</span>
+</pre></div>
+
+
+<p>最后刷新下文件.</p>
+<p>此时, 不管在哪个目录输入 java 都可以找到执行文件.</p>
+<p><img alt="" src="http://i62.tinypic.com/4q5sh2.jpg" /></p>
+<h1 id="4-hadoop">4. 下载安装 Hadoop</h1>
+<p>访问: <a href="http://archive.apache.org/dist/">http://archive.apache.org/dist/</a>, apache 的所有项目都在这里.</p>
+<p><img alt="" src="http://i61.tinypic.com/29ustjt.jpg" /></p>
+<p><img alt="" src="http://i60.tinypic.com/33xy72x.jpg" /></p>
+<p><img alt="" src="http://i58.tinypic.com/2nuon4o.jpg" /></p>
+<p><img alt="" src="http://i58.tinypic.com/1262ydd.jpg" /></p>
+<p>下载完成后, 拖到 Ubuntu 桌面.</p>
+<p><strong>mkdir /usr/itcast, </strong>创建一个文件夹.</p>
+<p><strong>cd 桌面</strong>, 进入桌面目录.</p>
+<p><strong>tar -zxvf hadoop-2.7.1.tar.gz -C /usr/itcast</strong> (-z 处理gz, x 释放/c 压缩, v 显示详情, f 解压哪个文件)</p>
+<p>接下来开始配置 hadoop, 对于 hadoop 2.0+, <strong>有五个文件需要配置:</strong></p>
+<p><strong>注意, 在此步操作前, 需要将用户切回 itcast (命令: sudo itcat)</strong></p>
+<p><strong>linux 默认权限是 644, 需要修改成 777 (命令: sudo chmod -R 777 /usr/itcast/hadoop-2.7.1/)</strong></p>
+<p><strong>Ubuntu 默认并没有安装 ssh 服务, 需要自己手动安装 openssh-server, 判断是否安装 ssh 服务, 可以通过如下命令进行: ssh localhost.</strong></p>
+<p><strong>安装命令: sudo apt-get install openssh-server</strong></p>
+<hr />
+<p><strong>cd /usr/itcast/hadoop-2.7.1/etc/hadoop</strong></p>
+<p><strong>vim hadoop-env.sh</strong><br>定位到 26% 左右, 找到</p>
+<div class="hlcode"><pre>export JAVA_HOME=<span class="cp">${</span><span class="n">JAVA_HOME</span><span class="cp">}</span>
+</pre></div>
+
+
+<p>改成</p>
+<div class="hlcode"><pre><span class="n">export</span> <span class="n">JAVA_HOME</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">java</span><span class="o">/</span><span class="n">jdk1</span><span class="mf">.7.0</span><span class="n">_80</span> <span class="p">(</span><span class="err">可以在</span> <span class="n">vim</span> <span class="err">的命令模式下</span><span class="p">,</span> <span class="err">通过</span> <span class="n">echo</span> <span class="err">$</span><span class="n">JAVA_HOME</span> <span class="err">查看路径</span><span class="p">)</span>
+</pre></div>
+
+
+<p><strong>vim core-site.xml</strong></p>
+<div class="hlcode"><pre><span class="nt">&lt;configuration&gt;</span>
+        <span class="nt">&lt;property&gt;</span>
+        <span class="c">&lt;!--用来指定 HDFS 的老大(NameNode)的地址--&gt;</span>
+                <span class="nt">&lt;name&gt;</span>fs.defaultFS<span class="nt">&lt;/name&gt;</span>
+                <span class="c">&lt;!--itcast01 是这台主机名, 要在 hosts 里设置了映射才可以, 不然只能写 ip--&gt;</span>
+                <span class="nt">&lt;value&gt;</span>hdfs://itcast01:9000<span class="nt">&lt;/value&gt;</span>
+        <span class="nt">&lt;/property&gt;</span>
+
+        <span class="nt">&lt;property&gt;</span>
+        <span class="c">&lt;!--用来指定 hadoop 运行时产生文件的存放目录--&gt;</span>
+                <span class="nt">&lt;name&gt;</span>hadoop.tmp.dir<span class="nt">&lt;/name&gt;</span>
+                <span class="nt">&lt;value&gt;</span>/usr/itcast/hadoop-2.7.1/tmp<span class="nt">&lt;/value&gt;</span>
+        <span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;/configuration&gt;</span>
+</pre></div>
+
+
+<p><strong>vim hdfs-site.xml</strong></p>
+<div class="hlcode"><pre><span class="nt">&lt;configuration&gt;</span>
+        <span class="nt">&lt;property&gt;</span>
+        <span class="c">&lt;!--指定 HDFS 保存数据的副本个数, 这里因为是伪分布, 所以是 1 份--&gt;</span>
+                <span class="nt">&lt;name&gt;</span>dfs.replication<span class="nt">&lt;/name&gt;</span>
+                <span class="nt">&lt;value&gt;</span>1<span class="nt">&lt;/value&gt;</span>
+        <span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;/configuration&gt;</span>
+</pre></div>
+
+
+<p><strong>mv mapred-site.xml.template mapred-site.xml</strong></p>
+<p><strong>vim mapred-site.xml</strong></p>
+<div class="hlcode"><pre><span class="nt">&lt;configuration&gt;</span>
+        <span class="nt">&lt;property&gt;</span>
+        <span class="c">&lt;!--告诉 Hadoop MR 要运行在 yarn 上--&gt;</span>
+                <span class="nt">&lt;name&gt;</span>mapreduce.framework.name<span class="nt">&lt;/name&gt;</span>
+                <span class="nt">&lt;value&gt;</span>yarn<span class="nt">&lt;/value&gt;</span>
+        <span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;/configuration&gt;</span>
+</pre></div>
+
+
+<p><strong>vim yarn-site.xml</strong></p>
+<div class="hlcode"><pre><span class="nt">&lt;configuration&gt;</span>
+        <span class="nt">&lt;property&gt;</span>
+            <span class="c">&lt;!--NodeManager 获取数据的方式是shuffle--&gt;</span>
+                <span class="nt">&lt;name&gt;</span>yarn.nodemanager.aux-services<span class="nt">&lt;/name&gt;</span>
+                <span class="nt">&lt;value&gt;</span>mapreduce_shuffle<span class="nt">&lt;/value&gt;</span>
+        <span class="nt">&lt;/property&gt;</span>
+        <span class="nt">&lt;property&gt;</span>
+            <span class="c">&lt;!--指定 YARN 的老大(ResourceManager 它负责资源的调度、分配)的地址--&gt;</span>
+                <span class="nt">&lt;name&gt;</span>yarn.resourcemanager.hostname<span class="nt">&lt;/name&gt;</span>
+                <span class="nt">&lt;value&gt;</span>itcast01<span class="nt">&lt;/value&gt;</span>
+        <span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;/configuration&gt;</span>
+</pre></div>
+
+
+<hr />
+<p>这五个文件配置好后, 将下来要<strong>修改环境变量</strong>(确保用户是 itcast), 命令: **vim ~/.bashrc</p>
+<div class="hlcode"><pre><span class="n">export</span> <span class="n">JAVA_HOME</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">java</span><span class="o">/</span><span class="n">jdk1</span><span class="mf">.7.0</span><span class="n">_80</span>
+<span class="n">export</span> <span class="n">HADOOP_HOME</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">itcast</span><span class="o">/</span><span class="n">hadoop</span><span class="o">-</span><span class="mf">2.7.1</span>
+<span class="n">export</span> <span class="n">PATH</span><span class="o">=</span><span class="err">$</span><span class="n">PATH</span><span class="o">:</span><span class="err">$</span><span class="n">JAVA_HOME</span><span class="o">/</span><span class="n">bin</span><span class="o">:</span><span class="err">$</span><span class="n">HADOOP_HOME</span><span class="o">/</span><span class="n">bin</span>
+</pre></div>
+
+
+<p>然后刷新下 bashrc, 命令: <strong>source ~/.bashrc</strong><br>退回根目录, 测试下 hadoop 命令: hadoop version</p>
+<p><strong>初始化 HDFS</strong><br><strong>命令: hdfs namenode -format</strong><br>以前是用 hdfs namenode –format, 格式化后, hadoop 根目录下就多出了 tmp 目录(在上一步第二个配置文件里设置的).</p>
+<p><strong>启动 hadoop 服务</strong></p>
+<div class="hlcode"><pre><span class="n">cd</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">itcast</span><span class="o">/</span><span class="n">hadoop</span><span class="o">-</span><span class="mf">2.7.1</span><span class="o">/</span><span class="n">sbin</span><span class="o">/</span>
+<span class="p">.</span><span class="o">/</span><span class="n">start</span><span class="o">-</span><span class="n">all</span><span class="p">.</span><span class="n">sh</span>
+</pre></div>
+
+
+<p>输入一堆 yes 和 密码后, 输入 <strong> jps</strong>, 如果看到 NameNode、ResourceManager、NodeManager、SecondaryNameNode 和 DataNod 六个进程, 就表示启动成功了.</p>
+<p>不过有点需要注意, ./start-all.sh 和 hdfs namenode –format 一样, 也是个过时命令, 新的命令是 <strong>start-dfs.sh </strong>和 <strong>start-yarn.sh.</strong></p>
+<h1 id="5">5. 测试环境</h1>
+<p>itcast01:50070 -- hdfs 管理界面</p>
+<p>itcast01:8088 -- yarn 管理界面</p>
+<p><strong>先测试 hdfs</strong> -- <a href="http://itcast01:50070">http://itcast01:50070</a></p>
+<p><img alt="" src="http://i61.tinypic.com/10fcr2s.jpg" /></p>
+<p><strong>hadoop fs -put</strong> /home/itcast/桌面/hadoop-2.7.1.tar.gz hdfs://itcast01:9000/hadoop<br>上传文件到 hdfs://itcast01:9000/ 并命名为 hadoop<br>同样功能的命令除了 put 还有 copyFromLocal (过时).</p>
+<p><img alt="" src="http://i59.tinypic.com/35b9yqr.jpg" /></p>
+<p><img alt="" src="http://i58.tinypic.com/x2ns0h.jpg" /></p>
+<p><strong>hadoop fs -get</strong> hdfs://itcast01:9000/hadoop /home/itcast/桌面/hadoop.tar.gz<br>下载文件到桌面, 并命名为 hadoop.tar.gz</p>
+<p>执行命令的时候, 可能会出现提示: WARN hdfs.DFSClient: DFSInputStream has been closed already
+不用管它, apache 也给出了说明:</p>
+<p><img alt="" src="http://i61.tinypic.com/344ql4k.jpg" /></p>
+<p><strong>再测试 mr(jar 包) 和 yarn</strong></p>
+<p>MR 给出了一些测试 jar, 它们在: /usr/itcast/hadoop-2.7.1/<strong>share</strong>/hadoop/mapreduce 目录下.</p>
+<p><strong>cd /usr/itcast/hadoop-2.7.1/share/hadoop/mapreduce</strong></p>
+<p>创建一个文件, 输入内容</p>
+<p><strong>vim words.txt</strong></p>
+<div class="hlcode"><pre><span class="n">hello</span> <span class="n">tom</span>
+<span class="n">hello</span> <span class="n">jerry</span>
+<span class="n">hello</span> <span class="n">kitty</span>
+<span class="n">hello</span> <span class="n">world</span>
+<span class="n">hello</span> <span class="n">martin</span>
+</pre></div>
+
+
+<p>所有的 MR 都是执行在 hdfs 上的, 所以要先上传文件.</p>
+<p><strong>hadoop fs -put words.txt hdfs://itcast01:9000/words.txt</strong></p>
+<p>/usr/itcast/hadoop-2.7.1/share/hadoop/mapreduce 目录下有个 hadoop-mapreduce-examples-2.7.1.jar, 里面有个 wordcount, 可以用来统计单词个数.
+<strong>hadoop jar hadoop-mapreduce-examples-2.7.1.jar wordcount hdfs://itcast01:9000/words.txt hdfs://itcast01:9000/result.txt</strong>
+第一个参数是待统计文件, 第二个参数是保存结果的文件路径.</p>
+<p>执行完毕后, 查看下 hdfs:</p>
+<p><strong>hadoop fs -ls hdfs://itcast01:9000/</strong></p>
+<div class="hlcode"><pre><span class="n">Found</span> <span class="mi">4</span> <span class="n">items</span>
+<span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span><span class="n">r</span><span class="o">--</span> <span class="mi">1</span> <span class="n">itcast</span> <span class="n">supergroup</span> <span class="mi">210606807</span> <span class="mi">2015</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">19</span> <span class="mi">11</span><span class="o">:</span><span class="mo">02</span> <span class="n">hdfs</span><span class="o">:</span><span class="c1">//itcast01:9000/hadoop</span>
+<span class="n">drwxr</span><span class="o">-</span><span class="n">xr</span><span class="o">-</span><span class="n">x</span> <span class="o">-</span> <span class="n">itcast</span> <span class="n">supergroup</span> <span class="mi">0</span> <span class="mi">2015</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">19</span> <span class="mi">11</span><span class="o">:</span><span class="mi">47</span> <span class="n">hdfs</span><span class="o">:</span><span class="c1">//itcast01:9000/result.txt</span>
+<span class="n">drwx</span><span class="o">------</span> <span class="o">-</span> <span class="n">itcast</span> <span class="n">supergroup</span> <span class="mi">0</span> <span class="mi">2015</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">19</span> <span class="mi">11</span><span class="o">:</span><span class="mi">46</span> <span class="n">hdfs</span><span class="o">:</span><span class="c1">//itcast01:9000/tmp</span>
+<span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span><span class="n">r</span><span class="o">--</span> <span class="mi">1</span> <span class="n">itcast</span> <span class="n">supergroup</span> <span class="mi">59</span> <span class="mi">2015</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">19</span> <span class="mi">11</span><span class="o">:</span><span class="mi">42</span> <span class="n">hdfs</span><span class="o">:</span><span class="c1">//itcast01:9000/words.txt</span>
+</pre></div>
+
+
+<p>也可以直接通过 浏览器 查看:</p>
+<p><img alt="" src="http://i60.tinypic.com/117qrh2.jpg" /></p>
+<p><img alt="" src="http://i59.tinypic.com/15xo7qa.jpg" /></p>
+<p>第一个 _SUCCESS 表示执行结果, 这里是成功, 第二个是内容, 把第二个下载下来并打开:</p>
+<div class="hlcode"><pre><span class="n">hello</span> <span class="mi">5</span>
+<span class="n">jerry</span> <span class="mi">1</span>
+<span class="n">kitty</span> <span class="mi">1</span>
+<span class="n">martin</span> <span class="mi">1</span>
+<span class="n">tom</span> <span class="mi">1</span>
+<span class="n">world</span> <span class="mi">1</span>
+</pre></div>
+    </div>
+
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="搭建 Hadoop 分布式实验环境" data-title="搭建 Hadoop 分布式实验环境" data-url="http://wiki.smallcpp.com/工具配置/搭建 Hadoop 分布式实验环境.html"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:"smallwiki"};
+        (function() {
+            var ds = document.createElement('script');
+            ds.type = 'text/javascript';ds.async = true;
+            ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+            ds.charset = 'UTF-8';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+    </script>
+    <!-- 多说公共JS代码 end -->
+
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2016 <a href="http://www.samllcpp.com/" target="_blank">Martin</a> Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+              </p>
+        </div>
+    </body>
+</html>
