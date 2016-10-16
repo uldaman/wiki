@@ -1,0 +1,164 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <title>VMware 安装 Ubuntu - Wiki | Small Cpp</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            
+            <a href="/">Home</a> » <a href="/#工具配置">工具配置</a> » VMware 安装 Ubuntu
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#_1">安装系统</a></li>
+<li><a href="#vm-tools">安装 VM Tools</a></li>
+<li><a href="#fcitx">安装 Fcitx</a></li>
+</ul>
+</div>
+<h1 id="_1">安装系统</h1>
+<p><strong>1. 创建新的虚拟机</strong></p>
+<p><img alt="" src="http://i59.tinypic.com/2jff68n.jpg" /></p>
+<p><strong>2. 使用自定义模式</strong></p>
+<p><img alt="" src="http://i60.tinypic.com/315ohh1.jpg" /></p>
+<p><strong>3. 下一步直到选择安装源</strong></p>
+<p><img alt="" src="http://i58.tinypic.com/33vp5af.jpg" /></p>
+<p><strong>4. 选择操作系统</strong></p>
+<p><img alt="" src="http://i62.tinypic.com/2lw6dz9.jpg" /></p>
+<p><strong>5. 设置虚拟机名称及安装路径</strong></p>
+<p><img alt="" src="http://i61.tinypic.com/t6e0c2.jpg" /></p>
+<p><strong>6. 设置处理器</strong></p>
+<p><img alt="" src="http://i60.tinypic.com/16gg5co.jpg" /></p>
+<p><strong>7. 设置内存, 对于测试环境的 Linux (32 位) 来说, <code>1G</code> 足够 (条件允许可以设置大一点).</strong></p>
+<p><img alt="" src="http://i58.tinypic.com/16c2e6u.jpg" /></p>
+<p><strong>8. 设置网络类型, 如果使用有线上网, 推荐 <code>NAT</code>, 如果是无线的话, 推荐使用桥接.</strong></p>
+<p><img alt="" src="http://i58.tinypic.com/2d0ayw4.jpg" /></p>
+<p><strong>9. 下面三步直接默认的就可以了.</strong></p>
+<p><img alt="" src="http://i58.tinypic.com/34xjr52.jpg" /></p>
+<p><img alt="" src="http://i57.tinypic.com/2rn7zeu.jpg" /></p>
+<p><img alt="" src="http://i62.tinypic.com/5ufhnp.jpg" /></p>
+<p><strong>10. 设置磁盘, 使用默认的 <code>20G</code> 足够了, 下面选择第一个单选框.</strong></p>
+<p><img alt="" src="http://i60.tinypic.com/2w20m6q.jpg" /></p>
+<p><strong>11. 设置磁盘文件及完成创建, 都默认就可以了.</strong></p>
+<p><img alt="" src="http://i58.tinypic.com/ol15l.jpg" /></p>
+<p><img alt="" src="http://i60.tinypic.com/msit82.jpg" /></p>
+<p><strong>12. 点击编辑虚拟机设置.</strong></p>
+<p><img alt="" src="http://i61.tinypic.com/2i7tvnb.jpg" /></p>
+<p><strong>13. 设置光盘镜像后点击确定.</strong></p>
+<p><img alt="" src="http://i57.tinypic.com/33m7i3q.jpg" /></p>
+<p><strong>14. 点击开启此虚拟机.</strong></p>
+<p><img alt="" src="http://i60.tinypic.com/5xsfgo.jpg" /></p>
+<p><strong>15. 等待虚拟机启动, 直到设置语言, 选择语言后点击安装 Ubuntu.</strong></p>
+<p><img alt="" src="http://i62.tinypic.com/nc1209.jpg" /></p>
+<p><strong>16. 对于我们编程或测试来说下面两个不必要勾选, 直接点继续.</strong></p>
+<p><img alt="" src="http://i60.tinypic.com/ergcxx.jpg" /></p>
+<p><strong>17. 选择最后一项, 我们将自定义分区设置.</strong></p>
+<p><img alt="" src="http://i62.tinypic.com/2u6pbbd.jpg" /></p>
+<p><strong>18. 现在开始利用上一篇学到的东西开始定义我们的分区.</strong></p>
+<p><strong>18.1. 选中 <code>/dev/sda</code> 后点击新建分区表…此时会弹出一个对话框, 直接确定就可以了.</strong></p>
+<p><img alt="" src="http://i61.tinypic.com/1zlqiwg.jpg" /></p>
+<p><strong>18.2. 选中新出现的空闲, 再点击左下方的 <code>+</code>.</strong></p>
+<p><img alt="" src="http://i60.tinypic.com/j5e5xc.jpg" /></p>
+<p><strong>18.3. 下图中的 "主分区"，"空间起始位置"， "Ext4 ..." 均为默认, 不需要修改; 大小设置为 <code>10240 MB = 10G</code>; 最后的 "挂载点" 下拉列表中, 选中 "/", 点 "确定".</strong></p>
+<p><img alt="" src="http://i62.tinypic.com/muv1nb.jpg" /></p>
+<p><strong>18.4. 同 <code>18.2</code> 中一样</strong></p>
+<p><img alt="" src="http://i57.tinypic.com/2uy0v3t.jpg" /></p>
+<p><strong>18.5. 大小选为 <code>1024 MB = 1G</code>, 用于下拉框选择交换空间 (即 swap). 这里我们没有用上一篇说过的 <code>2 倍</code>, 因为是虚拟机测试环境, 所以选 <code>1G</code> 就可以了.</strong></p>
+<p><img alt="" src="http://i57.tinypic.com/20k4rr9.jpg" /></p>
+<p><strong>18.6. 同 18.2 中一样</strong></p>
+<p><img alt="" src="http://i61.tinypic.com/ivjml5.jpg" /></p>
+<p><strong>18.7. 大小设为 <code>200 MB</code>, 挂载点选为 <code>/boot</code>.</strong></p>
+<p><img alt="" src="http://i62.tinypic.com/2ef25pi.jpg" /></p>
+<p><strong>18.8. 同 18.2</strong></p>
+<p><img alt="" src="http://i62.tinypic.com/24e6vs7.jpg" /></p>
+<p><strong>18.9. 挂载点选为 <code>/home</code>, 其它默认就可以了.</strong></p>
+<p><img alt="" src="http://i60.tinypic.com/2chkjlu.jpg" /></p>
+<p><strong>18.10. 此时你的设置应该如下, 点现在安装即可.</strong></p>
+<p><img alt="" src="http://i59.tinypic.com/2usfjw0.jpg" /></p>
+<p><strong>19. 下面的步骤默认就可以了, 不过要注意的是要记得设置的账号和密码.</strong></p>
+<p><img alt="" src="http://i57.tinypic.com/9v89k4.jpg" /></p>
+<p><img alt="" src="http://i57.tinypic.com/6gy1r7.jpg" /></p>
+<p><img alt="" src="http://i59.tinypic.com/aljcaq.jpg" /></p>
+<p><img alt="" src="http://i61.tinypic.com/23u6jpy.jpg" /></p>
+<h1 id="vm-tools">安装 VM Tools</h1>
+<p>全部安装完成以后, 我们还需要安装 <strong>VM Tools</strong> 来提高虚拟机使用性.</p>
+<p><strong>1. 先关闭虚拟机, 将 CD 设置成使用物理驱动器. 再启动虚拟机, 进入安装好的 Ubuntu 系统后, 选择虚拟机菜单栏 -- 安装 VMware tools.</strong></p>
+<p><img alt="" src="http://i61.tinypic.com/29fw7tg.jpg" /></p>
+<p><img alt="" src="http://i60.tinypic.com/2vxo9x0.jpg" /></p>
+<p><strong>2. 在 Ubuntu 系统中弹出的 VMware tools 窗口中找到 <code>VMwaretools-9.6.0-1294478.tar.gz</code> 复制到桌面.</strong></p>
+<p><img alt="" src="http://i60.tinypic.com/25gdlia.jpg" /></p>
+<p><strong>3. 复制完之后, 右键左侧栏的文件夹图标 -- 退出, 这时应该返回到桌面界面了. 在桌面上的 <code>VMwaretools-9.6.0-1294478.tar.gz</code> 右击 提取到此处.</strong></p>
+<p><img alt="" src="http://i60.tinypic.com/2vwfbzo.jpg" /></p>
+<p><strong>4. 此时桌面就多了一个 <code>vmware-tools-distrib</code> 的文件夹, 按 <code>CTRL+ALT+T</code> 呼出终端. 为了以后方便, 此时可以在左侧栏的终端图标上右键 -- 锁定到启动器.</strong></p>
+<p><img alt="" src="http://i60.tinypic.com/a0h0so.jpg" /></p>
+<p><strong>5. 在弹出的终端窗里输入 <code>sudo su</code> 进入 "超级用户"模式, 此时它会要求输入密码, 输入即可, 要注意, 在终端输入密码是不会显示的, 输完后直接确定就可以了.</strong></p>
+<p><img alt="" src="http://i62.tinypic.com/21oo66b.jpg" /></p>
+<p><strong>6. 输入 <code>ls</code> 命令列出文件夹里的文件, 然后进入 使用 <code>cd</code> 桌面 命令进入桌面文件夹.</strong></p>
+<p><img alt="" src="http://i61.tinypic.com/jgtq9t.jpg" /></p>
+<p><strong>7. 输入 <code>ls</code> 命令列出桌面上的文件, 然后进入 使用 <code>cd</code> 命令进入刚才解压出来的文件夹.</strong></p>
+<p>(小技巧, 因为 <code>vmware-tools-distrib</code> 名字很长, 可以输入名字的几个字母后按 <code>tab</code> 键, 终端会自动补全; 当然也可以在 <code>ls</code> 显示出来的结果上直接复制然后粘贴.)</p>
+<p><img alt="" src="http://i57.tinypic.com/20ayo0l.jpg" /></p>
+<p><strong>8. 进入 <code>vmware-tools-distrib</code> 后, 使用 <code>sudo ./ vmware-install.pl</code> 命令安装 VM Tools. 然后一堆的 <code>enter</code>、 <code>y</code>、 <code>n</code> 要按.</strong></p>
+<p><img alt="" src="http://i58.tinypic.com/5uo8dl.jpg" /></p>
+<p>安装完后要重启才能生效, 不过我们先别急着重启, Ubuntu 自带的 <strong>iBus</strong> 输入法太难用了, <strong>Fcitx</strong> 才是当之无愧的最好的中文输入法 (框架). 现在我们来安装它.</p>
+<h1 id="fcitx">安装 Fcitx</h1>
+<p>Ubuntu 16 后已自带 Fcitx, 但是没有<strong>五笔</strong>, 需要额外执行 <code>sudo apt-get install fcitx-table-wubi</code> 安装下就行了.</p>
+<p>Ubuntu 16 以前参考下面的步骤.</p>
+<p>在终端输入 <code>sudo apt-get install fcitx-table-wbpy</code>.</p>
+<p><img alt="" src="http://i62.tinypic.com/zisi6h.jpg" /></p>
+<p>安装完成之后, 输入 <code>reboot</code> 重启系统.</p>
+<p>重启系统过后, 首先拖动虚拟机大小看看屏幕能不能自适应, 如果可以的话说明 <strong>VM Tools</strong> 安装好了.</p>
+<p>接下来看看刚安装好的输入法.</p>
+<p>首先打开语言设置.</p>
+<p><img alt="" src="http://i58.tinypic.com/2m7vo.jpg" /></p>
+<p>在 <em>键盘输入方式系统</em> 处可以看到已经变成 <strong>fcitx</strong> 了, 如果不是的话, 手动选择下再重启.</p>
+<p><img alt="" src="http://i60.tinypic.com/wsv1pd.jpg" /></p>
+<p>此时, 你的系统应该有双拼、拼音、五笔拼音等乱七八糟的输入法. 如果只需要一个五笔拼音就够了, 可以从 Ubuntu 右上角顶栏的小键盘图标中打开配置，如下图：</p>
+<p><img alt="" src="http://i59.tinypic.com/11ljxie.jpg" /></p>
+<p>然后在桌面新建一个文本文档测试下新输入法, 是不是感觉棒棒哒..</p>
+<p><img alt="" src="http://i62.tinypic.com/349citu.jpg" /></p>
+<p>Ubuntu 还有很多不错的软件工具可以使用, 可以到 <a href="http://wiki.ubuntu.org.cn/Qref/Apps">http://wiki.ubuntu.org.cn/Qref/Apps</a> 自己找~</p>
+<p>看到合适的心仪的工具后, 直接点右侧的安装就可以了(当然这必须在 Ubuntu 里的浏览器上操作, 在 Windows 下可不行).</p>
+<p><img alt="" src="http://i60.tinypic.com/10n85s9.jpg" /></p>
+    </div>
+
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="VMware 安装 Ubuntu" data-title="VMware 安装 Ubuntu" data-url="http://wiki.smallcpp.com/工具配置/VMware 安装 Ubuntu.html"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:"smallwiki"};
+        (function() {
+            var ds = document.createElement('script');
+            ds.type = 'text/javascript';ds.async = true;
+            ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+            ds.charset = 'UTF-8';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+    </script>
+    <!-- 多说公共JS代码 end -->
+
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2016 <a href="http://www.samllcpp.com/" target="_blank">Martin</a> Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+              </p>
+        </div>
+    </body>
+</html>
