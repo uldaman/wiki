@@ -9,6 +9,7 @@ date: 2016-10-16 11:42
 - 宿主机: win7 64位, 16G
 - 虚拟化工具: VMware Workstation
 - 虚拟机系统: Ubuntu 32位, 1.5G, 20G, NAT
+- 主机名: itcast01 (NameNode), itcast02 (Datanode), itcast03 (Datanode)
 - Java 版本: jdk-8u101-linux-i586
 - Hadoop 版本: hadoop-2.7.3
 
@@ -20,19 +21,7 @@ date: 2016-10-16 11:42
 
 [TOC]
 
-编辑hosts文件
-关闭防火墙
-安装JDK
-下载hadoop 2.x幵解压
-修改配置文件
-类似linux的方法，配置ssh免密码
-分収hadoop到各个节点 (拷贝虚拟机)
-部署免密码ssh
-格式化namenoede
-吭劢hadoop集群
-用jps检验各后台迚程是否成功吭劢
-
-# 1. 修改固定 IP 、主机名 及 hosts
+# 1. 固定 IP、主机名、Hosts 和 iptables
 ## 固定 IP
 **sudo vim /etc/network/interfaces**, 编辑 interfaces 文件, 这是 Ubuntu 网上配置文件.
 
@@ -58,77 +47,89 @@ gateway 192.168.31.2
 
 ![](http://wiki.smallcpp.com/static/images/搭建Hadoop分布式实验环境/ifconfig.png)
 
+另外就是 gateway (网关), 虚拟机的网关可以通过虚拟网络编辑器查看.
+
+![](http://wiki.smallcpp.com/static/images/搭建Hadoop分布式实验环境/虚拟网络编辑器.png)
+
+![](http://wiki.smallcpp.com/static/images/搭建Hadoop分布式实验环境/NAT.png)
+
+![](http://wiki.smallcpp.com/static/images/搭建Hadoop分布式实验环境/gateway.png)
+
+所以上面的第八行的 gateway 要填: `192.168.142.2`.
+
 ## DNS
 **sudo vim /etc/resolv.conf**, 编辑 DNS 解析文件.
+
 ```
 nameserver 8.8.8.8
 nameserver 8.8.4.4
-nameserver 192.168.31.1
+nameserver 192.168.31.2
 ```
-改完上面, 如果重启的话, DNS 还是会变为原来的样子, 所以要让其永久改变, 因此, 执行: <br>**vim /etc/resolvconf/resolv.conf.d/base**. <br>输入和 DNS 解析文件相同的内容.
+<br>
+第 3 行填 **gateway** (网关) ip;
 
-**vim /etc/hostname**, 修改主机名.
+改完上面, 如果重启的话, DNS 还是会变为原来的样子, 网上给出的方法是执行 `sudo vim /etc/resolvconf/resolv.conf.d/base` 输入和 DNS 解析文件相同的内容.
 
-**vim /etc/hosts**, 修改 [ip 域名] 对应表.
+实际操作后重启发现好像并没生效, 又找到了另一个方法, 执行 `sudo vim /etc/resolvconf/resolv.conf.d/tail` 输入和 DNS 解析文件相同的内容.
+
+最后, 通过 `sudo resolvconf -u` 刷新 **resolv.conf** 文件, 再用 `sudo /etc/init.d/networking restart` 重启网络.
+
+## Hosts
+`sudo vim /etc/hostname` 修改主机名为 itcast01 (另外两台分别用 itcast02 和 itcast03).
+
+`sudo vim /etc/hosts` 修改 [ip 域名] 对应表.
+
 ```
 127.0.0.1       localhost
 192.168.31.200  itcast01
 ```
+<br>
+## 关闭防火墙
+iptables 是 linux 下一个简单实用的防火墙组件.
 
-#2. 关闭防火墙
-iptables 是 linux 下一个简单实用的防火墙组件. <br>**service iptables status**, 先检查下 iptables 状态, 确认是否安装. <br>如果提示: **iptables：unrecognized service**, 则没有安装 iptables, 那就别管它了; <br>如果 iptables 是安装了的, 那么就要查看它的状态, 及是否自启动等等. <br>暂且略过.
+先用 `sudo ufw status` 查看防火墙状态, 如果是启用的, 就用 `sudo ufw disable` 关闭它.
 
-都设置好后, **reboot** 重启系统, **ifconfig** 查看 ip 是否变为我们设置的, hostname 查看主机名.
+> Ubuntu 默认不安装 selinux
 
-#3. 安装 JDK
-访问 oracle 官网 : [http://www.oracle.com/index.html](http://www.oracle.com/index.html)
+都设置好后, `reboot` 重启系统, `ifconfig` 查看 ip 是否变为我们设置的, `hostname` 查看主机名.
 
-我们安装的 jdk 1.7 版本, 因为 1.8 版本太新, 和 hadoop 的兼容性不是很好.
+# 2. 安装 JDK
+## 2.1
+访问 oracle 官网: [http://www.oracle.com/technetwork/java/javase/downloads/index.html](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
 
-![](http://i58.tinypic.com/28gt2bm.jpg)
+我这里选择的是最新的 `jdk-8u101-linux-i586`.
 
-![](http://i60.tinypic.com/e5lqps.jpg)
-
-**向下翻到最后:**
-
-![](http://i57.tinypic.com/2w69oat.jpg)
-
-![](http://i58.tinypic.com/ny7bck.jpg)
-
-![](http://i60.tinypic.com/i3w7k2.jpg)
-
-![](http://i59.tinypic.com/111896r.jpg)
-
-下载好后, 弄到 Ubuntu 里, 解压, 然后在 usr 目录下新建一个 java 目录, 把解压好的文件复制进去.
-
-**注意, 在接下来的操作前, 需要将用户切回 itcast (命令: sudo itcat)**
+下载好后, 弄到 Ubuntu 里解压, 然后在 `usr` 目录下新建一个 `java` 目录, 把解压好的文件复制进去.
 
 ```
-root@itcast01:/home/itcast# mkdir /usr/java
-root@itcast01:/home/itcast# mv 桌面/jdk1.7.0_80/ /usr/java/
-vim ~/.bashrc
+sudo mkdir /usr/java
+sudo mv 桌面/jdk1.8.0_101/ /usr/java/
 ```
+<br>
+或者可以先 `sudo mkdir /usr/java` 创建好目录, 再用 `sudo tar -zxvf jdk-8u101-linux-i586.tar.gz -C /usr/java` (-z 处理 gzip, x 解压, v 显示详情, f 解压哪个文件) 直接解压到 `/usr/java` 下.
 
-打开 VIM 编辑器后, 翻到最后一行, 在后面添加:
+## 2.2
+`vim ~/.bashrc` 打开 VIM 编辑器后, 翻到最后一行, 在后面添加:
 
 ```
-export JAVA_HOME=/usr/java/jdk1.7.0_80
+export JAVA_HOME=/usr/java/jdk1.8.0_101
 export PATH=$PATH:$JAVA_HOME/bin
 ```
-“=”左右两边不能有空格.
+<br>
+注意, "=" 左右两边不能有空格; 最后刷新下文件.
+
+## 2.3
+刷新环境变量.
 
 ```
 source ~/.bashrc
 ```
+<br>
+此时, 不管在哪个目录输入 `java -version` 都可以找到执行文件.
 
-最后刷新下文件.
+![](http://wiki.smallcpp.com/static/images/搭建Hadoop分布式实验环境/javaversion.png)
 
-此时, 不管在哪个目录输入 java 都可以找到执行文件.
-
-![](http://i62.tinypic.com/4q5sh2.jpg)
-
-#4. 下载安装 Hadoop
-
+# 3. 下载安装 Hadoop
 访问: [http://archive.apache.org/dist/](http://archive.apache.org/dist/), apache 的所有项目都在这里.
 
 ![](http://i61.tinypic.com/29ustjt.jpg)
@@ -137,40 +138,35 @@ source ~/.bashrc
 
 ![](http://i58.tinypic.com/2nuon4o.jpg)
 
-![](http://i58.tinypic.com/1262ydd.jpg)
+![](http://wiki.smallcpp.com/static/images/搭建Hadoop分布式实验环境/hadoopdown.png)
 
 下载完成后, 拖到 Ubuntu 桌面.
 
-**mkdir /usr/itcast, **创建一个文件夹.
+`sudo mkdir /usr/itcast` 创建一个文件夹.
 
-**cd 桌面**, 进入桌面目录.
+`cd ~/桌面`, 进入桌面目录.
 
-**tar -zxvf hadoop-2.7.1.tar.gz -C /usr/itcast** (-z 处理gz, x 释放/c 压缩, v 显示详情, f 解压哪个文件)
+`sudo tar -zxvf hadoop-2.7.3.tar.gz -C /usr/itcast` (-z 处理 gzip, x 解压, v 显示详情, f 解压哪个文件)
 
-接下来开始配置 hadoop, 对于 hadoop 2.0+, **有五个文件需要配置:**
+为避免权限问题, 可将 `/usr/itcast/hadoop-2.7.3/` 目录权限改为 **777**: `sudo chmod -R 777 /usr/itcast/hadoop-2.7.3/`
 
-**注意, 在此步操作前, 需要将用户切回 itcast (命令: sudo itcat)**
+# 4. 配置 Hadoop
+`cd /usr/itcast/hadoop-2.7.3/etc/hadoop` 进入 Hadoop 配置文件所在目录.
 
-**linux 默认权限是 644, 需要修改成 777 (命令: sudo chmod -R 777 /usr/itcast/hadoop-2.7.1/)**
+## 4.1. vim hadoop-env.sh
+定位到 26 行左右, 找到
 
-**Ubuntu 默认并没有安装 ssh 服务, 需要自己手动安装 openssh-server, 判断是否安装 ssh 服务, 可以通过如下命令进行: ssh localhost.**
-
-**安装命令: sudo apt-get install openssh-server**
-
-* * *
-
-**cd /usr/itcast/hadoop-2.7.1/etc/hadoop**
-
-**vim hadoop-env.sh**<br>定位到 26% 左右, 找到
 ```
 export JAVA_HOME=${JAVA_HOME}
 ```
-改成
-```
-export JAVA_HOME=/usr/java/jdk1.7.0_80 (可以在 vim 的命令模式下, 通过 echo $JAVA_HOME 查看路径)
-```
+<br>
+改成:
 
-**vim core-site.xml**
+```
+export JAVA_HOME=/usr/java/jdk1.8.0_101 (可以在 vim 的命令模式下, 通过 echo $JAVA_HOME 查看路径)
+```
+<br>
+## 4.2. vim core-site.xml
 ```xml
 <configuration>
         <property>
@@ -182,37 +178,39 @@ export JAVA_HOME=/usr/java/jdk1.7.0_80 (可以在 vim 的命令模式下, 通过
 
         <property>
         <!--用来指定 hadoop 运行时产生文件的存放目录-->
+        <!--默认为系统目录, 重启会被清空, 导致重启 hadoop 不能用-->
                 <name>hadoop.tmp.dir</name>
-                <value>/usr/itcast/hadoop-2.7.1/tmp</value>
+                <value>/usr/itcast/hadoop-2.7.3/tmp</value>
         </property>
 </configuration>
 ```
-
-**vim hdfs-site.xml**
+## 4.3. vim hdfs-site.xml
 ```xml
 <configuration>
         <property>
-        <!--指定 HDFS 保存数据的副本个数, 这里因为是伪分布, 所以是 1 份-->
+        <!--指定 HDFS 保存数据的副本个数, 一般最大为 3 就差不多了-->
                 <name>dfs.replication</name>
-                <value>1</value>
+                <value>2</value>
         </property>
-</configuration>
-```
-
-**mv mapred-site.xml.template mapred-site.xml**
-
-**vim mapred-site.xml**
-```xml
-<configuration>
         <property>
-        <!--告诉 Hadoop MR 要运行在 yarn 上-->
-                <name>mapreduce.framework.name</name>
-                <value>yarn</value>
+    <!--指定元数据保存目录-->
+             <name>dfs.namenode.name.dir</name>
+             <value>/usr/itcast/hadoop-2.7.3/tmp/dfs/name</value>
+        </property>
+        <property>
+    <!--指定 HDFS 保存数据目录-->
+             <name>dfs.datanode.data.dir</name>
+             <value>/usr/itcast/hadoop-2.7.3/tmp/dfs/data</value>
         </property>
 </configuration>
 ```
+<br>
+我们这里有 itcast02 和 itcast03 两台数据节点, 所以 `dfs.replication` 为 2, 如果是伪分布式系统的话, 这里改为 1 就可以了.
 
-**vim yarn-site.xml**
+## 4.4. vim yarn-env.sh
+定位到 23 行左右, 找到 JAVA_HOME, 改为 `export JAVA_HOME=/usr/java/jdk1.8.0_101`
+
+## 4.5. vim yarn-site.xml
 ```xml
 <configuration>
         <property>
@@ -227,24 +225,115 @@ export JAVA_HOME=/usr/java/jdk1.7.0_80 (可以在 vim 的命令模式下, 通过
         </property>
 </configuration>
 ```
+<br>
+## 4.6. mapred-site.xml
+```ssh
+cp mapred-site.xml.template mapred-site.xml
+vim mapred-site.xml
+```
+<br>
 
-* * *
+```xml
+<configuration>
+        <property>
+        <!--告诉 Hadoop MR 要运行在 yarn 上-->
+                <name>mapreduce.framework.name</name>
+                <value>yarn</value>
+        </property>
+        <property>
+                <name>mapreduce.jobhistory.address</name>
+                <value>itcast01:10020</value>
+        </property>
+        <property>
+                <name>mapreduce.jobhistory.webapp.address</name>
+                <value>itcast01:19888</value>
+        </property>
+</configuration>
+```
+<br>
+## 4.7. vim slaves
+如果是伪分布式环境, 不需要配这个环节.
 
-这五个文件配置好后, 将下来要**修改环境变量**(确保用户是 itcast), 命令: **vim ~/.bashrc
+`vim slaves`
+
+打开后去掉第一行的 localhost, 将数据节点的域名添加进来
 
 ```
-export JAVA_HOME=/usr/java/jdk1.7.0_80
-export HADOOP_HOME=/usr/itcast/hadoop-2.7.1
+itcast02
+itcast03
+```
+<br>
+**注意**, 数据节点的域名要在 Hosts 文件中解析了才行!
+
+## 4.8. 修改环境变量
+`vim ~/.bashrc`
+
+```
+export JAVA_HOME=/usr/java/jdk1.8.0_101
+export HADOOP_HOME=/usr/itcast/hadoop-2.7.3
 export PATH=$PATH:$JAVA_HOME/bin:$HADOOP_HOME/bin
 ```
+<br>
+然后刷新下 bashrc, 命令: `source ~/.bashrc` 退回根目录, 测试下 hadoop 命令: `hadoop version`
 
-然后刷新下 bashrc, 命令: **source ~/.bashrc**<br>退回根目录, 测试下 hadoop 命令: hadoop version
+![](http://wiki.smallcpp.com/static/images/搭建Hadoop分布式实验环境/hadoopversion.png)
+
+## 4.9. 克隆虚拟机
+关闭当前虚拟机后, 从当前虚拟机上克隆两份.
+
+修改克隆出来的虚拟机的**固定 IP****、主机名** 和 **Hosts**.
+
+`sudo vim /etc/network/interfaces` 修改固定 IP
+
+`sudo vim /etc/hostname` 修改主机名.
+
+`sudo vim /etc/hosts` 修改 [ip 域名] 对应表.
+
+```
+127.0.0.1       localhost
+192.168.31.200  itcast01
+192.168.31.201  itcast02
+192.168.31.202  itcast03
+```
+<br>
+配好后重启, 在三台虚拟机间互 Ping 测试下.
+
+# 5. 配置 SSH 免密码登录
+Ubuntu 默认并没有安装 **ssh** 服务, 需要自己手动安装 **openssh-server**, 可以通过 `ssh localhost` 判断是否安装 ssh 服务; 如果没有安装则通过 `sudo apt-get install openssh-server` 安装即可.
+
+## 5.1 配置 itcast01
+在 itcast01 上安装好 **ssh** 服务后.
+
+`cd ~` 进入根目录
+
+`ls -la` 查看下当前目录文件, 可以看到有个隐藏的 `.ssh` 文件夹 (如果没有自己新建个)
+
+`cd .ssh/` 进入 `.ssh` 目录, `ls` 一下, 看看该目录下有没有 `id_rsa`、`id_rsa.pub` 两个文件, 如果没有, 就用 `ssh-keygen -t rsa` 生成一对 (一路回车就好).
+
+`cp id_rsa.pub authorized_keys`
+
+## 5.2 配置 itcast02 和 itcast03
+首先也是先安装好 **ssh** 服务生成一对 `id_rsa`、`id_rsa.pub` 文件;
+
+然后**不要**执行 `cp id_rsa.pub authorized_keys`, 而是执行 `ssh-copy-id -i ~/.ssh/id_rsa.pub martin@itcast01` 将公钥追加到 **itcast01** 的 **authorized_keys** 中.
+
+操作好后到 itcast01 中 `vim authorized_keys` 可以看到里面已经多出了 itcast02 和 itcast03 的公钥了.
+
+最后将 **authorized_keys** 远程拷贝到 itcast02 和 itcast03 中.
+
+```
+scp authorized_keys martin@itcast02:/home/martin/.ssh/authorized_keys
+scp authorized_keys martin@itcast03:/home/martin/.ssh/authorized_keys
+```
+<br>
+#5. 测试环境
+hdfs namenode -format
 
 **初始化 HDFS**<br>**命令: hdfs namenode -format**<br>以前是用 hdfs namenode –format, 格式化后, hadoop 根目录下就多出了 tmp 目录(在上一步第二个配置文件里设置的).
 
 **启动 hadoop 服务**
 ```
-cd /usr/itcast/hadoop-2.7.1/sbin/
+cd /usr/itcast/hadoop-2.7.3/sbin/
 ./start-all.sh
 ```
 
@@ -252,7 +341,7 @@ cd /usr/itcast/hadoop-2.7.1/sbin/
 
 不过有点需要注意, ./start-all.sh 和 hdfs namenode –format 一样, 也是个过时命令, 新的命令是 **start-dfs.sh **和 **start-yarn.sh.**
 
-#5. 测试环境
+
 
 itcast01:50070 -- hdfs 管理界面
 
@@ -263,7 +352,7 @@ itcast01:8088 -- yarn 管理界面
 
 ![](http://i61.tinypic.com/10fcr2s.jpg)
 
-**hadoop fs -put** /home/itcast/桌面/hadoop-2.7.1.tar.gz hdfs://itcast01:9000/hadoop<br>上传文件到 hdfs://itcast01:9000/ 并命名为 hadoop<br>同样功能的命令除了 put 还有 copyFromLocal (过时).
+**hadoop fs -put** /home/itcast/桌面/hadoop-2.7.3.tar.gz hdfs://itcast01:9000/hadoop<br>上传文件到 hdfs://itcast01:9000/ 并命名为 hadoop<br>同样功能的命令除了 put 还有 copyFromLocal (过时).
 
 ![](http://i59.tinypic.com/35b9yqr.jpg)
 
@@ -278,9 +367,9 @@ itcast01:8088 -- yarn 管理界面
 
 **再测试 mr(jar 包) 和 yarn**
 
-MR 给出了一些测试 jar, 它们在: /usr/itcast/hadoop-2.7.1/**share**/hadoop/mapreduce 目录下.
+MR 给出了一些测试 jar, 它们在: /usr/itcast/hadoop-2.7.3/**share**/hadoop/mapreduce 目录下.
 
-**cd /usr/itcast/hadoop-2.7.1/share/hadoop/mapreduce**
+**cd /usr/itcast/hadoop-2.7.3/share/hadoop/mapreduce**
 
 创建一个文件, 输入内容
 
@@ -297,7 +386,7 @@ hello martin
 
 **hadoop fs -put words.txt hdfs://itcast01:9000/words.txt**
 
-/usr/itcast/hadoop-2.7.1/share/hadoop/mapreduce 目录下有个 hadoop-mapreduce-examples-2.7.1.jar, 里面有个 wordcount, 可以用来统计单词个数.
+/usr/itcast/hadoop-2.7.3/share/hadoop/mapreduce 目录下有个 hadoop-mapreduce-examples-2.7.1.jar, 里面有个 wordcount, 可以用来统计单词个数.
 **hadoop jar hadoop-mapreduce-examples-2.7.1.jar wordcount hdfs://itcast01:9000/words.txt hdfs://itcast01:9000/result.txt**
 第一个参数是待统计文件, 第二个参数是保存结果的文件路径.
 
