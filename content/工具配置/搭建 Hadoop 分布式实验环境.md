@@ -383,6 +383,12 @@ stop-all.sh
 mr-jobhistory-daemon.sh stop historyserver
 ```
 <br>
+还可以通过 `hdfs dfsadmin -report` 来查看所有 DataNode 的信息.
+
+![](http://wiki.smallcpp.com/static/images/搭建Hadoop分布式实验环境/dfsadmin.png)
+
+**Live datanodes** 表示当前集群有几个 DataNode 在运行.
+
 # 7. 测试集群
 集群启动成功后会提供 Web 界面来管理集群.
 
