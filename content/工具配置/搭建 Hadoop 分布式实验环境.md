@@ -56,7 +56,7 @@ gateway 192.168.31.2
 
 但是需要注意, 并不所有的都是 `eth0`, 采用的 Ubuntu 版本不同, 也有可能是其他的接口, 如 `ens32`; 可以先使用 `ifconfig` 看下系统使用的是哪个接口.
 
-![](static/images/搭建Hadoop分布式实验环境/ifconfig.png)
+![](http://wiki.smallcpp.com/static/images/搭建Hadoop分布式实验环境/ifconfig.png)
 
 ## DNS
 **sudo vim /etc/resolv.conf**, 编辑 DNS 解析文件.
