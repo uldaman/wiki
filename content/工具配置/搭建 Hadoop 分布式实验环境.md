@@ -47,7 +47,7 @@ gateway 192.168.31.2
 
 ![](http://wiki.smallcpp.com/static/images/搭建Hadoop分布式实验环境/ifconfig.png)
 
-另外就是 gateway (网关), 虚拟机的网关可以通过虚拟网络编辑器查看.
+另外就是 **gateway** (网关), 虚拟机的网关可以通过虚拟网络编辑器查看.
 
 ![](http://wiki.smallcpp.com/static/images/搭建Hadoop分布式实验环境/虚拟网络编辑器.png)
 
@@ -55,7 +55,7 @@ gateway 192.168.31.2
 
 ![](http://wiki.smallcpp.com/static/images/搭建Hadoop分布式实验环境/gateway.png)
 
-所以上面的第八行的 gateway 要填: `192.168.142.2`.
+所以上面的第八行的 **gateway** 要填: `192.168.142.2`.
 
 ## DNS
 **sudo vim /etc/resolv.conf**, 编辑 DNS 解析文件.
@@ -68,7 +68,9 @@ nameserver 192.168.31.2
 <br>
 第 3 行填 **gateway** (网关) ip;
 
-改完上面, 如果重启的话, DNS 还是会变为原来的样子, 网上给出的方法是执行 `sudo vim /etc/resolvconf/resolv.conf.d/base` 输入和 DNS 解析文件相同的内容.
+改完上面, 如果重启的话, DNS 还是会变为原来的样子;
+
+网上给出的方法是执行 `sudo vim /etc/resolvconf/resolv.conf.d/base` 输入和 DNS 解析文件相同的内容.
 
 实际操作后重启发现好像并没生效, 又找到了另一个方法, 执行 `sudo vim /etc/resolvconf/resolv.conf.d/tail` 输入和 DNS 解析文件相同的内容.
 
@@ -82,6 +84,8 @@ nameserver 192.168.31.2
 ```
 127.0.0.1       localhost
 192.168.31.200  itcast01
+192.168.31.201  itcast02
+192.168.31.201  itcast03
 ```
 <br>
 ## 关闭防火墙
@@ -271,7 +275,7 @@ itcast03
 ```
 export JAVA_HOME=/usr/java/jdk1.8.0_101
 export HADOOP_HOME=/usr/itcast/hadoop-2.7.3
-export PATH=$PATH:$JAVA_HOME/bin:$HADOOP_HOME/bin
+export PATH=$PATH:$JAVA_HOME/bin:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
 ```
 <br>
 然后刷新下 bashrc, 命令: `source ~/.bashrc` 退回根目录, 测试下 hadoop 命令: `hadoop version`
@@ -301,7 +305,7 @@ export PATH=$PATH:$JAVA_HOME/bin:$HADOOP_HOME/bin
 # 5. 配置 SSH 免密码登录
 Ubuntu 默认并没有安装 **ssh** 服务, 需要自己手动安装 **openssh-server**, 可以通过 `ssh localhost` 判断是否安装 ssh 服务; 如果没有安装则通过 `sudo apt-get install openssh-server` 安装即可.
 
-## 5.1 配置 itcast01
+## 5.1. 配置 itcast01
 在 itcast01 上安装好 **ssh** 服务后.
 
 `cd ~` 进入根目录
@@ -312,7 +316,7 @@ Ubuntu 默认并没有安装 **ssh** 服务, 需要自己手动安装 **openssh-
 
 `cp id_rsa.pub authorized_keys`
 
-## 5.2 配置 itcast02 和 itcast03
+## 5.2. 配置 itcast02 和 itcast03
 首先也是先安装好 **ssh** 服务生成一对 `id_rsa`、`id_rsa.pub` 文件;
 
 然后**不要**执行 `cp id_rsa.pub authorized_keys`, 而是执行 `ssh-copy-id -i ~/.ssh/id_rsa.pub martin@itcast01` 将公钥追加到 **itcast01** 的 **authorized_keys** 中.
@@ -326,54 +330,109 @@ scp authorized_keys martin@itcast02:/home/martin/.ssh/authorized_keys
 scp authorized_keys martin@itcast03:/home/martin/.ssh/authorized_keys
 ```
 <br>
-#5. 测试环境
-hdfs namenode -format
+# 6. 启动集群
+首次启动需要先在 NameNode 节点 (itcast01) 执行 NameNode 的格式化:
 
-**初始化 HDFS**<br>**命令: hdfs namenode -format**<br>以前是用 hdfs namenode –format, 格式化后, hadoop 根目录下就多出了 tmp 目录(在上一步第二个配置文件里设置的).
-
-**启动 hadoop 服务**
 ```
-cd /usr/itcast/hadoop-2.7.3/sbin/
-./start-all.sh
+hdfs namenode -format       # 首次运行需要执行初始化，之后不需要
 ```
+<br>
+格式化成功后就可以通过以下命令启动集群了:
 
-输入一堆 yes 和 密码后, 输入 ** jps**, 如果看到 NameNode、ResourceManager、NodeManager、SecondaryNameNode 和 DataNod 六个进程, 就表示启动成功了.
+```
+start-dfs.sh
+start-yarn.sh
+mr-jobhistory-daemon.sh start historyserver
+```
+<br>
+或者:
 
-不过有点需要注意, ./start-all.sh 和 hdfs namenode –format 一样, 也是个过时命令, 新的命令是 **start-dfs.sh **和 **start-yarn.sh.**
+```
+start-all.sh
+mr-jobhistory-daemon.sh start historyserver
+```
+<br>
+集群成功启动后可以在终端用 `JPS` 查看当前有哪些 Java 进程, NameNode 节点上应该有以下进程:
+
+```
+NameNode
+SecondaryNameNode
+ResourceManager
+JobHistoryServer
+```
+<br>
+而 DataNode 上应该有以下进程:
+
+```
+DataNode
+NodeManager
+```
+<br>
+停止集群命令如下:
+
+```
+stop-yarn.sh
+stop-dfs.sh
+mr-jobhistory-daemon.sh stop historyserver
+```
+<br>
+或者:
+
+```
+stop-all.sh
+mr-jobhistory-daemon.sh stop historyserver
+```
+<br>
+# 7. 测试集群
+集群启动成功后会提供 Web 界面来管理集群.
+
+- [itcast01:50070](http://itcast01:50070) \-\- hdfs 管理界面
+- [itcast01:8088](http://itcast01:8088) \-\- yarn 管理界面
+- [itcast01:19888](http://itcast01:19888) \-\- jobhistory 管理界面
 
 
-
-itcast01:50070 -- hdfs 管理界面
-
-itcast01:8088 -- yarn 管理界面
-
-
-**先测试 hdfs** -- [http://itcast01:50070](http://itcast01:50070)
+**hdfs 管理界面**
 
 ![](http://i61.tinypic.com/10fcr2s.jpg)
 
-**hadoop fs -put** /home/itcast/桌面/hadoop-2.7.3.tar.gz hdfs://itcast01:9000/hadoop<br>上传文件到 hdfs://itcast01:9000/ 并命名为 hadoop<br>同样功能的命令除了 put 还有 copyFromLocal (过时).
+hadoop fs -ls /
+hdfs://itcast01:9000
 
-![](http://i59.tinypic.com/35b9yqr.jpg)
+## 7.1. 上传文件
+在 itcast01 (不一定是 itcast01, 可以集群中的任意一台进行测试) 的桌面上准备了一份大文件, 如 `ubuntu-16.04-desktop-amd64.iso`, 现在把它上传到 Hadoop 的 HDFS 文件系统上去.
 
-![](http://i58.tinypic.com/x2ns0h.jpg)
+`hadoop fs -put /home/martin/桌面/ubuntu-16.04-desktop-amd64.iso hdfs://itcast01:9000/ubuntu-amd64.iso`
 
-**hadoop fs -get** hdfs://itcast01:9000/hadoop /home/itcast/桌面/hadoop.tar.gz<br>下载文件到桌面, 并命名为 hadoop.tar.gz
+上传文件到 `hdfs://itcast01:9000/` 并命名为 `ubuntu-amd64.iso`; 同样功能的命令除了 `put` 还有 `copyFromLocal` (过时).
 
-执行命令的时候, 可能会出现提示: WARN hdfs.DFSClient: DFSInputStream has been closed already
+`hdfs://itcast01:9000/` 表示的是 HDFS 的**根目录**, 可以简写成 `/`, 如上面的上传文件命令可以写成这样:
+
+`hadoop fs -put /home/martin/桌面/ubuntu-16.04-desktop-amd64.iso /ubuntu-amd64.iso`
+
+Hadoop 的 **HDFS** 系统使用起来就像是 Linux 的文件系统, 如 `hadoop fs -ls /` 查看的就是 HDFS 根目录下的列表, 切不要将它们混淆了, HDFS 的根目录可不在 Linux 的根目录 (`/`) 下, 是两套完全不同的体系.
+
+上传完毕后可以在 Web 界面的文件管理模块可以看到变化:
+
+![](http://wiki.smallcpp.com/static/images/搭建Hadoop分布式实验环境/hadoopfile.png)
+
+![](http://wiki.smallcpp.com/static/images/搭建Hadoop分布式实验环境/hadoopinfo.png)
+
+## 7.2. 下载文件
+`hadoop fs -get /ubuntu-amd64.iso /home/martin/桌面/ubuntu-amd64.iso`
+
+下载文件到 Linux 系统.
+
+执行命令的时候, 可能会出现提示: `WARN hdfs.DFSClient: DFSInputStream has been closed already`.
+
 不用管它, apache 也给出了说明:
 
 ![](http://i61.tinypic.com/344ql4k.jpg)
 
-**再测试 mr(jar 包) 和 yarn**
+## 7.3. 测试 MR 作业
+MR 使用 Java 进行开发, Hadoop 预置了一些测试 MR 作业 (就是一些 jar 包), 它们在: `/usr/itcast/hadoop-2.7.3/share/hadoop/mapreduce` 目录下.
 
-MR 给出了一些测试 jar, 它们在: /usr/itcast/hadoop-2.7.3/**share**/hadoop/mapreduce 目录下.
+创建一个文件 `vim words.txt`, 输入内容:
 
-**cd /usr/itcast/hadoop-2.7.3/share/hadoop/mapreduce**
-
-创建一个文件, 输入内容
-
-**vim words.txt**
 ```
 hello tom
 hello jerry
@@ -381,38 +440,50 @@ hello kitty
 hello world
 hello martin
 ```
+<br>
+所有的 MR 都是执行在 **hdfs** 上的, 所以要先上传文件: `hadoop fs -put words.txt /words.txt`
 
-所有的 MR 都是执行在 hdfs 上的, 所以要先上传文件.
+`/usr/itcast/hadoop-2.7.3/share/hadoop/mapreduce` 目录下有个 `hadoop-mapreduce-examples-2.7.3.jar`, 里面有个 `wordcount` 方法, 可以用来统计单词个数.
 
-**hadoop fs -put words.txt hdfs://itcast01:9000/words.txt**
+```
+cd /usr/itcast/hadoop-2.7.3/share/hadoop/mapreduce
+hadoop jar hadoop-mapreduce-examples-2.7.3.jar wordcount /words.txt /result
+```
+<br>
+第一个参数是待统计文件, 第二个参数是保存结果的目录.
 
-/usr/itcast/hadoop-2.7.3/share/hadoop/mapreduce 目录下有个 hadoop-mapreduce-examples-2.7.1.jar, 里面有个 wordcount, 可以用来统计单词个数.
-**hadoop jar hadoop-mapreduce-examples-2.7.1.jar wordcount hdfs://itcast01:9000/words.txt hdfs://itcast01:9000/result.txt**
-第一个参数是待统计文件, 第二个参数是保存结果的文件路径.
+执行完毕后, 查看下 hdfs 系统: `hadoop fs -ls /`
 
-执行完毕后, 查看下 hdfs:
-
-**hadoop fs -ls hdfs://itcast01:9000/**
 ```
 Found 4 items
--rw-r--r-- 1 itcast supergroup 210606807 2015-09-19 11:02 hdfs://itcast01:9000/hadoop
-drwxr-xr-x - itcast supergroup 0 2015-09-19 11:47 hdfs://itcast01:9000/result.txt
-drwx------ - itcast supergroup 0 2015-09-19 11:46 hdfs://itcast01:9000/tmp
--rw-r--r-- 1 itcast supergroup 59 2015-09-19 11:42 hdfs://itcast01:9000/words.txt
+drwxr-xr-x   - martin supergroup          0 2016-10-16 21:33 /result
+drwxrwx---   - martin supergroup          0 2016-10-16 20:27 /tmp
+-rw-r--r--   2 martin supergroup 1485881344 2016-10-16 21:01 /ubuntu-amd64.iso
+-rw-r--r--   2 martin supergroup         59 2016-10-16 21:30 /words.txt
+
 ```
+<br>
+`/result` 就是刚生成的结果目录, 用 `hadoop fs -ls /result` 查看下里面的内容:
 
-也可以直接通过 浏览器 查看:
-
-![](http://i60.tinypic.com/117qrh2.jpg)
-
-![](http://i59.tinypic.com/15xo7qa.jpg)
-
-第一个 _SUCCESS 表示执行结果, 这里是成功, 第二个是内容, 把第二个下载下来并打开:
 ```
-hello 5
-jerry 1
-kitty 1
-martin 1
-tom 1
-world 1
+Found 2 items
+-rw-r--r--   2 martin supergroup          0 2016-10-16 21:36 /result/_SUCCESS
+-rw-r--r--   2 martin supergroup         47 2016-10-16 21:36 /result/part-r-00000
 ```
+<br>
+其中 `_SUCCESS` 表示 MR 作业执行成功, `part-r-00000` 为结果文件, 用 `hadoop fs -cat /result/part-r-00000` 查看下:
+
+```
+hello   5
+jerry   1
+kitty   1
+martin  1
+tom     1
+world   1
+```
+<br>
+当然也可以直接通过 Web 查看.
+
+#  References
+[Hadoop 安装教程_单机/伪分布式配置_Hadoop2.6.0/Ubuntu14.04](http://www.powerxing.com/install-hadoop/)<br>
+[Hadoop 集群安装配置教程_Hadoop2.6.0/Ubuntu14.04](http://www.powerxing.com/install-hadoop-cluster/)
