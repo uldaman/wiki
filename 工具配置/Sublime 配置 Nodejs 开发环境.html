@@ -1,0 +1,159 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <title>Sublime 配置 Nodejs 开发环境 - Wiki | Small Cpp</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            
+            <a href="/">Home</a> » <a href="/#工具配置">工具配置</a> » Sublime 配置 Nodejs 开发环境
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#_1">语法提示</a></li>
+<li><a href="#_2">代码检查</a></li>
+<li><a href="#_3">格式化代码</a></li>
+<li><a href="#_4">代码高亮</a></li>
+</ul>
+</div>
+<h1 id="_1">语法提示</h1>
+<p>使用插件: <strong>SublimeText-Nodejs</strong> 插件（<a href="https://github.com/tanepiper/SublimeText-Nodejs">Github</a>）</p>
+<p><strong>注意</strong>, 这个插件不要用 Sublime 的 Package Control 来安装, Package Control 安装的会没有配置文件导致设置不了插件 . . .</p>
+<p>直接在 Github 上下载包下来, 解压重命名为 <strong>Nodejs</strong>, 然后放到 Sublime 的 <strong>Packages</strong> 目录下 (首选项 -> 浏览插件);</p>
+<p>打开 Nodejs 下面的 <code>Nodejs.sublime-settings</code>, 修改里面的 <code>node_command</code> 和  <code>npm_command</code>, 如下:</p>
+<div class="hlcode"><pre><span class="p">{</span>
+  <span class="c1">// save before running commands</span>
+  <span class="s2">&quot;save_first&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+  <span class="c1">// if present, use this command instead of plain &quot;node&quot;</span>
+  <span class="c1">// e.g. &quot;/usr/bin/node&quot; or &quot;C:\bin\node.exe&quot;</span>
+  <span class="s2">&quot;node_command&quot;</span><span class="o">:</span> <span class="s2">&quot;E:\\nodejs\\node.exe&quot;</span><span class="p">,</span>
+  <span class="c1">// Same for NPM command</span>
+  <span class="s2">&quot;npm_command&quot;</span><span class="o">:</span> <span class="s2">&quot;E:\\nodejs\\npm.cmd&quot;</span><span class="p">,</span>
+  <span class="c1">// as &#39;NODE_PATH&#39; environment variable for node runtime</span>
+  <span class="s2">&quot;node_path&quot;</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+
+  <span class="s2">&quot;expert_mode&quot;</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+
+  <span class="s2">&quot;ouput_to_new_tab&quot;</span><span class="o">:</span> <span class="kc">false</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p><br>
+再打开 <code>Nodejs.sublime-build</code>, 修改里面的 <code>encoding</code> 和  <code>windows cmd</code>, 如下:</p>
+<div class="hlcode"><pre><span class="p">{</span>
+  <span class="s2">&quot;cmd&quot;</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;node&quot;</span><span class="p">,</span> <span class="s2">&quot;$file&quot;</span><span class="p">],</span>
+  <span class="s2">&quot;file_regex&quot;</span><span class="o">:</span> <span class="s2">&quot;^[ ]*File \&quot;(...*?)\&quot;, line ([0-9]*)&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;selector&quot;</span><span class="o">:</span> <span class="s2">&quot;source.js&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;shell&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+  <span class="s2">&quot;encoding&quot;</span><span class="o">:</span> <span class="s2">&quot;utf8&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;windows&quot;</span><span class="o">:</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;cmd&quot;</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;taskkill&quot;</span><span class="p">,</span> <span class="s2">&quot;/F&quot;</span><span class="p">,</span> <span class="s2">&quot;/IM&quot;</span><span class="p">,</span> <span class="s2">&quot;node.exe&quot;</span><span class="p">,</span> <span class="s2">&quot;&amp;&quot;</span><span class="p">,</span> <span class="s2">&quot;node&quot;</span><span class="p">,</span> <span class="s2">&quot;$file&quot;</span><span class="p">]</span>
+    <span class="p">},</span>
+  <span class="s2">&quot;linux&quot;</span><span class="o">:</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;cmd&quot;</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;killall node; node&quot;</span><span class="p">,</span> <span class="s2">&quot;$file&quot;</span><span class="p">]</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;osx&quot;</span><span class="o">:</span>
+    <span class="p">{</span>
+    <span class="s2">&quot;cmd&quot;</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;killall node; node $file&quot;</span><span class="p">]</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p><br>
+配置好后, 打开一个 js 文件使用 <code>ctrl + b</code> 就能调用 node.js 来运行脚本了.</p>
+<h1 id="_2">代码检查</h1>
+<p>插件: JSHint</p>
+<p>这个可以通过 Package Control 安装, 选择插件时, 有两个, 一个是 JSHint, 还有一个是 JSHint Gutter, 推荐使用 JSHint Gutter, 这个版本较新, 可以配置很多另一个 JSHint 没有的功能.</p>
+<p>插件设置 -> JSHint Gutter -> Set Plugin Options, 这里面主要配置 node.js 的路径和 <code>lint_on_save</code> (保存时检查, 很好用的功能).</p>
+<p>插件设置 -> JSHint Gutter -> Set Linting Preferences, 这里对 JSHint 的规则做配置, 我这里配好一份, 可参考:</p>
+<div class="hlcode"><pre><span class="p">{</span>
+  <span class="c1">// The plugin looks for a .jshintrc file in the same directory as the source</span>
+  <span class="c1">// file you&#39;re prettifying (or any directory above if it doesn&#39;t exist, or in</span>
+  <span class="c1">// your home folder if everything else fails) and uses those options along</span>
+  <span class="c1">// the default ones.</span>
+
+  <span class="c1">// Details: https://github.com/victorporof/Sublime-JSHint#using-your-own-jshintrc-options</span>
+  <span class="c1">// Example: https://github.com/jshint/jshint/blob/master/examples/.jshintrc</span>
+  <span class="c1">// Documentation: http://www.jshint.com/docs/options/</span>
+  <span class="s2">&quot;globals&quot;</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s2">&quot;console&quot;</span><span class="o">:</span> <span class="kc">true</span>
+  <span class="p">},</span>  <span class="c1">// 指定没有正式定义的全局变量的白名单</span>
+  <span class="s2">&quot;browser&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>  <span class="c1">// true: 暴露浏览器属性的全局变量, 列如 window, document</span>
+  <span class="s2">&quot;esnext&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>  <span class="c1">// true: 允许 ECMAScript 6 规约, 目前 ES6 的特性不是所有的浏览器都支持</span>
+  <span class="s2">&quot;unused&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>  <span class="c1">// true: 表示禁止变量已经声明, 但却不使用</span>
+  <span class="s2">&quot;undef&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>  <span class="c1">// true: 表示所有的局部变量都必须先声明再使用</span>
+  <span class="s2">&quot;noempty&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>  <span class="c1">// true: 表示禁止出现空的代码块 `{ }`</span>
+  <span class="s2">&quot;noarg&quot;</span> <span class="o">:</span> <span class="kc">false</span><span class="p">,</span>  <span class="c1">// true: 表示禁止使用 `arguments.caller` 和 `arguments.callee`</span>
+  <span class="s2">&quot;immed &quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>  <span class="c1">// true: 立即执行函数必须用括号包起来 `(function () { } ());`</span>
+  <span class="s2">&quot;eqeqeq&quot;</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>  <span class="c1">// true: 表示判断相等时, 必须使用 ===</span>
+  <span class="s2">&quot;strict&quot;</span><span class="o">:</span> <span class="s2">&quot;global&quot;</span>  <span class="c1">// global: 全局强制使用 ES5 的严格模式 (在每个文件开头 &quot;use strict&quot;;), Strict Mode 是对 JS 用法的一些限制, 过滤掉了容易出错的特性和不容易优化的特性</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p><br>
+最后, 要使用 JSHint 插件, 还需要你的系统安装了 JSHint 包, 可用 npm 直接安装, 网络不好的使用国内镜像安装:</p>
+<p><code>npm --registry https://registry.npm.taobao.org install jshint</code></p>
+<h1 id="_3">格式化代码</h1>
+<p>插件: JsFormat</p>
+<p>这个没什么好说的, 默认快捷键: <code>ctrl + alt + f</code>, 我习惯改成 <code>ctrl + k + c</code>.</p>
+<p>插件设置 -> JsFormat -> Key Bindings - Default, 改成:</p>
+<div class="hlcode"><pre><span class="p">[</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;keys&quot;</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;ctrl+k&quot;</span><span class="p">,</span> <span class="s2">&quot;ctrl+c&quot;</span><span class="p">],</span> <span class="s2">&quot;command&quot;</span><span class="o">:</span> <span class="s2">&quot;js_format&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;context&quot;</span><span class="o">:</span> <span class="p">[{</span><span class="s2">&quot;key&quot;</span><span class="o">:</span> <span class="s2">&quot;selector&quot;</span><span class="p">,</span> <span class="s2">&quot;operator&quot;</span><span class="o">:</span> <span class="s2">&quot;equal&quot;</span><span class="p">,</span> <span class="s2">&quot;operand&quot;</span><span class="o">:</span> <span class="s2">&quot;source.js,source.json&quot;</span><span class="p">}]</span>
+    <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+
+
+<p><br></p>
+<h1 id="_4">代码高亮</h1>
+<p>Sublime 自带了 JS 的高亮, 但有个插件叫 JavaScriptNext, 它对 JS 的渲染更好看些, 可以尝试使用.</p>
+    </div>
+
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="Sublime 配置 Nodejs 开发环境" data-title="Sublime 配置 Nodejs 开发环境" data-url="http://wiki.smallcpp.com/工具配置/Sublime 配置 Nodejs 开发环境.html"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:"smallwiki"};
+        (function() {
+            var ds = document.createElement('script');
+            ds.type = 'text/javascript';ds.async = true;
+            ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+            ds.charset = 'UTF-8';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+    </script>
+    <!-- 多说公共JS代码 end -->
+
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2016 <a href="http://www.samllcpp.com/" target="_blank">Martin</a> Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+              </p>
+        </div>
+    </body>
+</html>
