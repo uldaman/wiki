@@ -1,5 +1,5 @@
 ---
-title: sublime + markdown
+title: Sublime + Markdown.md
 layout: page
 date: 2016-03-05 13:00
 ---

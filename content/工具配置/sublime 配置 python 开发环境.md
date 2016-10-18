@@ -1,5 +1,5 @@
 ---
-title: sublime 配置 python 开发环境
+title: Sublime 配置 Python 开发环境
 layout: page
 date: 2016-04-24 15:08
 ---
