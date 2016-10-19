@@ -1,5 +1,5 @@
 ---
-title: Ubuntu 升级 Ruby 版本.md
+title: Ubuntu 升级 Ruby 版本
 layout: page
 date: 2016-05-28 21:47
 ---

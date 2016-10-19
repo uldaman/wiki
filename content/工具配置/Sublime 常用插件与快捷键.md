@@ -10,7 +10,7 @@ Summary: Sublime Text 常用插件与快捷键.
 我常用的大部分插件在之前的几篇 Wiki 都介绍配置过了.
 
 [Sublime 配置 Markdown 写作环境](http://wiki.smallcpp.com/%E5%B7%A5%E5%85%B7%E9%85%8D%E7%BD%AE/Sublime%20%E9%85%8D%E7%BD%AE%20Markdown%20%E5%86%99%E4%BD%9C%E7%8E%AF%E5%A2%83.html) <br>
-[Sublime 配置 Python 开发环境](http://wiki.smallcpp.com/%E5%B7%A5%E5%85%B7%E9%85%8D%E7%BD%AE/sublime%20%E9%85%8D%E7%BD%AE%20python%20%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83.html) <br>
+[Sublime 配置 Python 开发环境](http://wiki.smallcpp.com/%E5%B7%A5%E5%85%B7%E9%85%8D%E7%BD%AE/Sublime%20%E9%85%8D%E7%BD%AE%20Python%20%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83.html) <br>
 [Sublime 配置 Nodejs 开发环境](http://wiki.smallcpp.com/%E5%B7%A5%E5%85%B7%E9%85%8D%E7%BD%AE/Sublime%20%E9%85%8D%E7%BD%AE%20Nodejs%20%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83.html)
 
 
@@ -18,7 +18,6 @@ Summary: Sublime Text 常用插件与快捷键.
 
 Bracket Highlighter
 Emmet
-Side Bar
 Tag
 
 
