@@ -452,3 +452,13 @@ SourceTree 的 stash 操作会让选择一个选项 -- "保存暂存的更改"
 ```
 git config --global core.quotepath false
 ```
+<br>
+## 13. 区分文件大小写
+默认的 Git 监控是**不区分**文件大小写的 ~
+
+Git 控制是否忽略大小的选项是 `core.ignorecase` (true: 不区分, false: 区分), 但是这个选项在每个 Git 项目的配置里都是默认 true 的, 所以就算配了全局的 `core.ignorecase` 为 `false`, 也会被项目的配置给覆盖掉.
+
+所以一般这里有两种处理方法.
+
+- 第一种, 做全局设置 `git config --global core.ignorecase false`, 并且删除 Git 项目的 `core.ignorecase` 选项
+- 第二种, 就是只对当前项目做配置 `git config core.ignorecase false`
