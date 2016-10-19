@@ -248,11 +248,6 @@ SublimeLinter 支持全语言, 但不能单独使用, 需要额外下载插件�
 
 如果只想使用某个单独语言的代码规范检查, 可以单独安装, 如在 [Sublime 配置 Python 开发环境](http://wiki.smallcpp.com/%E5%B7%A5%E5%85%B7%E9%85%8D%E7%BD%AE/Sublime%20%E9%85%8D%E7%BD%AE%20Python%20%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83.html) 及 [Sublime 配置 Nodejs 开发环境](http://wiki.smallcpp.com/%E5%B7%A5%E5%85%B7%E9%85%8D%E7%BD%AE/Sublime%20%E9%85%8D%E7%BD%AE%20Nodejs%20%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83.html) 中介绍过的 **Pylint** 和 **JSHint**.
 
-## CoffeeScript
-插件: [CoffeeScript](http://aponxi.github.io/sublime-better-coffeescript/)
-
-这个插件据说很叼, 支持全语言语法高亮和检查，命令，快捷键，片段等等, 但我没用过, 我一般都是使用单独的语法高亮插件, 这里仅记录下.
-
 ## 符号对齐
 **Update**:<br>[AlignTab](https://github.com/randy3k/AlignTab): A much more powerful version of the *Alignment* package. Supports regexes and table mode.
 
