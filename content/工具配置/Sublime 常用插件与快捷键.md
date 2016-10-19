@@ -1,7 +1,8 @@
-Title: Sublime 常用插件与快捷键
-Author: Martin
-Date: 2016-10-19 13:27
-Summary: Sublime Text 常用插件与快捷键.
+---
+title: Sublime 常用插件与快捷键
+layout: page
+date: 2016-10-19 13:27
+---
 
 [TOC]
 
@@ -16,8 +17,10 @@ Summary: Sublime Text 常用插件与快捷键.
 
 以下还有一些其他挺好用的插件也是我常用的.
 
+SublimeCodeintel 代码自动完成 扫描目录索引
+Emmet 方便编写 HTML
+SublimeLinter 代码规范检查
 Bracket Highlighter
-Emmet
 Tag
 
 
