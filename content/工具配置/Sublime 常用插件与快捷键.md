@@ -17,6 +17,191 @@ date: 2016-10-19 13:27
 
 以下还有一些其他挺好用的插件也是我常用的.
 
+## 括号高亮
+插件: [BracketHighlighter](http://facelessuser.github.io/BracketHighlighter/)
+
+> Bracket Highlighter matches a variety of brackets such as: [], (), {}, "", '', <tag></tag>, and even custom brackets.
+
+BracketHighlighter 插件为 Sublime Text 提供括号、引号这类高亮功能, 但安装此插件后, 默认没有高亮, 只有下划线表示, 而且还不是很醒目, 需要配置:
+
+Preferences \-\> package settings \-\> Bracket Highlighter \-\> Bracket Settings – User, 然后添加如下代码:
+
+```js
+{
+    "bracket_styles": {
+        "default": {
+            "icon": "dot",
+            "color": "brackethighlighter.default",
+            "style": "highlight"
+        },
+
+        "unmatched": {
+            "icon": "question",
+            "color": "brackethighlighter.unmatched",
+            "style": "highlight"
+        },
+        "curly": {
+            "icon": "curly_bracket",
+            "color": "brackethighlighter.curly",
+            "style": "highlight"
+        },
+        "round": {
+            "icon": "round_bracket",
+            "color": "brackethighlighter.round",
+            "style": "highlight"
+        },
+        "square": {
+            "icon": "square_bracket",
+            "color": "brackethighlighter.square",
+            "style": "highlight"
+        },
+        "angle": {
+            "icon": "angle_bracket",
+            "color": "brackethighlighter.angle",
+            "style": "highlight"
+        },
+        "tag": {
+            "icon": "tag",
+            "color": "brackethighlighter.tag",
+            "style": "highlight"
+        },
+        "single_quote": {
+            "icon": "single_quote",
+            "color": "brackethighlighter.quote",
+            "style": "highlight"
+        },
+        "double_quote": {
+            "icon": "double_quote",
+            "color": "brackethighlighter.quote",
+            "style": "highlight"
+        },
+        "regex": {
+            "icon": "regex",
+            "color": "brackethighlighter.quote",
+            "style": "outline"
+        }
+    }
+
+}
+```
+<br>
+然后还要针对你的 Sublime 主题进行设置, 如果使用的是默认的 Monokai 主题, 那么主题设置文件在:
+
+- 找到 Sublime text3 安装目录下的 Packages 中的 `Color Scheme – Default.sublime-package`
+- 将其重命名为 `Color Scheme – Default.sublime-package.zip`，解压找到 `Monokai.tmTheme`, 拉出来
+- `Monokai.tmTheme` 有一堆 `dict` 标签 (注意是有 `key` 子标签的那列 `dict`), 在其同级下添加下面的代码
+
+如果你像我一样, 使用的是 **Monokai Extended** 主题扩展的话, 主题的设置文件在 `Data\Installed Packages\Monokai Extended.sublime-package` 里.
+
+```xml
+<dict>
+    <key>name</key>
+    <string>Bracket Default</string>
+    <key>scope</key>
+    <string>brackethighlighter.default</string>
+    <key>settings</key>
+    <dict>
+        <key>foreground</key>
+        <string>#FFFFFF</string>
+        <key>background</key>
+        <string>#A6E22E</string>
+    </dict>
+</dict>
+
+<dict>
+    <key>name</key>
+    <string>Bracket Unmatched</string>
+    <key>scope</key>
+    <string>brackethighlighter.unmatched</string>
+    <key>settings</key>
+    <dict>
+        <key>foreground</key>
+        <string>#FFFFFF</string>
+        <key>background</key>
+        <string>#FF0000</string>
+    </dict>
+</dict>
+
+<dict>
+    <key>name</key>
+    <string>Bracket Curly</string>
+    <key>scope</key>
+    <string>brackethighlighter.curly</string>
+    <key>settings</key>
+    <dict>
+        <key>foreground</key>
+        <string>#FF00FF</string>
+    </dict>
+</dict>
+
+<dict>
+    <key>name</key>
+    <string>Bracket Round</string>
+    <key>scope</key>
+    <string>brackethighlighter.round</string>
+    <key>settings</key>
+    <dict>
+        <key>foreground</key>
+        <string>#E7FF04</string>
+    </dict>
+</dict>
+
+<dict>
+    <key>name</key>
+    <string>Bracket Square</string>
+    <key>scope</key>
+    <string>brackethighlighter.square</string>
+    <key>settings</key>
+    <dict>
+        <key>foreground</key>
+        <string>#FE4800</string>
+    </dict>
+</dict>
+
+<dict>
+    <key>name</key>
+    <string>Bracket Angle</string>
+    <key>scope</key>
+    <string>brackethighlighter.angle</string>
+    <key>settings</key>
+    <dict>
+        <key>foreground</key>
+        <string>#02F78E</string>
+    </dict>
+</dict>
+
+<dict>
+    <key>name</key>
+    <string>Bracket Tag</string>
+    <key>scope</key>
+    <string>brackethighlighter.tag</string>
+    <key>settings</key>
+    <dict>
+        <key>foreground</key>
+        <string>#FFFFFF</string>
+        <key>background</key>
+        <string>#0080FF</string>
+    </dict>
+</dict>
+
+<dict>
+    <key>name</key>
+    <string>Bracket Quote</string>
+    <key>scope</key>
+    <string>brackethighlighter.quote</string>
+    <key>settings</key>
+    <dict>
+        <key>foreground</key>
+        <string>#56FF00</string>
+    </dict>
+</dict>
+```
+<br>
+配好后的效果如下图:
+
+![](http://wiki.smallcpp.com/static/images/Sublime常用插件与快捷键/BracketHighlighter.png)
+
+
 SublimeCodeintel 代码自动完成 扫描目录索引
 Emmet 方便编写 HTML
 SublimeLinter 代码规范检查
