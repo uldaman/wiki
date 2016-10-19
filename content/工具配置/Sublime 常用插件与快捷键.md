@@ -296,7 +296,7 @@ AlignTab 预置了一些对齐符号, 如等号, 使用方法: 选中要对齐�
 ## Emmet
 插件: [Emmet](https://sublime.wbond.net/packages/Emmet)
 
-就是以前的 zencoding, 方便编写 HTML, 可说是前端必备, 打算单独弄篇 Wiki.
+就是以前的 Zen Coding, 方便编写 HTML, 可说是前端必备, 打算单独弄篇 Wiki.
 
 ## 文件提示
 插件: [Auto​File​Name](https://packagecontrol.io/packages/AutoFileName)
