@@ -7,6 +7,7 @@ date: 2016-10-19 13:27
 [TOC]
 
 # 常用插件
+有个老外推荐了他使用的一些包, 我觉得都很好, 这里也推荐一下 [传送门](https://johnblackbourn.com/my-st3-packages).
 
 我常用的大部分插件在之前的几篇 Wiki 都介绍配置过了.
 
@@ -16,6 +17,11 @@ date: 2016-10-19 13:27
 
 
 以下还有一些其他挺好用的插件也是我常用的.
+
+## UTF8 转换(必备)
+插件: [ConvertToUTF8](https://packagecontrol.io/packages/ConvertToUTF8)
+
+这是必备插件, 没什么好说的, 安装就行了.
 
 ## 括号高亮
 插件: [BracketHighlighter](http://facelessuser.github.io/BracketHighlighter/)
@@ -201,13 +207,116 @@ Preferences \-\> package settings \-\> Bracket Highlighter \-\> Bracket Settings
 
 ![](http://wiki.smallcpp.com/static/images/Sublime常用插件与快捷键/BracketHighlighter.png)
 
+## 代码提示、自动补全和链接跳转
+**Update**:<br>Forget about *SublimeCodeIntel* and use the new [CodeComplice](https://johnblackbourn.com/sublimecodeintel-st3) package instead.
 
-SublimeCodeintel 代码自动完成 扫描目录索引
-Emmet 方便编写 HTML
-SublimeLinter 代码规范检查
-Bracket Highlighter
-Tag
+> Sublime 默认是只提示当前文件, 这里的代码提示指的是全局代码提示.
 
+插件: [SublimeCodeintel](https://packagecontrol.io/packages/SublimeCodeIntel) (已不推荐使用, 见上面的 **Update**).
+
+该插件同时支持**代码提示**、**自动补全**和**链接跳转**三个功能, 非常强大.
+
+另外, 还有一些插件具有单独的功能, 如 [All Autocomplete](https://packagecontrol.io/packages/All%20Autocomplete) 支持全局代码提示, 而 [CTags](https://packagecontrol.io/packages/CTags) 支持链接跳转;<br>
+**当然**, 如果你的 SublimeCodeintel 能正常工作, 你是不需要 All Autocomplete 和 CTags 的.
+
+SublimeCodeintel 需要设置一下才能使用, 官网上说要配 `~/.codeintel/config`, 经验证, 这是比较老的方式, 新的已经没有这个文件了 (坑爹啊, 为什么官网不更新!!), 新的配置说明可以参考: [CodeComplice](https://packagecontrol.io/packages/CodeComplice).
+
+首次使用需要配置用户设置后才生效, 选择 `Preferences -> Package Settings -> SublimeCodeIntel -> Setting Default`，将其内容全部复制到 `Setting User` 中;
+
+将 `JavaScript` 为例, 将 `codeintel_language_settings` 的 `JavaScript` 改为下面这样:
+
+```js
+"JavaScript": {
+    "codeintel_scan_extra_dir": [],
+    "codeintel_scan_exclude_dir":["/build/", "/min/"],
+    "codeintel_scan_files_in_project": true,
+    "codeintel_selected_catalogs": ["jQuery"]
+},
+```
+<br>
+## 代码规范检查
+插件: [SublimeLinter](http://www.sublimelinter.com/en/latest/)
+
+SublimeLinter 支持全语言, 但不能单独使用, 需要额外下载插件包, 如:
+
+- SublimeLinter-csslint
+- SublimeLinter-jshint
+- SublimeLinter-contrib-htmlhint
+- SublimeLinter-contrib-pylint
+
+同时系统中也需要安装对应的 lint, 如 `npm install -g jshint`.
+
+如果只想使用某个单独语言的代码规范检查, 可以单独安装, 如在 [Sublime 配置 Python 开发环境](http://wiki.smallcpp.com/%E5%B7%A5%E5%85%B7%E9%85%8D%E7%BD%AE/Sublime%20%E9%85%8D%E7%BD%AE%20Python%20%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83.html) 及 [Sublime 配置 Nodejs 开发环境](http://wiki.smallcpp.com/%E5%B7%A5%E5%85%B7%E9%85%8D%E7%BD%AE/Sublime%20%E9%85%8D%E7%BD%AE%20Nodejs%20%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83.html) 中介绍过的 **Pylint** 和 **JSHint**.
+
+## CoffeeScript
+插件: [CoffeeScript](http://aponxi.github.io/sublime-better-coffeescript/)
+
+这个插件据说很叼, 支持全语言语法高亮和检查，命令，快捷键，片段等等, 但我没用过, 我一般都是使用单独的语法高亮插件, 这里仅记录下.
+
+## 符号对齐
+**Update**:<br>[AlignTab](https://github.com/randy3k/AlignTab): A much more powerful version of the *Alignment* package. Supports regexes and table mode.
+
+AlignTab 预置了一些对齐符号, 如等号, 使用方法: 选中要对齐的代码块, 右键 \-\> `Align By`, 选择按什么符号进行对齐.
+
+同时 AlignTab 还支持自定义符号对齐, 如 `+` 号, 使用方法, 选中要对齐的代码块, `ctrl + shift + p` 呼出命令栏, 输出 `Live`, 选择弹出来的 `Aligntab: Live Preview Mode`, 这是 AlignTab 的**正则**模式, 选择后, Sublime 下方会出现正则输入栏, 在里面输入 '\\+' (因为 + 号是正则表达式, 所以要输入反斜杠转义), 就可以看到效果了.
+
+插件: [Alignment](https://packagecontrol.io/packages/Alignment) (只支持等号对齐, 已不推荐使用, 见上面的 **Update**).
+
+[Alignment 使用详解](https://my.oschina.net/shede333/blog/170536)
+
+## HTML/XML 代码格式化
+插件: [Tag](https://github.com/titoBouzout/Tag)
+
+这个插件主要用来进行 HTML/XML 代码格式化, 我一般习惯使用和 JsFormat 相同的快捷键.
+
+插件设置 -> 按键绑定 \- 用户, 添加一行:
+
+```js
+{
+    "keys": ["ctrl+k", "ctrl+c"],
+    "command": "tag_indent_document",
+    "context": [{
+            "key": "selector",
+            "operator": "equal",
+            "operand": "text.html,text.htm,text.xml,text.xsl"
+        }]
+}
+```
+<br>
+## 快速注释
+插件: [Doc​Blockr](https://packagecontrol.io/packages/DocBlockr)
+
+这个插件也不需要什么设置, 安装好即可用, 类似 vs 上 tab 键补全注释功能.
+
+## 按模板快速新建文件
+插件: [SublimeTmpl](https://packagecontrol.io/packages/SublimeTmpl)
+
+如其名, 无须多解释 . . .
+
+## Emmet
+插件: [Emmet](https://sublime.wbond.net/packages/Emmet)
+
+就是以前的 zencoding, 方便编写 HTML, 可说是前端必备, 打算单独弄篇 Wiki.
+
+## 文件提示
+插件: [Auto​File​Name](https://packagecontrol.io/packages/AutoFileName)
+
+这个插件也是前端用的多, 例如写 CSS 的时候, 如 `background:url(../img/njpg.png) no-repeat;`, 当写到 `../img/` 时插件就被提示这个目录下有哪些文件.
+
+## jQuery 语法提示
+插件: [jQuery](https://packagecontrol.io/packages/jQuery)
+
+让 Sublime Text3 支持 jQuery 语法提示, 这个插件不需要设置, 安装后即能使用.
+
+## HTML5 语法提示
+插件: [HTML5](https://packagecontrol.io/packages/HTML5)
+
+让 Sublime Text3 支持 HTML5 语法提示, 这个插件不需要设置, 安装后即能使用.
+
+## Sass 语法提示
+插件: [Sass](https://sublime.wbond.net/packages/Sass)
+
+让 Sublime Text3 支持 Sass 语法提示, 这个插件不需要设置, 安装后即能使用.
 
 # 常用快捷键
 
