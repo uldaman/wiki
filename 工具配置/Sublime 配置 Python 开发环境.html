@@ -1,0 +1,672 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <title>Sublime 配置 Python 开发环境 - Wiki | Small Cpp</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            
+            <a href="/">Home</a> » <a href="/#工具配置">工具配置</a> » Sublime 配置 Python 开发环境
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#1">1. 中文文件名方框</a></li>
+<li><a href="#2">2. 主题、字体</a></li>
+<li><a href="#3">3. 代码提示</a><ul>
+<li><a href="#31-jedi">3.1 Jedi</a></li>
+<li><a href="#32-anaconda">3.2 Anaconda</a><ul>
+<li><a href="#321-dot9193">3.2.1 添加按点(dot)[.]后出现代码提示.</a></li>
+<li><a href="#322-pep8">3.2.2 PEP8 配置</a></li>
+<li><a href="#323">3.2.3 自动补充函数参数</a></li>
+<li><a href="#324-virtualenv">3.2.4 支持 virtualenv</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#4">4. 代码规范检查</a></li>
+<li><a href="#5">5. 自动生成注释</a></li>
+<li><a href="#6">6. 项目设置</a></li>
+<li><a href="#7">7. 侧边栏扩展</a></li>
+<li><a href="#8">8. 代码调试</a><ul>
+<li><a href="#81-sublimerepl">8.1 SublimeREPL 基础</a><ul>
+<li><a href="#811-virtualenv">8.1.1 添加 virtualenv 支持</a></li>
+<li><a href="#812">8.1.2 以交互式运行当前文件</a></li>
+<li><a href="#813">8.1.3 关联快捷键</a></li>
+</ul>
+</li>
+<li><a href="#82-sulimerepl">8.2 更好的 SulimeREPL 设置</a></li>
+</ul>
+</li>
+<li><a href="#9-pyc">9. 编译 Pyc 文件</a><ul>
+<li><a href="#91-pyc">9.1 生成单个的 pyc 文件</a></li>
+<li><a href="#92-py-pyc">9.2 将整个目录下的 py 文件都生成 pyc</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<h1 id="1">1. 中文文件名方框</h1>
+<p>这个是 sublime text 3 的 bug, 当 Windows 个性化显示中的设置自定义文本大小 (DPI) 大于默认的 100% 的时候, 就会出现这个bug.</p>
+<p>解决方法:</p>
+<p>在 sublime text 3 中, Preference, Settings - User, 最后加上一行 <code>"dpi_scale": 1.0</code> 覆盖操作系统设置的 DPI:</p>
+<div class="hlcode"><pre><span class="p">{</span>
+    <span class="s2">&quot;color_scheme&quot;</span><span class="o">:</span> <span class="s2">&quot;Packages/Nil-Theme/Sanakan.tmTheme&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;font_size&quot;</span><span class="o">:</span> <span class="mf">11.0</span><span class="p">,</span>
+    <span class="s2">&quot;ignored_packages&quot;</span><span class="o">:</span>
+    <span class="p">[</span>
+        <span class="s2">&quot;Vintage&quot;</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;update_check&quot;</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+    <span class="s2">&quot;word_wrap&quot;</span><span class="o">:</span> <span class="s2">&quot;auto&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dpi_scale&quot;</span><span class="o">:</span><span class="mf">1.0</span> <span class="c1">// &lt;= 这里</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p><br></p>
+<h1 id="2">2. 主题、字体</h1>
+<p>先安装字体, 我习惯的是 <strong>M+ 1mn regular</strong></p>
+<p>再安装主题, <strong>Monokai Extended</strong> 和 <strong>Soda Dark</strong>, 使用 package control 就可以安装了.</p>
+<p>然后是 sublime 的设置了, 首选项 -> 设置 - 用户</p>
+<div class="hlcode"><pre><span class="p">{</span>
+    <span class="s2">&quot;always_show_minimap_viewport&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="s2">&quot;auto_complete_commit_on_tab&quot;</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+    <span class="s2">&quot;auto_find_in_selection&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="s2">&quot;bold_folder_labels&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="s2">&quot;color_scheme&quot;</span><span class="o">:</span> <span class="s2">&quot;Packages/Monokai Extended/Monokai Extended.tmTheme&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;theme&quot;</span><span class="o">:</span> <span class="s2">&quot;Soda Dark.sublime-theme&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;default_line_ending&quot;</span><span class="o">:</span> <span class="s2">&quot;unix&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;detect_indentation&quot;</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+    <span class="s2">&quot;detect_slow_plugins&quot;</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+    <span class="s2">&quot;dpi_scale&quot;</span><span class="o">:</span> <span class="mf">1.0</span><span class="p">,</span>
+    <span class="s2">&quot;drag_text&quot;</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+    <span class="s2">&quot;draw_white_space&quot;</span><span class="o">:</span> <span class="s2">&quot;selection&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ensure_newline_at_eof_on_save&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="s2">&quot;fallback_encoding&quot;</span><span class="o">:</span> <span class="s2">&quot;UTF-8&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;font_face&quot;</span><span class="o">:</span> <span class="s2">&quot;M+ 1mn regular&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;font_size&quot;</span><span class="o">:</span> <span class="mi">14</span><span class="p">,</span>
+    <span class="s2">&quot;highlight_line&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="s2">&quot;highlight_modified_tabs&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="s2">&quot;ignored_packages&quot;</span><span class="o">:</span>
+    <span class="p">[</span>
+        <span class="s2">&quot;Vintageous&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Vintage&quot;</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;indent_guide_options&quot;</span><span class="o">:</span>
+    <span class="p">[</span>
+        <span class="s2">&quot;draw_active&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;draw_normal&quot;</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;indent_to_bracket&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="s2">&quot;line_padding_bottom&quot;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">&quot;line_padding_top&quot;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">&quot;preview_on_click&quot;</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+    <span class="s2">&quot;rulers&quot;</span><span class="o">:</span>
+    <span class="p">[</span>
+        <span class="mi">120</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;scroll_past_end&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="s2">&quot;shift_tab_unindent&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="s2">&quot;show_encoding&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="s2">&quot;tab_size&quot;</span><span class="o">:</span> <span class="mi">4</span><span class="p">,</span>
+    <span class="s2">&quot;translate_tabs_to_spaces&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="s2">&quot;trim_automatic_white_space&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="s2">&quot;trim_trailing_white_space_on_save&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="s2">&quot;update_check&quot;</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+    <span class="s2">&quot;word_wrap&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="s2">&quot;wrap_width&quot;</span><span class="o">:</span> <span class="mi">120</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p><br>
+保存重启就能看到效果了.</p>
+<h1 id="3">3. 代码提示</h1>
+<p>代码提示插件, 有 <strong>SublimeCodeIntel</strong>、<strong>Anaconda</strong>、<strong>sublimePythonIDE</strong> 以及 <strong>Jedi</strong> 等.</p>
+<p>不过 winodows 下 <strong>SublimeCodeIntel</strong>、<strong>Anaconda</strong>、<strong>sublimePythonIDE</strong> 配置有点问题, 总不能达到预期目标, 最终选取了 <strong>Jedi</strong>.</p>
+<p>(不过始终觉得 <strong>Anaconda</strong> 比较好...太可惜了, 装不上.. )</p>
+<h2 id="31-jedi">3.1 Jedi</h2>
+<p>Jedi 貌似现在不能通过 Package Control 来安装, 可以直接去 GitHub 上下载 <a href="https://github.com/srusskih/SublimeJEDI">https://github.com/srusskih/SublimeJEDI</a></p>
+<p>下载好后, 解压文件, 重命名为 Jedi - Python autocompletion, 然后复制到 Sublime Text 3\Data\Packages 目录下.</p>
+<p>然后再打开 sublime 插件里就有 Jedi 了.</p>
+<p><img alt="" src="http://i66.tinypic.com/2z4zbjb.jpg" /></p>
+<p>接下来就是要配置插件的默认设置...</p>
+<p>添加按点(dot)[.]后出现代码提示.</p>
+<p>到 Sublime Text 3\Data\Packages\User 下添加一个文件 Python.sublime-settings (如果没有的话), 添加如下内容:</p>
+<div class="hlcode"><pre><span class="p">{</span>
+   <span class="s2">&quot;auto_complete_triggers&quot;</span><span class="o">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;selector&quot;</span><span class="o">:</span> <span class="s2">&quot;source.python&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;characters&quot;</span><span class="o">:</span> <span class="s2">&quot;.&quot;</span>
+        <span class="p">}</span>
+    <span class="p">],</span>
+
+    <span class="s2">&quot;auto_complete_selector&quot;</span><span class="o">:</span> <span class="s2">&quot;-&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p><br>
+然后, 打开 Jedi 的默认设置文件, 更改下面两条:</p>
+<p><img alt="" src="http://i64.tinypic.com/211v22p.jpg" /></p>
+<div class="hlcode"><pre><span class="s2">&quot;python_interpreter&quot;</span><span class="o">:</span> <span class="s2">&quot;D:/Python/python.exe&quot;</span><span class="p">,</span>
+
+<span class="s2">&quot;python_package_paths&quot;</span><span class="o">:</span> <span class="p">[</span>
+    <span class="s2">&quot;D:/Python&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;D:/Python/DLLs&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;D:/Python/Lib&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;D:/Python/Lib/lib-tk&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;D:/Python/Lib/site-packages&quot;</span>
+<span class="p">],</span>
+</pre></div>
+
+
+<p><br></p>
+<h2 id="32-anaconda">3.2 Anaconda</h2>
+<p>Anaconda 是一个终极 Python 插件, 它为 ST3 增添了多项 IDE 类似的功能，例如:</p>
+<ul>
+<li>Autocompletion: 自动完成，该选项默认开启，同时提供多种配置选项</li>
+<li>Code linting: 使用支持 pep8 标准的 PyLint 或者 PyFlakes</li>
+<li>McCabe code complexity checker: 让你可以在特定的文件中使用 <a href="http://en.wikipedia.org/wiki/Cyclomatic_complexity">McCabe complexity checker</a>. 如果你对软件复杂度检查工具不太熟悉的话，请务必先浏览上边的链接</li>
+<li>Goto Definitions: 能够在你的整个工程中查找并且显示任意一个变量，函数，或者类的定义</li>
+<li>Find Usage: 能够快速的查找某个变量，函数或者类在某个特定文件中的什么地方被使用了</li>
+<li>Show Documentation:  能够显示一个函数或者类的说明性字符串(当然，是在定义了字符串的情况下, 目前只支持英文)</li>
+</ul>
+<p>Anaconda 可以通过 Package Control 直接安装.</p>
+<h3 id="321-dot9193">3.2.1 添加按点(dot)[.]后出现代码提示.</h3>
+<p>Python.sublime-settings configuration file in the Packages/User directory (Preferences -&gt; Browse Packages) and add the following:</p>
+<p>到 Sublime Text 3\Data\Packages\User (Preferences -> Browse Packages -> User) 下添加一个文件 Python.sublime-settings (如果没有的话), 添加如下内容:</p>
+<div class="hlcode"><pre><span class="p">{</span>
+    <span class="s2">&quot;auto_complete_triggers&quot;</span><span class="o">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;selector&quot;</span><span class="o">:</span> <span class="s2">&quot;source.python - string - comment - constant.numeric&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;characters&quot;</span><span class="o">:</span> <span class="s2">&quot;.&quot;</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p><br></p>
+<h3 id="322-pep8">3.2.2 PEP8 配置</h3>
+<p>Preferences -> 插件设置 -> Anaconda -> Settings-User</p>
+<div class="hlcode"><pre><span class="p">{</span>
+    <span class="s2">&quot;autoformat_ignore&quot;</span><span class="o">:</span>
+    <span class="p">[</span>
+        <span class="s2">&quot;E309&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;E501&quot;</span>
+    <span class="p">],</span>
+
+    <span class="s2">&quot;pep8_ignore&quot;</span><span class="o">:</span>
+    <span class="p">[</span>
+        <span class="s2">&quot;E309&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;E501&quot;</span> <span class="c1">// 忽略长度限制</span>
+    <span class="p">],</span>
+
+    <span class="s2">&quot;anaconda_linter_mark_style&quot;</span><span class="o">:</span> <span class="s2">&quot;none&quot;</span><span class="p">,</span>
+
+    <span class="s2">&quot;anaconda_linter_underlines&quot;</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+
+    <span class="s2">&quot;anaconda_linter_show_errors_on_save&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p><br></p>
+<h3 id="323">3.2.3 自动补充函数参数</h3>
+<p>Preferences -> 插件设置 -> Anaconda -> Settings-User</p>
+<div class="hlcode"><pre><span class="p">{</span>
+    <span class="s2">&quot;complete_parameters&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span> <span class="c1">// 输 ( 时补充函数的非默认参数</span>
+    <span class="s2">&quot;complete_all_parameters&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span> <span class="c1">// 输 ( 时补充函数的所有参数</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p><br></p>
+<h3 id="324-virtualenv">3.2.4 支持 virtualenv</h3>
+<p>如果想配全局的 virtualenv, Preferences -> 插件设置 -> Anaconda -> Settings-User:</p>
+<div class="hlcode"><pre><span class="p">{</span>
+    <span class="s2">&quot;python_interpreter&quot;</span><span class="o">:</span> <span class="s2">&quot;D:/pydj/project_venv/Scripts/python.exe&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p><br>
+如果想为不同的项目配置 virtualenv, 那么修改项目的 *.sublime-project 文件:</p>
+<div class="hlcode"><pre><span class="s2">&quot;settings&quot;</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s2">&quot;python_interpreter&quot;</span><span class="o">:</span> <span class="s2">&quot;D:/pydj/project_venv/Scripts/python.exe&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p><br></p>
+<h1 id="4">4. 代码规范检查</h1>
+<p>如果上一步你能安装 <strong>3.2 Anaconda</strong> 就不需要这一步了, <strong>Anaconda</strong> 已经帮你集成好了.</p>
+<p><strong>pylinter</strong> 插件</p>
+<p>这个插件依赖于 python 的 <strong>pylint</strong> 库, 所以首先, 我们得 <code>pip install pylint</code></p>
+<p>安装好后还要对 pylinter 插件做下设置</p>
+<p>首选项 -> 插件设置 -> Pylinter -> Settings-Default</p>
+<div class="hlcode"><pre><span class="s2">&quot;python_bin&quot;</span><span class="o">:</span> <span class="s2">&quot;D:/Python/python.exe&quot;</span><span class="p">,</span>
+
+<span class="c1">// The following paths will be added Pylint&#39;s Python path</span>
+<span class="s2">&quot;python_path&quot;</span><span class="o">:</span> <span class="p">[</span>
+    <span class="s2">&quot;D:/Python&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;D:/Python/DLLs&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;D:/Python/Lib&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;D:/Python/Lib/lib-tk&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;D:/Python/Lib/site-packages&quot;</span>
+<span class="p">],</span>
+<span class="c1">// Full path to the lint.py module in the pylint package</span>
+<span class="s2">&quot;pylint_path&quot;</span><span class="o">:</span> <span class="s2">&quot;D:/Python/Lib/site-packages/pylint&quot;</span><span class="p">,</span>
+
+<span class="c1">// Set to true to automtically run Pylint on save</span>
+<span class="s2">&quot;run_on_save&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+
+<span class="c1">// Set to true to use graphical error icons</span>
+<span class="s2">&quot;use_icons&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+<span class="s2">&quot;disable_outline&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+
+<span class="c1">// Status messages stay as long as cursor is on an error line</span>
+<span class="s2">&quot;message_stay&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+</pre></div>
+
+
+<p><br></p>
+<h1 id="5">5. 自动生成注释</h1>
+<p><strong>DocBlockr</strong> 插件</p>
+<p>在 Python 文件中, 文件头、类头以及函数头输入 """ 再按回车即可, 例如:</p>
+<div class="hlcode"><pre>class TestClass<span class="p">()</span><span class="o">:</span>
+    <span class="s">&quot;&quot;&quot; &lt;-- Press [enter]</span>
+
+<span class="s">def test_function():</span>
+<span class="s">    &quot;&quot;&quot;</span> <span class="o">&lt;--</span> Press <span class="p">[</span>enter<span class="p">]</span>
+</pre></div>
+
+
+<p><br></p>
+<h1 id="6">6. 项目设置</h1>
+<p>由於 Python 可以透過 virtualenv 來設定不同的虛擬環境, 透過這些環境來對不同開發專案, 達到環境獨立的優點, 因此我們也會期望在使用 sublime 開發時, 也可以偵測到不同的環境.
+首先先用 sublime 创建一个项目, 很简单, 直接 <strong>项目 -> 项目另存为</strong> 就可以了.</p>
+<p>保存好后选择 <strong>项目 -> 编辑项目</strong>, 设置使用 virtualenv 环境:</p>
+<div class="hlcode"><pre><span class="p">{</span>
+    <span class="s2">&quot;build_systems&quot;</span><span class="o">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;project_venv builder&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;selector&quot;</span><span class="o">:</span> <span class="s2">&quot;source.python&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;shell_cmd&quot;</span><span class="o">:</span> <span class="s2">&quot;D:/pydj/project_venv/bin/python -u \&quot;$file\&quot;&quot;</span>
+        <span class="p">}</span>
+    <span class="p">],</span>
+
+    <span class="s2">&quot;folders&quot;</span><span class="o">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+          <span class="s2">&quot;follow_symlinks&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+          <span class="s2">&quot;path&quot;</span><span class="o">:</span> <span class="s2">&quot;.&quot;</span>
+        <span class="p">}</span>
+     <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p><br>
+然后是覆盖 <strong>Jedi</strong> 默认设置中的 python_interpreter 和 python_package_paths (如果你安装了 <strong>Jedi</strong> 的话):</p>
+<div class="hlcode"><pre><span class="p">{</span>
+    <span class="s2">&quot;build_systems&quot;</span><span class="o">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;project_venv builder&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;selector&quot;</span><span class="o">:</span> <span class="s2">&quot;source.python&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;shell_cmd&quot;</span><span class="o">:</span> <span class="s2">&quot;D:/pydj/project_venv/Scripts/python -u \&quot;$file\&quot;&quot;</span>
+        <span class="p">}</span>
+    <span class="p">],</span>
+
+    <span class="s2">&quot;folders&quot;</span><span class="o">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+          <span class="s2">&quot;follow_symlinks&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+          <span class="s2">&quot;path&quot;</span><span class="o">:</span> <span class="s2">&quot;.&quot;</span>
+        <span class="p">}</span>
+     <span class="p">],</span>
+
+    <span class="s2">&quot;settings&quot;</span><span class="o">:</span> <span class="p">{</span>
+        <span class="s2">&quot;python_interpreter&quot;</span><span class="o">:</span> <span class="s2">&quot;D:/pydj/project_venv/Scripts/python.exe&quot;</span><span class="p">,</span>
+
+        <span class="s2">&quot;python_package_paths&quot;</span><span class="o">:</span> <span class="p">[</span>
+            <span class="s2">&quot;D:/pydj/project_venv/Scripts&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;D:/pydj/project_venv/Lib&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;D:/pydj/project_venv/Lib/site-packages&quot;</span>
+        <span class="p">],</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p><br>
+另外是覆盖 <strong>pylinter</strong> 的设置 (如果使用的是 <strong>pylinter</strong> 的话, 另外, virtualenv 里也需要 <code>pip install pylint</code>):</p>
+<div class="hlcode"><pre><span class="p">{</span>
+    <span class="s2">&quot;build_systems&quot;</span><span class="o">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;project_venv builder&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;selector&quot;</span><span class="o">:</span> <span class="s2">&quot;source.python&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;shell_cmd&quot;</span><span class="o">:</span> <span class="s2">&quot;D:/pydj/project_venv/Scripts/python -u \&quot;$file\&quot;&quot;</span>
+        <span class="p">}</span>
+    <span class="p">],</span>
+
+    <span class="s2">&quot;folders&quot;</span><span class="o">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+          <span class="s2">&quot;follow_symlinks&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+          <span class="s2">&quot;path&quot;</span><span class="o">:</span> <span class="s2">&quot;.&quot;</span>
+        <span class="p">}</span>
+     <span class="p">],</span>
+
+    <span class="s2">&quot;settings&quot;</span><span class="o">:</span> <span class="p">{</span>
+        <span class="s2">&quot;python_interpreter&quot;</span><span class="o">:</span> <span class="s2">&quot;D:/pydj/project_venv/Scripts/python.exe&quot;</span><span class="p">,</span>
+
+        <span class="s2">&quot;python_package_paths&quot;</span><span class="o">:</span> <span class="p">[</span>
+            <span class="s2">&quot;D:/pydj/project_venv/Scripts&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;D:/pydj/project_venv/Lib&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;D:/pydj/project_venv/Lib/site-packages&quot;</span>
+        <span class="p">],</span>
+
+        <span class="s2">&quot;pylinter&quot;</span><span class="o">:</span> <span class="p">{</span>
+            <span class="s2">&quot;python_bin&quot;</span><span class="o">:</span> <span class="s2">&quot;D:/pydj/project_venv/Scripts/python.exe&quot;</span><span class="p">,</span>
+
+            <span class="s2">&quot;python_path&quot;</span><span class="o">:</span> <span class="p">[</span>
+                <span class="s2">&quot;D:/pydj/project_venv/Scripts&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;D:/pydj/project_venv/Lib&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;D:/pydj/project_venv/Lib/site-packages&quot;</span>
+            <span class="p">],</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p><br></p>
+<h1 id="7">7. 侧边栏扩展</h1>
+<p><strong>SideBarEnhancements</strong> 插件
+安装好几乎不需要设置, 当打开__项目__时, 在项目文件上右键就能显示扩展.</p>
+<p>如果安装好 SideBarEnhancements 后没有显示侧边栏, 可以用快捷键 <strong>ctrl + k</strong>, <strong>ctrl + b</strong> 来打开侧边栏 (不是 ctrl + k + b, 是先按 ctrl + k, 松开再按 ctrl + b), 或者点击菜单: 查看 -> 侧边栏 -> 显示\隐藏侧边栏</p>
+<h1 id="8">8. 代码调试</h1>
+<p><strong>SublimeREPL</strong> 插件
+这个插件允许在编辑界面直接运行 Python 解释器</p>
+<p><img alt="" src="http://i63.tinypic.com/2pzz760.jpg" /></p>
+<h2 id="81-sublimerepl">8.1 SublimeREPL 基础</h2>
+<p>这部分内容仅做了解, 可直接用 <strong>[8.2 更好的 SulimeREPL 设置]</strong> 替代.</p>
+<h3 id="811-virtualenv">8.1.1 添加 virtualenv 支持</h3>
+<p>打开 SublimeREPL 的用户设置: 首选项 -> 插件设置 -> SulimeREPL -> Setting-User.</p>
+<div class="hlcode"><pre><span class="p">{</span>
+    <span class="s2">&quot;python_virtualenv_paths&quot;</span><span class="o">:</span> <span class="p">[</span>
+        <span class="s2">&quot;D:/pydj&quot;</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p><br>
+在这里写入 virtualenv 项目的根目录路径, 如我的 virtualenv 项目路径是 <code>D:/pydj/project_venv</code>, 所以这里填入 <code>D:/pdj</code></p>
+<p>当需要运行 virtualenv 时, 选择 Python - virtualenv 后, 界面上会出现 virtualenv 选择框:</p>
+<p><img alt="" src="http://i65.tinypic.com/2q2lhg2.jpg" /></p>
+<p><img alt="" src="http://i66.tinypic.com/2n7ianq.jpg" /></p>
+<p>选择后就能打开该 virtualenv 的 python 交互解释器了.</p>
+<h3 id="812">8.1.2 以交互式运行当前文件</h3>
+<p>SublimeREPL 里最常用的应该就是 Python 和 Python - RUN current file, 前者是打开交互式环境, 后者是直接运行当前文件, 但是一些常见的 python ide 都是把这两者结合起来, SublimeREPL 通过设置也能实现这个功能.</p>
+<p>打开 Sublime Text 3\Packages\SublimeREPL\config\Python\Main.sublime-menu 文件 (先备份一份).</p>
+<p><strong>删除</strong> "id" 为 "repl_python" 的项(如果想保留也可以不删除), <strong>修改</strong> "id" 为 "repl_python_run" 的项:</p>
+<div class="hlcode"><pre><span class="p">[</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;id&quot;</span><span class="o">:</span> <span class="s2">&quot;tools&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;children&quot;</span><span class="o">:</span><span class="p">[</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;caption&quot;</span><span class="o">:</span> <span class="s2">&quot;SublimeREPL&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;mnemonic&quot;</span><span class="o">:</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;id&quot;</span><span class="o">:</span> <span class="s2">&quot;SublimeREPL&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;children&quot;</span><span class="o">:</span> <span class="p">[</span>
+                    <span class="p">{</span>
+                        <span class="s2">&quot;caption&quot;</span><span class="o">:</span> <span class="s2">&quot;Python&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;id&quot;</span><span class="o">:</span> <span class="s2">&quot;Python&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;children&quot;</span><span class="o">:</span> <span class="p">[</span>
+                            <span class="p">{</span>
+                                <span class="s2">&quot;command&quot;</span><span class="o">:</span> <span class="s2">&quot;repl_open&quot;</span><span class="p">,</span>
+                                <span class="s2">&quot;caption&quot;</span><span class="o">:</span> <span class="s2">&quot;Python&quot;</span><span class="p">,</span>
+                                <span class="s2">&quot;id&quot;</span><span class="o">:</span> <span class="s2">&quot;repl_python&quot;</span><span class="p">,</span>  <span class="c1">// &lt;= 这里</span>
+                                <span class="s2">&quot;mnemonic&quot;</span><span class="o">:</span> <span class="s2">&quot;p&quot;</span><span class="p">,</span>
+                                <span class="s2">&quot;args&quot;</span><span class="o">:</span> <span class="p">{</span>
+                                    <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;subprocess&quot;</span><span class="p">,</span>
+                                    <span class="s2">&quot;encoding&quot;</span><span class="o">:</span> <span class="s2">&quot;utf8&quot;</span><span class="p">,</span>
+                                    <span class="s2">&quot;cmd&quot;</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;python&quot;</span><span class="p">,</span> <span class="s2">&quot;-i&quot;</span><span class="p">,</span> <span class="s2">&quot;-u&quot;</span><span class="p">],</span>
+                                    <span class="s2">&quot;cwd&quot;</span><span class="o">:</span> <span class="s2">&quot;$file_path&quot;</span><span class="p">,</span>
+                                    <span class="s2">&quot;syntax&quot;</span><span class="o">:</span> <span class="s2">&quot;Packages/Python/Python.tmLanguage&quot;</span><span class="p">,</span>
+                                    <span class="s2">&quot;external_id&quot;</span><span class="o">:</span> <span class="s2">&quot;python&quot;</span><span class="p">,</span>
+                                    <span class="s2">&quot;extend_env&quot;</span><span class="o">:</span> <span class="p">{</span><span class="s2">&quot;PYTHONIOENCODING&quot;</span><span class="o">:</span> <span class="s2">&quot;utf-8&quot;</span><span class="p">}</span>
+                                <span class="p">}</span>
+                            <span class="p">},</span>
+                            <span class="p">{</span>
+                                <span class="s2">&quot;command&quot;</span><span class="o">:</span> <span class="s2">&quot;repl_open&quot;</span><span class="p">,</span>
+                                <span class="s2">&quot;caption&quot;</span><span class="o">:</span> <span class="s2">&quot;Python - RUN current file&quot;</span><span class="p">,</span>
+                                <span class="s2">&quot;id&quot;</span><span class="o">:</span> <span class="s2">&quot;repl_python_run&quot;</span><span class="p">,</span> <span class="c1">// &lt;= 这里</span>
+                                <span class="s2">&quot;mnemonic&quot;</span><span class="o">:</span> <span class="s2">&quot;d&quot;</span><span class="p">,</span>
+                                <span class="s2">&quot;args&quot;</span><span class="o">:</span> <span class="p">{</span>
+                                    <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;subprocess&quot;</span><span class="p">,</span>
+                                    <span class="s2">&quot;encoding&quot;</span><span class="o">:</span> <span class="s2">&quot;utf8&quot;</span><span class="p">,</span>
+                                    <span class="s2">&quot;cmd&quot;</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;python&quot;</span><span class="p">,</span> <span class="s2">&quot;-i&quot;</span><span class="p">,</span> <span class="s2">&quot;-u&quot;</span><span class="p">,</span> <span class="s2">&quot;$file_basename&quot;</span><span class="p">],</span>
+                                    <span class="s2">&quot;cwd&quot;</span><span class="o">:</span> <span class="s2">&quot;$file_path&quot;</span><span class="p">,</span>
+                                    <span class="s2">&quot;syntax&quot;</span><span class="o">:</span> <span class="s2">&quot;Packages/Python/Python.tmLanguage&quot;</span><span class="p">,</span>
+                                    <span class="s2">&quot;external_id&quot;</span><span class="o">:</span> <span class="s2">&quot;python&quot;</span><span class="p">,</span>
+                                    <span class="s2">&quot;extend_env&quot;</span><span class="o">:</span> <span class="p">{</span><span class="s2">&quot;PYTHONIOENCODING&quot;</span><span class="o">:</span> <span class="s2">&quot;utf-8&quot;</span><span class="p">}</span>
+                                <span class="p">}</span>
+                            <span class="p">},</span>
+                            <span class="p">{</span>
+                                <span class="s2">&quot;command&quot;</span><span class="o">:</span> <span class="s2">&quot;repl_open&quot;</span><span class="p">,</span>
+                                <span class="s2">&quot;caption&quot;</span><span class="o">:</span> <span class="s2">&quot;Python - PDB current file&quot;</span><span class="p">,</span>
+                                <span class="s2">&quot;id&quot;</span><span class="o">:</span> <span class="s2">&quot;repl_python_pdb&quot;</span><span class="p">,</span>
+                                <span class="s2">&quot;mnemonic&quot;</span><span class="o">:</span> <span class="s2">&quot;d&quot;</span><span class="p">,</span>
+                                <span class="s2">&quot;args&quot;</span><span class="o">:</span> <span class="p">{</span>
+                                    <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;subprocess&quot;</span><span class="p">,</span>
+                                    <span class="s2">&quot;encoding&quot;</span><span class="o">:</span> <span class="s2">&quot;utf8&quot;</span><span class="p">,</span>
+                                    <span class="s2">&quot;cmd&quot;</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;python&quot;</span><span class="p">,</span> <span class="s2">&quot;-i&quot;</span><span class="p">,</span> <span class="s2">&quot;-u&quot;</span><span class="p">,</span> <span class="s2">&quot;-m&quot;</span><span class="p">,</span> <span class="s2">&quot;pdb&quot;</span><span class="p">,</span> <span class="s2">&quot;$file_basename&quot;</span><span class="p">],</span>
+                                    <span class="s2">&quot;cwd&quot;</span><span class="o">:</span> <span class="s2">&quot;$file_path&quot;</span><span class="p">,</span>
+                                    <span class="s2">&quot;syntax&quot;</span><span class="o">:</span> <span class="s2">&quot;Packages/Python/Python.tmLanguage&quot;</span><span class="p">,</span>
+                                    <span class="s2">&quot;external_id&quot;</span><span class="o">:</span> <span class="s2">&quot;python&quot;</span><span class="p">,</span>
+                                    <span class="s2">&quot;extend_env&quot;</span><span class="o">:</span> <span class="p">{</span><span class="s2">&quot;PYTHONIOENCODING&quot;</span><span class="o">:</span> <span class="s2">&quot;utf-8&quot;</span><span class="p">}</span>
+                                <span class="p">}</span>
+                            <span class="p">},</span>
+                            <span class="p">{</span>
+                                <span class="s2">&quot;command&quot;</span><span class="o">:</span> <span class="s2">&quot;python_virtualenv_repl&quot;</span><span class="p">,</span>
+                                <span class="s2">&quot;id&quot;</span><span class="o">:</span> <span class="s2">&quot;python_virtualenv_repl&quot;</span><span class="p">,</span>
+                                <span class="s2">&quot;caption&quot;</span><span class="o">:</span> <span class="s2">&quot;Python - virtualenv&quot;</span>
+                            <span class="p">},</span>
+                            <span class="p">{</span>
+                                <span class="s2">&quot;command&quot;</span><span class="o">:</span> <span class="s2">&quot;repl_open&quot;</span><span class="p">,</span>
+                                <span class="s2">&quot;caption&quot;</span><span class="o">:</span> <span class="s2">&quot;Python - IPython&quot;</span><span class="p">,</span>
+                                <span class="s2">&quot;id&quot;</span><span class="o">:</span> <span class="s2">&quot;repl_python_ipython&quot;</span><span class="p">,</span>
+                                <span class="s2">&quot;mnemonic&quot;</span><span class="o">:</span> <span class="s2">&quot;p&quot;</span><span class="p">,</span>
+                                <span class="s2">&quot;args&quot;</span><span class="o">:</span> <span class="p">{</span>
+                                    <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;subprocess&quot;</span><span class="p">,</span>
+                                    <span class="s2">&quot;encoding&quot;</span><span class="o">:</span> <span class="s2">&quot;utf8&quot;</span><span class="p">,</span>
+                                    <span class="s2">&quot;autocomplete_server&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+                                    <span class="s2">&quot;cmd&quot;</span><span class="o">:</span> <span class="p">{</span>
+                                        <span class="s2">&quot;osx&quot;</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;python&quot;</span><span class="p">,</span> <span class="s2">&quot;-u&quot;</span><span class="p">,</span> <span class="s2">&quot;${packages}/SublimeREPL/config/Python/ipy_repl.py&quot;</span><span class="p">],</span>
+                                        <span class="s2">&quot;linux&quot;</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;python&quot;</span><span class="p">,</span> <span class="s2">&quot;-u&quot;</span><span class="p">,</span> <span class="s2">&quot;${packages}/SublimeREPL/config/Python/ipy_repl.py&quot;</span><span class="p">],</span>
+                                        <span class="s2">&quot;windows&quot;</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;python&quot;</span><span class="p">,</span> <span class="s2">&quot;-u&quot;</span><span class="p">,</span> <span class="s2">&quot;${packages}/SublimeREPL/config/Python/ipy_repl.py&quot;</span><span class="p">]</span>
+                                    <span class="p">},</span>
+                                    <span class="s2">&quot;cwd&quot;</span><span class="o">:</span> <span class="s2">&quot;$file_path&quot;</span><span class="p">,</span>
+                                    <span class="s2">&quot;syntax&quot;</span><span class="o">:</span> <span class="s2">&quot;Packages/Python/Python.tmLanguage&quot;</span><span class="p">,</span>
+                                    <span class="s2">&quot;external_id&quot;</span><span class="o">:</span> <span class="s2">&quot;python&quot;</span><span class="p">,</span>
+                                    <span class="s2">&quot;extend_env&quot;</span><span class="o">:</span> <span class="p">{</span>
+                                        <span class="s2">&quot;PYTHONIOENCODING&quot;</span><span class="o">:</span> <span class="s2">&quot;utf-8&quot;</span><span class="p">,</span>
+                                        <span class="s2">&quot;SUBLIMEREPL_EDITOR&quot;</span><span class="o">:</span> <span class="s2">&quot;$editor&quot;</span>
+                                    <span class="p">}</span>
+                                <span class="p">}</span>
+                            <span class="p">}</span>
+                        <span class="p">]</span>
+                    <span class="p">}</span>
+                <span class="p">]</span>
+            <span class="p">}</span>
+        <span class="p">]</span>
+    <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+
+
+<p><br></p>
+<blockquote>
+<p>补充下: ipython 是一个 python 的交互式 shell, 比默认的 python shell 好用得多, 支持变量自动补全, 自动缩进, 支持 bash shell 命令, 内置了许多很有用的功能和函数.
+不过 SublimeREPL 的 ipython 不怎么好用, 所以一般也不用...</p>
+</blockquote>
+<h3 id="813">8.1.3 关联快捷键</h3>
+<p>首选项 -> 按键绑定 - 用户</p>
+<div class="hlcode"><pre><span class="p">[</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;keys&quot;</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;f5&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;command&quot;</span><span class="o">:</span> <span class="s2">&quot;run_existing_window_command&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;args&quot;</span><span class="o">:</span> <span class="p">{</span>
+            <span class="s2">&quot;id&quot;</span><span class="o">:</span> <span class="s2">&quot;repl_python_run&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;file&quot;</span><span class="o">:</span> <span class="s2">&quot;config/Python/Main.sublime-menu&quot;</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+<span class="p">]</span>
+</pre></div>
+
+
+<p><br></p>
+<h2 id="82-sulimerepl">8.2 更好的 SulimeREPL 设置</h2>
+<p>在 stackoverflow 上找到一个解决方案 <a href="http://stackoverflow.com/questions/24963030/sublime-text3-and-virtualenvs">http://stackoverflow.com/questions/24963030/sublime-text3-and-virtualenvs</a></p>
+<p>该方案有很好兼容性, 完全可以替代上面的所有设置, 设置好后, 通过快捷键来触发 SublimeREPL, 并且以后切换 virtualenv 时, 只需要设置项目设置中的 <strong>python_interpreter</strong> 就可以了.</p>
+<p>首选项 -> 浏览插件, 创建一个 py 文件: <code>project_venv_repl.py</code></p>
+<div class="hlcode"><pre><span class="kn">import</span> <span class="nn">sublime_plugin</span>
+<span class="k">class</span> <span class="nc">ProjectVenvReplCommand</span><span class="p">(</span><span class="n">sublime_plugin</span><span class="o">.</span><span class="n">TextCommand</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Starts a SublimeREPL, attempting to use project&#39;s specified</span>
+<span class="sd">    python interpreter.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">edit</span><span class="p">,</span> <span class="n">open_file</span><span class="o">=</span><span class="s">&#39;$file&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Called on project_venv_repl command&quot;&quot;&quot;</span>
+        <span class="n">cmd_list</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">get_project_interpreter</span><span class="p">(),</span> <span class="s">&#39;-i&#39;</span><span class="p">,</span> <span class="s">&#39;-u&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">open_file</span><span class="p">:</span>
+            <span class="n">cmd_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">open_file</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">repl_open</span><span class="p">(</span><span class="n">cmd_list</span><span class="o">=</span><span class="n">cmd_list</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">get_project_interpreter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the project&#39;s specified python interpreter, if any&quot;&quot;&quot;</span>
+        <span class="n">settings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">settings</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">settings</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;python_interpreter&#39;</span><span class="p">,</span> <span class="s">&#39;python&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">repl_open</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cmd_list</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Open a SublimeREPL using provided commands&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">window</span><span class="p">()</span><span class="o">.</span><span class="n">run_command</span><span class="p">(</span>
+            <span class="s">&#39;repl_open&#39;</span><span class="p">,</span> <span class="p">{</span>
+                <span class="s">&#39;encoding&#39;</span><span class="p">:</span> <span class="s">&#39;utf8&#39;</span><span class="p">,</span>
+                <span class="s">&#39;type&#39;</span><span class="p">:</span> <span class="s">&#39;subprocess&#39;</span><span class="p">,</span>
+                <span class="s">&#39;cmd&#39;</span><span class="p">:</span> <span class="n">cmd_list</span><span class="p">,</span>
+                <span class="s">&#39;cwd&#39;</span><span class="p">:</span> <span class="s">&#39;$file_path&#39;</span><span class="p">,</span>
+                <span class="s">&#39;syntax&#39;</span><span class="p">:</span> <span class="s">&#39;Packages/Python/Python.tmLanguage&#39;</span>
+            <span class="p">}</span>
+        <span class="p">)</span>
+</pre></div>
+
+
+<p><br>
+首选项 -> 按键绑定 - 用户</p>
+<div class="hlcode"><pre><span class="p">[</span>
+    <span class="c1">// Runs currently open file in repl</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;keys&quot;</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;f5&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;command&quot;</span><span class="o">:</span> <span class="s2">&quot;project_venv_repl&quot;</span>
+    <span class="p">},</span>
+    <span class="c1">// Runs repl without any file</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;keys&quot;</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;f6&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;command&quot;</span><span class="o">:</span> <span class="s2">&quot;project_venv_repl&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;args&quot;</span><span class="o">:</span> <span class="p">{</span>
+            <span class="s2">&quot;open_file&quot;</span><span class="o">:</span> <span class="kc">null</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="c1">// Runs a specific file in repl, change main.py to desired file</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;keys&quot;</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;f7&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;command&quot;</span><span class="o">:</span> <span class="s2">&quot;project_venv_repl&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;args&quot;</span><span class="o">:</span> <span class="p">{</span>
+            <span class="s2">&quot;open_file&quot;</span><span class="o">:</span> <span class="s2">&quot;/home/user/example/main.py&quot;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+
+
+<p><br></p>
+<ul>
+<li>f5: 以项目设置中的 <strong>python_interpreter</strong>  来运行当前文件</li>
+<li>f6: 直接运行项目设置中的 <strong>python_interpreter</strong></li>
+<li>f7: 以项目设置中的 <strong>python_interpreter</strong>  来运行指定 py 文件, 更新 open_file 就可以了.</li>
+</ul>
+<h1 id="9-pyc">9. 编译 Pyc 文件</h1>
+<h2 id="91-pyc">9.1 生成单个的 pyc 文件</h2>
+<div class="hlcode"><pre><span class="kn">import</span> <span class="nn">py_compile</span>
+<span class="n">py_compile</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">r&#39;H:/game/test.py&#39;</span><span class="p">)</span>
+</pre></div>
+
+
+<p><br>
+执行上面的代码, 就能将 test.py 生成 test.pyc 了.</p>
+<h2 id="92-py-pyc">9.2 将整个目录下的 py 文件都生成 pyc</h2>
+<div class="hlcode"><pre><span class="kn">import</span> <span class="nn">compileall</span>
+<span class="n">compileall</span><span class="o">.</span><span class="n">compile_dir</span><span class="p">(</span><span class="s">r&#39;H:/game&#39;</span><span class="p">)</span>
+</pre></div>
+
+
+<p><br>
+执行上面的代码, 就将 game 目录下的所有 py 文件(包含子目录)都生成 pyc 文件了.</p>
+<p>当编写项目时, 可以把这个功能做到 <strong>[工具 -> 编译系统]</strong> 里或者 <strong>[SublimeREPL]</strong> 里:</p>
+<div class="hlcode"><pre><span class="p">{</span>
+    <span class="s2">&quot;selector&quot;</span><span class="o">:</span> <span class="s2">&quot;source.python&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;shell_cmd&quot;</span><span class="o">:</span> <span class="s2">&quot;python -m py_compile \&quot;test.py\&quot;&quot;</span>
+<span class="p">}</span>
+
+<span class="p">{</span>
+    <span class="s2">&quot;selector&quot;</span><span class="o">:</span> <span class="s2">&quot;source.python&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;shell_cmd&quot;</span><span class="o">:</span> <span class="s2">&quot;python -m compileall \&quot;C:/Users/Administrator/Desktop/Scripts\&quot;&quot;</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p><br></p>
+    </div>
+
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="Sublime 配置 Python 开发环境" data-title="Sublime 配置 Python 开发环境" data-url="http://wiki.smallcpp.com/工具配置/Sublime 配置 Python 开发环境.html"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:"smallwiki"};
+        (function() {
+            var ds = document.createElement('script');
+            ds.type = 'text/javascript';ds.async = true;
+            ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+            ds.charset = 'UTF-8';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+    </script>
+    <!-- 多说公共JS代码 end -->
+
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2016 <a href="http://www.samllcpp.com/" target="_blank">Martin</a> Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+              </p>
+        </div>
+    </body>
+</html>
