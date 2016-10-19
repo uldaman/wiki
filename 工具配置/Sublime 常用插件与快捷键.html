@@ -26,9 +26,12 @@
     <div class="clearfix"></div>
     <div id="content">
         <div class="toc"><span class="toctitle">Table of Contents</span><ul>
-<li><a href="#_1">常用插件</a></li>
-<li><a href="#_2">常用快捷键</a></li>
-<li><a href="#_3">全部快捷键</a></li>
+<li><a href="#_1">常用插件</a><ul>
+<li><a href="#_2">括号高亮</a></li>
+</ul>
+</li>
+<li><a href="#_3">常用快捷键</a></li>
+<li><a href="#_4">全部快捷键</a></li>
 </ul>
 </div>
 <h1 id="_1">常用插件</h1>
@@ -37,12 +40,193 @@
 <a href="http://wiki.smallcpp.com/%E5%B7%A5%E5%85%B7%E9%85%8D%E7%BD%AE/Sublime%20%E9%85%8D%E7%BD%AE%20Python%20%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83.html">Sublime 配置 Python 开发环境</a> <br>
 <a href="http://wiki.smallcpp.com/%E5%B7%A5%E5%85%B7%E9%85%8D%E7%BD%AE/Sublime%20%E9%85%8D%E7%BD%AE%20Nodejs%20%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83.html">Sublime 配置 Nodejs 开发环境</a></p>
 <p>以下还有一些其他挺好用的插件也是我常用的.</p>
+<h2 id="_2">括号高亮</h2>
+<p>插件: <a href="http://facelessuser.github.io/BracketHighlighter/">BracketHighlighter</a></p>
+<blockquote>
+<p>Bracket Highlighter matches a variety of brackets such as: [], (), {}, "", '', <tag></tag>, and even custom brackets.</p>
+</blockquote>
+<p>BracketHighlighter 插件为 Sublime Text 提供括号、引号这类高亮功能, 但安装此插件后, 默认没有高亮, 只有下划线表示, 而且还不是很醒目, 需要配置:</p>
+<p>Preferences -> package settings -> Bracket Highlighter -> Bracket Settings – User, 然后添加如下代码:</p>
+<div class="hlcode"><pre><span class="p">{</span>
+    <span class="s2">&quot;bracket_styles&quot;</span><span class="o">:</span> <span class="p">{</span>
+        <span class="s2">&quot;default&quot;</span><span class="o">:</span> <span class="p">{</span>
+            <span class="s2">&quot;icon&quot;</span><span class="o">:</span> <span class="s2">&quot;dot&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;color&quot;</span><span class="o">:</span> <span class="s2">&quot;brackethighlighter.default&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;style&quot;</span><span class="o">:</span> <span class="s2">&quot;highlight&quot;</span>
+        <span class="p">},</span>
+
+        <span class="s2">&quot;unmatched&quot;</span><span class="o">:</span> <span class="p">{</span>
+            <span class="s2">&quot;icon&quot;</span><span class="o">:</span> <span class="s2">&quot;question&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;color&quot;</span><span class="o">:</span> <span class="s2">&quot;brackethighlighter.unmatched&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;style&quot;</span><span class="o">:</span> <span class="s2">&quot;highlight&quot;</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;curly&quot;</span><span class="o">:</span> <span class="p">{</span>
+            <span class="s2">&quot;icon&quot;</span><span class="o">:</span> <span class="s2">&quot;curly_bracket&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;color&quot;</span><span class="o">:</span> <span class="s2">&quot;brackethighlighter.curly&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;style&quot;</span><span class="o">:</span> <span class="s2">&quot;highlight&quot;</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;round&quot;</span><span class="o">:</span> <span class="p">{</span>
+            <span class="s2">&quot;icon&quot;</span><span class="o">:</span> <span class="s2">&quot;round_bracket&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;color&quot;</span><span class="o">:</span> <span class="s2">&quot;brackethighlighter.round&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;style&quot;</span><span class="o">:</span> <span class="s2">&quot;highlight&quot;</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;square&quot;</span><span class="o">:</span> <span class="p">{</span>
+            <span class="s2">&quot;icon&quot;</span><span class="o">:</span> <span class="s2">&quot;square_bracket&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;color&quot;</span><span class="o">:</span> <span class="s2">&quot;brackethighlighter.square&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;style&quot;</span><span class="o">:</span> <span class="s2">&quot;highlight&quot;</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;angle&quot;</span><span class="o">:</span> <span class="p">{</span>
+            <span class="s2">&quot;icon&quot;</span><span class="o">:</span> <span class="s2">&quot;angle_bracket&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;color&quot;</span><span class="o">:</span> <span class="s2">&quot;brackethighlighter.angle&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;style&quot;</span><span class="o">:</span> <span class="s2">&quot;highlight&quot;</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;tag&quot;</span><span class="o">:</span> <span class="p">{</span>
+            <span class="s2">&quot;icon&quot;</span><span class="o">:</span> <span class="s2">&quot;tag&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;color&quot;</span><span class="o">:</span> <span class="s2">&quot;brackethighlighter.tag&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;style&quot;</span><span class="o">:</span> <span class="s2">&quot;highlight&quot;</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;single_quote&quot;</span><span class="o">:</span> <span class="p">{</span>
+            <span class="s2">&quot;icon&quot;</span><span class="o">:</span> <span class="s2">&quot;single_quote&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;color&quot;</span><span class="o">:</span> <span class="s2">&quot;brackethighlighter.quote&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;style&quot;</span><span class="o">:</span> <span class="s2">&quot;highlight&quot;</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;double_quote&quot;</span><span class="o">:</span> <span class="p">{</span>
+            <span class="s2">&quot;icon&quot;</span><span class="o">:</span> <span class="s2">&quot;double_quote&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;color&quot;</span><span class="o">:</span> <span class="s2">&quot;brackethighlighter.quote&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;style&quot;</span><span class="o">:</span> <span class="s2">&quot;highlight&quot;</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;regex&quot;</span><span class="o">:</span> <span class="p">{</span>
+            <span class="s2">&quot;icon&quot;</span><span class="o">:</span> <span class="s2">&quot;regex&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;color&quot;</span><span class="o">:</span> <span class="s2">&quot;brackethighlighter.quote&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;style&quot;</span><span class="o">:</span> <span class="s2">&quot;outline&quot;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+<span class="p">}</span>
+</pre></div>
+
+
+<p><br>
+然后还要针对你的 Sublime 主题进行设置, 如果使用的是默认的 Monokai 主题, 那么主题设置文件在:</p>
+<ul>
+<li>找到 Sublime text3 安装目录下的 Packages 中的 <code>Color Scheme – Default.sublime-package</code></li>
+<li>将其重命名为 <code>Color Scheme – Default.sublime-package.zip</code>，解压找到 <code>Monokai.tmTheme</code>, 拉出来</li>
+<li><code>Monokai.tmTheme</code> 有一堆 <code>dict</code> 标签 (注意是有 <code>key</code> 子标签的那列 <code>dict</code>), 在其同级下添加下面的代码</li>
+</ul>
+<p>如果你像我一样, 使用的是 <strong>Monokai Extended</strong> 主题扩展的话, 主题的设置文件在 <code>Data\Installed Packages\Monokai Extended.sublime-package</code> 里.</p>
+<div class="hlcode"><pre><span class="nt">&lt;dict&gt;</span>
+    <span class="nt">&lt;key&gt;</span>name<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>Bracket Default<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>scope<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>brackethighlighter.default<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>settings<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;dict&gt;</span>
+        <span class="nt">&lt;key&gt;</span>foreground<span class="nt">&lt;/key&gt;</span>
+        <span class="nt">&lt;string&gt;</span>#FFFFFF<span class="nt">&lt;/string&gt;</span>
+        <span class="nt">&lt;key&gt;</span>background<span class="nt">&lt;/key&gt;</span>
+        <span class="nt">&lt;string&gt;</span>#A6E22E<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;/dict&gt;</span>
+<span class="nt">&lt;/dict&gt;</span>
+
+<span class="nt">&lt;dict&gt;</span>
+    <span class="nt">&lt;key&gt;</span>name<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>Bracket Unmatched<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>scope<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>brackethighlighter.unmatched<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>settings<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;dict&gt;</span>
+        <span class="nt">&lt;key&gt;</span>foreground<span class="nt">&lt;/key&gt;</span>
+        <span class="nt">&lt;string&gt;</span>#FFFFFF<span class="nt">&lt;/string&gt;</span>
+        <span class="nt">&lt;key&gt;</span>background<span class="nt">&lt;/key&gt;</span>
+        <span class="nt">&lt;string&gt;</span>#FF0000<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;/dict&gt;</span>
+<span class="nt">&lt;/dict&gt;</span>
+
+<span class="nt">&lt;dict&gt;</span>
+    <span class="nt">&lt;key&gt;</span>name<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>Bracket Curly<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>scope<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>brackethighlighter.curly<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>settings<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;dict&gt;</span>
+        <span class="nt">&lt;key&gt;</span>foreground<span class="nt">&lt;/key&gt;</span>
+        <span class="nt">&lt;string&gt;</span>#FF00FF<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;/dict&gt;</span>
+<span class="nt">&lt;/dict&gt;</span>
+
+<span class="nt">&lt;dict&gt;</span>
+    <span class="nt">&lt;key&gt;</span>name<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>Bracket Round<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>scope<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>brackethighlighter.round<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>settings<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;dict&gt;</span>
+        <span class="nt">&lt;key&gt;</span>foreground<span class="nt">&lt;/key&gt;</span>
+        <span class="nt">&lt;string&gt;</span>#E7FF04<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;/dict&gt;</span>
+<span class="nt">&lt;/dict&gt;</span>
+
+<span class="nt">&lt;dict&gt;</span>
+    <span class="nt">&lt;key&gt;</span>name<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>Bracket Square<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>scope<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>brackethighlighter.square<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>settings<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;dict&gt;</span>
+        <span class="nt">&lt;key&gt;</span>foreground<span class="nt">&lt;/key&gt;</span>
+        <span class="nt">&lt;string&gt;</span>#FE4800<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;/dict&gt;</span>
+<span class="nt">&lt;/dict&gt;</span>
+
+<span class="nt">&lt;dict&gt;</span>
+    <span class="nt">&lt;key&gt;</span>name<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>Bracket Angle<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>scope<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>brackethighlighter.angle<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>settings<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;dict&gt;</span>
+        <span class="nt">&lt;key&gt;</span>foreground<span class="nt">&lt;/key&gt;</span>
+        <span class="nt">&lt;string&gt;</span>#02F78E<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;/dict&gt;</span>
+<span class="nt">&lt;/dict&gt;</span>
+
+<span class="nt">&lt;dict&gt;</span>
+    <span class="nt">&lt;key&gt;</span>name<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>Bracket Tag<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>scope<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>brackethighlighter.tag<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>settings<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;dict&gt;</span>
+        <span class="nt">&lt;key&gt;</span>foreground<span class="nt">&lt;/key&gt;</span>
+        <span class="nt">&lt;string&gt;</span>#FFFFFF<span class="nt">&lt;/string&gt;</span>
+        <span class="nt">&lt;key&gt;</span>background<span class="nt">&lt;/key&gt;</span>
+        <span class="nt">&lt;string&gt;</span>#0080FF<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;/dict&gt;</span>
+<span class="nt">&lt;/dict&gt;</span>
+
+<span class="nt">&lt;dict&gt;</span>
+    <span class="nt">&lt;key&gt;</span>name<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>Bracket Quote<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>scope<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>brackethighlighter.quote<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>settings<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;dict&gt;</span>
+        <span class="nt">&lt;key&gt;</span>foreground<span class="nt">&lt;/key&gt;</span>
+        <span class="nt">&lt;string&gt;</span>#56FF00<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;/dict&gt;</span>
+<span class="nt">&lt;/dict&gt;</span>
+</pre></div>
+
+
+<p><br>
+配好后的效果如下图:</p>
+<p><img alt="" src="http://wiki.smallcpp.com/static/images/Sublime常用插件与快捷键/BracketHighlighter.png" /></p>
 <p>SublimeCodeintel 代码自动完成 扫描目录索引
 Emmet 方便编写 HTML
 SublimeLinter 代码规范检查
 Bracket Highlighter
 Tag</p>
-<h1 id="_2">常用快捷键</h1>
+<h1 id="_3">常用快捷键</h1>
 <table>
 <thead>
 <tr>
@@ -209,7 +393,7 @@ Tag</p>
 </tr>
 </tbody>
 </table>
-<h1 id="_3">全部快捷键</h1>
+<h1 id="_4">全部快捷键</h1>
 <table>
 <thead>
 <tr>
