@@ -72,6 +72,7 @@
 </li>
 <li><a href="#11-git-stash">11. git stash 贮藏</a></li>
 <li><a href="#12">12. 中文显示问题</a></li>
+<li><a href="#13">13. 区分文件大小写</a></li>
 </ul>
 </div>
 <h2 id="1-git">1. git 配置</h2>
@@ -481,6 +482,17 @@ mac 系统的 git-diff-wrapper.sh</p>
 <p>解决方式：</p>
 <div class="hlcode"><pre><span class="n">git</span> <span class="n">config</span> <span class="o">--</span><span class="n">global</span> <span class="n">core</span><span class="p">.</span><span class="n">quotepath</span> <span class="nb">false</span>
 </pre></div>
+
+
+<p><br></p>
+<h2 id="13">13. 区分文件大小写</h2>
+<p>默认的 Git 监控是<strong>不区分</strong>文件大小写的 ~</p>
+<p>Git 控制是否忽略大小的选项是 <code>core.ignorecase</code> (true: 不区分, false: 区分), 但是这个选项在每个 Git 项目的配置里都是默认 true 的, 所以就算配了全局的 <code>core.ignorecase</code> 为 <code>false</code>, 也会被项目的配置给覆盖掉.</p>
+<p>所以一般这里有两种处理方法.</p>
+<ul>
+<li>第一种, 做全局设置 <code>git config --global core.ignorecase false</code>, 并且删除 Git 项目的 <code>core.ignorecase</code> 选项</li>
+<li>第二种, 就是只对当前项目做配置 <code>git config core.ignorecase false</code></li>
+</ul>
     </div>
 
     <!-- 多说评论框 start -->
