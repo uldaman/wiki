@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <title>Hadoop Logs 文件 - Wiki | Small Cpp</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            
+            <a href="/">Home</a> » <a href="/#工具配置">工具配置</a> » Hadoop Logs 文件
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <p>Hadoop 存在多种日志文件, 其中 <strong>Master</strong> 上的日志文件记录全面信息, 包括 <strong>Slave</strong> 上的 <strong>JobTracker</strong> 与 <strong>DataNode</strong> 也会将错误信息写到 <strong>Master</strong> 中, 而 <strong>Slave</strong> 中的日志主要记录完成的 <strong>Task</strong> 任务信息.</p>
+<p>Hadoop Log 文件保存在 Hadoop 根目录下的 logs 目录里.</p>
+<div class="hlcode"><pre><span class="n">martin</span><span class="err">@</span><span class="n">itcast01</span><span class="o">:/</span><span class="n">usr</span><span class="o">/</span><span class="n">itcast</span><span class="o">/</span><span class="n">hadoop</span><span class="o">-</span><span class="mf">2.7.3</span><span class="o">/</span><span class="n">logs</span><span class="err">$</span> <span class="n">ls</span> <span class="o">-</span><span class="n">l</span>
+<span class="err">总用量</span> <span class="mi">452</span>
+<span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span> <span class="mi">1</span> <span class="n">martin</span> <span class="n">martin</span> <span class="mi">173292</span> <span class="mi">10</span><span class="err">月</span> <span class="mi">17</span> <span class="mo">01</span><span class="o">:</span><span class="mi">22</span> <span class="n">hadoop</span><span class="o">-</span><span class="n">martin</span><span class="o">-</span><span class="n">namenode</span><span class="o">-</span><span class="n">itcast01</span><span class="p">.</span><span class="n">log</span>
+<span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span> <span class="mi">1</span> <span class="n">martin</span> <span class="n">martin</span>   <span class="mi">5314</span> <span class="mi">10</span><span class="err">月</span> <span class="mi">16</span> <span class="mi">17</span><span class="o">:</span><span class="mi">32</span> <span class="n">hadoop</span><span class="o">-</span><span class="n">martin</span><span class="o">-</span><span class="n">namenode</span><span class="o">-</span><span class="n">itcast01</span><span class="p">.</span><span class="n">out</span>
+<span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span> <span class="mi">1</span> <span class="n">martin</span> <span class="n">martin</span>   <span class="mi">1030</span> <span class="mi">10</span><span class="err">月</span> <span class="mi">16</span> <span class="mi">17</span><span class="o">:</span><span class="mi">27</span> <span class="n">hadoop</span><span class="o">-</span><span class="n">martin</span><span class="o">-</span><span class="n">namenode</span><span class="o">-</span><span class="n">itcast01</span><span class="p">.</span><span class="n">out</span><span class="mf">.1</span>
+<span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span> <span class="mi">1</span> <span class="n">martin</span> <span class="n">martin</span>   <span class="mi">1030</span> <span class="mi">10</span><span class="err">月</span> <span class="mi">16</span> <span class="mi">17</span><span class="o">:</span><span class="mi">26</span> <span class="n">hadoop</span><span class="o">-</span><span class="n">martin</span><span class="o">-</span><span class="n">namenode</span><span class="o">-</span><span class="n">itcast01</span><span class="p">.</span><span class="n">out</span><span class="mf">.2</span>
+<span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span> <span class="mi">1</span> <span class="n">martin</span> <span class="n">martin</span>  <span class="mi">64382</span> <span class="mi">10</span><span class="err">月</span> <span class="mi">17</span> <span class="mo">01</span><span class="o">:</span><span class="mi">22</span> <span class="n">hadoop</span><span class="o">-</span><span class="n">martin</span><span class="o">-</span><span class="n">secondarynamenode</span><span class="o">-</span><span class="n">itcast01</span><span class="p">.</span><span class="n">log</span>
+<span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span> <span class="mi">1</span> <span class="n">martin</span> <span class="n">martin</span>   <span class="mi">1030</span> <span class="mi">10</span><span class="err">月</span> <span class="mi">16</span> <span class="mi">17</span><span class="o">:</span><span class="mi">29</span> <span class="n">hadoop</span><span class="o">-</span><span class="n">martin</span><span class="o">-</span><span class="n">secondarynamenode</span><span class="o">-</span><span class="n">itcast01</span><span class="p">.</span><span class="n">out</span>
+<span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span> <span class="mi">1</span> <span class="n">martin</span> <span class="n">martin</span>   <span class="mi">1030</span> <span class="mi">10</span><span class="err">月</span> <span class="mi">16</span> <span class="mi">17</span><span class="o">:</span><span class="mi">27</span> <span class="n">hadoop</span><span class="o">-</span><span class="n">martin</span><span class="o">-</span><span class="n">secondarynamenode</span><span class="o">-</span><span class="n">itcast01</span><span class="p">.</span><span class="n">out</span><span class="mf">.1</span>
+<span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span> <span class="mi">1</span> <span class="n">martin</span> <span class="n">martin</span>  <span class="mi">40588</span> <span class="mi">10</span><span class="err">月</span> <span class="mi">17</span> <span class="mo">01</span><span class="o">:</span><span class="mi">22</span> <span class="n">mapred</span><span class="o">-</span><span class="n">martin</span><span class="o">-</span><span class="n">historyserver</span><span class="o">-</span><span class="n">itcast01</span><span class="p">.</span><span class="n">log</span>
+<span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span> <span class="mi">1</span> <span class="n">martin</span> <span class="n">martin</span>   <span class="mi">1852</span> <span class="mi">10</span><span class="err">月</span> <span class="mi">16</span> <span class="mi">20</span><span class="o">:</span><span class="mi">27</span> <span class="n">mapred</span><span class="o">-</span><span class="n">martin</span><span class="o">-</span><span class="n">historyserver</span><span class="o">-</span><span class="n">itcast01</span><span class="p">.</span><span class="n">out</span>
+<span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span> <span class="mi">1</span> <span class="n">martin</span> <span class="n">martin</span>      <span class="mi">0</span> <span class="mi">10</span><span class="err">月</span> <span class="mi">16</span> <span class="mi">17</span><span class="o">:</span><span class="mi">26</span> <span class="n">SecurityAuth</span><span class="o">-</span><span class="n">martin</span><span class="p">.</span><span class="n">audit</span>
+<span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span> <span class="mi">1</span> <span class="n">martin</span> <span class="n">martin</span> <span class="mi">132156</span> <span class="mi">10</span><span class="err">月</span> <span class="mi">17</span> <span class="mo">01</span><span class="o">:</span><span class="mi">22</span> <span class="n">yarn</span><span class="o">-</span><span class="n">martin</span><span class="o">-</span><span class="n">resourcemanager</span><span class="o">-</span><span class="n">itcast01</span><span class="p">.</span><span class="n">log</span>
+<span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span> <span class="mi">1</span> <span class="n">martin</span> <span class="n">martin</span>   <span class="mi">1899</span> <span class="mi">10</span><span class="err">月</span> <span class="mi">16</span> <span class="mi">17</span><span class="o">:</span><span class="mi">29</span> <span class="n">yarn</span><span class="o">-</span><span class="n">martin</span><span class="o">-</span><span class="n">resourcemanager</span><span class="o">-</span><span class="n">itcast01</span><span class="p">.</span><span class="n">out</span>
+<span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span> <span class="mi">1</span> <span class="n">martin</span> <span class="n">martin</span>   <span class="mi">1899</span> <span class="mi">10</span><span class="err">月</span> <span class="mi">16</span> <span class="mi">17</span><span class="o">:</span><span class="mi">27</span> <span class="n">yarn</span><span class="o">-</span><span class="n">martin</span><span class="o">-</span><span class="n">resourcemanager</span><span class="o">-</span><span class="n">itcast01</span><span class="p">.</span><span class="n">out</span><span class="mf">.1</span>
+</pre></div>
+
+
+<p><br>
+log 文件的名称由几部分构造: <strong>组件</strong> - <strong>当前用户</strong> - <strong>节点</strong> - <strong>主机</strong></p>
+<p><code>*.log</code> 是日志消息, 故障诊断的首要步骤即为检查该文件 (此日志文件最重要)</p>
+<p><code>*.out</code> 是当前输出 (记录标准输出和标准错误).</p>
+    </div>
+
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="Hadoop Logs 文件" data-title="Hadoop Logs 文件" data-url="http://wiki.smallcpp.com/工具配置/Hadoop Logs 文件.html"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:"smallwiki"};
+        (function() {
+            var ds = document.createElement('script');
+            ds.type = 'text/javascript';ds.async = true;
+            ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+            ds.charset = 'UTF-8';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+    </script>
+    <!-- 多说公共JS代码 end -->
+
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2016 <a href="http://www.samllcpp.com/" target="_blank">Martin</a> Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+              </p>
+        </div>
+    </body>
+</html>
