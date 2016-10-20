@@ -207,16 +207,18 @@ Preferences \-\> package settings \-\> Bracket Highlighter \-\> Bracket Settings
 
 ![](http://wiki.smallcpp.com/static/images/Sublime常用插件与快捷键/BracketHighlighter.png)
 
-## 代码提示、自动补全和链接跳转
+## 代码提示、自动补全和代码跳转
 **Update**:<br>Forget about *SublimeCodeIntel* and use the new [CodeComplice](https://johnblackbourn.com/sublimecodeintel-st3) package instead.
+
+**注意**, 这类全局代码提示插件和那种单独语言的代码提示是相**冲突**的, 如 **Anaconda**、**NodeJs** 等.
 
 > Sublime 默认是只提示当前文件, 这里的代码提示指的是全局代码提示.
 
 插件: [SublimeCodeintel](https://packagecontrol.io/packages/SublimeCodeIntel) (已不推荐使用, 见上面的 **Update**).
 
-该插件同时支持**代码提示**、**自动补全**和**链接跳转**三个功能, 非常强大.
+该插件同时支持**代码提示**、**自动补全**和**代码跳转**三个功能, 非常强大.
 
-另外, 还有一些插件具有单独的功能, 如 [All Autocomplete](https://packagecontrol.io/packages/All%20Autocomplete) 支持全局代码提示, 而 [CTags](https://packagecontrol.io/packages/CTags) 支持链接跳转;<br>
+另外, 还有一些插件具有单独的功能, 如 [All Autocomplete](https://packagecontrol.io/packages/All%20Autocomplete) 支持全局代码提示, 而 [CTags](https://packagecontrol.io/packages/CTags) 支持代码跳转;<br>
 **当然**, 如果你的 SublimeCodeintel 能正常工作, 你是不需要 All Autocomplete 和 CTags 的.
 
 SublimeCodeintel 需要设置一下才能使用, 官网上说要配 `~/.codeintel/config`, 经验证, 这是比较老的方式, 新的已经没有这个文件了 (坑爹啊, 为什么官网不更新!!), 新的配置说明可以参考: [CodeComplice](https://packagecontrol.io/packages/CodeComplice).
@@ -234,6 +236,22 @@ SublimeCodeintel 需要设置一下才能使用, 官网上说要配 `~/.codeinte
 },
 ```
 <br>
+## 代码跳转
+插件: [CTags](https://packagecontrol.io/packages/CTags)
+
+由于 **SublimeCodeintel** 会和其他的代码提示插件冲突, 所以有可能你不会用到 SublimeCodeintel, 这时就需要另一款代码跳转插件了, 那就是 CTags.
+
+CTags 插件借助于 tags 文件,  tags 文件能被编辑器或其它工具用来快速查找定位源代码中的符号 (tag/symbol), 如变量名, 函数名等.
+
+生成 tags 文件需要借助工具 [Ctags](http://ctags.sourceforge.net/), 它是用来遍历源代码文件生成 tags 文件的, 去官网下载对应的系统版本, 然后解压放到任意目录.
+
+然后还要在 Sublime 的 CTags 插件中配置 Ctags 工具的路径, 打开 CTags 设置文件 (从 Default 拷贝一份到 User), 找到其中的 `command` 选项, 配上你的 Ctags 工具全路径, 如: `D:\\ctags58\\ctags.exe` (exe 后缀可省略).<br>
+还可以将 Ctags 工具路径加入系统的环境变量, 那就不需要配这个选项了.
+
+要使用时, 侧左栏的工程/项目目录上右键执行 `CTags: Rebuild Tags` 菜单项, 然后就会发现工程/项目目录里多了两个文件 `.tags` 和 `.tags_sorted_by_file`, 此时, CTags 插件可以正常工作了; 选中一个函数, 右键打开 `Navigate to Definition` 菜单项并执行, 就会发生跳转, 还可以跳回去.
+
+> 手动生成 tags 文件: 命令行下进入工程/项目目录, 执行 `ctags -R -f .tags`, 这样会少生成 `.tags_sorted_by_file` 文件, 但效果是一样的 . . .
+
 ## 代码规范检查
 插件: [SublimeLinter](http://www.sublimelinter.com/en/latest/)
 
@@ -262,6 +280,8 @@ AlignTab 预置了一些对齐符号, 如等号, 使用方法: 选中要对齐�
 ## HTML/XML 代码格式化
 插件: [Tag](https://github.com/titoBouzout/Tag)
 
+**Update**:<br>该插件可以考虑用下面的 **HTML-CSS-JS Prettify** 替代.
+
 这个插件主要用来进行 HTML/XML 代码格式化, 我一般习惯使用和 JsFormat 相同的快捷键.
 
 插件设置 -> 按键绑定 \- 用户, 添加一行:
@@ -278,6 +298,16 @@ AlignTab 预置了一些对齐符号, 如等号, 使用方法: 选中要对齐�
 }
 ```
 <br>
+## HTML/CSS/JS 格式化
+插件: [HTML-CSS-JS Prettify](https://github.com/titoBouzout/Tag)
+
+这个插件同时支持 HTML、CSS 和 JS 的代码格式化, 我没使用过, 听说还行, 如果可以的话, 那么可以用来替换 **Tab** 和 **JsFormat** 这两个插件了.
+
+Refrences:
+[Sublime Text2 格式化 HMTL/CSS/JS 插件 HTML-CSS-JS Prettify](http://www.tuicool.com/articles/jUjmIv6)<br>
+[使用 Sublime Text 3 的 HTML-CSS-JS Prettify 插件格式化代码](https://segmentfault.com/a/1190000000666502)<br>
+[sublime text 3 插件: HTML-CSS-JS Prettify](http://frontenddev.org/article/sublime-does-text-three-plug-ins-html-and-css-js-prettify.html)
+
 ## 快速注释
 插件: [Doc​Blockr](https://packagecontrol.io/packages/DocBlockr)
 
