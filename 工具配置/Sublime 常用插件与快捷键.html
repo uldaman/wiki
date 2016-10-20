@@ -29,21 +29,23 @@
 <li><a href="#_1">常用插件</a><ul>
 <li><a href="#utf8">UTF8 转换(必备)</a></li>
 <li><a href="#_2">括号高亮</a></li>
-<li><a href="#_3">代码提示、自动补全和链接跳转</a></li>
-<li><a href="#_4">代码规范检查</a></li>
-<li><a href="#_5">符号对齐</a></li>
+<li><a href="#_3">代码提示、自动补全和代码跳转</a></li>
+<li><a href="#_4">代码跳转</a></li>
+<li><a href="#_5">代码规范检查</a></li>
+<li><a href="#_6">符号对齐</a></li>
 <li><a href="#htmlxml">HTML/XML 代码格式化</a></li>
-<li><a href="#_6">快速注释</a></li>
-<li><a href="#_7">按模板快速新建文件</a></li>
+<li><a href="#htmlcssjs">HTML/CSS/JS 格式化</a></li>
+<li><a href="#_7">快速注释</a></li>
+<li><a href="#_8">按模板快速新建文件</a></li>
 <li><a href="#emmet">Emmet</a></li>
-<li><a href="#_8">文件提示</a></li>
+<li><a href="#_9">文件提示</a></li>
 <li><a href="#jquery">jQuery 语法提示</a></li>
 <li><a href="#html5">HTML5 语法提示</a></li>
 <li><a href="#sass">Sass 语法提示</a></li>
 </ul>
 </li>
-<li><a href="#_9">常用快捷键</a></li>
-<li><a href="#_10">全部快捷键</a></li>
+<li><a href="#_10">常用快捷键</a></li>
+<li><a href="#_11">全部快捷键</a></li>
 </ul>
 </div>
 <h1 id="_1">常用插件</h1>
@@ -237,14 +239,15 @@
 <p><br>
 配好后的效果如下图:</p>
 <p><img alt="" src="http://wiki.smallcpp.com/static/images/Sublime常用插件与快捷键/BracketHighlighter.png" /></p>
-<h2 id="_3">代码提示、自动补全和链接跳转</h2>
+<h2 id="_3">代码提示、自动补全和代码跳转</h2>
 <p><strong>Update</strong>:<br>Forget about <em>SublimeCodeIntel</em> and use the new <a href="https://johnblackbourn.com/sublimecodeintel-st3">CodeComplice</a> package instead.</p>
+<p><strong>注意</strong>, 这类全局代码提示插件和那种单独语言的代码提示是相<strong>冲突</strong>的, 如 <strong>Anaconda</strong>、<strong>NodeJs</strong> 等.</p>
 <blockquote>
 <p>Sublime 默认是只提示当前文件, 这里的代码提示指的是全局代码提示.</p>
 </blockquote>
 <p>插件: <a href="https://packagecontrol.io/packages/SublimeCodeIntel">SublimeCodeintel</a> (已不推荐使用, 见上面的 <strong>Update</strong>).</p>
-<p>该插件同时支持<strong>代码提示</strong>、<strong>自动补全</strong>和<strong>链接跳转</strong>三个功能, 非常强大.</p>
-<p>另外, 还有一些插件具有单独的功能, 如 <a href="https://packagecontrol.io/packages/All%20Autocomplete">All Autocomplete</a> 支持全局代码提示, 而 <a href="https://packagecontrol.io/packages/CTags">CTags</a> 支持链接跳转;<br>
+<p>该插件同时支持<strong>代码提示</strong>、<strong>自动补全</strong>和<strong>代码跳转</strong>三个功能, 非常强大.</p>
+<p>另外, 还有一些插件具有单独的功能, 如 <a href="https://packagecontrol.io/packages/All%20Autocomplete">All Autocomplete</a> 支持全局代码提示, 而 <a href="https://packagecontrol.io/packages/CTags">CTags</a> 支持代码跳转;<br>
 <strong>当然</strong>, 如果你的 SublimeCodeintel 能正常工作, 你是不需要 All Autocomplete 和 CTags 的.</p>
 <p>SublimeCodeintel 需要设置一下才能使用, 官网上说要配 <code>~/.codeintel/config</code>, 经验证, 这是比较老的方式, 新的已经没有这个文件了 (坑爹啊, 为什么官网不更新!!), 新的配置说明可以参考: <a href="https://packagecontrol.io/packages/CodeComplice">CodeComplice</a>.</p>
 <p>首次使用需要配置用户设置后才生效, 选择 <code>Preferences -&gt; Package Settings -&gt; SublimeCodeIntel -&gt; Setting Default</code>，将其内容全部复制到 <code>Setting User</code> 中;</p>
@@ -259,7 +262,18 @@
 
 
 <p><br></p>
-<h2 id="_4">代码规范检查</h2>
+<h2 id="_4">代码跳转</h2>
+<p>插件: <a href="https://packagecontrol.io/packages/CTags">CTags</a></p>
+<p>由于 <strong>SublimeCodeintel</strong> 会和其他的代码提示插件冲突, 所以有可能你不会用到 SublimeCodeintel, 这时就需要另一款代码跳转插件了, 那就是 CTags.</p>
+<p>CTags 插件借助于 tags 文件,  tags 文件能被编辑器或其它工具用来快速查找定位源代码中的符号 (tag/symbol), 如变量名, 函数名等.</p>
+<p>生成 tags 文件需要借助工具 <a href="http://ctags.sourceforge.net/">Ctags</a>, 它是用来遍历源代码文件生成 tags 文件的, 去官网下载对应的系统版本, 然后解压放到任意目录.</p>
+<p>然后还要在 Sublime 的 CTags 插件中配置 Ctags 工具的路径, 打开 CTags 设置文件 (从 Default 拷贝一份到 User), 找到其中的 <code>command</code> 选项, 配上你的 Ctags 工具全路径, 如: <code>D:\\ctags58\\ctags.exe</code> (exe 后缀可省略).<br>
+还可以将 Ctags 工具路径加入系统的环境变量, 那就不需要配这个选项了.</p>
+<p>要使用时, 侧左栏的工程/项目目录上右键执行 <code>CTags: Rebuild Tags</code> 菜单项, 然后就会发现工程/项目目录里多了两个文件 <code>.tags</code> 和 <code>.tags_sorted_by_file</code>, 此时, CTags 插件可以正常工作了; 选中一个函数, 右键打开 <code>Navigate to Definition</code> 菜单项并执行, 就会发生跳转, 还可以跳回去.</p>
+<blockquote>
+<p>手动生成 tags 文件: 命令行下进入工程/项目目录, 执行 <code>ctags -R -f .tags</code>, 这样会少生成 <code>.tags_sorted_by_file</code> 文件, 但效果是一样的 . . .</p>
+</blockquote>
+<h2 id="_5">代码规范检查</h2>
 <p>插件: <a href="http://www.sublimelinter.com/en/latest/">SublimeLinter</a></p>
 <p>SublimeLinter 支持全语言, 但不能单独使用, 需要额外下载插件包, 如:</p>
 <ul>
@@ -270,7 +284,7 @@
 </ul>
 <p>同时系统中也需要安装对应的 lint, 如 <code>npm install -g jshint</code>.</p>
 <p>如果只想使用某个单独语言的代码规范检查, 可以单独安装, 如在 <a href="http://wiki.smallcpp.com/%E5%B7%A5%E5%85%B7%E9%85%8D%E7%BD%AE/Sublime%20%E9%85%8D%E7%BD%AE%20Python%20%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83.html">Sublime 配置 Python 开发环境</a> 及 <a href="http://wiki.smallcpp.com/%E5%B7%A5%E5%85%B7%E9%85%8D%E7%BD%AE/Sublime%20%E9%85%8D%E7%BD%AE%20Nodejs%20%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83.html">Sublime 配置 Nodejs 开发环境</a> 中介绍过的 <strong>Pylint</strong> 和 <strong>JSHint</strong>.</p>
-<h2 id="_5">符号对齐</h2>
+<h2 id="_6">符号对齐</h2>
 <p><strong>Update</strong>:<br><a href="https://github.com/randy3k/AlignTab">AlignTab</a>: A much more powerful version of the <em>Alignment</em> package. Supports regexes and table mode.</p>
 <p>AlignTab 预置了一些对齐符号, 如等号, 使用方法: 选中要对齐的代码块, 右键 -> <code>Align By</code>, 选择按什么符号进行对齐.</p>
 <p>同时 AlignTab 还支持自定义符号对齐, 如 <code>+</code> 号, 使用方法, 选中要对齐的代码块, <code>ctrl + shift + p</code> 呼出命令栏, 输出 <code>Live</code>, 选择弹出来的 <code>Aligntab: Live Preview Mode</code>, 这是 AlignTab 的<strong>正则</strong>模式, 选择后, Sublime 下方会出现正则输入栏, 在里面输入 '\+' (因为 + 号是正则表达式, 所以要输入反斜杠转义), 就可以看到效果了.</p>
@@ -278,6 +292,7 @@
 <p><a href="https://my.oschina.net/shede333/blog/170536">Alignment 使用详解</a></p>
 <h2 id="htmlxml">HTML/XML 代码格式化</h2>
 <p>插件: <a href="https://github.com/titoBouzout/Tag">Tag</a></p>
+<p><strong>Update</strong>:<br>该插件可以考虑用下面的 <strong>HTML-CSS-JS Prettify</strong> 替代.</p>
 <p>这个插件主要用来进行 HTML/XML 代码格式化, 我一般习惯使用和 JsFormat 相同的快捷键.</p>
 <p>插件设置 -&gt; 按键绑定 - 用户, 添加一行:</p>
 <div class="hlcode"><pre><span class="p">{</span>
@@ -293,16 +308,23 @@
 
 
 <p><br></p>
-<h2 id="_6">快速注释</h2>
+<h2 id="htmlcssjs">HTML/CSS/JS 格式化</h2>
+<p>插件: <a href="https://github.com/titoBouzout/Tag">HTML-CSS-JS Prettify</a></p>
+<p>这个插件同时支持 HTML、CSS 和 JS 的代码格式化, 我没使用过, 听说还行, 如果可以的话, 那么可以用来替换 <strong>Tab</strong> 和 <strong>JsFormat</strong> 这两个插件了.</p>
+<p>Refrences:
+<a href="http://www.tuicool.com/articles/jUjmIv6">Sublime Text2 格式化 HMTL/CSS/JS 插件 HTML-CSS-JS Prettify</a><br>
+<a href="https://segmentfault.com/a/1190000000666502">使用 Sublime Text 3 的 HTML-CSS-JS Prettify 插件格式化代码</a><br>
+<a href="http://frontenddev.org/article/sublime-does-text-three-plug-ins-html-and-css-js-prettify.html">sublime text 3 插件: HTML-CSS-JS Prettify</a></p>
+<h2 id="_7">快速注释</h2>
 <p>插件: <a href="https://packagecontrol.io/packages/DocBlockr">Doc​Blockr</a></p>
 <p>这个插件也不需要什么设置, 安装好即可用, 类似 vs 上 tab 键补全注释功能.</p>
-<h2 id="_7">按模板快速新建文件</h2>
+<h2 id="_8">按模板快速新建文件</h2>
 <p>插件: <a href="https://packagecontrol.io/packages/SublimeTmpl">SublimeTmpl</a></p>
 <p>如其名, 无须多解释 . . .</p>
 <h2 id="emmet">Emmet</h2>
 <p>插件: <a href="https://sublime.wbond.net/packages/Emmet">Emmet</a></p>
 <p>就是以前的 Zen Coding, 方便编写 HTML, 可说是前端必备, 打算单独弄篇 Wiki.</p>
-<h2 id="_8">文件提示</h2>
+<h2 id="_9">文件提示</h2>
 <p>插件: <a href="https://packagecontrol.io/packages/AutoFileName">Auto​File​Name</a></p>
 <p>这个插件也是前端用的多, 例如写 CSS 的时候, 如 <code>background:url(../img/njpg.png) no-repeat;</code>, 当写到 <code>../img/</code> 时插件就被提示这个目录下有哪些文件.</p>
 <h2 id="jquery">jQuery 语法提示</h2>
@@ -314,7 +336,7 @@
 <h2 id="sass">Sass 语法提示</h2>
 <p>插件: <a href="https://sublime.wbond.net/packages/Sass">Sass</a></p>
 <p>让 Sublime Text3 支持 Sass 语法提示, 这个插件不需要设置, 安装后即能使用.</p>
-<h1 id="_9">常用快捷键</h1>
+<h1 id="_10">常用快捷键</h1>
 <table>
 <thead>
 <tr>
@@ -481,7 +503,7 @@
 </tr>
 </tbody>
 </table>
-<h1 id="_10">全部快捷键</h1>
+<h1 id="_11">全部快捷键</h1>
 <table>
 <thead>
 <tr>
