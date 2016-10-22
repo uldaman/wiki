@@ -113,6 +113,8 @@ sudo mv 桌面/jdk1.8.0_101/ /usr/java/
 或者可以先 `sudo mkdir /usr/java` 创建好目录, 再用 `sudo tar -zxvf jdk-8u101-linux-i586.tar.gz -C /usr/java` (-z 处理 gzip, x 解压, v 显示详情, f 解压哪个文件) 直接解压到 `/usr/java` 下.
 
 ## 2.2
+修改环境变量.
+
 `vim ~/.bashrc` 打开 VIM 编辑器后, 翻到最后一行, 在后面添加:
 
 ```
@@ -133,7 +135,8 @@ source ~/.bashrc
 
 ![](http://wiki.smallcpp.com/static/images/搭建Hadoop分布式实验环境/javaversion.png)
 
-# 3. 下载安装 Hadoop
+# 3. 安装 Hadoop
+## 3.1
 访问: [http://archive.apache.org/dist/](http://archive.apache.org/dist/), apache 的所有项目都在这里.
 
 ![](http://i61.tinypic.com/29ustjt.jpg)
@@ -153,6 +156,24 @@ source ~/.bashrc
 `sudo tar -zxvf hadoop-2.7.3.tar.gz -C /usr/itcast` (-z 处理 gzip, x 解压, v 显示详情, f 解压哪个文件)
 
 为避免权限问题, 可将 `/usr/itcast/hadoop-2.7.3/` 目录权限改为 **777**: `sudo chmod -R 777 /usr/itcast/hadoop-2.7.3/`
+
+## 3.2
+修改环境变量.
+
+`vim ~/.bashrc`
+
+```
+export JAVA_HOME=/usr/java/jdk1.8.0_101
+export HADOOP_HOME=/usr/itcast/hadoop-2.7.3
+export PATH=$PATH:$JAVA_HOME/bin:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
+```
+<br>
+## 3.3
+刷新环境变量.
+
+`source ~/.bashrc` 退回根目录, 测试下 hadoop 命令: `hadoop version`
+
+![](http://wiki.smallcpp.com/static/images/搭建Hadoop分布式实验环境/hadoopversion.png)
 
 # 4. 配置 Hadoop
 `cd /usr/itcast/hadoop-2.7.3/etc/hadoop` 进入 Hadoop 配置文件所在目录.
@@ -269,20 +290,7 @@ itcast03
 <br>
 **注意**, 数据节点的域名要在 Hosts 文件中解析了才行!
 
-## 4.8. 修改环境变量
-`vim ~/.bashrc`
-
-```
-export JAVA_HOME=/usr/java/jdk1.8.0_101
-export HADOOP_HOME=/usr/itcast/hadoop-2.7.3
-export PATH=$PATH:$JAVA_HOME/bin:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
-```
-<br>
-然后刷新下 bashrc, 命令: `source ~/.bashrc` 退回根目录, 测试下 hadoop 命令: `hadoop version`
-
-![](http://wiki.smallcpp.com/static/images/搭建Hadoop分布式实验环境/hadoopversion.png)
-
-## 4.9. 克隆虚拟机
+## 4.8. 克隆虚拟机
 关闭当前虚拟机后, 从当前虚拟机上克隆两份.
 
 修改克隆出来的虚拟机的**固定 IP****、主机名** 和 **Hosts**.
@@ -340,16 +348,16 @@ hdfs namenode -format       # 首次运行需要执行初始化，之后不需�
 格式化成功后就可以通过以下命令启动集群了:
 
 ```
-start-dfs.sh
-start-yarn.sh
-mr-jobhistory-daemon.sh start historyserver
+./start-dfs.sh
+./start-yarn.sh
+./mr-jobhistory-daemon.sh start historyserver
 ```
 <br>
 或者:
 
 ```
-start-all.sh
-mr-jobhistory-daemon.sh start historyserver
+./start-all.sh
+./mr-jobhistory-daemon.sh start historyserver
 ```
 <br>
 集群成功启动后可以在终端用 `JPS` 查看当前有哪些 Java 进程, NameNode 节点上应该有以下进程:
