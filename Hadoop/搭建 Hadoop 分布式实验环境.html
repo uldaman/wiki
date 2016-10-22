@@ -19,7 +19,7 @@
     <div id="header">
         <div id="post-nav">
             
-            <a href="/">Home</a> » <a href="/#工具配置">工具配置</a> » 搭建 Hadoop 分布式实验环境
+            <a href="/">Home</a> » <a href="/#Hadoop">Hadoop</a> » 搭建 Hadoop 分布式实验环境
             
         </div>
     </div>
@@ -51,7 +51,12 @@
 <li><a href="#23">2.3</a></li>
 </ul>
 </li>
-<li><a href="#3-hadoop">3. 下载安装 Hadoop</a></li>
+<li><a href="#3-hadoop">3. 安装 Hadoop</a><ul>
+<li><a href="#31">3.1</a></li>
+<li><a href="#32">3.2</a></li>
+<li><a href="#33">3.3</a></li>
+</ul>
+</li>
 <li><a href="#4-hadoop">4. 配置 Hadoop</a><ul>
 <li><a href="#41-vim-hadoop-envsh">4.1. vim hadoop-env.sh</a></li>
 <li><a href="#42-vim-core-sitexml">4.2. vim core-site.xml</a></li>
@@ -60,8 +65,7 @@
 <li><a href="#45-vim-yarn-sitexml">4.5. vim yarn-site.xml</a></li>
 <li><a href="#46-mapred-sitexml">4.6. mapred-site.xml</a></li>
 <li><a href="#47-vim-slaves">4.7. vim slaves</a></li>
-<li><a href="#48">4.8. 修改环境变量</a></li>
-<li><a href="#49">4.9. 克隆虚拟机</a></li>
+<li><a href="#48">4.8. 克隆虚拟机</a></li>
 </ul>
 </li>
 <li><a href="#5-ssh">5. 配置 SSH 免密码登录</a><ul>
@@ -153,6 +157,7 @@
 <p><br>
 或者可以先 <code>sudo mkdir /usr/java</code> 创建好目录, 再用 <code>sudo tar -zxvf jdk-8u101-linux-i586.tar.gz -C /usr/java</code> (-z 处理 gzip, x 解压, v 显示详情, f 解压哪个文件) 直接解压到 <code>/usr/java</code> 下.</p>
 <h2 id="22">2.2</h2>
+<p>修改环境变量.</p>
 <p><code>vim ~/.bashrc</code> 打开 VIM 编辑器后, 翻到最后一行, 在后面添加:</p>
 <div class="hlcode"><pre><span class="n">export</span> <span class="n">JAVA_HOME</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">java</span><span class="o">/</span><span class="n">jdk1</span><span class="mf">.8.0</span><span class="n">_101</span>
 <span class="n">export</span> <span class="n">PATH</span><span class="o">=</span><span class="err">$</span><span class="n">PATH</span><span class="o">:</span><span class="err">$</span><span class="n">JAVA_HOME</span><span class="o">/</span><span class="n">bin</span>
@@ -170,7 +175,8 @@
 <p><br>
 此时, 不管在哪个目录输入 <code>java -version</code> 都可以找到执行文件.</p>
 <p><img alt="" src="http://wiki.smallcpp.com/static/images/搭建Hadoop分布式实验环境/javaversion.png" /></p>
-<h1 id="3-hadoop">3. 下载安装 Hadoop</h1>
+<h1 id="3-hadoop">3. 安装 Hadoop</h1>
+<h2 id="31">3.1</h2>
 <p>访问: <a href="http://archive.apache.org/dist/">http://archive.apache.org/dist/</a>, apache 的所有项目都在这里.</p>
 <p><img alt="" src="http://i61.tinypic.com/29ustjt.jpg" /></p>
 <p><img alt="" src="http://i60.tinypic.com/33xy72x.jpg" /></p>
@@ -181,6 +187,20 @@
 <p><code>cd ~/桌面</code>, 进入桌面目录.</p>
 <p><code>sudo tar -zxvf hadoop-2.7.3.tar.gz -C /usr/itcast</code> (-z 处理 gzip, x 解压, v 显示详情, f 解压哪个文件)</p>
 <p>为避免权限问题, 可将 <code>/usr/itcast/hadoop-2.7.3/</code> 目录权限改为 <strong>777</strong>: <code>sudo chmod -R 777 /usr/itcast/hadoop-2.7.3/</code></p>
+<h2 id="32">3.2</h2>
+<p>修改环境变量.</p>
+<p><code>vim ~/.bashrc</code></p>
+<div class="hlcode"><pre><span class="n">export</span> <span class="n">JAVA_HOME</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">java</span><span class="o">/</span><span class="n">jdk1</span><span class="mf">.8.0</span><span class="n">_101</span>
+<span class="n">export</span> <span class="n">HADOOP_HOME</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">itcast</span><span class="o">/</span><span class="n">hadoop</span><span class="o">-</span><span class="mf">2.7.3</span>
+<span class="n">export</span> <span class="n">PATH</span><span class="o">=</span><span class="err">$</span><span class="n">PATH</span><span class="o">:</span><span class="err">$</span><span class="n">JAVA_HOME</span><span class="o">/</span><span class="n">bin</span><span class="o">:</span><span class="err">$</span><span class="n">HADOOP_HOME</span><span class="o">/</span><span class="n">bin</span><span class="o">:</span><span class="err">$</span><span class="n">HADOOP_HOME</span><span class="o">/</span><span class="n">sbin</span>
+</pre></div>
+
+
+<p><br></p>
+<h2 id="33">3.3</h2>
+<p>刷新环境变量.</p>
+<p><code>source ~/.bashrc</code> 退回根目录, 测试下 hadoop 命令: <code>hadoop version</code></p>
+<p><img alt="" src="http://wiki.smallcpp.com/static/images/搭建Hadoop分布式实验环境/hadoopversion.png" /></p>
 <h1 id="4-hadoop">4. 配置 Hadoop</h1>
 <p><code>cd /usr/itcast/hadoop-2.7.3/etc/hadoop</code> 进入 Hadoop 配置文件所在目录.</p>
 <h2 id="41-vim-hadoop-envsh">4.1. vim hadoop-env.sh</h2>
@@ -294,18 +314,7 @@
 
 <p><br>
 <strong>注意</strong>, 数据节点的域名要在 Hosts 文件中解析了才行!</p>
-<h2 id="48">4.8. 修改环境变量</h2>
-<p><code>vim ~/.bashrc</code></p>
-<div class="hlcode"><pre><span class="n">export</span> <span class="n">JAVA_HOME</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">java</span><span class="o">/</span><span class="n">jdk1</span><span class="mf">.8.0</span><span class="n">_101</span>
-<span class="n">export</span> <span class="n">HADOOP_HOME</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">itcast</span><span class="o">/</span><span class="n">hadoop</span><span class="o">-</span><span class="mf">2.7.3</span>
-<span class="n">export</span> <span class="n">PATH</span><span class="o">=</span><span class="err">$</span><span class="n">PATH</span><span class="o">:</span><span class="err">$</span><span class="n">JAVA_HOME</span><span class="o">/</span><span class="n">bin</span><span class="o">:</span><span class="err">$</span><span class="n">HADOOP_HOME</span><span class="o">/</span><span class="n">bin</span><span class="o">:</span><span class="err">$</span><span class="n">HADOOP_HOME</span><span class="o">/</span><span class="n">sbin</span>
-</pre></div>
-
-
-<p><br>
-然后刷新下 bashrc, 命令: <code>source ~/.bashrc</code> 退回根目录, 测试下 hadoop 命令: <code>hadoop version</code></p>
-<p><img alt="" src="http://wiki.smallcpp.com/static/images/搭建Hadoop分布式实验环境/hadoopversion.png" /></p>
-<h2 id="49">4.9. 克隆虚拟机</h2>
+<h2 id="48">4.8. 克隆虚拟机</h2>
 <p>关闭当前虚拟机后, 从当前虚拟机上克隆两份.</p>
 <p>修改克隆出来的虚拟机的<strong>固定 IP</strong><strong>、主机名</strong> 和 <strong>Hosts</strong>.</p>
 <p><code>sudo vim /etc/network/interfaces</code> 修改固定 IP</p>
@@ -347,16 +356,16 @@
 
 <p><br>
 格式化成功后就可以通过以下命令启动集群了:</p>
-<div class="hlcode"><pre><span class="n">start</span><span class="o">-</span><span class="n">dfs</span><span class="p">.</span><span class="n">sh</span>
-<span class="n">start</span><span class="o">-</span><span class="n">yarn</span><span class="p">.</span><span class="n">sh</span>
-<span class="n">mr</span><span class="o">-</span><span class="n">jobhistory</span><span class="o">-</span><span class="n">daemon</span><span class="p">.</span><span class="n">sh</span> <span class="n">start</span> <span class="n">historyserver</span>
+<div class="hlcode"><pre><span class="p">.</span><span class="o">/</span><span class="n">start</span><span class="o">-</span><span class="n">dfs</span><span class="p">.</span><span class="n">sh</span>
+<span class="p">.</span><span class="o">/</span><span class="n">start</span><span class="o">-</span><span class="n">yarn</span><span class="p">.</span><span class="n">sh</span>
+<span class="p">.</span><span class="o">/</span><span class="n">mr</span><span class="o">-</span><span class="n">jobhistory</span><span class="o">-</span><span class="n">daemon</span><span class="p">.</span><span class="n">sh</span> <span class="n">start</span> <span class="n">historyserver</span>
 </pre></div>
 
 
 <p><br>
 或者:</p>
-<div class="hlcode"><pre><span class="n">start</span><span class="o">-</span><span class="n">all</span><span class="p">.</span><span class="n">sh</span>
-<span class="n">mr</span><span class="o">-</span><span class="n">jobhistory</span><span class="o">-</span><span class="n">daemon</span><span class="p">.</span><span class="n">sh</span> <span class="n">start</span> <span class="n">historyserver</span>
+<div class="hlcode"><pre><span class="p">.</span><span class="o">/</span><span class="n">start</span><span class="o">-</span><span class="n">all</span><span class="p">.</span><span class="n">sh</span>
+<span class="p">.</span><span class="o">/</span><span class="n">mr</span><span class="o">-</span><span class="n">jobhistory</span><span class="o">-</span><span class="n">daemon</span><span class="p">.</span><span class="n">sh</span> <span class="n">start</span> <span class="n">historyserver</span>
 </pre></div>
 
 
@@ -479,7 +488,7 @@ hdfs://itcast01:9000</p>
     </div>
 
     <!-- 多说评论框 start -->
-    <div class="ds-thread" data-thread-key="搭建 Hadoop 分布式实验环境" data-title="搭建 Hadoop 分布式实验环境" data-url="http://wiki.smallcpp.com/工具配置/搭建 Hadoop 分布式实验环境.html"></div>
+    <div class="ds-thread" data-thread-key="搭建 Hadoop 分布式实验环境" data-title="搭建 Hadoop 分布式实验环境" data-url="http://wiki.smallcpp.com/Hadoop/搭建 Hadoop 分布式实验环境.html"></div>
     <!-- 多说评论框 end -->
     <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
     <script type="text/javascript">

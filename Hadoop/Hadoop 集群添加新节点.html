@@ -1,0 +1,106 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <title>Hadoop 集群添加新节点 - Wiki | Small Cpp</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            
+            <a href="/">Home</a> » <a href="/#Hadoop">Hadoop</a> » Hadoop 集群添加新节点
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <p>仅为<strong>实验</strong>集群或者<strong>小型</strong>集群的添加节点方法, 一般<strong>大型</strong>的集群都有专门的运维.</p>
+<div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#_1">安装系统</a></li>
+<li><a href="#_2">设置域名解析</a></li>
+<li><a href="#ssh">配置 SSH</a></li>
+<li><a href="#_3">启动新节点</a></li>
+<li><a href="#_4">负载均衡</a></li>
+</ul>
+</div>
+<h1 id="_1">安装系统</h1>
+<p>首先安装好系统, 配置好 IP、JDK 及 Hadoop, 参考 <a href="http://wiki.smallcpp.com/%E5%B7%A5%E5%85%B7%E9%85%8D%E7%BD%AE/%E6%90%AD%E5%BB%BA%20Hadoop%20%E5%88%86%E5%B8%83%E5%BC%8F%E5%AE%9E%E9%AA%8C%E7%8E%AF%E5%A2%83.html">搭建 Hadoop 分布式实验环境</a> 前三步.</p>
+<h1 id="_2">设置域名解析</h1>
+<p>到 <strong>NameNode</strong> 节点下, <code>cd /usr/itcast/hadoop-2.7.3/etc/hadoop</code> 进入 Hadoop 配置文件所在目录;</p>
+<p><code>vim slaves</code> 将新节点的域名添加进来;</p>
+<p><code>sudo vim /etc/hosts</code> 修改 [ip 域名] 对应表, 将新节点的 <code>IP 域名</code> 添加进来, 然后将<strong>远程拷贝</strong>到新节点中, 如我的新添加的节点主机名是 itcast04, 用户是 martin:</p>
+<p><code>scp /etc/hosts martin@itcast04:/home/martin/.ssh/authorized_keys</code></p>
+<p>同时也将 Hadoop 的配置目录拷贝过去:</p>
+<p><code>scp /usr/itcast/hadoop-2.7.3/etc/hadoop martin@itcast04:/usr/itcast/hadoop-2.7.3/etc/hadoop</code></p>
+<p>下面两个操作不知道是不是必须的, 待研究~</p>
+<ul>
+<li>更新当前集群的 DataNode 的 [ip 域名] 对应表</li>
+<li>更新当前集群的 DataNode 的 slaves 列表</li>
+</ul>
+<h1 id="ssh">配置 SSH</h1>
+<p>参考 <a href="http://wiki.smallcpp.com/%E5%B7%A5%E5%85%B7%E9%85%8D%E7%BD%AE/%E6%90%AD%E5%BB%BA%20Hadoop%20%E5%88%86%E5%B8%83%E5%BC%8F%E5%AE%9E%E9%AA%8C%E7%8E%AF%E5%A2%83.html#52-itcast02-itcast03">搭建 Hadoop 分布式实验环境</a> 第 5.2 步.</p>
+<h1 id="_3">启动新节点</h1>
+<p>添加新节点<strong>不需要</strong>重启集群, 新节点会向 NameNode 发送心跳及 blockreport, 集群就知道有新节点上线了, 所以按上面的操作配好后, 到新节点下执行以下操作即可.</p>
+<div class="hlcode"><pre><span class="p">.</span><span class="o">/</span><span class="n">start</span><span class="o">-</span><span class="n">dfs</span><span class="p">.</span><span class="n">sh</span>
+<span class="p">.</span><span class="o">/</span><span class="n">start</span><span class="o">-</span><span class="n">yarn</span><span class="p">.</span><span class="n">sh</span>
+<span class="p">.</span><span class="o">/</span><span class="n">mr</span><span class="o">-</span><span class="n">jobhistory</span><span class="o">-</span><span class="n">daemon</span><span class="p">.</span><span class="n">sh</span> <span class="n">start</span> <span class="n">historyserver</span>
+</pre></div>
+
+
+<p><br>
+或者:</p>
+<div class="hlcode"><pre><span class="p">.</span><span class="o">/</span><span class="n">start</span><span class="o">-</span><span class="n">all</span><span class="p">.</span><span class="n">sh</span>
+<span class="p">.</span><span class="o">/</span><span class="n">mr</span><span class="o">-</span><span class="n">jobhistory</span><span class="o">-</span><span class="n">daemon</span><span class="p">.</span><span class="n">sh</span> <span class="n">start</span> <span class="n">historyserver</span>
+</pre></div>
+
+
+<p><br>
+执行完毕后, 用 <code>jps</code> 看下有没有下面这两个进程:</p>
+<div class="hlcode"><pre><span class="n">DataNode</span>
+<span class="n">NodeManager</span>
+</pre></div>
+
+
+<p><br></p>
+<h1 id="_4">负载均衡</h1>
+<p>该步骤可选, 数据负载均衡，目的是为了将其他节点的数据分担一些到新节点上来，比较消耗时间.</p>
+<div class="hlcode"><pre><span class="p">.</span><span class="o">/</span><span class="n">start</span><span class="o">-</span><span class="n">balancer</span><span class="p">.</span><span class="n">sh</span>
+</pre></div>
+    </div>
+
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="Hadoop 集群添加新节点" data-title="Hadoop 集群添加新节点" data-url="http://wiki.smallcpp.com/Hadoop/Hadoop 集群添加新节点.html"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:"smallwiki"};
+        (function() {
+            var ds = document.createElement('script');
+            ds.type = 'text/javascript';ds.async = true;
+            ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+            ds.charset = 'UTF-8';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+    </script>
+    <!-- 多说公共JS代码 end -->
+
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2016 <a href="http://www.samllcpp.com/" target="_blank">Martin</a> Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+              </p>
+        </div>
+    </body>
+</html>
