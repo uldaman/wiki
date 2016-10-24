@@ -1,0 +1,211 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <title>NodeJs 调试技巧 - Wiki | Small Cpp</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            
+            <a href="/">Home</a> » <a href="/#工具配置">工具配置</a> » NodeJs 调试技巧
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#supervisor">supervisor</a></li>
+<li><a href="#node-debug">node debug</a></li>
+<li><a href="#node-inspector">node-inspector</a></li>
+<li><a href="#eclipse">使用 Eclipse 调试</a></li>
+</ul>
+</div>
+<h1 id="supervisor">supervisor</h1>
+<p>node.js 的 supervisor 插件可以帮我们监控文件的改动, 自动重启服务器, 这个 supervisor 是 node.js 的一个包 (而不是 python 的那个 supervisor, 别弄混了), 安装起来很简单, 使用 npm 的安装命令就可以, 因为我们需要在控制台运行, 所以需要安装在全局环境中.</p>
+<div class="hlcode"><pre><span class="n">npm</span> <span class="n">install</span> <span class="o">-</span><span class="n">g</span> <span class="n">supervisor</span>
+</pre></div>
+
+
+<p><br>
+然后就可以使用 supervisor 启动脚本了:</p>
+<div class="hlcode"><pre><span class="n">supervisor</span> <span class="n">sss</span><span class="p">.</span><span class="n">js</span>
+
+<span class="n">Running</span> <span class="n">node</span><span class="o">-</span><span class="n">supervisor</span> <span class="n">with</span>
+  <span class="n">program</span> <span class="err">&#39;</span><span class="n">sss</span><span class="p">.</span><span class="n">js</span><span class="err">&#39;</span>
+  <span class="o">--</span><span class="n">watch</span> <span class="sc">&#39;.&#39;</span>
+  <span class="o">--</span><span class="n">extensions</span> <span class="err">&#39;</span><span class="n">node</span><span class="p">,</span><span class="n">js</span><span class="err">&#39;</span>
+  <span class="o">--</span><span class="n">exec</span> <span class="err">&#39;</span><span class="n">node</span><span class="err">&#39;</span>
+
+<span class="n">Starting</span> <span class="n">child</span> <span class="n">process</span> <span class="n">with</span> <span class="err">&#39;</span><span class="n">node</span> <span class="n">sss</span><span class="p">.</span><span class="n">js</span><span class="err">&#39;</span>
+<span class="n">Watching</span> <span class="n">directory</span> <span class="err">&#39;</span><span class="n">C</span><span class="o">:</span><span class="err">\</span><span class="n">Users</span><span class="err">\</span><span class="n">chaoqun</span><span class="p">.</span><span class="n">zhu</span><span class="err">\</span><span class="n">Desktop</span><span class="err">\</span><span class="n">testjs</span><span class="err">&#39;</span> <span class="k">for</span> <span class="n">changes</span><span class="p">.</span>
+<span class="n">Press</span> <span class="n">rs</span> <span class="k">for</span> <span class="n">restarting</span> <span class="n">the</span> <span class="n">process</span><span class="p">.</span>
+<span class="nl">http:</span><span class="c1">//127.0.0.1:5586</span>
+<span class="n">crashing</span> <span class="n">child</span>
+<span class="n">Starting</span> <span class="n">child</span> <span class="n">process</span> <span class="n">with</span> <span class="err">&#39;</span><span class="n">node</span> <span class="n">sss</span><span class="p">.</span><span class="n">js</span><span class="err">&#39;</span>
+<span class="nl">http:</span><span class="c1">//127.0.0.1:5586</span>
+<span class="n">crashing</span> <span class="n">child</span>
+<span class="n">Starting</span> <span class="n">child</span> <span class="n">process</span> <span class="n">with</span> <span class="err">&#39;</span><span class="n">node</span> <span class="n">sss</span><span class="p">.</span><span class="n">js</span><span class="err">&#39;</span>
+<span class="nl">http:</span><span class="c1">//127.0.0.1:5586</span>
+<span class="n">crashing</span> <span class="n">child</span>
+<span class="n">Starting</span> <span class="n">child</span> <span class="n">process</span> <span class="n">with</span> <span class="err">&#39;</span><span class="n">node</span> <span class="n">sss</span><span class="p">.</span><span class="n">js</span><span class="err">&#39;</span>
+<span class="nl">http:</span><span class="c1">//127.0.0.1:5586</span>
+</pre></div>
+
+
+<p><br></p>
+<h1 id="node-debug">node debug</h1>
+<p>node.js 提供了一个内建调试器来帮助开发者调试应用程序. 想要开启调试器我们需要在代码中加入 debugger 标签, 当 node.js 执行到 debugger 标签时会自动暂停 (debugger 标签相当于在代码中开启一个断点).</p>
+<p>执行命令：<code>node debug xxx.js</code> 就可以进入调试模式.</p>
+<p><img alt="" src="http://wiki.smallcpp.com/static/images/node.js调试技巧/nodedebug.png" /></p>
+<p>以调试模式运行 js 时, 程序会直接断在入口处 (类似 OD 附加程序时), 你可以 cont 一下让程序继续跑起来, 就像 GDB 一样, 可以用 <code>help</code> 命令查看自己都可以使用哪些调试命令.</p>
+<p>当程序中断时, 可使使用 <code>repl</code> 进入程序上下文, 此状态下可以即时求值, 和 Chrome 的 Debug 的 Console 是一样的.</p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>run</td>
+<td>执行脚本, 在入口处会暂停</td>
+</tr>
+<tr>
+<td>restart</td>
+<td>重新执行脚本</td>
+</tr>
+<tr>
+<td>cont, c</td>
+<td>继续执行, 直到遇到下一个断点</td>
+</tr>
+<tr>
+<td>next, n</td>
+<td>单步执行</td>
+</tr>
+<tr>
+<td>step, s</td>
+<td>单步执行并步入函数</td>
+</tr>
+<tr>
+<td>out, o</td>
+<td>从函数中步出</td>
+</tr>
+<tr>
+<td>setBreakpoint(), sb()</td>
+<td>当前行设置断点</td>
+</tr>
+<tr>
+<td>setBreakpoint('f()'), sb(...)</td>
+<td>在函数f的第一行设置断点</td>
+</tr>
+<tr>
+<td>setBreakpoint('script.js', 20), sb(...)</td>
+<td>在 script.js 的第 20 行设置断点</td>
+</tr>
+<tr>
+<td>clearBreakpoint, cb(...)</td>
+<td>清除所有断点</td>
+</tr>
+<tr>
+<td>backtrace, bt</td>
+<td>显示当前的调用栈</td>
+</tr>
+<tr>
+<td>list(5)</td>
+<td>显示当前执行到的前后5行代码</td>
+</tr>
+<tr>
+<td>watch(expr)</td>
+<td>把表达式 expr 加入监视列表</td>
+</tr>
+<tr>
+<td>unwatch(expr)</td>
+<td>把表达式 expr 从监视列表移除</td>
+</tr>
+<tr>
+<td>watchers</td>
+<td>显示监视列表中所有的表达式和值</td>
+</tr>
+<tr>
+<td>repl</td>
+<td>在当前上下文打开即时求值环境</td>
+</tr>
+<tr>
+<td>kill</td>
+<td>终止当前执行的脚本</td>
+</tr>
+<tr>
+<td>scripts</td>
+<td>显示当前已加载的所有脚本</td>
+</tr>
+<tr>
+<td>version</td>
+<td>显示 v8 版本</td>
+</tr>
+</tbody>
+</table>
+<h1 id="node-inspector">node-inspector</h1>
+<p>大部分 node.js 应用都是 web 应用, 所以一些基于 Chrome 的在线调试工具应运而生, 最出名的应该就是 node-inspector 了, 这是一个 node.js 的模块, 安装、使用相当的方便, 首先使用 npm 把其安装在全局环境中.</p>
+<div class="hlcode"><pre><span class="n">npm</span> <span class="n">install</span> <span class="o">-</span><span class="n">g</span> <span class="n">node</span><span class="o">-</span><span class="n">inspector</span>
+</pre></div>
+
+
+<p><br>
+node-inspector 是通过 websocket 方式来转向 debug 输入输出的, 因此, 我们在调试前要先启动 node-inspector 来监听 node.js 的 debug 调试端口, 默认情况下 node-inspector 的端口是 8080, 可以通过参数 <code>--web-port=[port]</code> 来设置端口.</p>
+<div class="hlcode"><pre><span class="n">node</span><span class="o">-</span><span class="n">inspector</span> <span class="o">--</span><span class="n">web</span><span class="o">-</span><span class="n">port</span><span class="o">=</span><span class="mi">8888</span>
+</pre></div>
+
+
+<p><br>
+在启动 node-inpspector 之后, 我们可以通过 <code>--debug</code> 或 <code>--debug-brk</code> 来启动 node.js 程序.</p>
+<div class="hlcode"><pre><span class="n">node</span> <span class="o">--</span><span class="n">debug</span><span class="o">-</span><span class="n">brk</span> <span class="n">xxx</span><span class="p">.</span><span class="n">js</span>
+</pre></div>
+
+
+<p><br>
+控制台会返回 "debugger listening on port 5858", 现在打开浏览嚣, 访问 <code>http://localhost:8888/debug?port=5858</code>, 这时候就会打开一个很像 Chrome 内置调试工具的界面, 并且代码断点在第一行, 下面就可以使用这个来调试了.</p>
+<p>如果你使用 <strong>Sublime</strong> 作为开发工具的话, 可以安装个 <a href="https://github.com/houfeng0923/NodejsDebug">NodeJsDebug</a> 插件;</p>
+<p>安装完以后，打开 <code>nodejs_debug.sublime-settings</code> 文件, 将 <code>chrome-path</code> 修改成自己电脑上的 Chrome 目录;</p>
+<p>然后 <code>click item 'Nodejs Debug' on contextmenu</code> 插件就会代替你依次执行启动 node-inspector、启动要调试的 js、用 Chrome 打开调试的 Web 页面三个步骤.</p>
+<h1 id="eclipse">使用 Eclipse 调试</h1>
+<p>Eclipse 提供了一个 node.js 的调试插件, 不过我基本不用 Eclipse, 所以这里仅记录下.</p>
+    </div>
+
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="NodeJs 调试技巧" data-title="NodeJs 调试技巧" data-url="http://wiki.smallcpp.com/工具配置/NodeJs 调试技巧.html"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:"smallwiki"};
+        (function() {
+            var ds = document.createElement('script');
+            ds.type = 'text/javascript';ds.async = true;
+            ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+            ds.charset = 'UTF-8';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+    </script>
+    <!-- 多说公共JS代码 end -->
+
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2016 <a href="http://www.samllcpp.com/" target="_blank">Martin</a> Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+              </p>
+        </div>
+    </body>
+</html>
