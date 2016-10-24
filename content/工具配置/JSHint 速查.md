@@ -1,5 +1,5 @@
 ---
-title: JSHint 速查.md
+title: JSHint 速查
 layout: page
 date: 2016-10-24 13:40
 ---

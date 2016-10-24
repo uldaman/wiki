@@ -44,7 +44,7 @@ node.js 提供了一个内建调试器来帮助开发者调试应用程序. 想�
 
 执行命令：`node debug xxx.js` 就可以进入调试模式.
 
-![](http://wiki.smallcpp.com/static/images/node.js调试技巧/nodedebug.png)
+![](http://wiki.smallcpp.com/static/images/NodeJs调试技巧/nodedebug.png)
 
 以调试模式运行 js 时, 程序会直接断在入口处 (类似 OD 附加程序时), 你可以 cont 一下让程序继续跑起来, 就像 GDB 一样, 可以用 `help` 命令查看自己都可以使用哪些调试命令.
 
