@@ -7,7 +7,7 @@
         <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
         <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon">
         <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
-        <title>shell 命令 - Wiki | Small Cpp</title>
+        <title>Shell 命令 - Wiki | Small Cpp</title>
         <meta name="keywords" content=""/>
         <meta name="description" content=""/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -19,7 +19,7 @@
     <div id="header">
         <div id="post-nav">
             
-            <a href="/">Home</a> » <a href="/#软件工程">软件工程</a> » shell 命令
+            <a href="/">Home</a> » <a href="/#软件工程">软件工程</a> » Shell 命令
             
         </div>
     </div>
@@ -49,10 +49,8 @@
 <li><a href="#uniq">uniq</a></li>
 <li><a href="#cut">cut</a></li>
 <li><a href="#wc">wc</a></li>
-<li><a href="#sed">sed</a><ul>
-<li><a href="#_14">简介</a></li>
-</ul>
-</li>
+<li><a href="#sed">sed</a></li>
+<li><a href="#awk">awk</a></li>
 </ul>
 </div>
 <h1 id="_1">基础使用</h1>
@@ -470,7 +468,6 @@ sort 是默认以首字母来排序, 而且默认是以<strong>字符</strong>�
 <p><br>
 40 是行数, 45 是单词数, 1719 是字节数.</p>
 <h1 id="sed">sed</h1>
-<h2 id="_14">简介</h2>
 <p>sed 是一种在线编辑器, 它一次处理<strong>一行</strong>内容 (即以行为处理单位).</p>
 <p>sed 主要用来自动编辑一个或多个文件; 简化对文件的反复操作; 编写转换程序等.</p>
 <p>处理时, 把当前处理的行存储在临时缓冲区中, 称为 "模式空间" (pattern space), 接着用 sed 命令处理缓冲区中的内容, 处理完成后, 把缓冲区的内容送往屏幕, 接着处理下一行, 这样不断重复, 直到文件末尾.</p>
@@ -610,10 +607,168 @@ s 指令支持正则表达式.</p>
 
 
 <p><br></p>
+<h1 id="awk">awk</h1>
+<p>awk 是一个强大的文本分析工具, 相对于 grep 的查找, sed 的编辑, awk 在其对数据分析并生成报告时, 显得尤为强大.</p>
+<p>简单来说 awk 就是把文件<strong>逐行</strong>的读入, 以<strong>空格</strong>为默认分隔符将每行切片, 切开的部分再进行各种分析处理.</p>
+<p>awk 的强大以至于它甚至形成了自己的语言体系, 即 AWK 编程, 它允许您创建简短的程序, 这些程序读取输入文件、为数据排序、处理数据、对输入执行计算以及生成报表, 还有无数其他的功能. , 但对于我来说, 了解它的基础用法就足够了, 更高级的功能我更喜欢用 Python 来完成.</p>
+<p>awk 语言的最基本功能是在文件或者字符串中基于指定规则浏览和抽取信息, awk 抽取信息后, 才能进行其他文本操作.</p>
+<p>完整的 awk 脚本通常用来格式化文本文件中的信息, 通常, awk 是以文件的一行为处理单位的. awk 每接收文件的一行, 然后执行相应的命令, 来处理文本.</p>
+<p>调用 awk 的三种方式:</p>
+<div class="hlcode"><pre><span class="mf">1.</span> <span class="err">命令行方式</span>
+<span class="n">awk</span> <span class="p">[</span><span class="o">-</span><span class="n">F</span>  <span class="n">field</span><span class="o">-</span><span class="n">separator</span><span class="p">]</span>  <span class="err">&#39;</span><span class="n">commands</span><span class="err">&#39;</span>  <span class="n">input</span><span class="o">-</span><span class="n">file</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="err">其中</span><span class="p">,</span> <span class="n">commands</span> <span class="err">是真正</span> <span class="n">awk</span> <span class="err">命令</span><span class="p">,</span> <span class="err">通过包含两部分内容</span><span class="o">:</span> <span class="err">&#39;</span><span class="n">pattern</span> <span class="p">{</span><span class="n">action</span><span class="p">}</span><span class="err">&#39;</span>
+<span class="n">pattern</span> <span class="o">:</span> <span class="err">要查找的内容</span> <span class="p">(</span><span class="err">支持正则</span><span class="p">,</span> <span class="err">不指定</span> <span class="n">pattern</span><span class="p">,</span> <span class="err">则对所有行进行</span> <span class="n">action</span><span class="p">)</span>
+<span class="n">action</span> <span class="o">:</span> <span class="err">对匹配内容所执行的操作</span> <span class="p">(</span><span class="err">不指定</span> <span class="n">action</span> <span class="err">则默认输出每行的内容</span><span class="p">)</span>
+<span class="o">-</span><span class="n">F</span> <span class="err">域分隔符是可选的</span><span class="p">.</span> <span class="n">input</span><span class="o">-</span><span class="n">file</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="err">是待处理的文件</span><span class="p">.</span>
+<span class="err">在</span> <span class="n">awk</span> <span class="err">中</span><span class="p">,</span> <span class="err">文件的每一行中</span><span class="p">,</span> <span class="err">由域分隔符分开的每一项称为一个域</span><span class="p">.</span> <span class="err">通常</span><span class="p">,</span> <span class="err">在不指名</span> <span class="o">-</span><span class="n">F</span> <span class="err">域分隔符的情况下</span><span class="p">,</span> <span class="err">默认的域分隔符是空格或</span> <span class="n">tab</span><span class="p">.</span>
+
+<span class="mf">2.</span> <span class="n">shell</span> <span class="err">脚本方式</span>
+<span class="err">将所有的</span> <span class="n">awk</span> <span class="err">命令插入一个文件</span><span class="p">,</span> <span class="err">并使</span> <span class="n">awk</span> <span class="err">程序可执行</span><span class="p">,</span> <span class="err">然后</span> <span class="n">awk</span> <span class="err">命令解释器作为脚本的首行</span><span class="p">,</span> <span class="err">一遍通过键入脚本名称来调用</span><span class="p">.</span>
+<span class="err">相当于</span> <span class="n">shell</span> <span class="err">脚本首行的</span><span class="o">:</span> <span class="err">#</span><span class="o">!/</span><span class="n">bin</span><span class="o">/</span><span class="n">sh</span>
+<span class="err">可以换成</span><span class="o">:</span> <span class="err">#</span><span class="o">!/</span><span class="n">bin</span><span class="o">/</span><span class="n">awk</span>
+
+<span class="mf">3.</span> <span class="err">将所有的</span> <span class="n">awk</span> <span class="err">命令插入一个单独文件</span><span class="p">,</span> <span class="err">然后调用</span><span class="o">:</span>
+<span class="n">awk</span> <span class="o">-</span><span class="n">f</span> <span class="n">awk</span><span class="o">-</span><span class="n">script</span><span class="o">-</span><span class="n">file</span> <span class="n">input</span><span class="o">-</span><span class="n">file</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="err">其中</span><span class="p">,</span> <span class="o">-</span><span class="n">f</span> <span class="err">选项加载</span> <span class="n">awk</span><span class="o">-</span><span class="n">script</span><span class="o">-</span><span class="n">file</span> <span class="err">中的</span> <span class="n">awk</span> <span class="err">脚本</span><span class="p">,</span> <span class="n">input</span><span class="o">-</span><span class="n">file</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="err">跟上面的是一样的</span><span class="p">.</span>
+</pre></div>
+
+
+<p><br>
+这里着重介绍命令行方式.</p>
+<p>假设 <code>last -n 5</code> 的输出如下:</p>
+<div class="hlcode"><pre><span class="n">last</span> <span class="o">-</span><span class="n">n</span> <span class="mi">5</span>
+<span class="n">root</span>     <span class="n">pts</span><span class="o">/</span><span class="mi">1</span>   <span class="mf">192.168.1.100</span>  <span class="n">Tue</span> <span class="n">Feb</span> <span class="mi">10</span> <span class="mi">11</span><span class="o">:</span><span class="mi">21</span>   <span class="n">still</span> <span class="n">logged</span> <span class="n">in</span>
+<span class="n">root</span>     <span class="n">pts</span><span class="o">/</span><span class="mi">1</span>   <span class="mf">192.168.1.100</span>  <span class="n">Tue</span> <span class="n">Feb</span> <span class="mi">10</span> <span class="mo">00</span><span class="o">:</span><span class="mi">46</span> <span class="o">-</span> <span class="mo">02</span><span class="o">:</span><span class="mi">28</span>  <span class="p">(</span><span class="mo">01</span><span class="o">:</span><span class="mi">41</span><span class="p">)</span>
+<span class="n">root</span>     <span class="n">pts</span><span class="o">/</span><span class="mi">1</span>   <span class="mf">192.168.1.100</span>  <span class="n">Mon</span> <span class="n">Feb</span>  <span class="mi">9</span> <span class="mi">11</span><span class="o">:</span><span class="mi">41</span> <span class="o">-</span> <span class="mi">18</span><span class="o">:</span><span class="mi">30</span>  <span class="p">(</span><span class="mo">06</span><span class="o">:</span><span class="mi">48</span><span class="p">)</span>
+<span class="n">dmtsai</span>   <span class="n">pts</span><span class="o">/</span><span class="mi">1</span>   <span class="mf">192.168.1.100</span>  <span class="n">Mon</span> <span class="n">Feb</span>  <span class="mi">9</span> <span class="mi">11</span><span class="o">:</span><span class="mi">41</span> <span class="o">-</span> <span class="mi">11</span><span class="o">:</span><span class="mi">41</span>  <span class="p">(</span><span class="mo">00</span><span class="o">:</span><span class="mo">00</span><span class="p">)</span>
+<span class="n">root</span>     <span class="n">tty1</span>                   <span class="n">Fri</span> <span class="n">Sep</span>  <span class="mi">5</span> <span class="mi">14</span><span class="o">:</span><span class="mi">09</span> <span class="o">-</span> <span class="mi">14</span><span class="o">:</span><span class="mi">10</span>  <span class="p">(</span><span class="mo">00</span><span class="o">:</span><span class="mo">01</span><span class="p">)</span>
+</pre></div>
+
+
+<p><br>
+如果只是显示最近登录的 5 个帐号的名称:</p>
+<div class="hlcode"><pre><span class="n">last</span> <span class="o">-</span><span class="n">n</span> <span class="mi">5</span> <span class="o">|</span> <span class="n">awk</span>  <span class="err">&#39;</span><span class="p">{</span><span class="n">print</span> <span class="err">$</span><span class="mi">1</span><span class="p">}</span><span class="err">&#39;</span>
+<span class="n">root</span>
+<span class="n">root</span>
+<span class="n">root</span>
+<span class="n">dmtsai</span>
+<span class="n">root</span>
+</pre></div>
+
+
+<p><br>
+awk 工作流程是这样的:<br>
+读入有 '\n' 换行符分割的一条记录, 然后将记录按指定的域分隔符划分域, 填充域, <code>$0</code> 则表示所有域, <code>$1</code> 表示第一个域, <code>$n</code> 表示第 n 个域. 默认域分隔符是 "空白键" 或 "[tab]键", 所以 <code>$1</code> 表示登录用户, <code>$3</code> 表示登录用户ip, 以此类推.</p>
+<p>下面的操作只显示 <code>/etc/passwd</code> 的账户和账户对应的 shell, 而账户与 shell 之间以 tab 键分割:</p>
+<div class="hlcode"><pre><span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">passwd</span> <span class="o">|</span><span class="n">awk</span>  <span class="o">-</span><span class="n">F</span> <span class="sc">&#39;:&#39;</span>  <span class="err">&#39;</span><span class="p">{</span><span class="n">print</span> <span class="err">$</span><span class="mi">1</span><span class="s">&quot;</span><span class="se">\t</span><span class="s">&quot;</span><span class="err">$</span><span class="mi">7</span><span class="p">}</span><span class="err">&#39;</span>
+<span class="n">root</span>    <span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">bash</span>
+<span class="n">daemon</span>  <span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">sh</span>
+<span class="n">bin</span>     <span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">sh</span>
+<span class="n">sys</span>     <span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">sh</span>
+</pre></div>
+
+
+<p><br>
+下面的操作显示 <code>/etc/passwd</code> 的账户和账户对应的 shell, 而账户与 shell 之间以逗号分割, 而且在所有行添加列名 "name, shell", 在最后一行添加 "blue, /bin/nosh".</p>
+<div class="hlcode"><pre><span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">passwd</span> <span class="o">|</span><span class="n">awk</span>  <span class="o">-</span><span class="n">F</span> <span class="sc">&#39;:&#39;</span>  <span class="err">&#39;</span><span class="n">BEGIN</span> <span class="p">{</span><span class="n">print</span> <span class="s">&quot;name,shell&quot;</span><span class="p">}</span>  <span class="p">{</span><span class="n">print</span> <span class="err">$</span><span class="mi">1</span><span class="s">&quot;,&quot;</span><span class="err">$</span><span class="mi">7</span><span class="p">}</span> <span class="n">END</span> <span class="p">{</span><span class="n">print</span> <span class="s">&quot;blue,/bin/nosh&quot;</span><span class="p">}</span><span class="err">&#39;</span>
+<span class="n">name</span><span class="p">,</span><span class="n">shell</span>
+<span class="n">root</span><span class="p">,</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">bash</span>
+<span class="n">daemon</span><span class="p">,</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">sh</span>
+<span class="n">bin</span><span class="p">,</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">sh</span>
+<span class="n">sys</span><span class="p">,</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">sh</span>
+<span class="p">....</span>
+<span class="n">blue</span><span class="p">,</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">nosh</span>
+</pre></div>
+
+
+<p><br>
+awk 工作流程是这样的: 先执行 BEGING, 然后处理文件, 最后执行 END 操作.</p>
+<p>搜索 <code>/etc/passwd</code> 有 root 关键字的所有行:</p>
+<div class="hlcode"><pre><span class="n">awk</span> <span class="o">-</span><span class="n">F</span> <span class="sc">&#39;:&#39;</span> <span class="err">&#39;</span><span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="err">&#39;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">passwd</span>
+<span class="nl">root:</span><span class="n">x</span><span class="o">:</span><span class="mi">0</span><span class="o">:</span><span class="mi">0</span><span class="o">:</span><span class="n">root</span><span class="o">:/</span><span class="n">root</span><span class="o">:/</span><span class="n">bin</span><span class="o">/</span><span class="n">bash</span>
+</pre></div>
+
+
+<p><br>
+搜索 <code>/etc/passwd</code> 有 root 关键字的所有行, 并显示对应的 shell:</p>
+<div class="hlcode"><pre><span class="n">awk</span> <span class="o">-</span><span class="n">F</span> <span class="sc">&#39;:&#39;</span> <span class="err">&#39;</span><span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="p">{</span><span class="n">print</span> <span class="err">$</span><span class="mi">7</span><span class="p">}</span><span class="err">&#39;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">passwd</span>
+<span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">bash</span>
+</pre></div>
+
+
+<p><br>
+awk 有许多内置变量用来设置环境信息, 这些变量可以被改变, 下面给出了最常用的一些变量.</p>
+<ul>
+<li><code>ARGC</code><ul>
+<li>命令行参数个数</li>
+</ul>
+</li>
+<li><code>ARGV</code><ul>
+<li>命令行参数排列</li>
+</ul>
+</li>
+<li><code>ENVIRON</code><ul>
+<li>支持队列中系统环境变量的使用</li>
+</ul>
+</li>
+<li><code>FILENAME</code><ul>
+<li>awk 浏览的文件名</li>
+</ul>
+</li>
+<li><code>FNR</code><ul>
+<li>浏览文件的记录数</li>
+</ul>
+</li>
+<li><code>FS</code><ul>
+<li>设置输入域分隔符, 等价于命令行 -F选项</li>
+</ul>
+</li>
+<li><code>NF</code><ul>
+<li>浏览记录的域的个数</li>
+</ul>
+</li>
+<li><code>NR</code><ul>
+<li>已读的记录数</li>
+</ul>
+</li>
+<li><code>OFS</code><ul>
+<li>输出域分隔符</li>
+</ul>
+</li>
+<li><code>ORS</code><ul>
+<li>输出记录分隔符</li>
+</ul>
+</li>
+<li><code>RS</code><ul>
+<li>控制记录分隔符</li>
+</ul>
+</li>
+<li><code>$0~n</code><ul>
+<li>域选择器</li>
+</ul>
+</li>
+</ul>
+<p>统计 <code>/etc/passwd</code> 文件名, 每行的行号, 每行的列数, 对应的完整行内容:</p>
+<div class="hlcode"><pre><span class="n">awk</span>  <span class="o">-</span><span class="n">F</span> <span class="sc">&#39;:&#39;</span>  <span class="err">&#39;</span><span class="p">{</span><span class="n">print</span> <span class="s">&quot;filename:&quot;</span> <span class="n">FILENAME</span> <span class="s">&quot;, linenumber:&quot;</span> <span class="n">NR</span> <span class="s">&quot;, columns:&quot;</span> <span class="n">NF</span> <span class="s">&quot;, linecontent:&quot;</span><span class="err">$</span><span class="mi">0</span><span class="p">}</span><span class="err">&#39;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">passwd</span>
+<span class="nl">filename:</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">passwd</span><span class="p">,</span><span class="n">linenumber</span><span class="o">:</span><span class="mi">1</span><span class="p">,</span><span class="n">columns</span><span class="o">:</span><span class="mi">7</span><span class="p">,</span><span class="n">linecontent</span><span class="o">:</span><span class="n">root</span><span class="o">:</span><span class="n">x</span><span class="o">:</span><span class="mi">0</span><span class="o">:</span><span class="mi">0</span><span class="o">:</span><span class="n">root</span><span class="o">:/</span><span class="n">root</span><span class="o">:/</span><span class="n">bin</span><span class="o">/</span><span class="n">bash</span>
+<span class="nl">filename:</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">passwd</span><span class="p">,</span><span class="n">linenumber</span><span class="o">:</span><span class="mi">2</span><span class="p">,</span><span class="n">columns</span><span class="o">:</span><span class="mi">7</span><span class="p">,</span><span class="n">linecontent</span><span class="o">:</span><span class="n">daemon</span><span class="o">:</span><span class="n">x</span><span class="o">:</span><span class="mi">1</span><span class="o">:</span><span class="mi">1</span><span class="o">:</span><span class="n">daemon</span><span class="o">:/</span><span class="n">usr</span><span class="o">/</span><span class="n">sbin</span><span class="o">:/</span><span class="n">bin</span><span class="o">/</span><span class="n">sh</span>
+<span class="nl">filename:</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">passwd</span><span class="p">,</span><span class="n">linenumber</span><span class="o">:</span><span class="mi">3</span><span class="p">,</span><span class="n">columns</span><span class="o">:</span><span class="mi">7</span><span class="p">,</span><span class="n">linecontent</span><span class="o">:</span><span class="n">bin</span><span class="o">:</span><span class="n">x</span><span class="o">:</span><span class="mi">2</span><span class="o">:</span><span class="mi">2</span><span class="o">:</span><span class="n">bin</span><span class="o">:/</span><span class="n">bin</span><span class="o">:/</span><span class="n">bin</span><span class="o">/</span><span class="n">sh</span>
+<span class="nl">filename:</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">passwd</span><span class="p">,</span><span class="n">linenumber</span><span class="o">:</span><span class="mi">4</span><span class="p">,</span><span class="n">columns</span><span class="o">:</span><span class="mi">7</span><span class="p">,</span><span class="n">linecontent</span><span class="o">:</span><span class="n">sys</span><span class="o">:</span><span class="n">x</span><span class="o">:</span><span class="mi">3</span><span class="o">:</span><span class="mi">3</span><span class="o">:</span><span class="n">sys</span><span class="o">:/</span><span class="n">dev</span><span class="o">:/</span><span class="n">bin</span><span class="o">/</span><span class="n">sh</span>
+</pre></div>
+
+
+<p><br>
+使用 printf 替代 print, 可以让代码更加简洁, 易读:</p>
+<div class="hlcode"><pre><span class="n">awk</span>  <span class="o">-</span><span class="n">F</span> <span class="sc">&#39;:&#39;</span>  <span class="err">&#39;</span><span class="p">{</span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;filename:%10s, linenumber:%s, columns:%s, linecontent:%s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">FILENAME</span><span class="p">,</span> <span class="n">NR</span><span class="p">,</span> <span class="n">NF</span><span class="p">,</span> <span class="err">$</span><span class="mi">0</span><span class="p">)}</span><span class="err">&#39;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">passwd</span>
+</pre></div>
+
+
+<p><br>
+printf 函数, 其用法和 c 语言中 printf 基本相似, 可以格式化字符串, 输出复杂时, printf 更加好用, 代码更易懂.</p>
     </div>
 
     <!-- 多说评论框 start -->
-    <div class="ds-thread" data-thread-key="shell 命令" data-title="shell 命令" data-url="http://wiki.smallcpp.com/软件工程/shell 命令.html"></div>
+    <div class="ds-thread" data-thread-key="Shell 命令" data-title="Shell 命令" data-url="http://wiki.smallcpp.com/软件工程/Shell 命令.html"></div>
     <!-- 多说评论框 end -->
     <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
     <script type="text/javascript">
