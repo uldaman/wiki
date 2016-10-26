@@ -1,0 +1,639 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <title>shell 命令 - Wiki | Small Cpp</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            
+            <a href="/">Home</a> » <a href="/#软件工程">软件工程</a> » shell 命令
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#_1">基础使用</a><ul>
+<li><a href="#_2">执行方式</a></li>
+<li><a href="#_3">接收控制台输入</a></li>
+<li><a href="#_4">接收命令返回值</a></li>
+<li><a href="#_5">定义变量</a></li>
+<li><a href="#_6">单引号与双引号区别</a></li>
+<li><a href="#_7">特殊变量</a></li>
+<li><a href="#_8">整数运算</a></li>
+<li><a href="#for">for 循环</a></li>
+<li><a href="#while">while 循环</a></li>
+<li><a href="#case">case 选择</a></li>
+<li><a href="#if">if 选择</a></li>
+<li><a href="#_9">布尔表达式</a></li>
+<li><a href="#_10">逻辑运算符</a></li>
+<li><a href="#_11">文件判断</a></li>
+<li><a href="#_12">函数</a></li>
+<li><a href="#_13">脚本调试</a></li>
+</ul>
+</li>
+<li><a href="#sort">sort</a></li>
+<li><a href="#uniq">uniq</a></li>
+<li><a href="#cut">cut</a></li>
+<li><a href="#wc">wc</a></li>
+<li><a href="#sed">sed</a><ul>
+<li><a href="#_14">简介</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<h1 id="_1">基础使用</h1>
+<h2 id="_2">执行方式</h2>
+<ul>
+<li>方式一:<ul>
+<li>需在脚本开头指定解释器: #!/bin/bash</li>
+<li>给脚本 +x 权限,</li>
+<li>输入脚本绝对路径或相对路径:<ul>
+<li><code>/root/test.sh</code></li>
+<li><code>./test.sh</code></li>
+</ul>
+</li>
+<li>或者在路径前再加个点<ul>
+<li><code>. ./test.sh</code></li>
+</ul>
+</li>
+<li>区别在于前面的会新开一个 bash (不可见), 也就是在当前 bash 变量不共享, 加个 <code>.</code> 表示在当前脚本执行脚本</li>
+</ul>
+</li>
+<li>方式二:
+    用指定解释器执行 sh test.sh</li>
+</ul>
+<h2 id="_3">接收控制台输入</h2>
+<p><code>read -p(提示语句) -n(字符个数) -t(等待时间) variable</code></p>
+<h2 id="_4">接收命令返回值</h2>
+<p>A=`ls -l` — 反引号 (飘号)</p>
+<p>或者</p>
+<p>A=$(ls -l)</p>
+<h2 id="_5">定义变量</h2>
+<p>不能有空格, 如果字符串中有空格, 要用引号包围.</p>
+<ul>
+<li><code>STR="hello wored"</code></li>
+<li><code>unset STR</code> 撤销变量</li>
+<li><code>readonly B=2</code> 只读变量, 不能 unset</li>
+<li><code>export</code> 导出变量为全局环境变量</li>
+</ul>
+<h2 id="_6">单引号与双引号区别</h2>
+<ul>
+<li>双引号仅转义空格</li>
+<li>单引号会转义所有特殊字符</li>
+</ul>
+<h2 id="_7">特殊变量</h2>
+<ul>
+<li><code>$?</code> 上一个命令的退出状态</li>
+<li><code>$$</code> 当前进程编号</li>
+<li><code>$0</code> 当前脚本名称</li>
+<li><code>$n</code> 指定位置参数</li>
+<li><code>$#</code> 参数个数</li>
+<li><code>$*</code> / <code>$@</code> 参数列表<ul>
+<li>区别: 当被双引号包围时, <code>$*</code> 将参数列表当成一整体, <code>$@</code> 会将参数分开</li>
+</ul>
+</li>
+</ul>
+<h2 id="_8">整数运算</h2>
+<p><code>expr m + n</code> (这个命令要有空格)</p>
+<p>或者</p>
+<p><code>$((m+n))</code></p>
+<p>如计算 (2 + 3) * 4</p>
+<ul>
+<li>分两步的写法<ul>
+<li>S=`expr 2 + 3`</li>
+<li><code>expr $S\*4</code> (注意 * 要转义)</li>
+</ul>
+</li>
+<li>一步的写法<ul>
+<li>echo `expr `expr 2 + 3`*4`</li>
+<li>或者 <code>$(((2+3)*4))</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="for">for 循环</h2>
+<div class="hlcode"><pre><span class="k">for</span> <span class="n">N</span> <span class="n">in</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span>
+<span class="k">do</span>
+    <span class="n">echo</span> <span class="err">$</span><span class="n">N</span>
+<span class="n">done</span>
+</pre></div>
+
+
+<p><br>
+或者</p>
+<div class="hlcode"><pre><span class="k">for</span> <span class="n">N</span> <span class="n">in</span> <span class="p">{</span><span class="mf">1..3</span><span class="p">}</span>   <span class="err">#</span> <span class="err">表示</span> <span class="mi">1</span> <span class="err">到</span> <span class="mi">3</span>
+<span class="k">do</span>
+    <span class="n">echo</span> <span class="err">$</span><span class="n">N</span>
+<span class="n">done</span>
+</pre></div>
+
+
+<p><br>
+或者</p>
+<div class="hlcode"><pre><span class="k">for</span> <span class="p">((</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="mi">5</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">))</span>
+<span class="k">do</span>
+    <span class="n">echo</span> <span class="err">$</span><span class="n">i</span>
+<span class="n">done</span>
+</pre></div>
+
+
+<p><br></p>
+<h2 id="while">while 循环</h2>
+<div class="hlcode"><pre><span class="k">while</span> <span class="n">expre</span>
+<span class="k">do</span>
+    <span class="n">echo</span> <span class="err">&#39;</span><span class="k">do</span> <span class="n">something</span><span class="err">&#39;</span>
+<span class="n">end</span>
+</pre></div>
+
+
+<p><br>
+或者</p>
+<div class="hlcode"><pre><span class="n">i</span><span class="o">=</span><span class="mi">1</span>
+<span class="k">while</span> <span class="p">((</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">5</span><span class="p">))</span>
+<span class="k">do</span>
+    <span class="n">echo</span> <span class="err">&#39;</span><span class="k">do</span> <span class="n">something</span><span class="err">&#39;</span>
+<span class="n">done</span>
+</pre></div>
+
+
+<p><br></p>
+<h2 id="case">case 选择</h2>
+<div class="hlcode"><pre><span class="k">case</span> <span class="err">$</span><span class="mi">1</span> <span class="n">in</span>
+<span class="n">one</span><span class="p">)</span>
+    <span class="p">...</span>
+    <span class="p">;;</span>
+<span class="n">two</span><span class="p">)</span>
+    <span class="p">...</span>
+    <span class="p">;;</span>
+<span class="o">*</span><span class="p">)</span>
+<span class="n">esac</span>
+</pre></div>
+
+
+<p><br></p>
+<h2 id="if">if 选择</h2>
+<div class="hlcode"><pre><span class="k">if</span> <span class="n">xx</span>
+<span class="n">then</span>
+    <span class="n">xx</span>
+<span class="n">elif</span> <span class="n">xx</span>
+<span class="n">then</span>
+    <span class="n">xx</span>
+<span class="k">else</span>
+    <span class="n">xx</span>
+<span class="n">fi</span>
+</pre></div>
+
+
+<p><br></p>
+<h2 id="_9">布尔表达式</h2>
+<p><code>[ xx ]</code>, 注意 <code>[  ]</code> 两边有空格 (非空返回 true)</p>
+<p>表达式可使用 <code>$?</code> 验证 (0 为 true, &gt;0 为 flase)</p>
+<p><code>[ xx ] &amp;&amp; echo OK</code>, 条件成立, 执行后面的语句</p>
+<p><code>[ xx ] &amp;&amp; echo OK || echo NO</code>, 类似三目表达式, 条件成立, echo OK, 不满足执行 echo NO</p>
+<h2 id="_10">逻辑运算符</h2>
+<ul>
+<li><code>=</code> 等于比较</li>
+<li><code>-lt</code> 小于</li>
+<li><code>-le</code> 小于等于</li>
+<li><code>-eq</code> 等于 (可用=)</li>
+<li><code>-gt</code> 大于</li>
+<li><code>-ge</code> 大于等于</li>
+<li><code>-ne</code> 不等于</li>
+</ul>
+<h2 id="_11">文件判断</h2>
+<ul>
+<li><code>-r</code>有读权限</li>
+<li><code>-w</code>有写权限</li>
+<li><code>-x</code>有执行权限</li>
+<li><code>-f</code>文件存在并且是一个常规文件</li>
+<li><code>-s</code>文件存在且不为空</li>
+<li><code>-d</code>文件存在且是一个目录</li>
+<li><code>-b</code>文件存在且是一个块设备</li>
+<li><code>-L</code>文件存在且是一个链接</li>
+</ul>
+<h2 id="_12">函数</h2>
+<div class="hlcode"><pre><span class="kd">function</span> <span class="nx">xxx</span><span class="p">()</span> <span class="o">/</span> <span class="kd">function</span> <span class="nx">start</span> <span class="o">/</span> <span class="nx">start</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="p">...;</span>
+    <span class="k">return</span> <span class="kr">int</span><span class="p">;</span> <span class="err">#</span> <span class="err">只能返回</span> <span class="kr">int</span> <span class="err">型</span> <span class="mi">1</span><span class="o">~</span><span class="mi">255</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p><br>
+函数没有形参, 通过调用时指定, 在函数体内, 通过 <code>$1~n</code> 来取.</p>
+<p>返回值通过 <code>$?</code> 来获取.</p>
+<div class="hlcode"><pre><span class="kd">function</span> <span class="nx">fSum</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="nx">echo</span> <span class="nx">$1</span><span class="p">,</span> <span class="nx">$2</span><span class="p">;</span>
+    <span class="nx">reutrn</span> <span class="nx">$</span><span class="p">((</span><span class="nx">$1</span><span class="o">+</span><span class="nx">$2</span><span class="p">));</span>
+<span class="p">}</span>
+<span class="nx">fSum</span> <span class="mi">3</span> <span class="mi">2</span><span class="p">;</span>
+</pre></div>
+
+
+<p><br></p>
+<h2 id="_13">脚本调试</h2>
+<p><code>sh -vx xxx.sh</code></p>
+<p>或者</p>
+<p>在脚本中增加 <code>set -x</code></p>
+<h1 id="sort">sort</h1>
+<p>sort 命令对 File 参数指定的文件中的<strong>行</strong>排序, 并将结果写到标准输出. 如果 File 参数指定多个文件, 那么 sort 命令将这些文件连接起来, 并当作一个文件进行排序.</p>
+<div class="hlcode"><pre><span class="n">sort</span> <span class="p">[</span><span class="o">-</span><span class="n">fbMnrtuk</span><span class="p">]</span> <span class="p">[</span><span class="n">file</span> <span class="n">or</span> <span class="n">stdin</span><span class="p">]</span>
+<span class="err">选项与参数</span><span class="o">:</span>
+<span class="o">-</span><span class="n">f</span>  <span class="o">:</span> <span class="err">忽略大小写的差异</span><span class="p">,</span> <span class="err">例如</span> <span class="n">A</span> <span class="err">与</span> <span class="n">a</span> <span class="err">视为编码相同</span><span class="p">;</span>
+<span class="o">-</span><span class="n">b</span>  <span class="o">:</span> <span class="err">忽略最前面的空格符部分</span><span class="p">;</span>
+<span class="o">-</span><span class="n">M</span>  <span class="o">:</span> <span class="err">以月份的名字来排序</span><span class="p">,</span> <span class="err">例如</span> <span class="n">JAN</span><span class="p">,</span> <span class="n">DEC</span> <span class="err">等等的排序方法</span><span class="p">;</span>
+<span class="o">-</span><span class="n">n</span>  <span class="o">:</span> <span class="err">使用</span> <span class="s">&quot;纯数字&quot;</span> <span class="err">进行排序</span><span class="p">(</span><span class="err">默认是以文字型态来排序的</span><span class="p">);</span>
+<span class="o">-</span><span class="n">r</span>  <span class="o">:</span> <span class="err">反向排序</span><span class="p">;</span>
+<span class="o">-</span><span class="n">u</span>  <span class="o">:</span> <span class="err">就是</span> <span class="n">uniq</span><span class="p">,</span> <span class="err">相同的数据中</span><span class="p">,</span> <span class="err">仅出现一行代表</span><span class="p">;</span>
+<span class="o">-</span><span class="n">t</span>  <span class="o">:</span> <span class="err">分隔符</span><span class="p">,</span> <span class="err">默认是用</span> <span class="p">[</span><span class="n">tab</span><span class="p">]</span> <span class="err">键来分隔</span><span class="p">;</span>
+<span class="o">-</span><span class="n">k</span>  <span class="o">:</span> <span class="err">以那个区间</span> <span class="p">(</span><span class="n">field</span><span class="p">)</span> <span class="err">来进行排序的意思</span>
+</pre></div>
+
+
+<p><br>
+对 <code>/etc/passwd</code> 的账号进行排序</p>
+<div class="hlcode"><pre><span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">passwd</span> <span class="o">|</span> <span class="n">sort</span>
+<span class="nl">adm:</span><span class="n">x</span><span class="o">:</span><span class="mi">3</span><span class="o">:</span><span class="mi">4</span><span class="o">:</span><span class="n">adm</span><span class="o">:/</span><span class="n">var</span><span class="o">/</span><span class="n">adm</span><span class="o">:/</span><span class="n">sbin</span><span class="o">/</span><span class="n">nologin</span>
+<span class="nl">apache:</span><span class="n">x</span><span class="o">:</span><span class="mi">48</span><span class="o">:</span><span class="mi">48</span><span class="o">:</span><span class="n">Apache</span><span class="o">:/</span><span class="n">var</span><span class="o">/</span><span class="n">www</span><span class="o">:/</span><span class="n">sbin</span><span class="o">/</span><span class="n">nologin</span>
+<span class="nl">bin:</span><span class="n">x</span><span class="o">:</span><span class="mi">1</span><span class="o">:</span><span class="mi">1</span><span class="o">:</span><span class="n">bin</span><span class="o">:/</span><span class="n">bin</span><span class="o">:/</span><span class="n">sbin</span><span class="o">/</span><span class="n">nologin</span>
+<span class="nl">daemon:</span><span class="n">x</span><span class="o">:</span><span class="mi">2</span><span class="o">:</span><span class="mi">2</span><span class="o">:</span><span class="n">daemon</span><span class="o">:/</span><span class="n">sbin</span><span class="o">:/</span><span class="n">sbin</span><span class="o">/</span><span class="n">nologin</span>
+</pre></div>
+
+
+<p><br>
+sort 是默认以首字母来排序, 而且默认是以<strong>字符</strong>形式来排序, 所以由字母 a 开始升序排序.</p>
+<p><code>/etc/passwd</code> 内容是以 <code>:</code> 来分隔的, 我想以第三栏来排序, 该如何? 可以使用 <code>-t</code>和 <code>-k</code> 参数:</p>
+<div class="hlcode"><pre><span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">passwd</span> <span class="o">|</span> <span class="n">sort</span> <span class="o">-</span><span class="n">t</span> <span class="sc">&#39;:&#39;</span> <span class="o">-</span><span class="n">k</span> <span class="mi">3</span>
+<span class="nl">root:</span><span class="n">x</span><span class="o">:</span><span class="mi">0</span><span class="o">:</span><span class="mi">0</span><span class="o">:</span><span class="n">root</span><span class="o">:/</span><span class="n">root</span><span class="o">:/</span><span class="n">bin</span><span class="o">/</span><span class="n">bash</span>
+<span class="nl">uucp:</span><span class="n">x</span><span class="o">:</span><span class="mi">10</span><span class="o">:</span><span class="mi">14</span><span class="o">:</span><span class="n">uucp</span><span class="o">:/</span><span class="n">var</span><span class="o">/</span><span class="n">spool</span><span class="o">/</span><span class="n">uucp</span><span class="o">:/</span><span class="n">sbin</span><span class="o">/</span><span class="n">nologin</span>
+<span class="nl">operator:</span><span class="n">x</span><span class="o">:</span><span class="mi">11</span><span class="o">:</span><span class="mi">0</span><span class="o">:</span><span class="n">operator</span><span class="o">:/</span><span class="n">root</span><span class="o">:/</span><span class="n">sbin</span><span class="o">/</span><span class="n">nologin</span>
+<span class="nl">bin:</span><span class="n">x</span><span class="o">:</span><span class="mi">1</span><span class="o">:</span><span class="mi">1</span><span class="o">:</span><span class="n">bin</span><span class="o">:/</span><span class="n">bin</span><span class="o">:/</span><span class="n">sbin</span><span class="o">/</span><span class="n">nologin</span>
+<span class="nl">games:</span><span class="n">x</span><span class="o">:</span><span class="mi">12</span><span class="o">:</span><span class="mi">100</span><span class="o">:</span><span class="n">games</span><span class="o">:/</span><span class="n">usr</span><span class="o">/</span><span class="n">games</span><span class="o">:/</span><span class="n">sbin</span><span class="o">/</span><span class="n">nologin</span>
+</pre></div>
+
+
+<p><br>
+刚提到 sort 默认是以字符来排序的, 如果想要使用数字排序 (注意后面的 n):</p>
+<div class="hlcode"><pre><span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">passwd</span> <span class="o">|</span> <span class="n">sort</span> <span class="o">-</span><span class="n">t</span> <span class="sc">&#39;:&#39;</span> <span class="o">-</span><span class="n">k</span> <span class="mi">3</span><span class="n">n</span>
+<span class="nl">root:</span><span class="n">x</span><span class="o">:</span><span class="mi">0</span><span class="o">:</span><span class="mi">0</span><span class="o">:</span><span class="n">root</span><span class="o">:/</span><span class="n">root</span><span class="o">:/</span><span class="n">bin</span><span class="o">/</span><span class="n">bash</span>
+<span class="nl">daemon:</span><span class="n">x</span><span class="o">:</span><span class="mi">1</span><span class="o">:</span><span class="mi">1</span><span class="o">:</span><span class="n">daemon</span><span class="o">:/</span><span class="n">usr</span><span class="o">/</span><span class="n">sbin</span><span class="o">:/</span><span class="n">bin</span><span class="o">/</span><span class="n">sh</span>
+<span class="nl">bin:</span><span class="n">x</span><span class="o">:</span><span class="mi">2</span><span class="o">:</span><span class="mi">2</span><span class="o">:</span><span class="n">bin</span><span class="o">:/</span><span class="n">bin</span><span class="o">:/</span><span class="n">bin</span><span class="o">/</span><span class="n">sh</span>
+</pre></div>
+
+
+<p><br>
+默认是升序排序, 如果要倒序排序, 如下 (注意后面的 r):</p>
+<div class="hlcode"><pre><span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">passwd</span> <span class="o">|</span> <span class="n">sort</span> <span class="o">-</span><span class="n">t</span> <span class="sc">&#39;:&#39;</span> <span class="o">-</span><span class="n">k</span> <span class="mi">3</span><span class="n">nr</span>
+<span class="nl">nobody:</span><span class="n">x</span><span class="o">:</span><span class="mi">65534</span><span class="o">:</span><span class="mi">65534</span><span class="o">:</span><span class="n">nobody</span><span class="o">:/</span><span class="n">nonexistent</span><span class="o">:/</span><span class="n">bin</span><span class="o">/</span><span class="n">sh</span>
+<span class="nl">ntp:</span><span class="n">x</span><span class="o">:</span><span class="mi">106</span><span class="o">:</span><span class="mi">113</span><span class="o">::/</span><span class="n">home</span><span class="o">/</span><span class="n">ntp</span><span class="o">:/</span><span class="n">bin</span><span class="o">/</span><span class="nb">false</span>
+<span class="nl">messagebus:</span><span class="n">x</span><span class="o">:</span><span class="mi">105</span><span class="o">:</span><span class="mi">109</span><span class="o">::/</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">dbus</span><span class="o">:/</span><span class="n">bin</span><span class="o">/</span><span class="nb">false</span>
+<span class="nl">sshd:</span><span class="n">x</span><span class="o">:</span><span class="mi">104</span><span class="o">:</span><span class="mi">65534</span><span class="o">::/</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">sshd</span><span class="o">:/</span><span class="n">usr</span><span class="o">/</span><span class="n">sbin</span><span class="o">/</span><span class="n">nologin</span>
+</pre></div>
+
+
+<p><br>
+如果要对 <code>/etc/passwd</code>, 先以第六个域的第 2 个字符到第 4 个字符进行正向排序, 再基于第一个域进行反向排序:</p>
+<div class="hlcode"><pre><span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">passwd</span> <span class="o">|</span> <span class="n">sort</span> <span class="o">-</span><span class="n">t</span> <span class="sc">&#39;:&#39;</span> <span class="o">-</span><span class="n">k</span> <span class="mf">6.2</span><span class="p">,</span><span class="mf">6.4</span> <span class="o">-</span><span class="n">k</span> <span class="mi">1</span><span class="n">r</span>
+<span class="nl">sync:</span><span class="n">x</span><span class="o">:</span><span class="mi">4</span><span class="o">:</span><span class="mi">65534</span><span class="o">:</span><span class="n">sync</span><span class="o">:/</span><span class="n">bin</span><span class="o">:/</span><span class="n">bin</span><span class="o">/</span><span class="n">sync</span>
+<span class="nl">proxy:</span><span class="n">x</span><span class="o">:</span><span class="mi">13</span><span class="o">:</span><span class="mi">13</span><span class="o">:</span><span class="n">proxy</span><span class="o">:/</span><span class="n">bin</span><span class="o">:/</span><span class="n">bin</span><span class="o">/</span><span class="n">sh</span>
+<span class="nl">bin:</span><span class="n">x</span><span class="o">:</span><span class="mi">2</span><span class="o">:</span><span class="mi">2</span><span class="o">:</span><span class="n">bin</span><span class="o">:/</span><span class="n">bin</span><span class="o">:/</span><span class="n">bin</span><span class="o">/</span><span class="n">sh</span>
+<span class="nl">sys:</span><span class="n">x</span><span class="o">:</span><span class="mi">3</span><span class="o">:</span><span class="mi">3</span><span class="o">:</span><span class="n">sys</span><span class="o">:/</span><span class="n">dev</span><span class="o">:/</span><span class="n">bin</span><span class="o">/</span><span class="n">sh</span>
+</pre></div>
+
+
+<p><br>
+对 <code>/etc/passwd</code> 的第七个域进行排序, 然后去重:</p>
+<div class="hlcode"><pre><span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">passwd</span> <span class="o">|</span> <span class="n">sort</span> <span class="o">-</span><span class="n">t</span> <span class="sc">&#39;:&#39;</span> <span class="o">-</span><span class="n">k</span> <span class="mi">7</span> <span class="o">-</span><span class="n">u</span>
+<span class="nl">root:</span><span class="n">x</span><span class="o">:</span><span class="mi">0</span><span class="o">:</span><span class="mi">0</span><span class="o">:</span><span class="n">root</span><span class="o">:/</span><span class="n">root</span><span class="o">:/</span><span class="n">bin</span><span class="o">/</span><span class="n">bash</span>
+<span class="nl">syslog:</span><span class="n">x</span><span class="o">:</span><span class="mi">101</span><span class="o">:</span><span class="mi">102</span><span class="o">::/</span><span class="n">home</span><span class="o">/</span><span class="n">syslog</span><span class="o">:/</span><span class="n">bin</span><span class="o">/</span><span class="nb">false</span>
+<span class="nl">daemon:</span><span class="n">x</span><span class="o">:</span><span class="mi">1</span><span class="o">:</span><span class="mi">1</span><span class="o">:</span><span class="n">daemon</span><span class="o">:/</span><span class="n">usr</span><span class="o">/</span><span class="n">sbin</span><span class="o">:/</span><span class="n">bin</span><span class="o">/</span><span class="n">sh</span>
+<span class="nl">sync:</span><span class="n">x</span><span class="o">:</span><span class="mi">4</span><span class="o">:</span><span class="mi">65534</span><span class="o">:</span><span class="n">sync</span><span class="o">:/</span><span class="n">bin</span><span class="o">:/</span><span class="n">bin</span><span class="o">/</span><span class="n">sync</span>
+<span class="nl">sshd:</span><span class="n">x</span><span class="o">:</span><span class="mi">104</span><span class="o">:</span><span class="mi">65534</span><span class="o">::/</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">sshd</span><span class="o">:/</span><span class="n">usr</span><span class="o">/</span><span class="n">sbin</span><span class="o">/</span><span class="n">nologin</span>
+</pre></div>
+
+
+<p><br></p>
+<h1 id="uniq">uniq</h1>
+<p>uniq 命令可以去除<strong>排序过</strong>的文件中的重复行, 因此 uniq 经常和 sort 合用.</p>
+<div class="hlcode"><pre><span class="n">uniq</span> <span class="p">[</span><span class="o">-</span><span class="n">icu</span><span class="p">]</span>
+<span class="err">选项与参数</span><span class="o">:</span>
+<span class="o">-</span><span class="n">i</span>   <span class="o">:</span> <span class="err">忽略大小写字符的不同</span><span class="p">;</span>
+<span class="o">-</span><span class="n">c</span>  <span class="o">:</span> <span class="err">进行计数</span>
+<span class="o">-</span><span class="n">u</span>  <span class="o">:</span> <span class="err">只显示唯一的行</span>
+</pre></div>
+
+
+<p><br>
+如存在一个 testfile 文件, 内容如下:</p>
+<div class="hlcode"><pre><span class="n">hello</span>
+<span class="n">world</span>
+<span class="n">friend</span>
+<span class="n">hello</span>
+<span class="n">world</span>
+<span class="n">hello</span>
+</pre></div>
+
+
+<p><br>
+直接删除未经排序的文件, 将会发现没有任何行被删除</p>
+<div class="hlcode"><pre><span class="n">uniq</span> <span class="n">testfile</span>
+<span class="n">hello</span>
+<span class="n">world</span>
+<span class="n">friend</span>
+<span class="n">hello</span>
+<span class="n">world</span>
+<span class="n">hello</span>
+</pre></div>
+
+
+<p><br>
+排序文件后再去重</p>
+<div class="hlcode"><pre><span class="n">cat</span> <span class="n">words</span> <span class="o">|</span> <span class="n">sort</span> <span class="o">|</span><span class="n">uniq</span>
+<span class="n">friend</span>
+<span class="n">hello</span>
+<span class="n">world</span>
+</pre></div>
+
+
+<p><br>
+排序之后删除了重复行, 同时在行首位置输出该行重复的次数:</p>
+<div class="hlcode"><pre><span class="n">sort</span> <span class="n">testfile</span> <span class="o">|</span> <span class="n">uniq</span> <span class="o">-</span><span class="n">c</span>
+<span class="mi">1</span> <span class="n">friend</span>
+<span class="mi">3</span> <span class="n">hello</span>
+<span class="mi">2</span> <span class="n">world</span>
+</pre></div>
+
+
+<p><br>
+仅显示存在重复的行, 并在行首显示该行重复的次数:</p>
+<div class="hlcode"><pre><span class="n">sort</span> <span class="n">testfile</span> <span class="o">|</span> <span class="n">uniq</span> <span class="o">-</span><span class="n">dc</span>
+<span class="mi">3</span> <span class="n">hello</span>
+<span class="mi">2</span> <span class="n">world</span>
+</pre></div>
+
+
+<p><br>
+仅显示不重复的行:</p>
+<div class="hlcode"><pre><span class="n">sort</span> <span class="n">testfile</span> <span class="o">|</span> <span class="n">uniq</span> <span class="o">-</span><span class="n">u</span>
+<span class="n">friend</span>
+</pre></div>
+
+
+<p><br></p>
+<h1 id="cut">cut</h1>
+<p>cut 命令可以从一个文本文件或者文本流中提取文本列.</p>
+<div class="hlcode"><pre><span class="err">选项与参数</span><span class="o">:</span>
+<span class="o">-</span><span class="n">d</span>  <span class="o">:</span> <span class="err">后面接分隔字符</span><span class="p">.</span> <span class="err">与</span> <span class="o">-</span><span class="n">f</span> <span class="err">一起使用</span><span class="p">;</span>
+<span class="o">-</span><span class="n">f</span>  <span class="o">:</span> <span class="err">依据</span> <span class="o">-</span><span class="n">d</span> <span class="err">的分隔字符将一段信息分割成为数段</span><span class="p">,</span> <span class="err">用</span> <span class="o">-</span><span class="n">f</span> <span class="err">取出第几段的意思</span> <span class="p">(</span><span class="err">即下标</span><span class="p">);</span>
+<span class="o">-</span><span class="n">c</span>  <span class="o">:</span> <span class="err">以字符</span> <span class="p">(</span><span class="n">characters</span><span class="p">)</span> <span class="err">的单位取出固定字符区间</span><span class="p">;</span>
+</pre></div>
+
+
+<p><br>
+如 PATH 变量如下 (以 : 分割):</p>
+<div class="hlcode"><pre><span class="n">echo</span> <span class="err">$</span><span class="n">PATH</span>
+<span class="o">/</span><span class="n">bin</span><span class="o">:/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span><span class="o">:/</span><span class="n">sbin</span><span class="o">:/</span><span class="n">usr</span><span class="o">/</span><span class="n">sbin</span><span class="o">:/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">bin</span><span class="o">:/</span><span class="n">usr</span><span class="o">/</span><span class="n">X11R6</span><span class="o">/</span><span class="n">bin</span><span class="o">:/</span><span class="n">usr</span><span class="o">/</span><span class="n">games</span>
+<span class="cp"># 1 | 2       | 3   | 4       | 5            | 6            | 7</span>
+</pre></div>
+
+
+<p><br>
+将 PATH 变量取出, 我要找出第五个路径:</p>
+<div class="hlcode"><pre><span class="n">echo</span> <span class="err">$</span><span class="n">PATH</span> <span class="o">|</span> <span class="n">cut</span> <span class="o">-</span><span class="n">d</span> <span class="sc">&#39;:&#39;</span> <span class="o">-</span><span class="n">f</span> <span class="mi">5</span>
+<span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">bin</span>
+</pre></div>
+
+
+<p><br>
+将 PATH 变量取出, 我要找出第三和第五个路径:</p>
+<div class="hlcode"><pre><span class="n">echo</span> <span class="err">$</span><span class="n">PATH</span> <span class="o">|</span> <span class="n">cut</span> <span class="o">-</span><span class="n">d</span> <span class="sc">&#39;:&#39;</span> <span class="o">-</span><span class="n">f</span> <span class="mi">3</span><span class="p">,</span><span class="mi">5</span>
+<span class="o">/</span><span class="n">sbin</span><span class="o">:/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">bin</span>
+</pre></div>
+
+
+<p><br>
+将 PATH 变量取出, 我要找出第三到最后一个路径:</p>
+<div class="hlcode"><pre><span class="n">echo</span> <span class="err">$</span><span class="n">PATH</span> <span class="o">|</span> <span class="n">cut</span> <span class="o">-</span><span class="n">d</span> <span class="sc">&#39;:&#39;</span> <span class="o">-</span><span class="n">f</span> <span class="mi">3</span><span class="o">-</span>
+<span class="o">/</span><span class="n">sbin</span><span class="o">:/</span><span class="n">usr</span><span class="o">/</span><span class="n">sbin</span><span class="o">:/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">bin</span><span class="o">:/</span><span class="n">usr</span><span class="o">/</span><span class="n">X11R6</span><span class="o">/</span><span class="n">bin</span><span class="o">:/</span><span class="n">usr</span><span class="o">/</span><span class="n">games</span>
+</pre></div>
+
+
+<p><br>
+将 PATH 变量取出, 我要找出第一到第三个路径:</p>
+<div class="hlcode"><pre><span class="n">echo</span> <span class="err">$</span><span class="n">PATH</span> <span class="o">|</span> <span class="n">cut</span> <span class="o">-</span><span class="n">d</span> <span class="sc">&#39;:&#39;</span> <span class="o">-</span><span class="n">f</span> <span class="mi">1</span><span class="o">-</span><span class="mi">3</span>
+<span class="o">/</span><span class="n">bin</span><span class="o">:/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span><span class="o">:/</span><span class="n">sbin</span><span class="o">:</span>
+</pre></div>
+
+
+<p><br>
+将 PATH 变量取出, 我要找出第一到第三, 还有第五个路径:</p>
+<div class="hlcode"><pre><span class="n">echo</span> <span class="err">$</span><span class="n">PATH</span> <span class="o">|</span> <span class="n">cut</span> <span class="o">-</span><span class="n">d</span> <span class="sc">&#39;:&#39;</span> <span class="o">-</span><span class="n">f</span> <span class="mi">1</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span>
+<span class="o">/</span><span class="n">bin</span><span class="o">:/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span><span class="o">:/</span><span class="n">sbin</span><span class="o">:/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">bin</span>
+</pre></div>
+
+
+<p><br></p>
+<h1 id="wc">wc</h1>
+<p>统计文件里面有多少单词, 多少行, 多少字符.</p>
+<div class="hlcode"><pre><span class="n">wc</span> <span class="p">[</span><span class="o">-</span><span class="n">lLwmc</span><span class="p">]</span>
+<span class="err">选项与参数</span><span class="o">:</span>
+<span class="o">-</span><span class="n">l</span>  <span class="o">:</span> <span class="err">仅列出行</span><span class="p">;</span>
+<span class="o">-</span><span class="n">L</span>  <span class="o">:</span> <span class="err">最长行数</span><span class="p">;</span>
+<span class="o">-</span><span class="n">w</span>  <span class="o">:</span> <span class="err">仅列出多少字</span> <span class="p">(</span><span class="err">英文单字</span><span class="p">);</span>
+<span class="o">-</span><span class="n">m</span>  <span class="o">:</span> <span class="err">多少字符</span><span class="p">;</span>
+<span class="o">-</span><span class="n">c</span>  <span class="o">:</span> <span class="err">统计文件字节</span><span class="p">;</span>
+</pre></div>
+
+
+<p><br>
+默认使用 wc 统计 <code>/etc/passwd</code></p>
+<div class="hlcode"><pre><span class="n">wc</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">passwd</span>
+<span class="mi">40</span>   <span class="mi">45</span> <span class="mi">1719</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">passwd</span>
+</pre></div>
+
+
+<p><br>
+40 是行数, 45 是单词数, 1719 是字节数.</p>
+<h1 id="sed">sed</h1>
+<h2 id="_14">简介</h2>
+<p>sed 是一种在线编辑器, 它一次处理<strong>一行</strong>内容 (即以行为处理单位).</p>
+<p>sed 主要用来自动编辑一个或多个文件; 简化对文件的反复操作; 编写转换程序等.</p>
+<p>处理时, 把当前处理的行存储在临时缓冲区中, 称为 "模式空间" (pattern space), 接着用 sed 命令处理缓冲区中的内容, 处理完成后, 把缓冲区的内容送往屏幕, 接着处理下一行, 这样不断重复, 直到文件末尾.</p>
+<p>seb 默认不会改变源文件内容, 除非你使用重定向存储输出或者 <code>-i</code> 参数.</p>
+<div class="hlcode"><pre><span class="nx">sed</span> <span class="cp">[</span><span class="na">-nefr</span><span class="cp">]</span> <span class="s1">&#39;</span><span class="cp">[</span><span class="nx">function</span><span class="cp">]</span><span class="s1">&#39;</span>
+<span class="err">选项与参数</span><span class="o">:</span>
+<span class="o">-</span><span class="nx">n</span> <span class="o">:</span> <span class="err">使用安静</span> <span class="p">(</span><span class="nx">silent</span><span class="p">)</span> <span class="err">模式</span><span class="p">.</span> <span class="err">默认</span> <span class="nx">seb</span> <span class="err">会打印所有内容</span><span class="p">,</span> <span class="err">安静模式下不打印默认输出</span> <span class="p">(</span><span class="err">经常与</span> <span class="nx">p</span> <span class="err">指令一起用</span><span class="p">);</span>
+<span class="o">-</span><span class="nx">i</span> <span class="o">:</span> <span class="err">直接修改读取的文件内容</span><span class="p">,</span> <span class="err">而不是输出到终端</span><span class="p">.</span>
+<span class="o">-</span><span class="nx">f</span> <span class="o">:</span> <span class="err">将</span> <span class="nx">sed</span> <span class="err">的动作写在一个文件内</span><span class="p">,</span>  <span class="o">-</span><span class="nx">f</span> <span class="nx">filename</span> <span class="err">则可以运行</span> <span class="nx">filename</span> <span class="err">内的</span> <span class="nx">sed</span> <span class="err">动作</span><span class="p">;</span>
+<span class="o">-</span><span class="nx">r</span> <span class="o">:</span> <span class="nx">sed</span> <span class="err">的动作支持的是延伸型正规表示法的语法</span><span class="p">.</span> <span class="p">(</span><span class="err">默认是基础正规表示法语法</span><span class="p">)</span>
+<span class="o">-</span><span class="nx">e</span> <span class="o">:</span> <span class="err">多操作</span><span class="p">,</span> <span class="err">将多个</span> <span class="nx">seb</span> <span class="err">操作写成一行</span><span class="p">;</span>
+
+<span class="kd">function</span> <span class="p">(</span><span class="err">请务必以</span> <span class="s1">&#39; &#39;</span> <span class="err">单引号包围</span><span class="o">!</span><span class="p">)</span><span class="o">:</span>
+<span class="nx">d</span> <span class="o">:</span> <span class="err">删除</span><span class="p">;</span>
+<span class="nx">a</span> <span class="o">:</span> <span class="err">新增</span><span class="p">,</span> <span class="nx">a</span> <span class="err">的后面可以接字串</span><span class="p">,</span> <span class="err">而这些字串会在新的一行出现</span> <span class="p">(</span><span class="err">目前的下一行</span><span class="p">);</span>
+<span class="nx">i</span> <span class="o">:</span> <span class="err">插入</span><span class="p">,</span> <span class="nx">i</span> <span class="err">的后面可以接字串</span><span class="p">,</span> <span class="err">而这些字串会在新的一行出现</span> <span class="p">(</span><span class="err">目前的上一行</span><span class="p">);</span>
+<span class="nx">s</span> <span class="o">:</span> <span class="err">替换</span><span class="p">,</span> <span class="nx">s</span> <span class="err">紧跟的那个字符为分割符</span> <span class="p">(</span><span class="err">以字符为单位替换</span><span class="p">);</span>
+<span class="nx">c</span> <span class="o">:</span> <span class="err">替换</span><span class="p">,</span> <span class="nx">c</span> <span class="err">的后面可以接字串</span><span class="p">,</span> <span class="err">这些字串可以取代</span> <span class="nx">n1</span><span class="p">,</span><span class="nx">n2</span> <span class="err">之间的行</span> <span class="p">(</span><span class="err">以行为单位替换</span><span class="p">);</span>
+<span class="nx">p</span> <span class="o">:</span> <span class="err">指定只打印被修改后的行</span>  <span class="p">(</span><span class="err">经常与</span> <span class="o">-</span><span class="nx">n</span> <span class="err">参数一起用</span><span class="p">)</span>
+<span class="nx">q</span> <span class="o">:</span> <span class="err">完成一个指令后就退出</span> <span class="nx">seb</span> <span class="err">模式</span> <span class="p">(</span><span class="err">如只替换第一个找到的字符</span><span class="p">)</span>
+<span class="nx">g</span> <span class="o">:</span> <span class="err">全局匹配</span>
+<span class="p">,</span> <span class="o">:</span> <span class="err">截取行</span>
+</pre></div>
+
+
+<p><br>
+将 <code>/etc/passwd</code> 的内容列出并且打印行号, 同时, 请将第 2~5 行删除:</p>
+<blockquote>
+<p>nl 命令用来计算文件中行号</p>
+</blockquote>
+<div class="hlcode"><pre><span class="n">nl</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">passwd</span> <span class="o">|</span> <span class="n">sed</span> <span class="err">&#39;</span><span class="mi">2</span><span class="p">,</span><span class="mi">5</span><span class="n">d</span><span class="err">&#39;</span>
+<span class="mi">1</span> <span class="n">root</span><span class="o">:</span><span class="n">x</span><span class="o">:</span><span class="mi">0</span><span class="o">:</span><span class="mi">0</span><span class="o">:</span><span class="n">root</span><span class="o">:/</span><span class="n">root</span><span class="o">:/</span><span class="n">bin</span><span class="o">/</span><span class="n">bash</span>
+<span class="mi">6</span> <span class="n">sync</span><span class="o">:</span><span class="n">x</span><span class="o">:</span><span class="mi">5</span><span class="o">:</span><span class="mi">0</span><span class="o">:</span><span class="n">sync</span><span class="o">:/</span><span class="n">sbin</span><span class="o">:/</span><span class="n">bin</span><span class="o">/</span><span class="n">sync</span>
+<span class="mi">7</span> <span class="n">shutdown</span><span class="o">:</span><span class="n">x</span><span class="o">:</span><span class="mi">6</span><span class="o">:</span><span class="mi">0</span><span class="o">:</span><span class="n">shutdown</span><span class="o">:/</span><span class="n">sbin</span><span class="o">:/</span><span class="n">sbin</span><span class="o">/</span><span class="n">shutdown</span>
+<span class="p">......</span>
+</pre></div>
+
+
+<p><br>
+要删除第 3 到最后一行:</p>
+<div class="hlcode"><pre><span class="n">nl</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">passwd</span> <span class="o">|</span> <span class="n">sed</span> <span class="err">&#39;</span><span class="mi">3</span><span class="p">,</span><span class="err">$</span><span class="n">d</span><span class="err">&#39;</span>
+</pre></div>
+
+
+<p><br>
+在第二行后追加 "drink tea" 字样:</p>
+<div class="hlcode"><pre><span class="n">nl</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">passwd</span> <span class="o">|</span> <span class="n">sed</span> <span class="err">&#39;</span><span class="mi">2</span><span class="n">a</span> <span class="n">drink</span> <span class="n">tea</span><span class="err">&#39;</span>
+<span class="mi">1</span> <span class="n">root</span><span class="o">:</span><span class="n">x</span><span class="o">:</span><span class="mi">0</span><span class="o">:</span><span class="mi">0</span><span class="o">:</span><span class="n">root</span><span class="o">:/</span><span class="n">root</span><span class="o">:/</span><span class="n">bin</span><span class="o">/</span><span class="n">bash</span>
+<span class="mi">2</span> <span class="n">bin</span><span class="o">:</span><span class="n">x</span><span class="o">:</span><span class="mi">1</span><span class="o">:</span><span class="mi">1</span><span class="o">:</span><span class="n">bin</span><span class="o">:/</span><span class="n">bin</span><span class="o">:/</span><span class="n">sbin</span><span class="o">/</span><span class="n">nologin</span>
+<span class="n">drink</span> <span class="n">tea</span>
+<span class="mi">3</span> <span class="n">daemon</span><span class="o">:</span><span class="n">x</span><span class="o">:</span><span class="mi">2</span><span class="o">:</span><span class="mi">2</span><span class="o">:</span><span class="n">daemon</span><span class="o">:/</span><span class="n">sbin</span><span class="o">:/</span><span class="n">sbin</span><span class="o">/</span><span class="n">nologin</span>
+<span class="p">.....</span>
+</pre></div>
+
+
+<p><br>
+如果是要增加两行以上, 在第二行后面加入两行字, 例如 "Drink tea or ...." 与 "drink beer?":</p>
+<div class="hlcode"><pre><span class="n">nl</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">passwd</span> <span class="o">|</span> <span class="n">sed</span> <span class="err">&#39;</span><span class="mi">2</span><span class="n">a</span> <span class="n">Drink</span> <span class="n">tea</span> <span class="n">or</span> <span class="p">......</span>\
+<span class="o">&gt;</span> <span class="n">drink</span> <span class="n">beer</span> <span class="o">?</span><span class="err">&#39;</span>
+<span class="mi">1</span> <span class="n">root</span><span class="o">:</span><span class="n">x</span><span class="o">:</span><span class="mi">0</span><span class="o">:</span><span class="mi">0</span><span class="o">:</span><span class="n">root</span><span class="o">:/</span><span class="n">root</span><span class="o">:/</span><span class="n">bin</span><span class="o">/</span><span class="n">bash</span>
+<span class="mi">2</span> <span class="n">bin</span><span class="o">:</span><span class="n">x</span><span class="o">:</span><span class="mi">1</span><span class="o">:</span><span class="mi">1</span><span class="o">:</span><span class="n">bin</span><span class="o">:/</span><span class="n">bin</span><span class="o">:/</span><span class="n">sbin</span><span class="o">/</span><span class="n">nologin</span>
+<span class="n">Drink</span> <span class="n">tea</span> <span class="n">or</span> <span class="p">......</span>
+<span class="n">drink</span> <span class="n">beer</span><span class="o">?</span>
+<span class="mi">3</span> <span class="n">daemon</span><span class="o">:</span><span class="n">x</span><span class="o">:</span><span class="mi">2</span><span class="o">:</span><span class="mi">2</span><span class="o">:</span><span class="n">daemon</span><span class="o">:/</span><span class="n">sbin</span><span class="o">:/</span><span class="n">sbin</span><span class="o">/</span><span class="n">nologin</span>
+<span class="p">.....</span>
+</pre></div>
+
+
+<p><br>
+每一行之间都必须要以反斜杠 <code>\</code> 来进行新行的添加!</p>
+<p>将第 2-5 行的内容取代成为 "No 2-5 number":</p>
+<div class="hlcode"><pre><span class="n">nl</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">passwd</span> <span class="o">|</span> <span class="n">sed</span> <span class="err">&#39;</span><span class="mi">2</span><span class="p">,</span><span class="mi">5</span><span class="n">c</span> <span class="n">No</span> <span class="mi">2</span><span class="o">-</span><span class="mi">5</span> <span class="n">number</span><span class="err">&#39;</span>
+<span class="mi">1</span> <span class="n">root</span><span class="o">:</span><span class="n">x</span><span class="o">:</span><span class="mi">0</span><span class="o">:</span><span class="mi">0</span><span class="o">:</span><span class="n">root</span><span class="o">:/</span><span class="n">root</span><span class="o">:/</span><span class="n">bin</span><span class="o">/</span><span class="n">bash</span>
+<span class="n">No</span> <span class="mi">2</span><span class="o">-</span><span class="mi">5</span> <span class="n">number</span>
+<span class="mi">6</span> <span class="n">sync</span><span class="o">:</span><span class="n">x</span><span class="o">:</span><span class="mi">5</span><span class="o">:</span><span class="mi">0</span><span class="o">:</span><span class="n">sync</span><span class="o">:/</span><span class="n">sbin</span><span class="o">:/</span><span class="n">bin</span><span class="o">/</span><span class="n">sync</span>
+<span class="p">.....</span>
+</pre></div>
+
+
+<p><br>
+通过这个方法我们就能够将数据整行取代了!</p>
+<p>仅列出 /etc/passwd 文件内的第 5-7 行:</p>
+<div class="hlcode"><pre><span class="n">nl</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">passwd</span> <span class="o">|</span> <span class="n">sed</span> <span class="o">-</span><span class="n">n</span> <span class="err">&#39;</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="n">p</span><span class="err">&#39;</span>
+<span class="mi">5</span> <span class="n">lp</span><span class="o">:</span><span class="n">x</span><span class="o">:</span><span class="mi">4</span><span class="o">:</span><span class="mi">7</span><span class="o">:</span><span class="n">lp</span><span class="o">:/</span><span class="n">var</span><span class="o">/</span><span class="n">spool</span><span class="o">/</span><span class="n">lpd</span><span class="o">:/</span><span class="n">sbin</span><span class="o">/</span><span class="n">nologin</span>
+<span class="mi">6</span> <span class="n">sync</span><span class="o">:</span><span class="n">x</span><span class="o">:</span><span class="mi">5</span><span class="o">:</span><span class="mi">0</span><span class="o">:</span><span class="n">sync</span><span class="o">:/</span><span class="n">sbin</span><span class="o">:/</span><span class="n">bin</span><span class="o">/</span><span class="n">sync</span>
+<span class="mi">7</span> <span class="n">shutdown</span><span class="o">:</span><span class="n">x</span><span class="o">:</span><span class="mi">6</span><span class="o">:</span><span class="mi">0</span><span class="o">:</span><span class="n">shutdown</span><span class="o">:/</span><span class="n">sbin</span><span class="o">:/</span><span class="n">sbin</span><span class="o">/</span><span class="n">shutdown</span>
+</pre></div>
+
+
+<p><br>
+搜索 <code>/etc/passwd</code> 有 root 关键字的行:</p>
+<div class="hlcode"><pre><span class="n">nl</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">passwd</span> <span class="o">|</span> <span class="n">sed</span> <span class="o">-</span><span class="n">n</span> <span class="err">&#39;</span><span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">p</span><span class="err">&#39;</span>
+<span class="mi">1</span>  <span class="n">root</span><span class="o">:</span><span class="n">x</span><span class="o">:</span><span class="mi">0</span><span class="o">:</span><span class="mi">0</span><span class="o">:</span><span class="n">root</span><span class="o">:/</span><span class="n">root</span><span class="o">:/</span><span class="n">bin</span><span class="o">/</span><span class="n">bash</span>
+<span class="p">....</span>
+</pre></div>
+
+
+<p><br>
+删除 <code>/etc/passwd</code> 所有包含 root 的行, 其他行输出</p>
+<div class="hlcode"><pre><span class="n">nl</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">passwd</span> <span class="o">|</span> <span class="n">sed</span>  <span class="err">&#39;</span><span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">d</span><span class="err">&#39;</span>
+<span class="mi">2</span>  <span class="n">daemon</span><span class="o">:</span><span class="n">x</span><span class="o">:</span><span class="mi">1</span><span class="o">:</span><span class="mi">1</span><span class="o">:</span><span class="n">daemon</span><span class="o">:/</span><span class="n">usr</span><span class="o">/</span><span class="n">sbin</span><span class="o">:/</span><span class="n">bin</span><span class="o">/</span><span class="n">sh</span>
+<span class="mi">3</span>  <span class="n">bin</span><span class="o">:</span><span class="n">x</span><span class="o">:</span><span class="mi">2</span><span class="o">:</span><span class="mi">2</span><span class="o">:</span><span class="n">bin</span><span class="o">:/</span><span class="n">bin</span><span class="o">:/</span><span class="n">bin</span><span class="o">/</span><span class="n">sh</span>
+<span class="p">....</span>
+<span class="cp"># 第一行的匹配 root 已经删除了</span>
+</pre></div>
+
+
+<p><br>
+还可以对匹配的结果做进一步处理, 将动作用花括号包围就可以了, 多动作的话用分号分隔, 如搜索 <code>/etc/passwd</code>, 将有 root 的行中的 bash 替换为 blueshell:</p>
+<div class="hlcode"><pre><span class="n">nl</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">passwd</span> <span class="o">|</span> <span class="n">sed</span> <span class="o">-</span><span class="n">n</span> <span class="err">&#39;</span><span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="p">{</span><span class="n">s</span><span class="o">/</span><span class="n">bash</span><span class="o">/</span><span class="n">blueshell</span><span class="o">/</span><span class="p">;</span><span class="n">p</span><span class="p">}</span><span class="err">&#39;</span>
+<span class="mi">1</span>  <span class="n">root</span><span class="o">:</span><span class="n">x</span><span class="o">:</span><span class="mi">0</span><span class="o">:</span><span class="mi">0</span><span class="o">:</span><span class="n">root</span><span class="o">:/</span><span class="n">root</span><span class="o">:/</span><span class="n">bin</span><span class="o">/</span><span class="n">blueshell</span>
+</pre></div>
+
+
+<p><br>
+如果只替换第一个 bash 关键字为 blueshell, 就退出:</p>
+<div class="hlcode"><pre><span class="n">nl</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">passwd</span> <span class="o">|</span> <span class="n">sed</span> <span class="o">-</span><span class="n">n</span> <span class="err">&#39;</span><span class="o">/</span><span class="n">bash</span><span class="o">/</span><span class="p">{</span><span class="n">s</span><span class="o">/</span><span class="n">bash</span><span class="o">/</span><span class="n">blueshell</span><span class="o">/</span><span class="p">;</span><span class="n">p</span><span class="p">;</span><span class="n">q</span><span class="p">}</span><span class="err">&#39;</span>
+<span class="mi">1</span>  <span class="n">root</span><span class="o">:</span><span class="n">x</span><span class="o">:</span><span class="mi">0</span><span class="o">:</span><span class="mi">0</span><span class="o">:</span><span class="n">root</span><span class="o">:/</span><span class="n">root</span><span class="o">:/</span><span class="n">bin</span><span class="o">/</span><span class="n">blueshell</span>
+</pre></div>
+
+
+<p><br>
+s 指令还可以对匹配到的字符串进行替换, s 紧跟的那个字符为分割符, 以下示例用 <code>/</code> 分割:</p>
+<div class="hlcode"><pre><span class="n">sed</span> <span class="err">&#39;</span><span class="n">s</span><span class="o">/</span><span class="n">aaa</span><span class="o">/</span><span class="n">bbb</span><span class="o">/</span><span class="n">g</span><span class="err">&#39;</span> <span class="err">将所有的</span> <span class="n">aaa</span> <span class="err">替换成</span> <span class="n">bbb</span><span class="p">,</span> <span class="err">如果不加</span> <span class="n">g</span><span class="p">,</span> <span class="err">只替换每行找到的第一个</span> <span class="n">aaa</span>
+<span class="n">sed</span> <span class="err">&#39;</span><span class="n">s</span><span class="o">/</span><span class="n">aaa</span><span class="o">/&amp;</span><span class="n">bbb</span><span class="o">/</span><span class="err">&#39;</span> <span class="o">&amp;</span> <span class="err">表示用找到的字符追加</span> <span class="n">bbb</span><span class="p">,</span> <span class="err">这里就变成了</span> <span class="n">aaabbb</span>
+<span class="n">sed</span> <span class="err">&#39;</span><span class="n">s</span><span class="err">#\</span><span class="p">(</span><span class="n">love</span><span class="err">\</span><span class="p">)</span><span class="n">able</span><span class="err">#\</span><span class="mi">1</span><span class="n">rs</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">替换一部分</span><span class="p">,</span> <span class="err">括号里的</span> <span class="n">love</span> <span class="err">保留并标识为</span> <span class="mi">1</span><span class="p">,</span> <span class="err">所以这里</span> <span class="n">loveable</span> <span class="o">-&gt;</span> <span class="mi">1</span><span class="n">rs</span> <span class="o">-&gt;</span> <span class="n">lovers</span>
+</pre></div>
+
+
+<p><br>
+s 指令支持正则表达式.</p>
+<p>通过 <code>-e</code> 参数可以将多行 sed 命令连写, 如删除 <code>/etc/passwd</code> 第三行到末尾的数据, 然后把 bash 替换为 blueshell:</p>
+<div class="hlcode"><pre><span class="n">nl</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">passwd</span> <span class="o">|</span> <span class="n">sed</span> <span class="o">-</span><span class="n">e</span> <span class="err">&#39;</span><span class="mi">3</span><span class="p">,</span><span class="err">$</span><span class="n">d</span><span class="err">&#39;</span> <span class="o">-</span><span class="n">e</span> <span class="err">&#39;</span><span class="n">s</span><span class="o">/</span><span class="n">bash</span><span class="o">/</span><span class="n">blueshell</span><span class="o">/</span><span class="err">&#39;</span>
+<span class="mi">1</span>  <span class="n">root</span><span class="o">:</span><span class="n">x</span><span class="o">:</span><span class="mi">0</span><span class="o">:</span><span class="mi">0</span><span class="o">:</span><span class="n">root</span><span class="o">:/</span><span class="n">root</span><span class="o">:/</span><span class="n">bin</span><span class="o">/</span><span class="n">blueshell</span>
+<span class="mi">2</span>  <span class="n">daemon</span><span class="o">:</span><span class="n">x</span><span class="o">:</span><span class="mi">1</span><span class="o">:</span><span class="mi">1</span><span class="o">:</span><span class="n">daemon</span><span class="o">:/</span><span class="n">usr</span><span class="o">/</span><span class="n">sbin</span><span class="o">:/</span><span class="n">bin</span><span class="o">/</span><span class="n">sh</span>
+</pre></div>
+
+
+<p><br></p>
+    </div>
+
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="shell 命令" data-title="shell 命令" data-url="http://wiki.smallcpp.com/软件工程/shell 命令.html"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:"smallwiki"};
+        (function() {
+            var ds = document.createElement('script');
+            ds.type = 'text/javascript';ds.async = true;
+            ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+            ds.charset = 'UTF-8';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+    </script>
+    <!-- 多说公共JS代码 end -->
+
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2016 <a href="http://www.samllcpp.com/" target="_blank">Martin</a> Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+              </p>
+        </div>
+    </body>
+</html>
