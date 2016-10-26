@@ -1,0 +1,119 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <title>使用 rest 操作 HDFS - Wiki | Small Cpp</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            
+            <a href="/">Home</a> » <a href="/#Hadoop">Hadoop</a> » 使用 rest 操作 HDFS
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#vim-httpfs-envsh">vim httpfs-env.sh</a></li>
+<li><a href="#vim-core-sitexml">vim core-site.xml</a></li>
+<li><a href="#hdfs-sitexml">hdfs-site.xml</a></li>
+<li><a href="#namenode">重启 NameNode</a></li>
+<li><a href="#_1">测试</a></li>
+</ul>
+</div>
+<p>要使用 rest 操作 HDFS, 需要先开启集群的 rest 服务.</p>
+<h1 id="vim-httpfs-envsh">vim httpfs-env.sh</h1>
+<div class="hlcode"><pre><span class="n">export</span> <span class="n">HTTPFS_HTTP_PORT</span><span class="o">=</span><span class="mi">14000</span>
+</pre></div>
+
+
+<p><br></p>
+<h1 id="vim-core-sitexml">vim core-site.xml</h1>
+<div class="hlcode"><pre><span class="nt">&lt;property&gt;</span>
+    <span class="c">&lt;!--可使用节点--&gt;</span>
+    <span class="nt">&lt;name&gt;</span>hadoop.proxyuser.root.hosts<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;value&gt;</span>*<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+    <span class="c">&lt;!--可使用用户组--&gt;</span>
+    <span class="nt">&lt;name&gt;</span>hadoop.proxyuser.root.groups<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;value&gt;</span>*<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+</pre></div>
+
+
+<p><br></p>
+<h1 id="hdfs-sitexml">hdfs-site.xml</h1>
+<div class="hlcode"><pre><span class="nt">&lt;property&gt;</span>
+    <span class="c">&lt;!--启动 webhdfs--&gt;</span>
+    <span class="nt">&lt;name&gt;</span>dfs.webhdfs.enabled<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;value&gt;</span>true<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+</pre></div>
+
+
+<p><br></p>
+<h1 id="namenode">重启 NameNode</h1>
+<p>修改好配置文件后, 重新启动 NameNode:</p>
+<div class="hlcode"><pre><span class="p">.</span><span class="o">/</span><span class="n">stop</span><span class="o">-</span><span class="n">all</span><span class="p">.</span><span class="n">sh</span>
+<span class="p">.</span><span class="o">/</span><span class="n">start</span><span class="o">-</span><span class="n">all</span><span class="p">.</span><span class="n">sh</span>
+<span class="p">.</span><span class="o">/</span><span class="n">httpfs</span><span class="p">.</span><span class="n">sh</span> <span class="n">start</span>
+</pre></div>
+
+
+<p><br>
+最后一行就是启动集群的 rest 服务器.</p>
+<h1 id="_1">测试</h1>
+<p>执行命令 <code>curl -i "http://192.168.1.213:14000/webhdfs/v1?user.name=root&amp;op=LISTSTATUS"</code></p>
+<blockquote>
+<p>-i 表示显示 http response 的头信息, 连同网页代码一起.</p>
+</blockquote>
+<ul>
+<li>api: <code>http://&lt;HOST&gt;:&lt;PORT&gt;/webhdfs/v1/&lt;PATH&gt;</code></li>
+<li>参数:<ul>
+<li>user.name 操作者</li>
+<li>op 操作内容</li>
+</ul>
+</li>
+<li>返回 json 格式</li>
+</ul>
+<p>更多命令参考 <a href="http://hadoop.apache.org/docs/r2.7.3/hadoop-project-dist/hadoop-hdfs/WebHDFS.html">http://hadoop.apache.org/docs/r2.7.3/hadoop-project-dist/hadoop-hdfs/WebHDFS.html</a></p>
+    </div>
+
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="使用 rest 操作 HDFS" data-title="使用 rest 操作 HDFS" data-url="http://wiki.smallcpp.com/Hadoop/使用 rest 操作 HDFS.html"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:"smallwiki"};
+        (function() {
+            var ds = document.createElement('script');
+            ds.type = 'text/javascript';ds.async = true;
+            ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+            ds.charset = 'UTF-8';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+    </script>
+    <!-- 多说公共JS代码 end -->
+
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2016 <a href="http://www.samllcpp.com/" target="_blank">Martin</a> Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+              </p>
+        </div>
+    </body>
+</html>
