@@ -1,5 +1,5 @@
 ---
-title: shell 命令
+title: Shell 命令
 layout: page
 date: 2016-10-26 11:19
 ---
@@ -416,7 +416,6 @@ wc /etc/passwd
 40 是行数, 45 是单词数, 1719 是字节数.
 
 # sed
-## 简介
 sed 是一种在线编辑器, 它一次处理**一行**内容 (即以行为处理单位).
 
 sed 主要用来自动编辑一个或多个文件; 简化对文件的反复操作; 编写转换程序等.
@@ -561,3 +560,145 @@ nl /etc/passwd | sed -e '3,$d' -e 's/bash/blueshell/'
 2  daemon:x:1:1:daemon:/usr/sbin:/bin/sh
 ```
 <br>
+# awk
+awk 是一个强大的文本分析工具, 相对于 grep 的查找, sed 的编辑, awk 在其对数据分析并生成报告时, 显得尤为强大.
+
+简单来说 awk 就是把文件**逐行**的读入, 以**空格**为默认分隔符将每行切片, 切开的部分再进行各种分析处理.
+
+awk 的强大以至于它甚至形成了自己的语言体系, 即 AWK 编程, 它允许您创建简短的程序, 这些程序读取输入文件、为数据排序、处理数据、对输入执行计算以及生成报表, 还有无数其他的功能. , 但对于我来说, 了解它的基础用法就足够了, 更高级的功能我更喜欢用 Python 来完成.
+
+awk 语言的最基本功能是在文件或者字符串中基于指定规则浏览和抽取信息, awk 抽取信息后, 才能进行其他文本操作.
+
+完整的 awk 脚本通常用来格式化文本文件中的信息, 通常, awk 是以文件的一行为处理单位的. awk 每接收文件的一行, 然后执行相应的命令, 来处理文本.
+
+调用 awk 的三种方式:
+
+```
+1. 命令行方式
+awk [-F  field-separator]  'commands'  input-file(s)
+其中, commands 是真正 awk 命令, 通过包含两部分内容: 'pattern {action}'
+pattern : 要查找的内容 (支持正则, 不指定 pattern, 则对所有行进行 action)
+action : 对匹配内容所执行的操作 (不指定 action 则默认输出每行的内容)
+-F 域分隔符是可选的. input-file(s) 是待处理的文件.
+在 awk 中, 文件的每一行中, 由域分隔符分开的每一项称为一个域. 通常, 在不指名 -F 域分隔符的情况下, 默认的域分隔符是空格或 tab.
+
+2. shell 脚本方式
+将所有的 awk 命令插入一个文件, 并使 awk 程序可执行, 然后 awk 命令解释器作为脚本的首行, 一遍通过键入脚本名称来调用.
+相当于 shell 脚本首行的: #!/bin/sh
+可以换成: #!/bin/awk
+
+3. 将所有的 awk 命令插入一个单独文件, 然后调用:
+awk -f awk-script-file input-file(s)
+其中, -f 选项加载 awk-script-file 中的 awk 脚本, input-file(s) 跟上面的是一样的.
+```
+<br>
+这里着重介绍命令行方式.
+
+假设 `last -n 5` 的输出如下:
+
+```
+last -n 5
+root     pts/1   192.168.1.100  Tue Feb 10 11:21   still logged in
+root     pts/1   192.168.1.100  Tue Feb 10 00:46 - 02:28  (01:41)
+root     pts/1   192.168.1.100  Mon Feb  9 11:41 - 18:30  (06:48)
+dmtsai   pts/1   192.168.1.100  Mon Feb  9 11:41 - 11:41  (00:00)
+root     tty1                   Fri Sep  5 14:09 - 14:10  (00:01)
+```
+<br>
+如果只是显示最近登录的 5 个帐号的名称:
+
+```
+last -n 5 | awk  '{print $1}'
+root
+root
+root
+dmtsai
+root
+```
+<br>
+awk 工作流程是这样的:<br>
+读入有 '\\n' 换行符分割的一条记录, 然后将记录按指定的域分隔符划分域, 填充域, `$0` 则表示所有域, `$1` 表示第一个域, `$n` 表示第 n 个域. 默认域分隔符是 "空白键" 或 "[tab]键", 所以 `$1` 表示登录用户, `$3` 表示登录用户ip, 以此类推.
+
+下面的操作只显示 `/etc/passwd` 的账户和账户对应的 shell, 而账户与 shell 之间以 tab 键分割:
+
+```
+cat /etc/passwd |awk  -F ':'  '{print $1"\t"$7}'
+root    /bin/bash
+daemon  /bin/sh
+bin     /bin/sh
+sys     /bin/sh
+```
+<br>
+下面的操作显示 `/etc/passwd` 的账户和账户对应的 shell, 而账户与 shell 之间以逗号分割, 而且在所有行添加列名 "name, shell", 在最后一行添加 "blue, /bin/nosh".
+
+```
+cat /etc/passwd |awk  -F ':'  'BEGIN {print "name,shell"}  {print $1","$7} END {print "blue,/bin/nosh"}'
+name,shell
+root,/bin/bash
+daemon,/bin/sh
+bin,/bin/sh
+sys,/bin/sh
+....
+blue,/bin/nosh
+```
+<br>
+awk 工作流程是这样的: 先执行 BEGING, 然后处理文件, 最后执行 END 操作.
+
+搜索 `/etc/passwd` 有 root 关键字的所有行:
+
+```
+awk -F ':' '/root/' /etc/passwd
+root:x:0:0:root:/root:/bin/bash
+```
+<br>
+搜索 `/etc/passwd` 有 root 关键字的所有行, 并显示对应的 shell:
+
+```
+awk -F ':' '/root/{print $7}' /etc/passwd
+/bin/bash
+```
+<br>
+awk 有许多内置变量用来设置环境信息, 这些变量可以被改变, 下面给出了最常用的一些变量.
+
+- `ARGC`
+    + 命令行参数个数
+- `ARGV`
+    + 命令行参数排列
+- `ENVIRON`
+    + 支持队列中系统环境变量的使用
+- `FILENAME`
+    + awk 浏览的文件名
+- `FNR`
+    + 浏览文件的记录数
+- `FS`
+    + 设置输入域分隔符, 等价于命令行 -F选项
+- `NF`
+    + 浏览记录的域的个数
+- `NR`
+    + 已读的记录数
+- `OFS`
+    + 输出域分隔符
+- `ORS`
+    + 输出记录分隔符
+- `RS`
+    + 控制记录分隔符
+- `$0~n`
+    + 域选择器
+
+统计 `/etc/passwd` 文件名, 每行的行号, 每行的列数, 对应的完整行内容:
+
+```
+awk  -F ':'  '{print "filename:" FILENAME ", linenumber:" NR ", columns:" NF ", linecontent:"$0}' /etc/passwd
+filename:/etc/passwd,linenumber:1,columns:7,linecontent:root:x:0:0:root:/root:/bin/bash
+filename:/etc/passwd,linenumber:2,columns:7,linecontent:daemon:x:1:1:daemon:/usr/sbin:/bin/sh
+filename:/etc/passwd,linenumber:3,columns:7,linecontent:bin:x:2:2:bin:/bin:/bin/sh
+filename:/etc/passwd,linenumber:4,columns:7,linecontent:sys:x:3:3:sys:/dev:/bin/sh
+```
+<br>
+使用 printf 替代 print, 可以让代码更加简洁, 易读:
+
+```
+awk  -F ':'  '{printf("filename:%10s, linenumber:%s, columns:%s, linecontent:%s\n",FILENAME, NR, NF, $0)}' /etc/passwd
+```
+<br>
+printf 函数, 其用法和 c 语言中 printf 基本相似, 可以格式化字符串, 输出复杂时, printf 更加好用, 代码更易懂.
