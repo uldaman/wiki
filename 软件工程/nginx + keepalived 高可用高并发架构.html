@@ -32,7 +32,7 @@
 <p><img alt="" src="http://wiki.smallcpp.com/static/images/高可用高并发架构/nginx.jpg" /></p>
 <p>在以上的体系中, 我们接着将一些通用的服务从动态 Server 上抽离出来单独封装, 动态 Server 通过 <strong>RPC</strong> 远程调用通用服务, 这样就避免升级通用服务时会更改对所有动态 Server 的问题.</p>
 <p><img alt="" src="http://wiki.smallcpp.com/static/images/高可用高并发架构/rpc.jpg" /></p>
-<p>如上图, 如果 RPC 服务器挂掉了, 那所有的 RPC 请求都会出问题, 为此, 同一个通用服务可以准备多台 RPC 服务器, 通过 <strong>dobbu</strong> 来进行调度, 这样就实现了 RPC 服务器的<em>高并发</em>及<em>高可用</em>.</p>
+<p>如上图, 如果 RPC 服务器挂掉了, 那所有的 RPC 请求都会出问题, 为此, 同一个通用服务可以准备多台 RPC 服务器, 通过 <strong>dubbo</strong> 来进行调度, 这样就实现了 RPC 服务器的<em>高并发</em>及<em>高可用</em>.</p>
 <p><img alt="" src="http://wiki.smallcpp.com/static/images/高可用高并发架构/dobbu.jpg" /></p>
 <p>那么问题又来了, 如果 nginx 宕掉了怎么办?</p>
 <p>这时就要让 <strong>keepalived</strong> 出场了, 借助 keepalived 实现 nginx 的<em>高可用</em>.</p>
