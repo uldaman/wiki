@@ -1,0 +1,94 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <title>nginx + keepalived 高可用高并发架构 - Wiki | Small Cpp</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            
+            <a href="/">Home</a> » <a href="/#软件工程">软件工程</a> » nginx + keepalived 高可用高并发架构
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <div class="toc"><span class="toctitle">Table of Contents</span><ul></ul>
+</div>
+<p>nginx + keepalived 的组合通常被用来实现前端高可用.</p>
+<p>在这个组合中, 利用 <strong>nginx</strong> 的反向代理实现前端的<em>动静分离</em>和<em>负载均衡</em>, 如下图.</p>
+<p><img alt="" src="http://wiki.smallcpp.com/static/images/软件工程/nginx.jpg" /></p>
+<p>在以上的体系中, 我们接着将一些通用的服务从动态 Server 上抽离出来单独封装, 动态 Server 通过 <strong>RPC</strong> 远程调用通用服务, 这样就避免升级通用服务时会更改对所有动态 Server 的问题.</p>
+<p><img alt="" src="http://wiki.smallcpp.com/static/images/软件工程/rpc.jpg" /></p>
+<p>如上图, 如果 RPC 服务器挂掉了, 那所有的 RPC 请求都会出问题, 为此, 同一个通用服务可以准备多台 RPC 服务器, 通过 <strong>dobbu</strong> 来进行调度, 这样就实现了 RPC 服务器的<em>高并发</em>及<em>高可用</em>.</p>
+<p><img alt="" src="http://wiki.smallcpp.com/static/images/软件工程/dobbu.jpg" /></p>
+<p>那么问题又来了, 如果 nginx 宕掉了怎么办?</p>
+<p>这时就要让 <strong>keepalived</strong> 出场了, 借助 keepalived 实现 nginx 的<em>高可用</em>.</p>
+<p>访问网站即访问 IP, keepalived 在这里就是充当着抢这个被访问 IP 的角色, 如下图所示, 我们准备了两台 nginx 服务器, 都装上 keepalived;</p>
+<p><img alt="" src="http://wiki.smallcpp.com/static/images/软件工程/keepalived.jpg" /></p>
+<p>现在, 我们的网站 IP 被上面那个 keepalived 抢到了, 所以当有 IP 请求时, 是上面的 ngnix 在起作用, 一旦它出问题, 下面那个 keepalived 就会抢到前端网站 IP, 这样就实现了 ngnix 的<em>高可用</em>.</p>
+<p>在 keepalived 中, 可以通过自定义脚本实现监控任意进程, 一旦被监控进程挂掉, 就能让 keepalived 放弃对 IP 的抢占.</p>
+<p>另外, 在数据库层面上, 也有一些优化方案, 如读写分离、缓存系统、分库分表等 (<a href="http://www.jianshu.com/p/ddcc3643aec9">mongodb</a> 作为一个分布式数据库, 支持自动<a href="http://www.ttlsa.com/mongodb/the-architecture-of-mongodb-mongodb-fragment-cluster-and-simple-construction-scheme/">分片</a>); 值得一提的是, 现在有个应用叫 <strong>mycat</strong>.</p>
+<div class="hlcode"><pre><span class="n">mycat</span> <span class="err">能够帮我们实现分库分表的操作</span><span class="p">,</span> <span class="err">并且它也支持</span> <span class="n">mongodb</span><span class="p">,</span> <span class="err">开发者可以根据不同的需求将表分配不同的数据节点</span><span class="p">,</span> <span class="err">比如</span> <span class="n">Table</span> <span class="n">A</span> <span class="err">存放在关系型数据库中</span> <span class="p">(</span><span class="err">如</span> <span class="n">MySQL</span><span class="p">),</span> <span class="err">而</span> <span class="n">Table</span> <span class="n">B</span> <span class="err">可能更适合</span> <span class="n">NoSQL</span> <span class="p">(</span><span class="err">如</span> <span class="n">MongoDB</span><span class="p">),</span> <span class="err">在</span> <span class="n">MyCAT</span> <span class="err">中开发者只需要简单配置</span><span class="p">,</span> <span class="err">即可让</span> <span class="n">MyCAT</span> <span class="err">完成这一系列操作的路由</span><span class="p">.</span>
+</pre></div>
+
+
+<p>如果更进一步, 还可以上 <strong>CDN</strong> 服务, 把静态资源委托给 CDN.</p>
+<p>这里也顺便补充下 CDN 的知识:</p>
+<div class="hlcode"><pre><span class="n">CDN</span> <span class="err">内容分发网络</span>
+
+<span class="n">CDN</span> <span class="err">加速将网站的内容缓存在网络边缘</span> <span class="p">(</span><span class="err">离用户接入网络最近的地方</span><span class="p">),</span> <span class="err">然后在用户访问网站内容的时候</span><span class="p">,</span> <span class="n">CDN</span> <span class="err">系统能够实时地根据网络流量和各节点的连接、负载状况以及到用户的距离和响应时间等综合信息将用户的请求重新导向离用户最近的服务节点上</span><span class="p">.</span>
+
+<span class="n">CDN</span> <span class="err">服务最初用于确保快速可靠地分发静态内容</span><span class="p">,</span> <span class="err">这些内容可以缓存</span><span class="p">,</span> <span class="err">最适合在网速庞大的网络中存储和分发</span><span class="p">,</span> <span class="err">该网络在几十多个国家的十几个网络中的覆盖</span> <span class="n">CDN</span> <span class="err">网络服务器</span><span class="p">.</span>
+</pre></div>
+
+
+<p>这些知识比较偏硬件, 我认为更多的是 IT、运维或者架构师的职责, 对于目前的我来说, 简单的了解下, 知道有这些个东西就足够了, 更多的参考资料可参考:</p>
+<p><strong>Refrences</strong>:<br>
+<a href="http://freeloda.blog.51cto.com/2033581/1265304">Linux 高可用 (HA) 集群基本概念详解</a><br>
+<a href="http://freeloda.blog.51cto.com/2033581/1265808">Linux 高可用 (HA) 集群之 Heartbeat 详解</a><br>
+<a href="http://freeloda.blog.51cto.com/2033581/1270239">Linux 高可用 (HA) 集群之 heartbeat 基于 crm 进行资源管理详解</a><br>
+<a href="http://freeloda.blog.51cto.com/2033581/1272417">Linux 高可用 (HA) 集群之 Corosync 详解</a><br>
+<a href="http://freeloda.blog.51cto.com/2033581/1274533">Linux 高可用 (HA) 集群之 Pacemaker 详解</a><br>
+<a href="http://freeloda.blog.51cto.com/2033581/1275384">Linux 高可用 (HA) 集群之 DRB 详解</a><br>
+<a href="http://freeloda.blog.51cto.com/2033581/1280962">Linux 高可用 (HA) 集群之 keepalived 详解</a><br>
+<a href="http://www.codes51.com/article/detail_573458_1.html">Nginx + Keepalived 实现站点高可用</a></p>
+    </div>
+
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="nginx + keepalived 高可用高并发架构" data-title="nginx + keepalived 高可用高并发架构" data-url="http://wiki.smallcpp.com/软件工程/nginx + keepalived 高可用高并发架构.html"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:"smallwiki"};
+        (function() {
+            var ds = document.createElement('script');
+            ds.type = 'text/javascript';ds.async = true;
+            ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+            ds.charset = 'UTF-8';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+    </script>
+    <!-- 多说公共JS代码 end -->
+
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2016 <a href="http://www.samllcpp.com/" target="_blank">Martin</a> Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+              </p>
+        </div>
+    </body>
+</html>
