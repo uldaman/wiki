@@ -16,7 +16,7 @@ nginx + keepalived 的组合通常被用来实现前端高可用.
 
 ![](http://wiki.smallcpp.com/static/images/高可用高并发架构/rpc.jpg)
 
-如上图, 如果 RPC 服务器挂掉了, 那所有的 RPC 请求都会出问题, 为此, 同一个通用服务可以准备多台 RPC 服务器, 通过 **dobbu** 来进行调度, 这样就实现了 RPC 服务器的*高并发*及*高可用*.
+如上图, 如果 RPC 服务器挂掉了, 那所有的 RPC 请求都会出问题, 为此, 同一个通用服务可以准备多台 RPC 服务器, 通过 **dubbo** 来进行调度, 这样就实现了 RPC 服务器的*高并发*及*高可用*.
 
 ![](http://wiki.smallcpp.com/static/images/高可用高并发架构/dobbu.jpg)
 
