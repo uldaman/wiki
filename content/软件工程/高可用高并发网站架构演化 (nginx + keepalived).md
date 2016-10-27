@@ -1,5 +1,5 @@
 ---
-title: nginx + keepalived 高可用高并发架构
+title: 高可用高并发网站架构演化 (nginx + keepalived)
 layout: page
 date: 2016-10-27 22:27
 ---
