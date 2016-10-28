@@ -1,0 +1,608 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <title>vim 入门 - Wiki | Small Cpp</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            
+            <a href="/">Home</a> » <a href="/#工具配置">工具配置</a> » vim 入门
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#_1">配置文件</a></li>
+<li><a href="#vim">VIM 新特性</a><ul>
+<li><a href="#_2">区块选择</a></li>
+<li><a href="#_3">多档案编辑</a></li>
+<li><a href="#_4">多窗口编辑</a></li>
+</ul>
+</li>
+<li><a href="#_5">快捷键</a><ul>
+<li><a href="#_6">移动光标的方法</a></li>
+<li><a href="#_7">搜寻与取代</a></li>
+<li><a href="#_8">删除、复制与贴上</a></li>
+<li><a href="#_9">模式切换</a></li>
+<li><a href="#_10">环境的变更</a></li>
+<li><a href="#_11">自动补全</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<h1 id="_1">配置文件</h1>
+<p>整体 vim 的设置值一般是放置在  <code>/etc/vimrc</code>  这个文件, 不过, 不建议你修改它, 可以修改 <code>~/.vimrc</code> 这个文件（默认不存在, 请你自行手动创建! ）, 这是 vim 的用户配置文件.</p>
+<h1 id="vim">VIM 新特性</h1>
+<h2 id="_2">区块选择</h2>
+<ul>
+<li>v 字符选择</li>
+<li>V 行选择</li>
+<li>ctrl + v 区块选择</li>
+<li>y 复制选择</li>
+<li>d 删除选择</li>
+</ul>
+<h2 id="_3">多档案编辑</h2>
+<blockquote>
+<p>不常用, 推荐使用多窗口编辑功能</p>
+</blockquote>
+<ul>
+<li>vim file1 file2 ...</li>
+<li>:n 下一个文本</li>
+<li>:N 上一个文本</li>
+<li>:file 列出当前开启的所有文本</li>
+</ul>
+<h2 id="_4">多窗口编辑</h2>
+<ul>
+<li>:sp [filename] 开启一个新窗口</li>
+<li>[ctrl]+w j / ↓ 先按 ctrl + w 进入窗口切换模式， 再按 j k 上下切换窗口</li>
+<li>[ctrl]+w k / ↑</li>
+<li>[ctrl]+w q 退出当前窗口</li>
+</ul>
+<h1 id="_5">快捷键</h1>
+<p><img alt="" src="http://wiki.smallcpp.com/static/images/VIM入门/vim.jpg" /></p>
+<h2 id="_6">移动光标的方法</h2>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>h 或 向左箭头键(←)</td>
+<td>光标向左移动一个字符</td>
+</tr>
+<tr>
+<td>j 或 向下箭头键(↓)</td>
+<td>光标向下移动一个字符</td>
+</tr>
+<tr>
+<td>k 或 向上箭头键(↑)</td>
+<td>光标向上移动一个字符</td>
+</tr>
+<tr>
+<td>l 或 向右箭头键(→)</td>
+<td>光标向右移动一个字符</td>
+</tr>
+<tr>
+<td>w</td>
+<td>下一个单词的第一个字符</td>
+</tr>
+<tr>
+<td>W</td>
+<td>下一个长单词的第一个字符</td>
+</tr>
+<tr>
+<td>e</td>
+<td>下一个单词的最后一个字符</td>
+</tr>
+<tr>
+<td>E</td>
+<td>下一个长单词的最后一个字符</td>
+</tr>
+<tr>
+<td>b</td>
+<td>前一个单词的第一个字符</td>
+</tr>
+<tr>
+<td>B</td>
+<td>前一个长单词的第一个字符</td>
+</tr>
+<tr>
+<td>ge</td>
+<td>前一个单词的最后一个字符</td>
+</tr>
+<tr>
+<td>n hjkl</td>
+<td>进行多次移动</td>
+</tr>
+<tr>
+<td>[Ctrl] + [f]</td>
+<td>屏幕『向下』移动一页, 相当于 [Page Down]按键 (常用)</td>
+</tr>
+<tr>
+<td>[Ctrl] + [b]</td>
+<td>屏幕『向上』移动一页, 相当于 [Page Up] 按键 (常用)</td>
+</tr>
+<tr>
+<td>[Ctrl] + [d]</td>
+<td>屏幕『向下』移动半页</td>
+</tr>
+<tr>
+<td>[Ctrl] + [u]</td>
+<td>屏幕『向上』移动半页</td>
+</tr>
+<tr>
+<td>+</td>
+<td>光标移动到非空格符的下一行</td>
+</tr>
+<tr>
+<td>-</td>
+<td>光标移动到非空格符的上一行</td>
+</tr>
+<tr>
+<td>n<space></td>
+<td>那个 n 表示『数字』, 例如 20 .</td>
+</tr>
+<tr>
+<td></td>
+<td>按下数字后再按空格键, 光标会向右移动这一行的 n 个字符.</td>
+</tr>
+<tr>
+<td></td>
+<td>例如 20<space> 则光标会向后面移动 20 个字符距离.</td>
+</tr>
+<tr>
+<td>0 或功能键[Home]</td>
+<td>这是数字『 0 』: 移动到这一行的最前面字符处 (常用)</td>
+</tr>
+<tr>
+<td>$ 或功能键[End]</td>
+<td>移动到这一行的最后面字符处 (常用)</td>
+</tr>
+<tr>
+<td>H</td>
+<td>光标移动到这个屏幕的最上方那一行的第一个字符</td>
+</tr>
+<tr>
+<td>M</td>
+<td>光标移动到这个屏幕的中央那一行的第一个字符</td>
+</tr>
+<tr>
+<td>L</td>
+<td>光标移动到这个屏幕的最下方那一行的第一个字符</td>
+</tr>
+<tr>
+<td>G</td>
+<td>移动到这个档案的最后一行(常用)</td>
+</tr>
+<tr>
+<td>nG</td>
+<td>n 为数字. 移动到这个档案的第 n 行.</td>
+</tr>
+<tr>
+<td></td>
+<td>例如 20G 则会移动到这个档案的第 20 行 (可配合 :set nu)</td>
+</tr>
+<tr>
+<td>gg</td>
+<td>移动到这个档案的第一行, 相当于 1G 啊!  (常用)</td>
+</tr>
+<tr>
+<td>n<Enter></td>
+<td>n 为数字. 光标向下移动 n 行(常用)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_7">搜寻与取代</h2>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>/word</td>
+<td>向光标之下寻找一个名称为 word 的字符串.</td>
+</tr>
+<tr>
+<td></td>
+<td>例如要在档案内搜寻 vbird 这个字符串, 就输入 /vbird 即可!  (常用)</td>
+</tr>
+<tr>
+<td>?word</td>
+<td>向光标之上寻找一个字符串名称为 word 的字符串.</td>
+</tr>
+<tr>
+<td>n</td>
+<td>这个 n 是英文按键. 代表『重复前一个搜寻的动作』.</td>
+</tr>
+<tr>
+<td></td>
+<td>举例来说,  如果刚刚我们执行 /vbird 去向下搜寻 vbird 这个字符串,</td>
+</tr>
+<tr>
+<td></td>
+<td>则按下 n 后, 会向下继续搜寻下一个名称为 vbird 的字符串.</td>
+</tr>
+<tr>
+<td></td>
+<td>如果是执行 ?vbird 的话, 那么按下 n 则会向上继续搜寻名称为 vbird 的字符串!</td>
+</tr>
+<tr>
+<td>N</td>
+<td>与 n 功能相反</td>
+</tr>
+<tr>
+<td>:n1,n2s/word1/word2/g</td>
+<td>n1 与 n2 为数字. 在第 n1 与 n2 行之间寻找 word1 这个字符串, 并将该字符串取代为 word2 !</td>
+</tr>
+<tr>
+<td></td>
+<td>举例来说, 在 100 到 200 行之间搜寻 vbird 并取代为 VBIRD 则:  『:100,200s/vbird/VBIRD/g』. (常用)</td>
+</tr>
+<tr>
+<td>:1,$s/word1/word2/g</td>
+<td>从第一行到最后一行寻找 word1 字符串, 并将该字符串取代为 word2 ! (常用)</td>
+</tr>
+<tr>
+<td>:1,$s/word1/word2/gc</td>
+<td>从第一行到最后一行寻找 word1 字符串, 并将该字符串取代为 word2 !</td>
+</tr>
+<tr>
+<td></td>
+<td>且在取代前显示提示字符给用户确认 (confirm) 是否需要取代! (常用)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_8">删除、复制与贴上</h2>
+<blockquote>
+<p>注意 d 系行命令其实不是删除, 是剪切</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>x, X</td>
+<td>在一行字当中, x 为向后删除一个字符 (相当于 [del] 按键),</td>
+</tr>
+<tr>
+<td></td>
+<td>X 为向前删除一个字符(相当于 [backspace] 亦即是退格键) (常用)</td>
+</tr>
+<tr>
+<td>nx</td>
+<td>n 为数字, 连续向后删除 n 个字符. 举例来说, 我要连续删除 10 个字符,  『10x』.</td>
+</tr>
+<tr>
+<td>dd</td>
+<td>删除游标所在的那一整行(常用)</td>
+</tr>
+<tr>
+<td>ndd</td>
+<td>n 为数字. 删除光标所在的向下 n 行, 例如 20dd 则是删除 20 行 (常用)</td>
+</tr>
+<tr>
+<td>d1G</td>
+<td>删除光标所在到第一行的所有数据</td>
+</tr>
+<tr>
+<td>dG</td>
+<td>删除光标所在到最后一行的所有数据</td>
+</tr>
+<tr>
+<td>d$</td>
+<td>删除游标所在处, 到该行的最后一个字符</td>
+</tr>
+<tr>
+<td>d0</td>
+<td>那个是数字的 0 , 删除游标所在处, 到该行的最前面一个字符</td>
+</tr>
+<tr>
+<td>diw</td>
+<td>删除光标所在单词, 不包括空白字符</td>
+</tr>
+<tr>
+<td>daw</td>
+<td>删除光标所在单词, 包括空白字符</td>
+</tr>
+<tr>
+<td>dw</td>
+<td>从当前位置删除到下一个单词词首, 包括空格</td>
+</tr>
+<tr>
+<td>de</td>
+<td>从当前位置删除到下一个单词词首, 不包括空格</td>
+</tr>
+<tr>
+<td>yy</td>
+<td>复制游标所在的那一行(常用)</td>
+</tr>
+<tr>
+<td>nyy</td>
+<td>n 为数字. 复制光标所在的向下 n 行, 例如 20yy 则是复制 20 行(常用)</td>
+</tr>
+<tr>
+<td>yiw</td>
+<td>复制光标所在单词, 不包括空白字符</td>
+</tr>
+<tr>
+<td>yaw</td>
+<td>复制光标所在单词, 包括空白字符</td>
+</tr>
+<tr>
+<td>yw</td>
+<td>从当前位置复制到下一个单词词首, 包括空格</td>
+</tr>
+<tr>
+<td>ye</td>
+<td>从当前位置复制到下一个单词词首, 不包括空格</td>
+</tr>
+<tr>
+<td>y1G</td>
+<td>复制游标所在行到第一行的所有数据</td>
+</tr>
+<tr>
+<td>yG</td>
+<td>复制游标所在行到最后一行的所有数据</td>
+</tr>
+<tr>
+<td>y0</td>
+<td>复制光标所在的那个字符到该行行首的所有数据</td>
+</tr>
+<tr>
+<td>y$</td>
+<td>复制光标所在的那个字符到该行行尾的所有数据</td>
+</tr>
+<tr>
+<td>p, P</td>
+<td>p 为将已复制的数据在光标下一行贴上, P 则为贴在游标上一行!</td>
+</tr>
+<tr>
+<td></td>
+<td>举例来说, 我目前光标在第 20 行, 且已经复制了 10 行数据.</td>
+</tr>
+<tr>
+<td></td>
+<td>则按下 p 后,  那 10 行数据会贴在原本的 20 行之后, 亦即由 21 行开始贴.</td>
+</tr>
+<tr>
+<td></td>
+<td>但如果是按下 P 呢？ 那么原本的第 20 行会被推到变成 30 行.  (常用)</td>
+</tr>
+<tr>
+<td>J</td>
+<td>将光标所在行与下一行的数据结合成同一行</td>
+</tr>
+<tr>
+<td>c</td>
+<td>重复删除多个数据, 例如向下删除 10 行, [ 10cj ]</td>
+</tr>
+<tr>
+<td>u</td>
+<td>复原前一个动作. (常用)</td>
+</tr>
+<tr>
+<td>[Ctrl] + r</td>
+<td>重做上一个动作. (常用)</td>
+</tr>
+<tr>
+<td>.</td>
+<td>不要怀疑! 这就是小数点! 意思是重复前一个动作的意思.</td>
+</tr>
+<tr>
+<td></td>
+<td>如果你想要重复删除、重复贴上等等动作, 按下小数点『.』就好了!  (常用)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_9">模式切换</h2>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>i, I</td>
+<td>进入插入模式(Insert mode):</td>
+</tr>
+<tr>
+<td></td>
+<td>i 为『从目前光标所在处插入』</td>
+</tr>
+<tr>
+<td></td>
+<td>I 为『在目前所在行的第一个非空格符处开始插入』.  (常用)</td>
+</tr>
+<tr>
+<td>a, A</td>
+<td>进入插入模式(Insert mode):</td>
+</tr>
+<tr>
+<td></td>
+<td>a 为『从目前光标所在的下一个字符处开始插入』</td>
+</tr>
+<tr>
+<td></td>
+<td>A 为『从光标所在行的最后一个字符处开始插入』. (常用)</td>
+</tr>
+<tr>
+<td>o, O</td>
+<td>进入插入模式(Insert mode):  这是英文字母 o 的大小写.</td>
+</tr>
+<tr>
+<td></td>
+<td>o 为『在目前光标所在的下一行处插入新的一行』;</td>
+</tr>
+<tr>
+<td></td>
+<td>O 为在目前光标所在处的上一行插入新的一行! (常用)</td>
+</tr>
+<tr>
+<td>r, R</td>
+<td>进入取代模式(Replace mode):</td>
+</tr>
+<tr>
+<td></td>
+<td>r 只会取代光标所在的那一个字符一次;</td>
+</tr>
+<tr>
+<td></td>
+<td>R会一直取代光标所在的文字, 直到按下 ESC 为止; (常用)</td>
+</tr>
+<tr>
+<td>[Esc]</td>
+<td>退出编辑模式, 回到一般模式中(常用)</td>
+</tr>
+<tr>
+<td>:w</td>
+<td>将编辑的数据写入硬盘档案中(常用)</td>
+</tr>
+<tr>
+<td>:w!</td>
+<td>若文件属性为『只读』时, 强制写入该档案.</td>
+</tr>
+<tr>
+<td>:w!</td>
+<td>不过, 到底能不能写入,  还是跟你对该档案的档案权限有关啊!</td>
+</tr>
+<tr>
+<td>:q</td>
+<td>离开 vi (常用)</td>
+</tr>
+<tr>
+<td>:q!</td>
+<td>若曾修改过档案, 又不想储存, 使用 ! 为强制离开不储存档案.</td>
+</tr>
+<tr>
+<td></td>
+<td>注意一下啊, 那个惊叹号 (!) 在 vi 当中, 常常具有『强制』的意思～</td>
+</tr>
+<tr>
+<td>:wq</td>
+<td>储存后离开, 若为 :wq! 则为强制储存后离开 (常用)</td>
+</tr>
+<tr>
+<td>ZZ</td>
+<td>这是大写的 Z 喔! 若档案没有更动, 则不储存离开, 若档案已经被更动过, 则储存后离开!</td>
+</tr>
+<tr>
+<td>:w [filename]</td>
+<td>将编辑的数据储存成另一个档案（类似另存新档）</td>
+</tr>
+<tr>
+<td>:r [filename]</td>
+<td>在编辑的数据中, 读入另一个档案的数据;</td>
+</tr>
+<tr>
+<td>:r [filename]</td>
+<td>亦即将 『filename』 这个档案内容加到游标所在行后面</td>
+</tr>
+<tr>
+<td>:n1,n2 w [filename]</td>
+<td>将 n1 到 n2 的内容储存成 filename 这个档案.</td>
+</tr>
+<tr>
+<td>:! command</td>
+<td>暂时离开 vi 到指令行模式下执行 command 的显示结果!</td>
+</tr>
+<tr>
+<td></td>
+<td>例如:『:! ls /home』即可在 vi 当中察看 /home 底下以 ls 输出的档案信息!</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_10">环境的变更</h2>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>:set nu</td>
+<td>显示行号, 设定之后, 会在每一行的前缀显示该行的行号</td>
+</tr>
+<tr>
+<td>:set nonu</td>
+<td>与 set nu 相反, 为取消行号!</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_11">自动补全</h2>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>[ctrl]+x  [ctrl]+n</td>
+<td>通过目前正在编辑的这个“文件的内容文字”作为关键字, 予以补齐</td>
+</tr>
+<tr>
+<td>[ctrl]+x  [ctrl]+f</td>
+<td>以当前目录内的“文件名”作为关键字, 予以补齐</td>
+</tr>
+<tr>
+<td>[ctrl]+x  [ctrl]+o</td>
+<td>以扩展名作为语法补充, 以 vim 内置的关键字, 予以补齐</td>
+</tr>
+</tbody>
+</table>
+    </div>
+
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="vim 入门" data-title="vim 入门" data-url="http://wiki.smallcpp.com/工具配置/vim 入门.html"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:"smallwiki"};
+        (function() {
+            var ds = document.createElement('script');
+            ds.type = 'text/javascript';ds.async = true;
+            ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+            ds.charset = 'UTF-8';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+    </script>
+    <!-- 多说公共JS代码 end -->
+
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2016 <a href="http://www.samllcpp.com/" target="_blank">Martin</a> Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+              </p>
+        </div>
+    </body>
+</html>
