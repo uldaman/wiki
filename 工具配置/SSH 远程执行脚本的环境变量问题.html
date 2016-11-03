@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <title>SSH 远程执行脚本的环境变量问题 - Wiki | Small Cpp</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            
+            <a href="/">Home</a> » <a href="/#工具配置">工具配置</a> » SSH 远程执行脚本的环境变量问题
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <div class="toc"><span class="toctitle">Table of Contents</span><ul></ul>
+</div>
+<p>export 导出变量的作用域只即在当前进程及其子进程.</p>
+<p>SSH 远程会话是没有远程主机的环境变量, 解决方法: <code>ssh 远程主机 ". ~/etc/profile &amp;&amp; 命令"</code>.</p>
+<p>有兴趣深纠可参考: <a href="http://feihu.me/blog/2014/env-problem-when-ssh-executing-command-on-remote/#section-10">ssh 连接远程主机执行脚本的环境变量问题</a></p>
+    </div>
+
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="SSH 远程执行脚本的环境变量问题" data-title="SSH 远程执行脚本的环境变量问题" data-url="http://wiki.smallcpp.com/工具配置/SSH 远程执行脚本的环境变量问题.html"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:"smallwiki"};
+        (function() {
+            var ds = document.createElement('script');
+            ds.type = 'text/javascript';ds.async = true;
+            ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+            ds.charset = 'UTF-8';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+    </script>
+    <!-- 多说公共JS代码 end -->
+
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2016 <a href="http://www.samllcpp.com/" target="_blank">Martin</a> Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+              </p>
+        </div>
+    </body>
+</html>
