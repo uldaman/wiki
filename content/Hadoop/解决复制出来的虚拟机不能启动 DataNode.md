@@ -1,6 +1,8 @@
-author: Martin
-date: 2016-01-19 21:03
+---
 title: 解决复制出来的虚拟机不能启动 DataNode
+layout: page
+date: 2016-11-03 22:58
+---
 
 今天因测试需要, 需要第二台 hadoop 虚拟机, 于是就从 itcast01 克隆了一份, 命名为 itcast02.
 
