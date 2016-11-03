@@ -252,7 +252,7 @@ export JAVA_HOME=/usr/java/jdk1.8.0_101 (可以在 vim 的命令模式下, 通�
 ```
 <br>
 ## 4.6. mapred-site.xml
-```ssh
+```shell
 cp mapred-site.xml.template mapred-site.xml
 vim mapred-site.xml
 ```
