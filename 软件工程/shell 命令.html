@@ -203,13 +203,22 @@
 <p><code>[ xx ] &amp;&amp; echo OK || echo NO</code>, 类似三目表达式, 条件成立, echo OK, 不满足执行 echo NO</p>
 <h2 id="_10">逻辑运算符</h2>
 <ul>
+<li>字符串判断<ul>
 <li><code>=</code> 等于比较</li>
+<li><code>!=</code> 不等于比较</li>
+<li><code>-z</code>  空字符串</li>
+<li><code>-n</code>  非空字符串</li>
+</ul>
+</li>
+<li>数值判断<ul>
 <li><code>-lt</code> 小于</li>
 <li><code>-le</code> 小于等于</li>
-<li><code>-eq</code> 等于 (可用=)</li>
+<li><code>-eq</code> 等于</li>
 <li><code>-gt</code> 大于</li>
 <li><code>-ge</code> 大于等于</li>
 <li><code>-ne</code> 不等于</li>
+</ul>
+</li>
 </ul>
 <h2 id="_11">文件判断</h2>
 <ul>
