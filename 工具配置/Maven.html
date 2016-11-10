@@ -1,0 +1,254 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <title>Maven - Wiki | Small Cpp</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            
+            <a href="/">Home</a> » <a href="/#工具配置">工具配置</a> » Maven
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#_1">介绍</a></li>
+<li><a href="#_2">配置</a></li>
+<li><a href="#_3">生命周期</a></li>
+<li><a href="#eclipse">Eclipse 插件</a></li>
+<li><a href="#_4">添加依赖</a></li>
+</ul>
+</div>
+<h1 id="_1">介绍</h1>
+<p>maven 是一个基于 POM (项目对象模型) 的项目管理和构建自动化工具, 通过它便捷的管理项目生命周期. 即项目的 jar 包依赖、开发、测试、打包和发布.</p>
+<p>可以下载最新版本, 也可以下载经典版本: <a href="http://archive.apache.org/dist/maven/maven-3/3.0.5/binaries/">maven 3.0.5</a></p>
+<p>对于我个人来说, 使用了 maven 最大的好处就是不再需要上网单独下载 jar 包, 只需要在配置文件 <code>pom.xml</code> 中配置 jar 包的依赖关系, 就可以自动的下载 jar 包到我们的项目中. 当移植项目时也不再需要来回的拷贝依赖包, 只需要复制这个 pom.xml 就可以自动的下载这些 jar 包. 这样做还能避免依赖包版本的不一致的问题.</p>
+<p>maven 通过在 <code>pom.xml</code> 中配置特定的标识来定义项目名称, 这样既可以唯一的匹配其他的 jar 包, 也可以通过发布, 使别人能使用自己发布的 jar 包:</p>
+<div class="hlcode"><pre><span class="nt">&lt;groupId&gt;</span>com.smallcpp<span class="nt">&lt;/groupId&gt;</span>
+<span class="nt">&lt;artifactId&gt;</span>maventest<span class="nt">&lt;/artifactId&gt;</span>
+<span class="nt">&lt;version&gt;</span>0.0.1<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;packaging&gt;</span>jar<span class="nt">&lt;/packaging&gt;</span>
+<span class="nt">&lt;name&gt;</span>maventest<span class="nt">&lt;/name&gt;</span>
+<span class="nt">&lt;url&gt;</span>http://maven.apache.org<span class="nt">&lt;/url&gt;</span>
+</pre></div>
+
+
+<p><br>
+主要就是上面的几个参数:</p>
+<ul>
+<li><strong>groupId</strong>: 所述的项目名称, 由于有的项目并不是一个 jar 包构成的, 而是由很多的 jar 包组成的. 因此这个 groupId 就是整个项目的名称.</li>
+<li><strong>artifactId</strong>: 包的名称.</li>
+<li><strong>version</strong>: 版本号.</li>
+<li><strong>packaging</strong>: 包的类型, 一般都是jar, 也可以是war之类的. 如果不填, 默认就是jar.</li>
+<li><strong>name</strong> 和 <strong>url</strong>: 一个是名称, 一个是 maven 的地址.</li>
+</ul>
+<h1 id="_2">配置</h1>
+<p>下载 maven 后解压到任意位置 (例如 D:/apache-maven-3.0.5), 然后在修改环境变量:</p>
+<div class="hlcode"><pre><span class="n">M2_HOME</span><span class="o">:</span> <span class="n">D</span><span class="o">/</span><span class="n">apache</span><span class="o">-</span><span class="n">maven</span><span class="o">-</span><span class="mf">3.0</span><span class="o">.</span>
+<span class="n">PATH</span><span class="o">:</span> <span class="o">%</span><span class="n">M2_NOME</span><span class="o">%/</span><span class="n">bin</span>
+</pre></div>
+
+
+<p><br>
+然后打开 cmd 查看是否设置成功:</p>
+<div class="hlcode"><pre><span class="n">mvn</span> <span class="o">-</span><span class="n">version</span> <span class="err">查看版本</span>
+</pre></div>
+
+
+<p><br>
+上面的介绍中已经提到过了, maven 会自动下载 jar 包, 所以要配置下本地 jar 包的存放目录, maven 的设置文件是 <code>M2_HOME/conf/settings.xml</code>, 我们找到其中的 <code>localRepository</code> 标签, 改成:</p>
+<div class="hlcode"><pre><span class="nt">&lt;localRepository&gt;</span>F:/.m2/repositorys<span class="nt">&lt;/localRepository&gt;</span>
+</pre></div>
+
+
+<p><br>
+maven 中三个仓库的概念: <strong>本地仓库</strong> -> <strong>远程仓库</strong> -> <strong>中央仓库</strong>, maven 查找 jar 包也是按这个顺序.</p>
+<p>本地仓库就是我们上面配置的 <code>localRepository</code>, 当 maven 在这个仓库没有找到想要的 jar 包时, 就会去远程仓库寻找, 远程仓库的地址需要我们自己设置, 如果没有设置 (或者在远程仓库也没找到想要的 jar 包), 就会再去中央仓库中找, 如果还没找到, 就会报错.</p>
+<p><strong>远程仓库</strong> 可以在项目的 <code>pom.xml</code> 中设置, 但由于远程仓库的设置通常是想达到全局的效果, 所以也可以在 <code>M2_HOME/conf/settings.xml</code> 中通过 <strong>profile</strong> 设置 (具体的 profile 详细说明参见: <a href="http://elim.iteye.com/blog/1900568">Maven 简介 —— profile 介绍</a>).</p>
+<p>如下, 我们配置了阿里云做为远程仓库, 将其 <strong>id</strong> 设为 <strong>alimaven</strong>, 并且在 <code>activeProfile</code> 标签中激活这个 <strong>id</strong> (注意, 远程仓库需要 "激活" 才能使用, 除了 <code>activeProfile</code> 标签, 其它激活方式参见上面的 <em>Maven 简介 —— profile 介绍</em>).</p>
+<div class="hlcode"><pre><span class="nt">&lt;profiles&gt;</span>
+    <span class="nt">&lt;profile&gt;</span>
+        <span class="nt">&lt;id&gt;</span>alimaven<span class="nt">&lt;/id&gt;</span>
+        <span class="nt">&lt;repositories&gt;</span>
+            <span class="nt">&lt;repository&gt;</span>
+                <span class="nt">&lt;id&gt;</span>nexus<span class="nt">&lt;/id&gt;</span>
+                <span class="nt">&lt;name&gt;</span>local private nexus<span class="nt">&lt;/name&gt;</span>
+                <span class="nt">&lt;url&gt;</span>http://maven.aliyun.com/nexus/content/groups/public/<span class="nt">&lt;/url&gt;</span>
+                <span class="nt">&lt;releases&gt;</span>
+                    <span class="nt">&lt;enabled&gt;</span>true<span class="nt">&lt;/enabled&gt;</span>
+                <span class="nt">&lt;/releases&gt;</span>
+                <span class="nt">&lt;snapshots&gt;</span>
+                    <span class="nt">&lt;enabled&gt;</span>false<span class="nt">&lt;/enabled&gt;</span>
+                <span class="nt">&lt;/snapshots&gt;</span>
+            <span class="nt">&lt;/repository&gt;</span>
+        <span class="nt">&lt;/repositories&gt;</span>
+        <span class="nt">&lt;pluginRepositories&gt;</span>
+            <span class="nt">&lt;pluginRepository&gt;</span>
+                <span class="nt">&lt;id&gt;</span>nexus<span class="nt">&lt;/id&gt;</span>
+                <span class="nt">&lt;name&gt;</span>local private nexus<span class="nt">&lt;/name&gt;</span>
+                <span class="nt">&lt;url&gt;</span>http://maven.aliyun.com/nexus/content/groups/public/<span class="nt">&lt;/url&gt;</span>
+                <span class="nt">&lt;releases&gt;</span>
+                    <span class="nt">&lt;enabled&gt;</span>true<span class="nt">&lt;/enabled&gt;</span>
+                <span class="nt">&lt;/releases&gt;</span>
+                <span class="nt">&lt;snapshots&gt;</span>
+                    <span class="nt">&lt;enabled&gt;</span>false<span class="nt">&lt;/enabled&gt;</span>
+                <span class="nt">&lt;/snapshots&gt;</span>
+            <span class="nt">&lt;/pluginRepository&gt;</span>
+        <span class="nt">&lt;/pluginRepositories&gt;</span>
+    <span class="nt">&lt;/profile&gt;</span>
+<span class="nt">&lt;/profiles&gt;</span>
+
+<span class="nt">&lt;activeProfiles&gt;</span>
+<span class="nt">&lt;activeProfile&gt;</span>alimaven<span class="nt">&lt;/activeProfile&gt;</span>
+<span class="nt">&lt;/activeProfiles&gt;</span>
+</pre></div>
+
+
+<p><br>
+另外, 中央仓库其实就是 maven 默认给我们配好的 <strong>id</strong> 为 <strong>central</strong> 的仓库, 它的配置大概像下面这样 (这个配置在 maven 2.0 版本中位于 <code>${M2_HOME}/lib/maven-2.0.10-uber.jar/pom-4.0.0.xml</code>, 后面的版本我没找到...不过应该也差不多):</p>
+<div class="hlcode"><pre><span class="nt">&lt;repositories&gt;</span>
+  <span class="nt">&lt;repository&gt;</span>
+    <span class="nt">&lt;id&gt;</span>central<span class="nt">&lt;/id&gt;</span>
+    <span class="nt">&lt;name&gt;</span>Maven Repository Switchboard<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;layout&gt;</span>default<span class="nt">&lt;/layout&gt;</span>
+    <span class="nt">&lt;url&gt;</span>http://repo1.maven.org/maven2<span class="nt">&lt;/url&gt;</span>
+    <span class="nt">&lt;snapshots&gt;</span>
+      <span class="nt">&lt;enabled&gt;</span>false<span class="nt">&lt;/enabled&gt;</span>
+    <span class="nt">&lt;/snapshots&gt;</span>
+  <span class="nt">&lt;/repository&gt;</span>
+<span class="nt">&lt;/repositories&gt;</span>
+</pre></div>
+
+
+<p><br>
+可以看到中央仓库的 ID 为 <code>central</code>.</p>
+<p>maven 还提供镜像的配置, 让我们可以为仓库设置镜像, 在 <code>M2_HOME/conf/settings.xml</code> 中的 <code>mirror</code> 标签配置 (老实说, 为远程仓库配置镜像并没什么卵用, 反正地址都是我自己配, 给中央仓库设计镜像也没有必要, 还不如将镜像地址当做一个远程仓库设置, 这样镜像中找不到 jar 时还会去中央仓库再找一次, 多好 . . .).</p>
+<div class="hlcode"><pre><span class="nt">&lt;mirrors&gt;</span>
+    <span class="nt">&lt;mirror&gt;</span>
+          <span class="nt">&lt;id&gt;</span>alimaven<span class="nt">&lt;/id&gt;</span>
+          <span class="nt">&lt;name&gt;</span>aliyun maven<span class="nt">&lt;/name&gt;</span>
+          <span class="nt">&lt;url&gt;</span>http://maven.aliyun.com/nexus/content/groups/public/<span class="nt">&lt;/url&gt;</span>
+          <span class="nt">&lt;mirrorOf&gt;</span>central<span class="nt">&lt;/mirrorOf&gt;</span>
+    <span class="nt">&lt;/mirror&gt;</span>
+<span class="nt">&lt;/mirrors&gt;</span>
+</pre></div>
+
+
+<p><br>
+<code>mirrorOf</code> 标签指定要镜像哪个仓库.</p>
+<h1 id="_3">生命周期</h1>
+<p>最开始说到 maven 可以便捷的管理项目生命周期, maven 有三套相互独立的生命周期, 请注意这里说的是 "三套", 而且 "相互独立", 初学者容易将 maven 的生命周期看成一个整体, 其实不然;<br>
+这三套生命周期分别是：</p>
+<ul>
+<li><strong>Clean Lifecycle</strong> 在进行真正的构建之前进行一些清理工作</li>
+<li><strong>Default Lifecycle</strong> (或称 Build Lifecycle) 构建的核心部分, 编译, 测试, 打包, 部署等等</li>
+<li><strong>Site Lifecycle</strong> 生成项目报告, 站点, 发布站点</li>
+</ul>
+<p><strong>Default Lifecycle</strong> 定义了真正构建时所需要执行的大部分步骤, 它是生命周期中最核心的部分, 它大概如下图这样:</p>
+<p><img alt="" src="http://wiki.smallcpp.com/static/images/MAVEN/Default阶段.png" /></p>
+<p>在每段生命周期内 maven 都提供了 mvn <strong>命令</strong>来维护该阶段, 对于 Default Lifecycle:</p>
+<ul>
+<li><strong>generate-sources</strong>: 通常是通过插件支持创建额外的源代码</li>
+<li><strong>compile</strong>: 编译项目应用代码</li>
+<li><strong>test-compile</strong>: 编译项目单元测试代码</li>
+<li><strong>test</strong>: 运行项目单元测试 (一般为 Junit 测试)</li>
+<li><strong>package</strong>: 打包项目可以执行代码 (以 Jar/War/Ear 形式)</li>
+<li><strong>integration-test</strong>: 如有需要处理及部署应用以便执行系统集成测试</li>
+<li><strong>install</strong>: 将应用打包发布到本地 maven 软件包以便其它 maven 引用 (注意 Install 不是指安装 Java 应用)</li>
+<li><strong>deploy</strong>: 发布到远程 maven 软件包以便其他 maven 项目下载引用</li>
+</ul>
+<p>阶段内的命令是<strong>有序</strong>的, 每个命令的调用会自动调用其前面的阶段命令, 所以大部分情况下, 我们使用 <code>mvn install</code> 就可以了.</p>
+<p>另一个常用的命令是 <code>mvn clean</code> 用来清理项目环境, 如删除项目目录下的 target 目录 (已发布到本地仓库的需要自行控制), 但它属于 Clean Lifecycle 阶段的命令, 和 <code>mvn install</code> 在不同的生命周期, 所以执行 <code>mvn install</code> 时不会主动去执行 <code>mvn clean</code>, 因此, 我们通常和 install 组合使用:</p>
+<div class="hlcode"><pre><span class="n">mvn</span> <span class="n">clean</span> <span class="n">install</span>
+</pre></div>
+
+
+<p><br></p>
+<h1 id="eclipse">Eclipse 插件</h1>
+<p>Eclipse 提供了 maven 插件来方便我们使用, 该插件可以让我们在 Eclipse 上快速新建 maven 项目、导入 maven 项目及转换 maven 项目等.</p>
+<p>新版本的 Eclipse 已集成了 maven 插件, 无须再手动下载, 我们只需配置一下, 主要设置三样: 是否自动下载源码、本地 maven 环境 (Eclipse 有内置的, 不过建议用我们下载的 3.0.5) 以及配置文件目录.</p>
+<p><img alt="" src="http://wiki.smallcpp.com/static/images/MAVEN/MAVEN插件设置1.png" /></p>
+<p><img alt="" src="http://wiki.smallcpp.com/static/images/MAVEN/MAVEN插件设置2.png" /></p>
+<p><img alt="" src="http://wiki.smallcpp.com/static/images/MAVEN/MAVEN插件设置2.png" /></p>
+<p>我们可以新建 maven 项目, 也可以从现有的 java 项目转换:</p>
+<p><img alt="" src="http://wiki.smallcpp.com/static/images/MAVEN/现有项目转换MAVEN.png" /></p>
+<p><img alt="" src="http://wiki.smallcpp.com/static/images/MAVEN/新建MAVEN.png" /></p>
+<p><img alt="" src="http://wiki.smallcpp.com/static/images/MAVEN/简单项目.png" /></p>
+<p><img alt="" src="http://wiki.smallcpp.com/static/images/MAVEN/创建POM.png" /></p>
+<p>maven 项目的左上角有个 <strong>m</strong> 标记, 并且项目下有 <code>pom.xml</code> 文件:</p>
+<p><img alt="" src="http://wiki.smallcpp.com/static/images/MAVEN/MAVEN项目结构.png" /></p>
+<p>并且项目右键多了个一些 maven 选项:</p>
+<p><img alt="" src="http://wiki.smallcpp.com/static/images/MAVEN/常用MAVEN菜单.png" /></p>
+<p><img alt="" src="http://wiki.smallcpp.com/static/images/MAVEN/MAVENRUNAS.png" /></p>
+<p>说下 <code>mvn build</code> 这个选项, mvn 是没有这个命令的, 这个命令菜单是 Eclipse 提供一个接口, 选择该菜单就能通过配置来执行任意 mvn 命令, 如 <code>mvn clean install</code>:</p>
+<p><img alt="" src="http://wiki.smallcpp.com/static/images/MAVEN/RUNCONFIG.png" /></p>
+<p>如果配置错了, 可以在下面这里进行修改:</p>
+<p><img alt="" src="http://wiki.smallcpp.com/static/images/MAVEN/RUNCONFIG0.png" /></p>
+<p><img alt="" src="http://wiki.smallcpp.com/static/images/MAVEN/RUNCONFIG1.png" /></p>
+<p>使用了 Eclipse 插件后, 构建项目时会根据 <code>pom.xml</code> 的配置自动下载依赖包, 但由于我们关闭了 Eclipse 的<strong>自动构建</strong>, 所以需要手动触发下 maven 去下载 jar 依赖, 执行 Default Lifecycle 阶段的任意命令都能触发下载, 也可以通过下面图示的菜单去触发下载:</p>
+<p><img alt="" src="http://wiki.smallcpp.com/static/images/MAVEN/JAR下载.png" /></p>
+<p>然后就能在 <strong>progress</strong> 视图看到 Eclipse 进行了下载操作:</p>
+<p><img alt="" src="http://wiki.smallcpp.com/static/images/MAVEN/DOWNLOADJAR.png" /></p>
+<p>或者</p>
+<p><img alt="" src="http://wiki.smallcpp.com/static/images/MAVEN/DOWNLOADJAR1.png" /></p>
+<h1 id="_4">添加依赖</h1>
+<p>在 Eclipse 中双击打开 <code>pom.xml</code> 可以以可视化的方式添加依赖 (也可以在项目右键的 maven 菜单中使用该方式):</p>
+<p><img alt="" src="http://wiki.smallcpp.com/static/images/MAVEN/添加依赖0.png" /></p>
+<p>打开添加依赖窗口后, 在下图中红框处输入内容可以检索本地仓库, 如果本地仓库没有则检索不到:</p>
+<p><img alt="" src="http://wiki.smallcpp.com/static/images/MAVEN/添加依赖1.png" /></p>
+<p>检索不到时候就需要手动填写所依赖 jar 包的 maven 特征:</p>
+<p><img alt="" src="http://wiki.smallcpp.com/static/images/MAVEN/添加依赖2.png" /></p>
+<p>jar 包的特征可以在 <a href="https://mvnrepository.com/">mvn repository</a> 搜索得到.</p>
+<p>当然也可以在 <code>pom.xml</code> 中手动添加:</p>
+<div class="hlcode"><pre><span class="nt">&lt;dependencies&gt;</span>
+  <span class="nt">&lt;dependency&gt;</span>
+      <span class="nt">&lt;groupId&gt;</span>org.apache.hadoop<span class="nt">&lt;/groupId&gt;</span>
+      <span class="nt">&lt;artifactId&gt;</span>hadoop-common<span class="nt">&lt;/artifactId&gt;</span>
+      <span class="nt">&lt;version&gt;</span>2.7.3<span class="nt">&lt;/version&gt;</span>
+  <span class="nt">&lt;/dependency&gt;</span>
+<span class="nt">&lt;/dependencies&gt;</span>
+</pre></div>
+
+
+<p><br></p>
+    </div>
+
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="Maven" data-title="Maven" data-url="http://wiki.smallcpp.com/工具配置/Maven.html"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:"smallwiki"};
+        (function() {
+            var ds = document.createElement('script');
+            ds.type = 'text/javascript';ds.async = true;
+            ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+            ds.charset = 'UTF-8';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+    </script>
+    <!-- 多说公共JS代码 end -->
+
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2016 <a href="http://www.samllcpp.com/" target="_blank">Martin</a> Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+              </p>
+        </div>
+    </body>
+</html>
