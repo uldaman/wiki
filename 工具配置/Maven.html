@@ -136,7 +136,7 @@ maven 中三个仓库的概念: <strong>本地仓库</strong> -> <strong>远程�
 
 <p><br>
 可以看到中央仓库的 ID 为 <code>central</code>.</p>
-<p>maven 还提供镜像的配置, 让我们可以为仓库设置镜像, 在 <code>M2_HOME/conf/settings.xml</code> 中的 <code>mirror</code> 标签配置 (老实说, 为远程仓库配置镜像并没什么卵用, 反正地址都是我自己配, 给中央仓库设计镜像也没有必要, 还不如将镜像地址当做一个远程仓库设置, 这样镜像中找不到 jar 时还会去中央仓库再找一次, 多好 . . .).</p>
+<p>maven 还提供镜像的配置, 让我们可以为仓库设置<strong>镜像</strong>, 在 <code>M2_HOME/conf/settings.xml</code> 中的 <code>mirror</code> 标签配置 (老实说, 为远程仓库配置镜像并没什么卵用, 反正地址都是我自己配, 给中央仓库设计镜像也没有必要, 还不如将镜像地址当做一个远程仓库设置, 这样镜像中找不到 jar 时还会去中央仓库再找一次, 多好 . . .).</p>
 <div class="hlcode"><pre><span class="nt">&lt;mirrors&gt;</span>
     <span class="nt">&lt;mirror&gt;</span>
           <span class="nt">&lt;id&gt;</span>alimaven<span class="nt">&lt;/id&gt;</span>
@@ -183,9 +183,11 @@ maven 中三个仓库的概念: <strong>本地仓库</strong> -> <strong>远程�
 <p>新版本的 Eclipse 已集成了 maven 插件, 无须再手动下载, 我们只需配置一下, 主要设置三样: 是否自动下载源码、本地 maven 环境 (Eclipse 有内置的, 不过建议用我们下载的 3.0.5) 以及配置文件目录.</p>
 <p><img alt="" src="http://wiki.smallcpp.com/static/images/MAVEN/MAVEN插件设置1.png" /></p>
 <p><img alt="" src="http://wiki.smallcpp.com/static/images/MAVEN/MAVEN插件设置2.png" /></p>
-<p><img alt="" src="http://wiki.smallcpp.com/static/images/MAVEN/MAVEN插件设置2.png" /></p>
+<p><img alt="" src="http://wiki.smallcpp.com/static/images/MAVEN/MAVEN插件设置3.png" /></p>
 <p>我们可以新建 maven 项目, 也可以从现有的 java 项目转换:</p>
+<p>从现有项目<strong>转换</strong>:</p>
 <p><img alt="" src="http://wiki.smallcpp.com/static/images/MAVEN/现有项目转换MAVEN.png" /></p>
+<p>或者<strong>新建</strong> maven 项目:</p>
 <p><img alt="" src="http://wiki.smallcpp.com/static/images/MAVEN/新建MAVEN.png" /></p>
 <p><img alt="" src="http://wiki.smallcpp.com/static/images/MAVEN/简单项目.png" /></p>
 <p><img alt="" src="http://wiki.smallcpp.com/static/images/MAVEN/创建POM.png" /></p>
