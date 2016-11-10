@@ -116,7 +116,7 @@ maven 中三个仓库的概念: **本地仓库** \-\> **远程仓库** \-\> **�
 <br>
 可以看到中央仓库的 ID 为 `central`.
 
-maven 还提供镜像的配置, 让我们可以为仓库设置镜像, 在 `M2_HOME/conf/settings.xml` 中的 `mirror` 标签配置 (老实说, 为远程仓库配置镜像并没什么卵用, 反正地址都是我自己配, 给中央仓库设计镜像也没有必要, 还不如将镜像地址当做一个远程仓库设置, 这样镜像中找不到 jar 时还会去中央仓库再找一次, 多好 . . .).
+maven 还提供镜像的配置, 让我们可以为仓库设置**镜像**, 在 `M2_HOME/conf/settings.xml` 中的 `mirror` 标签配置 (老实说, 为远程仓库配置镜像并没什么卵用, 反正地址都是我自己配, 给中央仓库设计镜像也没有必要, 还不如将镜像地址当做一个远程仓库设置, 这样镜像中找不到 jar 时还会去中央仓库再找一次, 多好 . . .).
 
 ```xml
 <mirrors>
@@ -171,11 +171,15 @@ Eclipse 提供了 maven 插件来方便我们使用, 该插件可以让我们在
 
 ![](http://wiki.smallcpp.com/static/images/MAVEN/MAVEN插件设置2.png)
 
-![](http://wiki.smallcpp.com/static/images/MAVEN/MAVEN插件设置2.png)
+![](http://wiki.smallcpp.com/static/images/MAVEN/MAVEN插件设置3.png)
 
 我们可以新建 maven 项目, 也可以从现有的 java 项目转换:
 
+从现有项目**转换**:
+
 ![](http://wiki.smallcpp.com/static/images/MAVEN/现有项目转换MAVEN.png)
+
+或者**新建** maven 项目:
 
 ![](http://wiki.smallcpp.com/static/images/MAVEN/新建MAVEN.png)
 
