@@ -1,0 +1,79 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <title>SecureCRT 的安装和使用 - Wiki | Small Cpp</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            
+            <a href="/">Home</a> » <a href="/#工具配置">工具配置</a> » SecureCRT 的安装和使用
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <p><strong>SecureCRT</strong> 是一款支持 SSH（SSH1 和 SSH2）的终端仿真程序, 同时支持 Telnet 和 rlogin 协议; 它可用于连接运行包括 Windows、Unis 和 linux 在内的远程系统.</p>
+<p>首先下载 SecureCRT 并安装(网上有中文版本下载, 注意找大网站下载, 别下载了被装后门的版本).</p>
+<p>去 Ubuntu 中开启 SSH 功能. (SSH 为 Secure Shell 的缩写, 即安全外壳协议, 它是由 IETF 的网络工作小组（Network Working Group）所制定; SSH 是建立在应用层和传输层基础上的安全协议; 它专为远程登录会话和其他网络服务提供安全性的协议.)
+在 Ubuntu 中开启 SSH 功能只需要一句命令: sudo apt-get install openssh-server openssh-client</p>
+<p>查看 Ubuntu 的 ip, 在终端输入命令: ifconfig(注意不是 ipconfig).</p>
+<p><img alt="" src="http://i62.tinypic.com/fvfr40.jpg" /></p>
+<p>记录下 ip 地址.</p>
+<p>返回 SecureCRT 中, 选择 快速连接.</p>
+<p><img alt="" src="http://i61.tinypic.com/33lfmt1.jpg" /></p>
+<p>输入 Ubuntu 的 ip 地址和用户名.</p>
+<p><img alt="" src="http://i60.tinypic.com/15zo868.jpg" /></p>
+<p>点击连接, 会弹出对话框让输入密码, 输入确定即可.</p>
+<p><img alt="" src="http://i57.tinypic.com/6dyec6.jpg" /></p>
+<p><img alt="" src="http://i60.tinypic.com/1zoj2hc.jpg" /></p>
+<p>此时输入中文可能会显示乱码, 这是因为 Ubuntu 的 ssh 默认编码是 utf-8, 而 SecureCRT 却不是, 所以只要把 SecureCRT 的编码改成 utf-8 就可以了.</p>
+<p><img alt="" src="http://i60.tinypic.com/344qskp.jpg" /></p>
+<p><img alt="" src="http://i58.tinypic.com/30u3j46.jpg" /></p>
+<p>SecureCRT连接后如果稍长时间不用就会掉线, 往往会造成工作状态的丢失, 如下设置可以始终保持 SecureCRT 的连接:</p>
+<p><img alt="" src="http://i62.tinypic.com/2uhr0h3.jpg" /></p>
+<p><img alt="" src="http://i61.tinypic.com/wl7m88.jpg" /></p>
+<p>另外还有几个有用的配置:</p>
+<p><img alt="" src="http://i67.tinypic.com/sw6yrt.jpg" /></p>
+<p><img alt="" src="http://i63.tinypic.com/34rjfvd.jpg" /></p>
+<p>现在远程操作环境就搭建好了, 可以在 SecureCRT 中像 Ubuntu 终端那样使用.</p>
+<p><img alt="" src="http://i58.tinypic.com/ics9dd.jpg" /></p>
+    </div>
+
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="SecureCRT 的安装和使用" data-title="SecureCRT 的安装和使用" data-url="http://wiki.smallcpp.com/工具配置/SecureCRT 的安装和使用.html"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:"smallwiki"};
+        (function() {
+            var ds = document.createElement('script');
+            ds.type = 'text/javascript';ds.async = true;
+            ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+            ds.charset = 'UTF-8';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+    </script>
+    <!-- 多说公共JS代码 end -->
+
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2016 <a href="http://www.samllcpp.com/" target="_blank">Martin</a> Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+              </p>
+        </div>
+    </body>
+</html>
