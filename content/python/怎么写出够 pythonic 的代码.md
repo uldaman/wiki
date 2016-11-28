@@ -14,9 +14,9 @@ date: 2016-05-15 16:09
 > 另外推荐本书: [<<编写高质量代码 - 改善 Python 程序的 91 个建议>>](https://yunpan.cn/c6mPavfeDzHYK)  **访问密码** 9f75
 
 # References:<br>
-[python 性能调优](https://github.com/xuelangZF/CS_Offer/blob/master/Python.md)<br>
+[python 性能调优](https://github.com/z351522453/CS_Offer/blob/master/Python/Optimization.md)<br>
 [让你的Python代码更加pythonic](http://wuzhiwei.net/be_pythonic/)<br>
-[关于 Python 的最全面试题](http://gold.xitu.io/entry/56010de260b27db45a4f845f)
+[关于 Python 的最全面试题](https://github.com/z351522453/interview_python)
 
 # 列表生成式
 提供一个可迭代的对象生成一个新列表
