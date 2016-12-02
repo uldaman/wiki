@@ -32,9 +32,6 @@
 <li><a href="#31-jedi">3.1 Jedi</a></li>
 <li><a href="#32-anaconda">3.2 Anaconda</a><ul>
 <li><a href="#321-dot9193">3.2.1 添加按点(dot)[.]后出现代码提示.</a></li>
-<li><a href="#322-pep8">3.2.2 PEP8 配置</a></li>
-<li><a href="#323">3.2.3 自动补充函数参数</a></li>
-<li><a href="#324-virtualenv">3.2.4 支持 virtualenv</a></li>
 </ul>
 </li>
 </ul>
@@ -188,6 +185,60 @@
 <li>Show Documentation:  能够显示一个函数或者类的说明性字符串(当然，是在定义了字符串的情况下, 目前只支持英文)</li>
 </ul>
 <p>Anaconda 可以通过 Package Control 直接安装.</p>
+<p>通常, 我的 Anaconda 配置如下:</p>
+<p>[Preferences -> 插件设置 -> Anaconda -> Settings-User]</p>
+<div class="hlcode"><pre><span class="p">{</span>
+    <span class="s2">&quot;anaconda_linting&quot;</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>  <span class="c1">// 对于全局不启用 pep8 检测, 在项目配置文件中再根据需要打开</span>
+
+    <span class="s2">&quot;python_interpreter&quot;</span><span class="o">:</span> <span class="s2">&quot;C:/Python27/python&quot;</span><span class="p">,</span>
+
+    <span class="s2">&quot;pep8_ignore&quot;</span><span class="o">:</span>
+        <span class="p">[</span>
+            <span class="s2">&quot;E309&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;E501&quot;</span> <span class="c1">// 忽略长度限制</span>
+        <span class="p">],</span>
+
+    <span class="s2">&quot;autoformat_ignore&quot;</span><span class="o">:</span>
+        <span class="p">[</span>
+            <span class="s2">&quot;E309&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;E501&quot;</span> <span class="c1">// 忽略长度限制</span>
+        <span class="p">],</span>
+
+    <span class="s2">&quot;anaconda_linter_mark_style&quot;</span><span class="o">:</span> <span class="s2">&quot;none&quot;</span><span class="p">,</span>
+
+    <span class="s2">&quot;anaconda_linter_underlines&quot;</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+
+    <span class="s2">&quot;anaconda_linter_show_errors_on_save&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+
+    <span class="s2">&quot;complete_parameters&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span> <span class="c1">// 输 ( 时补充函数的非默认参数</span>
+
+    <span class="s2">&quot;complete_all_parameters&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span> <span class="c1">// 输 ( 时补充函数的所有参数</span>
+
+    <span class="s2">&quot;auto_python_builder_enabled&quot;</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>  <span class="c1">// 自动为当前项目生成编译系统, 通常不需要, 我们自己配置, 参照 6. 项目设置</span>
+
+    <span class="s2">&quot;auto_complete_triggers&quot;</span><span class="o">:</span>  <span class="c1">// 仅需要在 windows 下配置, 具体说明参照 3.2.1</span>
+        <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;selector&quot;</span><span class="o">:</span> <span class="s2">&quot;source.python - string - comment - constant.numeric&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;characters&quot;</span><span class="o">:</span> <span class="s2">&quot;.&quot;</span>
+            <span class="p">}</span>
+        <span class="p">],</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p><br>
+[*.sublime-project]</p>
+<div class="hlcode"><pre><span class="p">{</span>
+    <span class="s2">&quot;settings&quot;</span><span class="o">:</span> <span class="p">{</span>
+        <span class="s2">&quot;python_interpreter&quot;</span><span class="o">:</span> <span class="s2">&quot;E:/Workspace/ZEBU-KNOWLEDGE/environment/develop_env/Scripts/python&quot;</span><span class="p">,</span>  <span class="c1">// 添加 virtualenv 支持</span>
+        <span class="s2">&quot;anaconda_linting&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p><br></p>
 <h3 id="321-dot9193">3.2.1 添加按点(dot)[.]后出现代码提示.</h3>
 <blockquote>
 <p>Windows 下这个配置可以放在 [Preferences -> 插件设置 -> Anaconda -> Settings-User] 中</p>
@@ -201,88 +252,6 @@
             <span class="s2">&quot;characters&quot;</span><span class="o">:</span> <span class="s2">&quot;.&quot;</span>
         <span class="p">}</span>
     <span class="p">]</span>
-<span class="p">}</span>
-</pre></div>
-
-
-<p><br></p>
-<h3 id="322-pep8">3.2.2 PEP8 配置</h3>
-<p>Preferences -> 插件设置 -> Anaconda -> Settings-User</p>
-<div class="hlcode"><pre><span class="p">{</span>
-    <span class="s2">&quot;anaconda_linting&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
-
-    <span class="s2">&quot;autoformat_ignore&quot;</span><span class="o">:</span>
-    <span class="p">[</span>
-        <span class="s2">&quot;E309&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;E501&quot;</span>
-    <span class="p">],</span>
-
-    <span class="s2">&quot;pep8_ignore&quot;</span><span class="o">:</span>
-    <span class="p">[</span>
-        <span class="s2">&quot;E309&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;E501&quot;</span> <span class="c1">// 忽略长度限制</span>
-    <span class="p">],</span>
-
-    <span class="s2">&quot;anaconda_linter_mark_style&quot;</span><span class="o">:</span> <span class="s2">&quot;none&quot;</span><span class="p">,</span>
-
-    <span class="s2">&quot;anaconda_linter_underlines&quot;</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
-
-    <span class="s2">&quot;anaconda_linter_show_errors_on_save&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
-<span class="p">}</span>
-</pre></div>
-
-
-<p><br>
-如果想为不同的项目配置 virtualenv, 那么修改项目的 *.sublime-project 文件:</p>
-<div class="hlcode"><pre><span class="s2">&quot;settings&quot;</span><span class="o">:</span> <span class="p">{</span>
-    <span class="s2">&quot;anaconda_linting&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
-
-    <span class="s2">&quot;autoformat_ignore&quot;</span><span class="o">:</span>
-    <span class="p">[</span>
-        <span class="s2">&quot;E309&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;E501&quot;</span>
-    <span class="p">],</span>
-
-    <span class="s2">&quot;pep8_ignore&quot;</span><span class="o">:</span>
-    <span class="p">[</span>
-        <span class="s2">&quot;E309&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;E501&quot;</span> <span class="c1">// 忽略长度限制</span>
-    <span class="p">],</span>
-
-    <span class="s2">&quot;anaconda_linter_mark_style&quot;</span><span class="o">:</span> <span class="s2">&quot;none&quot;</span><span class="p">,</span>
-
-    <span class="s2">&quot;anaconda_linter_underlines&quot;</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
-
-    <span class="s2">&quot;anaconda_linter_show_errors_on_save&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
-<span class="p">}</span>
-</pre></div>
-
-
-<p><br>
-例如我通常会在全局的 Settings-User 中将 <code>"anaconda_linting": false</code>, 然后在 *.sublime-project 根据需要把 <code>"anaconda_linting": true</code></p>
-<h3 id="323">3.2.3 自动补充函数参数</h3>
-<p>Preferences -> 插件设置 -> Anaconda -> Settings-User</p>
-<div class="hlcode"><pre><span class="p">{</span>
-    <span class="s2">&quot;complete_parameters&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span> <span class="c1">// 输 ( 时补充函数的非默认参数</span>
-    <span class="s2">&quot;complete_all_parameters&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span> <span class="c1">// 输 ( 时补充函数的所有参数</span>
-    <span class="s2">&quot;auto_python_builder_enabled&quot;</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>  <span class="c1">// 自动为当前项目生成编译系统, 通常不需要, 我们自己配置</span>
-<span class="p">}</span>
-</pre></div>
-
-
-<p><br></p>
-<h3 id="324-virtualenv">3.2.4 支持 virtualenv</h3>
-<p>如果想配全局的 virtualenv, Preferences -> 插件设置 -> Anaconda -> Settings-User:</p>
-<div class="hlcode"><pre><span class="p">{</span>
-    <span class="s2">&quot;python_interpreter&quot;</span><span class="o">:</span> <span class="s2">&quot;D:/pydj/project_venv/Scripts/python&quot;</span><span class="p">,</span>
-<span class="p">}</span>
-</pre></div>
-
-
-<p><br>
-如果想为不同的项目配置 virtualenv, 那么修改项目的 *.sublime-project 文件:</p>
-<div class="hlcode"><pre><span class="s2">&quot;settings&quot;</span><span class="o">:</span> <span class="p">{</span>
-    <span class="s2">&quot;python_interpreter&quot;</span><span class="o">:</span> <span class="s2">&quot;D:/pydj/project_venv/Scripts/python&quot;</span><span class="p">,</span>
 <span class="p">}</span>
 </pre></div>
 
