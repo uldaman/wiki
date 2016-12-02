@@ -151,6 +151,7 @@ Anaconda 是一个终极 Python 插件, 它为 ST3 增添了多项 IDE 类似的
 Anaconda 可以通过 Package Control 直接安装.
 
 ### 3.2.1 添加按点(dot)\[.\]后出现代码提示.
+> Windows 下这个配置可以放在 [Preferences \-\> 插件设置 \-\> Anaconda \-\> Settings\-User] 中
 
 Python.sublime-settings configuration file in the Packages/User directory (Preferences -> Browse Packages) and add the following:
 
@@ -172,6 +173,8 @@ Preferences \-\> 插件设置 \-\> Anaconda \-\> Settings\-User
 
 ```js
 {
+    "anaconda_linting": true,
+
     "autoformat_ignore":
     [
         "E309",
@@ -192,6 +195,34 @@ Preferences \-\> 插件设置 \-\> Anaconda \-\> Settings\-User
 }
 ```
 <br>
+如果想为不同的项目配置 virtualenv, 那么修改项目的 \*.sublime-project 文件:
+
+```js
+"settings": {
+    "anaconda_linting": true,
+
+    "autoformat_ignore":
+    [
+        "E309",
+        "E501"
+    ],
+
+    "pep8_ignore":
+    [
+        "E309",
+        "E501" // 忽略长度限制
+    ],
+
+    "anaconda_linter_mark_style": "none",
+
+    "anaconda_linter_underlines": false,
+
+    "anaconda_linter_show_errors_on_save": true,
+}
+```
+<br>
+例如我通常会在全局的 Settings\-User 中将 `"anaconda_linting": false`, 然后在 \*.sublime-project 根据需要把 `"anaconda_linting": true`
+
 ### 3.2.3 自动补充函数参数
 Preferences \-\> 插件设置 \-\> Anaconda \-\> Settings\-User
 
@@ -199,6 +230,7 @@ Preferences \-\> 插件设置 \-\> Anaconda \-\> Settings\-User
 {
     "complete_parameters": true, // 输 ( 时补充函数的非默认参数
     "complete_all_parameters": true, // 输 ( 时补充函数的所有参数
+    "auto_python_builder_enabled": false,  // 自动为当前项目生成编译系统, 通常不需要, 我们自己配置
 }
 ```
 <br>
@@ -207,7 +239,7 @@ Preferences \-\> 插件设置 \-\> Anaconda \-\> Settings\-User
 
 ```js
 {
-    "python_interpreter": "D:/pydj/project_venv/Scripts/python.exe",
+    "python_interpreter": "D:/pydj/project_venv/Scripts/python",
 }
 ```
 <br>
@@ -215,7 +247,7 @@ Preferences \-\> 插件设置 \-\> Anaconda \-\> Settings\-User
 
 ```js
 "settings": {
-    "python_interpreter": "D:/pydj/project_venv/Scripts/python.exe",
+    "python_interpreter": "D:/pydj/project_venv/Scripts/python",
 }
 ```
 <br>
@@ -280,7 +312,7 @@ def test_function():
         {
             "name": "project_venv builder",
             "selector": "source.python",
-            "shell_cmd": "D:/pydj/project_venv/bin/python -u \"$file\""
+            "shell_cmd": "D:/pydj/project_venv/Scripts/python -u \"$file\""
         }
     ],
 
