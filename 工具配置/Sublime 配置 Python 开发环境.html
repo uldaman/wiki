@@ -189,6 +189,9 @@
 </ul>
 <p>Anaconda 可以通过 Package Control 直接安装.</p>
 <h3 id="321-dot9193">3.2.1 添加按点(dot)[.]后出现代码提示.</h3>
+<blockquote>
+<p>Windows 下这个配置可以放在 [Preferences -> 插件设置 -> Anaconda -> Settings-User] 中</p>
+</blockquote>
 <p>Python.sublime-settings configuration file in the Packages/User directory (Preferences -&gt; Browse Packages) and add the following:</p>
 <p>到 Sublime Text 3\Data\Packages\User (Preferences -> Browse Packages -> User) 下添加一个文件 Python.sublime-settings (如果没有的话), 添加如下内容:</p>
 <div class="hlcode"><pre><span class="p">{</span>
@@ -206,6 +209,8 @@
 <h3 id="322-pep8">3.2.2 PEP8 配置</h3>
 <p>Preferences -> 插件设置 -> Anaconda -> Settings-User</p>
 <div class="hlcode"><pre><span class="p">{</span>
+    <span class="s2">&quot;anaconda_linting&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+
     <span class="s2">&quot;autoformat_ignore&quot;</span><span class="o">:</span>
     <span class="p">[</span>
         <span class="s2">&quot;E309&quot;</span><span class="p">,</span>
@@ -227,12 +232,40 @@
 </pre></div>
 
 
-<p><br></p>
+<p><br>
+如果想为不同的项目配置 virtualenv, 那么修改项目的 *.sublime-project 文件:</p>
+<div class="hlcode"><pre><span class="s2">&quot;settings&quot;</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s2">&quot;anaconda_linting&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+
+    <span class="s2">&quot;autoformat_ignore&quot;</span><span class="o">:</span>
+    <span class="p">[</span>
+        <span class="s2">&quot;E309&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;E501&quot;</span>
+    <span class="p">],</span>
+
+    <span class="s2">&quot;pep8_ignore&quot;</span><span class="o">:</span>
+    <span class="p">[</span>
+        <span class="s2">&quot;E309&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;E501&quot;</span> <span class="c1">// 忽略长度限制</span>
+    <span class="p">],</span>
+
+    <span class="s2">&quot;anaconda_linter_mark_style&quot;</span><span class="o">:</span> <span class="s2">&quot;none&quot;</span><span class="p">,</span>
+
+    <span class="s2">&quot;anaconda_linter_underlines&quot;</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+
+    <span class="s2">&quot;anaconda_linter_show_errors_on_save&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p><br>
+例如我通常会在全局的 Settings-User 中将 <code>"anaconda_linting": false</code>, 然后在 *.sublime-project 根据需要把 <code>"anaconda_linting": true</code></p>
 <h3 id="323">3.2.3 自动补充函数参数</h3>
 <p>Preferences -> 插件设置 -> Anaconda -> Settings-User</p>
 <div class="hlcode"><pre><span class="p">{</span>
     <span class="s2">&quot;complete_parameters&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span> <span class="c1">// 输 ( 时补充函数的非默认参数</span>
     <span class="s2">&quot;complete_all_parameters&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span> <span class="c1">// 输 ( 时补充函数的所有参数</span>
+    <span class="s2">&quot;auto_python_builder_enabled&quot;</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>  <span class="c1">// 自动为当前项目生成编译系统, 通常不需要, 我们自己配置</span>
 <span class="p">}</span>
 </pre></div>
 
@@ -241,7 +274,7 @@
 <h3 id="324-virtualenv">3.2.4 支持 virtualenv</h3>
 <p>如果想配全局的 virtualenv, Preferences -> 插件设置 -> Anaconda -> Settings-User:</p>
 <div class="hlcode"><pre><span class="p">{</span>
-    <span class="s2">&quot;python_interpreter&quot;</span><span class="o">:</span> <span class="s2">&quot;D:/pydj/project_venv/Scripts/python.exe&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;python_interpreter&quot;</span><span class="o">:</span> <span class="s2">&quot;D:/pydj/project_venv/Scripts/python&quot;</span><span class="p">,</span>
 <span class="p">}</span>
 </pre></div>
 
@@ -249,7 +282,7 @@
 <p><br>
 如果想为不同的项目配置 virtualenv, 那么修改项目的 *.sublime-project 文件:</p>
 <div class="hlcode"><pre><span class="s2">&quot;settings&quot;</span><span class="o">:</span> <span class="p">{</span>
-    <span class="s2">&quot;python_interpreter&quot;</span><span class="o">:</span> <span class="s2">&quot;D:/pydj/project_venv/Scripts/python.exe&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;python_interpreter&quot;</span><span class="o">:</span> <span class="s2">&quot;D:/pydj/project_venv/Scripts/python&quot;</span><span class="p">,</span>
 <span class="p">}</span>
 </pre></div>
 
@@ -308,7 +341,7 @@
         <span class="p">{</span>
             <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;project_venv builder&quot;</span><span class="p">,</span>
             <span class="s2">&quot;selector&quot;</span><span class="o">:</span> <span class="s2">&quot;source.python&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;shell_cmd&quot;</span><span class="o">:</span> <span class="s2">&quot;D:/pydj/project_venv/bin/python -u \&quot;$file\&quot;&quot;</span>
+            <span class="s2">&quot;shell_cmd&quot;</span><span class="o">:</span> <span class="s2">&quot;D:/pydj/project_venv/Scripts/python -u \&quot;$file\&quot;&quot;</span>
         <span class="p">}</span>
     <span class="p">],</span>
 
