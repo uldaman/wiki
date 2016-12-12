@@ -1,0 +1,131 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <title>partial function (偏函数) - Wiki | Small Cpp</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            
+            <a href="/">Home</a> » <a href="/#python">python</a> » partial function (偏函数)
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <blockquote>
+<p>转自廖老师的 <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/00143184474383175eeea92a8b0439fab7b392a8a32f8fa000">偏函数</a></p>
+</blockquote>
+<p>Python 的 functools 模块提供了很多有用的功能, 其中一个就是偏函数 (Partial function). 要注意, 这里的偏函数和数学意义上的偏函数不一样.</p>
+<p>在介绍函数参数的时候, 我们讲到, 通过设定<strong>参数的默认值</strong>, 可以降低函数调用的难度. 而偏函数也可以做到这一点. 举例如下:</p>
+<p><code>int()</code> 函数可以把字符串转换为整数, 当仅传入字符串时, <code>int()</code> 函数默认按十进制转换:</p>
+<div class="hlcode"><pre><span class="nb">int</span><span class="p">(</span><span class="s">&#39;12345&#39;</span><span class="p">)</span>
+<span class="mi">12345</span>
+</pre></div>
+
+
+<p><br>
+但 <code>int()</code> 函数还提供额外的 base 参数, 默认值为 10. 如果传入 base 参数, 就可以做 N 进制的转换:</p>
+<div class="hlcode"><pre><span class="nb">int</span><span class="p">(</span><span class="s">&#39;12345&#39;</span><span class="p">,</span> <span class="n">base</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<span class="mi">5349</span>
+
+<span class="nb">int</span><span class="p">(</span><span class="s">&#39;12345&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
+<span class="mi">74565</span>
+</pre></div>
+
+
+<p><br>
+假设要转换大量的二进制字符串, 每次都传入 <code>int(x, base=2)</code> 非常麻烦, 于是, 我们想到, 可以定义一个 <code>int2()</code> 的函数, 默认把 <code>base=2</code> 传进去:</p>
+<div class="hlcode"><pre><span class="k">def</span> <span class="nf">int2</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">base</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">base</span><span class="p">)</span>
+</pre></div>
+
+
+<p><br>
+这样, 我们转换二进制就非常方便了:</p>
+<div class="hlcode"><pre><span class="n">int2</span><span class="p">(</span><span class="s">&#39;1000000&#39;</span><span class="p">)</span>
+<span class="mi">64</span>
+
+<span class="n">int2</span><span class="p">(</span><span class="s">&#39;1010101&#39;</span><span class="p">)</span>
+<span class="mi">85</span>
+</pre></div>
+
+
+<p><br>
+<code>functools.partial</code> 就是帮助我们创建一个偏函数的, 不需要我们自己定义 <code>int2()</code>, 可以直接使用下面的代码创建一个新的函数 <code>int2()</code>:</p>
+<div class="hlcode"><pre><span class="kn">import</span> <span class="nn">functools</span>
+<span class="n">int2</span> <span class="o">=</span> <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">base</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">int2</span><span class="p">(</span><span class="s">&#39;1000000&#39;</span><span class="p">)</span>
+<span class="mi">64</span>
+
+<span class="n">int2</span><span class="p">(</span><span class="s">&#39;1010101&#39;</span><span class="p">)</span>
+<span class="mi">85</span>
+</pre></div>
+
+
+<p><br>
+所以, 简单总结 <code>functools.partial</code> 的作用就是, 把一个函数的某些参数给固定住 (也就是设置默认值), 返回一个新的函数, 调用这个新函数会更简单.</p>
+<p>注意到上面的新的 <code>int2()</code> 函数, 仅仅是把 base 参数重新设定默认值为 2, 但也可以在函数调用时传入其他值:</p>
+<div class="hlcode"><pre><span class="n">int2</span><span class="p">(</span><span class="s">&#39;1000000&#39;</span><span class="p">,</span> <span class="n">base</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="mi">1000000</span>
+</pre></div>
+
+
+<p><br>
+最后, 创建偏函数时, 实际上可以接收<strong>函数对象</strong>、<strong>*args</strong> 和 <strong>**kw</strong> 这 3 个参数</p>
+<p>当传入: <code>int2 = functools.partial(int, base=2)</code>, 实际上固定了 <code>int()</code> 函数的关键字参数 base, 也就是 <code>int2('10010')</code> 相当于:</p>
+<div class="hlcode"><pre><span class="n">kw</span> <span class="o">=</span> <span class="p">{</span> <span class="s">&#39;base&#39;</span><span class="p">:</span> <span class="mi">2</span> <span class="p">}</span>
+<span class="nb">int</span><span class="p">(</span><span class="s">&#39;10010&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+</pre></div>
+
+
+<p><br>
+当传入: <code>max2 = functools.partial(max, 10)</code>, 实际上会把 10 作为 *args 的一部分自动加到左边, 也就是 <code>max2(5, 6, 7)</code> 相当于:</p>
+<div class="hlcode"><pre><span class="n">args</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
+<span class="nb">max</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+</pre></div>
+
+
+<p><br>
+结果为 10.</p>
+<p>总之, 当函数的参数个数太多, 需要简化时, 使用 <code>functools.partial</code> 可以创建一个新的函数, 这个新函数可以固定住原函数的部分参数, 从而在调用时更简单.</p>
+    </div>
+
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="partial function (偏函数)" data-title="partial function (偏函数)" data-url="http://wiki.smallcpp.com/python/partial function (偏函数).html"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:"smallwiki"};
+        (function() {
+            var ds = document.createElement('script');
+            ds.type = 'text/javascript';ds.async = true;
+            ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+            ds.charset = 'UTF-8';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+    </script>
+    <!-- 多说公共JS代码 end -->
+
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2016 <a href="http://www.samllcpp.com/" target="_blank">Martin</a> Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+              </p>
+        </div>
+    </body>
+</html>
