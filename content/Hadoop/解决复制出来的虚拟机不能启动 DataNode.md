@@ -4,7 +4,7 @@ layout: page
 date: 2016-11-03 22:58
 ---
 
-今天因测试需要, 需要第二台 hadoop 虚拟机, 于是就从 itcast01 克隆了一份, 命名为 itcast02.
+今天因测试需要, 需要第二台 hadoop 虚拟机, 于是就从 smallcpp01 克隆了一份, 命名为 smallcpp02.
 
 对第二台主机设置了 主机名、静态IP、 HOSTS、hadoop 配置(就是把一些配置文件里的 ip 和 主机名修改下), 重启虚拟机, 然后重新格式化 hdfs, 启动 Hadoop 服务…
 

@@ -9,7 +9,7 @@ date: 2016-10-16 11:42
 - 宿主机: win7 64位, 16G
 - 虚拟化工具: VMware Workstation
 - 虚拟机系统: Ubuntu 32位, 1.5G, 20G, NAT
-- 主机名: itcast01 (NameNode), itcast02 (Datanode), itcast03 (Datanode)
+- 主机名: smallcpp01 (NameNode), smallcpp02 (Datanode), smallcpp03 (Datanode)
 - Java 版本: jdk-8u101-linux-i586
 - Hadoop 版本: hadoop-2.7.3
 
@@ -77,15 +77,15 @@ nameserver 192.168.31.2
 最后, 通过 `sudo resolvconf -u` 刷新 **resolv.conf** 文件, 再用 `sudo /etc/init.d/networking restart` 重启网络.
 
 ## Hosts
-`sudo vim /etc/hostname` 修改主机名为 itcast01 (另外两台分别用 itcast02 和 itcast03).
+`sudo vim /etc/hostname` 修改主机名为 smallcpp01 (另外两台分别用 smallcpp02 和 smallcpp03).
 
 `sudo vim /etc/hosts` 修改 [ip 域名] 对应表.
 
 ```
 127.0.0.1       localhost
-192.168.31.200  itcast01
-192.168.31.201  itcast02
-192.168.31.201  itcast03
+192.168.31.200  smallcpp01
+192.168.31.201  smallcpp02
+192.168.31.201  smallcpp03
 ```
 <br>
 ## 关闭防火墙
@@ -149,13 +149,13 @@ source ~/.bashrc
 
 下载完成后, 拖到 Ubuntu 桌面.
 
-`sudo mkdir /usr/itcast` 创建一个文件夹.
+`sudo mkdir /usr/smallcpp` 创建一个文件夹.
 
 `cd ~/桌面`, 进入桌面目录.
 
-`sudo tar -zxvf hadoop-2.7.3.tar.gz -C /usr/itcast` (-z 处理 gzip, x 解压, v 显示详情, f 解压哪个文件)
+`sudo tar -zxvf hadoop-2.7.3.tar.gz -C /usr/smallcpp` (-z 处理 gzip, x 解压, v 显示详情, f 解压哪个文件)
 
-为避免权限问题, 可将 `/usr/itcast/hadoop-2.7.3/` 目录权限改为 **777**: `sudo chmod -R 777 /usr/itcast/hadoop-2.7.3/`
+为避免权限问题, 可将 `/usr/smallcpp/hadoop-2.7.3/` 目录权限改为 **777**: `sudo chmod -R 777 /usr/smallcpp/hadoop-2.7.3/`
 
 ## 3.2
 修改环境变量.
@@ -164,7 +164,7 @@ source ~/.bashrc
 
 ```
 export JAVA_HOME=/usr/java/jdk1.8.0_101
-export HADOOP_HOME=/usr/itcast/hadoop-2.7.3
+export HADOOP_HOME=/usr/smallcpp/hadoop-2.7.3
 export PATH=$PATH:$JAVA_HOME/bin:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
 ```
 <br>
@@ -176,7 +176,7 @@ export PATH=$PATH:$JAVA_HOME/bin:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
 ![](http://wiki.smallcpp.com/static/images/搭建Hadoop分布式实验环境/hadoopversion.png)
 
 # 4. 配置 Hadoop
-`cd /usr/itcast/hadoop-2.7.3/etc/hadoop` 进入 Hadoop 配置文件所在目录.
+`cd /usr/smallcpp/hadoop-2.7.3/etc/hadoop` 进入 Hadoop 配置文件所在目录.
 
 ## 4.1. vim hadoop-env.sh
 定位到 26 行左右, 找到
@@ -197,15 +197,15 @@ export JAVA_HOME=/usr/java/jdk1.8.0_101 (可以在 vim 的命令模式下, 通�
         <property>
         <!--用来指定 HDFS 的老大(NameNode)的地址-->
                 <name>fs.defaultFS</name>
-                <!--itcast01 是这台主机名, 要在 hosts 里设置了映射才可以, 不然只能写 ip-->
-                <value>hdfs://itcast01:9000</value>
+                <!--smallcpp01 是这台主机名, 要在 hosts 里设置了映射才可以, 不然只能写 ip-->
+                <value>hdfs://smallcpp01:9000</value>
         </property>
 
         <property>
         <!--用来指定 hadoop 运行时产生文件的存放目录-->
         <!--默认为系统目录, 重启会被清空, 导致重启 hadoop 不能用-->
                 <name>hadoop.tmp.dir</name>
-                <value>/usr/itcast/hadoop-2.7.3/tmp</value>
+                <value>/usr/smallcpp/hadoop-2.7.3/tmp</value>
         </property>
 </configuration>
 ```
@@ -220,17 +220,17 @@ export JAVA_HOME=/usr/java/jdk1.8.0_101 (可以在 vim 的命令模式下, 通�
         <property>
     <!--指定元数据保存目录-->
              <name>dfs.namenode.name.dir</name>
-             <value>/usr/itcast/hadoop-2.7.3/tmp/dfs/name</value>
+             <value>/usr/smallcpp/hadoop-2.7.3/tmp/dfs/name</value>
         </property>
         <property>
     <!--指定 HDFS 保存数据目录-->
              <name>dfs.datanode.data.dir</name>
-             <value>/usr/itcast/hadoop-2.7.3/tmp/dfs/data</value>
+             <value>/usr/smallcpp/hadoop-2.7.3/tmp/dfs/data</value>
         </property>
 </configuration>
 ```
 <br>
-我们这里有 itcast02 和 itcast03 两台数据节点, 所以 `dfs.replication` 为 2, 如果是伪分布式系统的话, 这里改为 1 就可以了.
+我们这里有 smallcpp02 和 smallcpp03 两台数据节点, 所以 `dfs.replication` 为 2, 如果是伪分布式系统的话, 这里改为 1 就可以了.
 
 ## 4.4. vim yarn-env.sh
 定位到 23 行左右, 找到 JAVA_HOME, 改为 `export JAVA_HOME=/usr/java/jdk1.8.0_101`
@@ -246,7 +246,7 @@ export JAVA_HOME=/usr/java/jdk1.8.0_101 (可以在 vim 的命令模式下, 通�
         <property>
             <!--指定 YARN 的老大(ResourceManager 它负责资源的调度、分配)的地址-->
                 <name>yarn.resourcemanager.hostname</name>
-                <value>itcast01</value>
+                <value>smallcpp01</value>
         </property>
 </configuration>
 ```
@@ -267,11 +267,11 @@ vim mapred-site.xml
         </property>
         <property>
                 <name>mapreduce.jobhistory.address</name>
-                <value>itcast01:10020</value>
+                <value>smallcpp01:10020</value>
         </property>
         <property>
                 <name>mapreduce.jobhistory.webapp.address</name>
-                <value>itcast01:19888</value>
+                <value>smallcpp01:19888</value>
         </property>
 </configuration>
 ```
@@ -284,8 +284,8 @@ vim mapred-site.xml
 打开后去掉第一行的 localhost, 将数据节点的域名添加进来
 
 ```
-itcast02
-itcast03
+smallcpp02
+smallcpp03
 ```
 <br>
 **注意**, 数据节点的域名要在 Hosts 文件中解析了才行!
@@ -303,9 +303,9 @@ itcast03
 
 ```
 127.0.0.1       localhost
-192.168.31.200  itcast01
-192.168.31.201  itcast02
-192.168.31.202  itcast03
+192.168.31.200  smallcpp01
+192.168.31.201  smallcpp02
+192.168.31.202  smallcpp03
 ```
 <br>
 配好后重启, 在三台虚拟机间互 Ping 测试下.
@@ -313,8 +313,8 @@ itcast03
 # 5. 配置 SSH 免密码登录
 Ubuntu 默认并没有安装 **ssh** 服务, 需要自己手动安装 **openssh-server**, 可以通过 `ssh localhost` 判断是否安装 ssh 服务; 如果没有安装则通过 `sudo apt-get install openssh-server` 安装即可.
 
-## 5.1. 配置 itcast01
-在 itcast01 上安装好 **ssh** 服务后.
+## 5.1. 配置 smallcpp01
+在 smallcpp01 上安装好 **ssh** 服务后.
 
 `cd ~` 进入根目录
 
@@ -324,22 +324,22 @@ Ubuntu 默认并没有安装 **ssh** 服务, 需要自己手动安装 **openssh-
 
 `cp id_rsa.pub authorized_keys`
 
-## 5.2. 配置 itcast02 和 itcast03
+## 5.2. 配置 smallcpp02 和 smallcpp03
 首先也是先安装好 **ssh** 服务生成一对 `id_rsa`、`id_rsa.pub` 文件;
 
-然后**不要**执行 `cp id_rsa.pub authorized_keys`, 而是执行 `ssh-copy-id -i ~/.ssh/id_rsa.pub martin@itcast01` 将公钥追加到 **itcast01** 的 **authorized_keys** 中.
+然后**不要**执行 `cp id_rsa.pub authorized_keys`, 而是执行 `ssh-copy-id -i ~/.ssh/id_rsa.pub martin@smallcpp01` 将公钥追加到 **smallcpp01** 的 **authorized_keys** 中.
 
-操作好后到 itcast01 中 `vim authorized_keys` 可以看到里面已经多出了 itcast02 和 itcast03 的公钥了.
+操作好后到 smallcpp01 中 `vim authorized_keys` 可以看到里面已经多出了 smallcpp02 和 smallcpp03 的公钥了.
 
-最后将 **authorized_keys** 远程拷贝到 itcast02 和 itcast03 中.
+最后将 **authorized_keys** 远程拷贝到 smallcpp02 和 smallcpp03 中.
 
 ```
-scp authorized_keys martin@itcast02:/home/martin/.ssh/authorized_keys
-scp authorized_keys martin@itcast03:/home/martin/.ssh/authorized_keys
+scp authorized_keys martin@smallcpp02:/home/martin/.ssh/authorized_keys
+scp authorized_keys martin@smallcpp03:/home/martin/.ssh/authorized_keys
 ```
 <br>
 # 6. 启动集群
-首次启动需要先在 NameNode 节点 (itcast01) 执行 NameNode 的格式化:
+首次启动需要先在 NameNode 节点 (smallcpp01) 执行 NameNode 的格式化:
 
 ```
 hdfs namenode -format       # 首次运行需要执行初始化，之后不需要
@@ -400,9 +400,9 @@ mr-jobhistory-daemon.sh stop historyserver
 # 7. 测试集群
 集群启动成功后会提供 Web 界面来管理集群.
 
-- [itcast01:50070](http://itcast01:50070) \-\- hdfs 管理界面
-- [itcast01:8088](http://itcast01:8088) \-\- yarn 管理界面
-- [itcast01:19888](http://itcast01:19888) \-\- jobhistory 管理界面
+- [smallcpp01:50070](http://smallcpp01:50070) \-\- hdfs 管理界面
+- [smallcpp01:8088](http://smallcpp01:8088) \-\- yarn 管理界面
+- [smallcpp01:19888](http://smallcpp01:19888) \-\- jobhistory 管理界面
 
 
 **hdfs 管理界面**
@@ -410,16 +410,16 @@ mr-jobhistory-daemon.sh stop historyserver
 ![](http://i61.tinypic.com/10fcr2s.jpg)
 
 hadoop fs -ls /
-hdfs://itcast01:9000
+hdfs://smallcpp01:9000
 
 ## 7.1. 上传文件
-在 itcast01 (不一定是 itcast01, 可以集群中的任意一台进行测试) 的桌面上准备了一份大文件, 如 `ubuntu-16.04-desktop-amd64.iso`, 现在把它上传到 Hadoop 的 HDFS 文件系统上去.
+在 smallcpp01 (不一定是 smallcpp01, 可以集群中的任意一台进行测试) 的桌面上准备了一份大文件, 如 `ubuntu-16.04-desktop-amd64.iso`, 现在把它上传到 Hadoop 的 HDFS 文件系统上去.
 
-`hadoop fs -put /home/martin/桌面/ubuntu-16.04-desktop-amd64.iso hdfs://itcast01:9000/ubuntu-amd64.iso`
+`hadoop fs -put /home/martin/桌面/ubuntu-16.04-desktop-amd64.iso hdfs://smallcpp01:9000/ubuntu-amd64.iso`
 
-上传文件到 `hdfs://itcast01:9000/` 并命名为 `ubuntu-amd64.iso`; 同样功能的命令除了 `put` 还有 `copyFromLocal` (过时).
+上传文件到 `hdfs://smallcpp01:9000/` 并命名为 `ubuntu-amd64.iso`; 同样功能的命令除了 `put` 还有 `copyFromLocal` (过时).
 
-`hdfs://itcast01:9000/` 表示的是 HDFS 的**根目录**, 可以简写成 `/`, 如上面的上传文件命令可以写成这样:
+`hdfs://smallcpp01:9000/` 表示的是 HDFS 的**根目录**, 可以简写成 `/`, 如上面的上传文件命令可以写成这样:
 
 `hadoop fs -put /home/martin/桌面/ubuntu-16.04-desktop-amd64.iso /ubuntu-amd64.iso`
 
@@ -443,7 +443,7 @@ Hadoop 的 **HDFS** 系统使用起来就像是 Linux 的文件系统, 如 `hado
 ![](http://i61.tinypic.com/344ql4k.jpg)
 
 ## 7.3. 测试 MR 作业
-MR 使用 Java 进行开发, Hadoop 预置了一些测试 MR 作业 (就是一些 jar 包), 它们在: `/usr/itcast/hadoop-2.7.3/share/hadoop/mapreduce` 目录下.
+MR 使用 Java 进行开发, Hadoop 预置了一些测试 MR 作业 (就是一些 jar 包), 它们在: `/usr/smallcpp/hadoop-2.7.3/share/hadoop/mapreduce` 目录下.
 
 创建一个文件 `vim words.txt`, 输入内容:
 
@@ -457,10 +457,10 @@ hello martin
 <br>
 所有的 MR 都是执行在 **hdfs** 上的, 所以要先上传文件: `hadoop fs -put words.txt /words.txt`
 
-`/usr/itcast/hadoop-2.7.3/share/hadoop/mapreduce` 目录下有个 `hadoop-mapreduce-examples-2.7.3.jar`, 里面有个 `wordcount` 方法, 可以用来统计单词个数.
+`/usr/smallcpp/hadoop-2.7.3/share/hadoop/mapreduce` 目录下有个 `hadoop-mapreduce-examples-2.7.3.jar`, 里面有个 `wordcount` 方法, 可以用来统计单词个数.
 
 ```
-cd /usr/itcast/hadoop-2.7.3/share/hadoop/mapreduce
+cd /usr/smallcpp/hadoop-2.7.3/share/hadoop/mapreduce
 hadoop jar hadoop-mapreduce-examples-2.7.3.jar wordcount /words.txt /result
 ```
 <br>

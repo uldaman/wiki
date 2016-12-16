@@ -11,10 +11,10 @@ date: 2016-10-22 22:08
 # 导入依赖包
 创建一个 Java 工程后, 在工程下新建个 lib 文件夹, 导入 hdfs 的相关 jar 包:
 
-- /usr/itcast/hadoop-2.7.1/share/hadoop/common
-- /usr/itcast/hadoop-2.7.1/share/hadoop/common/lib
-- /usr/itcast/hadoop-2.7.1/share/hadoop/hdfs
-- /usr/itcast/hadoop-2.7.1/share/hadoop/hdfs/lib
+- /usr/smallcpp/hadoop-2.7.1/share/hadoop/common
+- /usr/smallcpp/hadoop-2.7.1/share/hadoop/common/lib
+- /usr/smallcpp/hadoop-2.7.1/share/hadoop/hdfs
+- /usr/smallcpp/hadoop-2.7.1/share/hadoop/hdfs/lib
 
 测试 hdfs 导入这些目录下的 jar 就可以了…
 
