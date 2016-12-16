@@ -37,19 +37,19 @@
 <h1 id="_1">安装系统</h1>
 <p>首先安装好系统, 配置好 IP、JDK 及 Hadoop, 参考 <a href="http://wiki.smallcpp.com/Hadoop/%E6%90%AD%E5%BB%BA%20Hadoop%20%E5%88%86%E5%B8%83%E5%BC%8F%E5%AE%9E%E9%AA%8C%E7%8E%AF%E5%A2%83.html">搭建 Hadoop 分布式实验环境</a> 前三步.</p>
 <h1 id="_2">设置域名解析</h1>
-<p>到 <strong>NameNode</strong> 节点下, <code>cd /usr/itcast/hadoop-2.7.3/etc/hadoop</code> 进入 Hadoop 配置文件所在目录;</p>
+<p>到 <strong>NameNode</strong> 节点下, <code>cd /usr/smallcpp/hadoop-2.7.3/etc/hadoop</code> 进入 Hadoop 配置文件所在目录;</p>
 <p><code>vim slaves</code> 将新节点的域名添加进来;</p>
-<p><code>sudo vim /etc/hosts</code> 修改 [ip 域名] 对应表, 将新节点的 <code>IP 域名</code> 添加进来, 然后将<strong>远程拷贝</strong>到新节点中, 如我的新添加的节点主机名是 itcast04, 用户是 martin:</p>
-<p><code>scp /etc/hosts martin@itcast04:/home/martin/.ssh/authorized_keys</code></p>
+<p><code>sudo vim /etc/hosts</code> 修改 [ip 域名] 对应表, 将新节点的 <code>IP 域名</code> 添加进来, 然后将<strong>远程拷贝</strong>到新节点中, 如我的新添加的节点主机名是 smallcpp04, 用户是 martin:</p>
+<p><code>scp /etc/hosts martin@smallcpp04:/home/martin/.ssh/authorized_keys</code></p>
 <p>同时也将 Hadoop 的配置目录拷贝过去:</p>
-<p><code>scp /usr/itcast/hadoop-2.7.3/etc/hadoop martin@itcast04:/usr/itcast/hadoop-2.7.3/etc/hadoop</code></p>
+<p><code>scp /usr/smallcpp/hadoop-2.7.3/etc/hadoop martin@smallcpp04:/usr/smallcpp/hadoop-2.7.3/etc/hadoop</code></p>
 <p>下面两个操作不知道是不是必须的, 待研究~</p>
 <ul>
 <li>更新当前集群的 DataNode 的 [ip 域名] 对应表</li>
 <li>更新当前集群的 DataNode 的 slaves 列表</li>
 </ul>
 <h1 id="ssh">配置 SSH</h1>
-<p>参考 <a href="http://wiki.smallcpp.com/Hadoop/%E6%90%AD%E5%BB%BA%20Hadoop%20%E5%88%86%E5%B8%83%E5%BC%8F%E5%AE%9E%E9%AA%8C%E7%8E%AF%E5%A2%83.html#52-itcast02-itcast03">搭建 Hadoop 分布式实验环境</a> 第 5.2 步.</p>
+<p>参考 <a href="http://wiki.smallcpp.com/Hadoop/%E6%90%AD%E5%BB%BA%20Hadoop%20%E5%88%86%E5%B8%83%E5%BC%8F%E5%AE%9E%E9%AA%8C%E7%8E%AF%E5%A2%83.html#52-smallcpp02-smallcpp03">搭建 Hadoop 分布式实验环境</a> 第 5.2 步.</p>
 <h1 id="_3">启动新节点</h1>
 <p>添加新节点<strong>不需要</strong>重启集群, 新节点会向 NameNode 发送心跳及 blockreport, 集群就知道有新节点上线了, 所以按上面的操作配好后, 到新节点下执行以下操作即可.</p>
 <div class="hlcode"><pre><span class="p">.</span><span class="o">/</span><span class="n">start</span><span class="o">-</span><span class="n">dfs</span><span class="p">.</span><span class="n">sh</span>

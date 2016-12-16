@@ -30,7 +30,7 @@
 <li>宿主机: win7 64位, 16G</li>
 <li>虚拟化工具: VMware Workstation</li>
 <li>虚拟机系统: Ubuntu 32位, 1.5G, 20G, NAT</li>
-<li>主机名: itcast01 (NameNode), itcast02 (Datanode), itcast03 (Datanode)</li>
+<li>主机名: smallcpp01 (NameNode), smallcpp02 (Datanode), smallcpp03 (Datanode)</li>
 <li>Java 版本: jdk-8u101-linux-i586</li>
 <li>Hadoop 版本: hadoop-2.7.3</li>
 </ul>
@@ -69,8 +69,8 @@
 </ul>
 </li>
 <li><a href="#5-ssh">5. 配置 SSH 免密码登录</a><ul>
-<li><a href="#51-itcast01">5.1. 配置 itcast01</a></li>
-<li><a href="#52-itcast02-itcast03">5.2. 配置 itcast02 和 itcast03</a></li>
+<li><a href="#51-smallcpp01">5.1. 配置 smallcpp01</a></li>
+<li><a href="#52-smallcpp02-smallcpp03">5.2. 配置 smallcpp02 和 smallcpp03</a></li>
 </ul>
 </li>
 <li><a href="#6">6. 启动集群</a></li>
@@ -127,12 +127,12 @@
 <p>实际操作后重启发现好像并没生效, 又找到了另一个方法, 执行 <code>sudo vim /etc/resolvconf/resolv.conf.d/tail</code> 输入和 DNS 解析文件相同的内容.</p>
 <p>最后, 通过 <code>sudo resolvconf -u</code> 刷新 <strong>resolv.conf</strong> 文件, 再用 <code>sudo /etc/init.d/networking restart</code> 重启网络.</p>
 <h2 id="hosts">Hosts</h2>
-<p><code>sudo vim /etc/hostname</code> 修改主机名为 itcast01 (另外两台分别用 itcast02 和 itcast03).</p>
+<p><code>sudo vim /etc/hostname</code> 修改主机名为 smallcpp01 (另外两台分别用 smallcpp02 和 smallcpp03).</p>
 <p><code>sudo vim /etc/hosts</code> 修改 [ip 域名] 对应表.</p>
 <div class="hlcode"><pre><span class="mf">127.0.0.1</span>       <span class="n">localhost</span>
-<span class="mf">192.168.31.200</span>  <span class="n">itcast01</span>
-<span class="mf">192.168.31.201</span>  <span class="n">itcast02</span>
-<span class="mf">192.168.31.201</span>  <span class="n">itcast03</span>
+<span class="mf">192.168.31.200</span>  <span class="n">smallcpp01</span>
+<span class="mf">192.168.31.201</span>  <span class="n">smallcpp02</span>
+<span class="mf">192.168.31.201</span>  <span class="n">smallcpp03</span>
 </pre></div>
 
 
@@ -183,15 +183,15 @@
 <p><img alt="" src="http://i58.tinypic.com/2nuon4o.jpg" /></p>
 <p><img alt="" src="http://wiki.smallcpp.com/static/images/搭建Hadoop分布式实验环境/hadoopdown.png" /></p>
 <p>下载完成后, 拖到 Ubuntu 桌面.</p>
-<p><code>sudo mkdir /usr/itcast</code> 创建一个文件夹.</p>
+<p><code>sudo mkdir /usr/smallcpp</code> 创建一个文件夹.</p>
 <p><code>cd ~/桌面</code>, 进入桌面目录.</p>
-<p><code>sudo tar -zxvf hadoop-2.7.3.tar.gz -C /usr/itcast</code> (-z 处理 gzip, x 解压, v 显示详情, f 解压哪个文件)</p>
-<p>为避免权限问题, 可将 <code>/usr/itcast/hadoop-2.7.3/</code> 目录权限改为 <strong>777</strong>: <code>sudo chmod -R 777 /usr/itcast/hadoop-2.7.3/</code></p>
+<p><code>sudo tar -zxvf hadoop-2.7.3.tar.gz -C /usr/smallcpp</code> (-z 处理 gzip, x 解压, v 显示详情, f 解压哪个文件)</p>
+<p>为避免权限问题, 可将 <code>/usr/smallcpp/hadoop-2.7.3/</code> 目录权限改为 <strong>777</strong>: <code>sudo chmod -R 777 /usr/smallcpp/hadoop-2.7.3/</code></p>
 <h2 id="32">3.2</h2>
 <p>修改环境变量.</p>
 <p><code>vim ~/.bashrc</code></p>
 <div class="hlcode"><pre><span class="n">export</span> <span class="n">JAVA_HOME</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">java</span><span class="o">/</span><span class="n">jdk1</span><span class="mf">.8.0</span><span class="n">_101</span>
-<span class="n">export</span> <span class="n">HADOOP_HOME</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">itcast</span><span class="o">/</span><span class="n">hadoop</span><span class="o">-</span><span class="mf">2.7.3</span>
+<span class="n">export</span> <span class="n">HADOOP_HOME</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">smallcpp</span><span class="o">/</span><span class="n">hadoop</span><span class="o">-</span><span class="mf">2.7.3</span>
 <span class="n">export</span> <span class="n">PATH</span><span class="o">=</span><span class="err">$</span><span class="n">PATH</span><span class="o">:</span><span class="err">$</span><span class="n">JAVA_HOME</span><span class="o">/</span><span class="n">bin</span><span class="o">:</span><span class="err">$</span><span class="n">HADOOP_HOME</span><span class="o">/</span><span class="n">bin</span><span class="o">:</span><span class="err">$</span><span class="n">HADOOP_HOME</span><span class="o">/</span><span class="n">sbin</span>
 </pre></div>
 
@@ -202,7 +202,7 @@
 <p><code>source ~/.bashrc</code> 退回根目录, 测试下 hadoop 命令: <code>hadoop version</code></p>
 <p><img alt="" src="http://wiki.smallcpp.com/static/images/搭建Hadoop分布式实验环境/hadoopversion.png" /></p>
 <h1 id="4-hadoop">4. 配置 Hadoop</h1>
-<p><code>cd /usr/itcast/hadoop-2.7.3/etc/hadoop</code> 进入 Hadoop 配置文件所在目录.</p>
+<p><code>cd /usr/smallcpp/hadoop-2.7.3/etc/hadoop</code> 进入 Hadoop 配置文件所在目录.</p>
 <h2 id="41-vim-hadoop-envsh">4.1. vim hadoop-env.sh</h2>
 <p>定位到 26 行左右, 找到</p>
 <div class="hlcode"><pre>export JAVA_HOME=<span class="cp">${</span><span class="n">JAVA_HOME</span><span class="cp">}</span>
@@ -221,15 +221,15 @@
         <span class="nt">&lt;property&gt;</span>
         <span class="c">&lt;!--用来指定 HDFS 的老大(NameNode)的地址--&gt;</span>
                 <span class="nt">&lt;name&gt;</span>fs.defaultFS<span class="nt">&lt;/name&gt;</span>
-                <span class="c">&lt;!--itcast01 是这台主机名, 要在 hosts 里设置了映射才可以, 不然只能写 ip--&gt;</span>
-                <span class="nt">&lt;value&gt;</span>hdfs://itcast01:9000<span class="nt">&lt;/value&gt;</span>
+                <span class="c">&lt;!--smallcpp01 是这台主机名, 要在 hosts 里设置了映射才可以, 不然只能写 ip--&gt;</span>
+                <span class="nt">&lt;value&gt;</span>hdfs://smallcpp01:9000<span class="nt">&lt;/value&gt;</span>
         <span class="nt">&lt;/property&gt;</span>
 
         <span class="nt">&lt;property&gt;</span>
         <span class="c">&lt;!--用来指定 hadoop 运行时产生文件的存放目录--&gt;</span>
         <span class="c">&lt;!--默认为系统目录, 重启会被清空, 导致重启 hadoop 不能用--&gt;</span>
                 <span class="nt">&lt;name&gt;</span>hadoop.tmp.dir<span class="nt">&lt;/name&gt;</span>
-                <span class="nt">&lt;value&gt;</span>/usr/itcast/hadoop-2.7.3/tmp<span class="nt">&lt;/value&gt;</span>
+                <span class="nt">&lt;value&gt;</span>/usr/smallcpp/hadoop-2.7.3/tmp<span class="nt">&lt;/value&gt;</span>
         <span class="nt">&lt;/property&gt;</span>
 <span class="nt">&lt;/configuration&gt;</span>
 </pre></div>
@@ -245,19 +245,19 @@
         <span class="nt">&lt;property&gt;</span>
     <span class="c">&lt;!--指定元数据保存目录--&gt;</span>
              <span class="nt">&lt;name&gt;</span>dfs.namenode.name.dir<span class="nt">&lt;/name&gt;</span>
-             <span class="nt">&lt;value&gt;</span>/usr/itcast/hadoop-2.7.3/tmp/dfs/name<span class="nt">&lt;/value&gt;</span>
+             <span class="nt">&lt;value&gt;</span>/usr/smallcpp/hadoop-2.7.3/tmp/dfs/name<span class="nt">&lt;/value&gt;</span>
         <span class="nt">&lt;/property&gt;</span>
         <span class="nt">&lt;property&gt;</span>
     <span class="c">&lt;!--指定 HDFS 保存数据目录--&gt;</span>
              <span class="nt">&lt;name&gt;</span>dfs.datanode.data.dir<span class="nt">&lt;/name&gt;</span>
-             <span class="nt">&lt;value&gt;</span>/usr/itcast/hadoop-2.7.3/tmp/dfs/data<span class="nt">&lt;/value&gt;</span>
+             <span class="nt">&lt;value&gt;</span>/usr/smallcpp/hadoop-2.7.3/tmp/dfs/data<span class="nt">&lt;/value&gt;</span>
         <span class="nt">&lt;/property&gt;</span>
 <span class="nt">&lt;/configuration&gt;</span>
 </pre></div>
 
 
 <p><br>
-我们这里有 itcast02 和 itcast03 两台数据节点, 所以 <code>dfs.replication</code> 为 2, 如果是伪分布式系统的话, 这里改为 1 就可以了.</p>
+我们这里有 smallcpp02 和 smallcpp03 两台数据节点, 所以 <code>dfs.replication</code> 为 2, 如果是伪分布式系统的话, 这里改为 1 就可以了.</p>
 <h2 id="44-vim-yarn-envsh">4.4. vim yarn-env.sh</h2>
 <p>定位到 23 行左右, 找到 JAVA_HOME, 改为 <code>export JAVA_HOME=/usr/java/jdk1.8.0_101</code></p>
 <h2 id="45-vim-yarn-sitexml">4.5. vim yarn-site.xml</h2>
@@ -270,7 +270,7 @@
         <span class="nt">&lt;property&gt;</span>
             <span class="c">&lt;!--指定 YARN 的老大(ResourceManager 它负责资源的调度、分配)的地址--&gt;</span>
                 <span class="nt">&lt;name&gt;</span>yarn.resourcemanager.hostname<span class="nt">&lt;/name&gt;</span>
-                <span class="nt">&lt;value&gt;</span>itcast01<span class="nt">&lt;/value&gt;</span>
+                <span class="nt">&lt;value&gt;</span>smallcpp01<span class="nt">&lt;/value&gt;</span>
         <span class="nt">&lt;/property&gt;</span>
 <span class="nt">&lt;/configuration&gt;</span>
 </pre></div>
@@ -292,11 +292,11 @@
         <span class="nt">&lt;/property&gt;</span>
         <span class="nt">&lt;property&gt;</span>
                 <span class="nt">&lt;name&gt;</span>mapreduce.jobhistory.address<span class="nt">&lt;/name&gt;</span>
-                <span class="nt">&lt;value&gt;</span>itcast01:10020<span class="nt">&lt;/value&gt;</span>
+                <span class="nt">&lt;value&gt;</span>smallcpp01:10020<span class="nt">&lt;/value&gt;</span>
         <span class="nt">&lt;/property&gt;</span>
         <span class="nt">&lt;property&gt;</span>
                 <span class="nt">&lt;name&gt;</span>mapreduce.jobhistory.webapp.address<span class="nt">&lt;/name&gt;</span>
-                <span class="nt">&lt;value&gt;</span>itcast01:19888<span class="nt">&lt;/value&gt;</span>
+                <span class="nt">&lt;value&gt;</span>smallcpp01:19888<span class="nt">&lt;/value&gt;</span>
         <span class="nt">&lt;/property&gt;</span>
 <span class="nt">&lt;/configuration&gt;</span>
 </pre></div>
@@ -307,8 +307,8 @@
 <p>如果是伪分布式环境, 不需要配这个环节.</p>
 <p><code>vim slaves</code></p>
 <p>打开后去掉第一行的 localhost, 将数据节点的域名添加进来</p>
-<div class="hlcode"><pre><span class="n">itcast02</span>
-<span class="n">itcast03</span>
+<div class="hlcode"><pre><span class="n">smallcpp02</span>
+<span class="n">smallcpp03</span>
 </pre></div>
 
 
@@ -321,9 +321,9 @@
 <p><code>sudo vim /etc/hostname</code> 修改主机名.</p>
 <p><code>sudo vim /etc/hosts</code> 修改 [ip 域名] 对应表.</p>
 <div class="hlcode"><pre><span class="mf">127.0.0.1</span>       <span class="n">localhost</span>
-<span class="mf">192.168.31.200</span>  <span class="n">itcast01</span>
-<span class="mf">192.168.31.201</span>  <span class="n">itcast02</span>
-<span class="mf">192.168.31.202</span>  <span class="n">itcast03</span>
+<span class="mf">192.168.31.200</span>  <span class="n">smallcpp01</span>
+<span class="mf">192.168.31.201</span>  <span class="n">smallcpp02</span>
+<span class="mf">192.168.31.202</span>  <span class="n">smallcpp03</span>
 </pre></div>
 
 
@@ -331,25 +331,25 @@
 配好后重启, 在三台虚拟机间互 Ping 测试下.</p>
 <h1 id="5-ssh">5. 配置 SSH 免密码登录</h1>
 <p>Ubuntu 默认并没有安装 <strong>ssh</strong> 服务, 需要自己手动安装 <strong>openssh-server</strong>, 可以通过 <code>ssh localhost</code> 判断是否安装 ssh 服务; 如果没有安装则通过 <code>sudo apt-get install openssh-server</code> 安装即可.</p>
-<h2 id="51-itcast01">5.1. 配置 itcast01</h2>
-<p>在 itcast01 上安装好 <strong>ssh</strong> 服务后.</p>
+<h2 id="51-smallcpp01">5.1. 配置 smallcpp01</h2>
+<p>在 smallcpp01 上安装好 <strong>ssh</strong> 服务后.</p>
 <p><code>cd ~</code> 进入根目录</p>
 <p><code>ls -la</code> 查看下当前目录文件, 可以看到有个隐藏的 <code>.ssh</code> 文件夹 (如果没有自己新建个)</p>
 <p><code>cd .ssh/</code> 进入 <code>.ssh</code> 目录, <code>ls</code> 一下, 看看该目录下有没有 <code>id_rsa</code>、<code>id_rsa.pub</code> 两个文件, 如果没有, 就用 <code>ssh-keygen -t rsa</code> 生成一对 (一路回车就好).</p>
 <p><code>cp id_rsa.pub authorized_keys</code></p>
-<h2 id="52-itcast02-itcast03">5.2. 配置 itcast02 和 itcast03</h2>
+<h2 id="52-smallcpp02-smallcpp03">5.2. 配置 smallcpp02 和 smallcpp03</h2>
 <p>首先也是先安装好 <strong>ssh</strong> 服务生成一对 <code>id_rsa</code>、<code>id_rsa.pub</code> 文件;</p>
-<p>然后<strong>不要</strong>执行 <code>cp id_rsa.pub authorized_keys</code>, 而是执行 <code>ssh-copy-id -i ~/.ssh/id_rsa.pub martin@itcast01</code> 将公钥追加到 <strong>itcast01</strong> 的 <strong>authorized_keys</strong> 中.</p>
-<p>操作好后到 itcast01 中 <code>vim authorized_keys</code> 可以看到里面已经多出了 itcast02 和 itcast03 的公钥了.</p>
-<p>最后将 <strong>authorized_keys</strong> 远程拷贝到 itcast02 和 itcast03 中.</p>
-<div class="hlcode"><pre><span class="n">scp</span> <span class="n">authorized_keys</span> <span class="n">martin</span><span class="err">@</span><span class="n">itcast02</span><span class="o">:/</span><span class="n">home</span><span class="o">/</span><span class="n">martin</span><span class="o">/</span><span class="p">.</span><span class="n">ssh</span><span class="o">/</span><span class="n">authorized_keys</span>
-<span class="n">scp</span> <span class="n">authorized_keys</span> <span class="n">martin</span><span class="err">@</span><span class="n">itcast03</span><span class="o">:/</span><span class="n">home</span><span class="o">/</span><span class="n">martin</span><span class="o">/</span><span class="p">.</span><span class="n">ssh</span><span class="o">/</span><span class="n">authorized_keys</span>
+<p>然后<strong>不要</strong>执行 <code>cp id_rsa.pub authorized_keys</code>, 而是执行 <code>ssh-copy-id -i ~/.ssh/id_rsa.pub martin@smallcpp01</code> 将公钥追加到 <strong>smallcpp01</strong> 的 <strong>authorized_keys</strong> 中.</p>
+<p>操作好后到 smallcpp01 中 <code>vim authorized_keys</code> 可以看到里面已经多出了 smallcpp02 和 smallcpp03 的公钥了.</p>
+<p>最后将 <strong>authorized_keys</strong> 远程拷贝到 smallcpp02 和 smallcpp03 中.</p>
+<div class="hlcode"><pre><span class="n">scp</span> <span class="n">authorized_keys</span> <span class="n">martin</span><span class="err">@</span><span class="n">smallcpp02</span><span class="o">:/</span><span class="n">home</span><span class="o">/</span><span class="n">martin</span><span class="o">/</span><span class="p">.</span><span class="n">ssh</span><span class="o">/</span><span class="n">authorized_keys</span>
+<span class="n">scp</span> <span class="n">authorized_keys</span> <span class="n">martin</span><span class="err">@</span><span class="n">smallcpp03</span><span class="o">:/</span><span class="n">home</span><span class="o">/</span><span class="n">martin</span><span class="o">/</span><span class="p">.</span><span class="n">ssh</span><span class="o">/</span><span class="n">authorized_keys</span>
 </pre></div>
 
 
 <p><br></p>
 <h1 id="6">6. 启动集群</h1>
-<p>首次启动需要先在 NameNode 节点 (itcast01) 执行 NameNode 的格式化:</p>
+<p>首次启动需要先在 NameNode 节点 (smallcpp01) 执行 NameNode 的格式化:</p>
 <div class="hlcode"><pre><span class="n">hdfs</span> <span class="n">namenode</span> <span class="o">-</span><span class="n">format</span>       <span class="err">#</span> <span class="err">首次运行需要执行初始化，之后不需要</span>
 </pre></div>
 
@@ -407,19 +407,19 @@
 <h1 id="7">7. 测试集群</h1>
 <p>集群启动成功后会提供 Web 界面来管理集群.</p>
 <ul>
-<li><a href="http://itcast01:50070">itcast01:50070</a> -- hdfs 管理界面</li>
-<li><a href="http://itcast01:8088">itcast01:8088</a> -- yarn 管理界面</li>
-<li><a href="http://itcast01:19888">itcast01:19888</a> -- jobhistory 管理界面</li>
+<li><a href="http://smallcpp01:50070">smallcpp01:50070</a> -- hdfs 管理界面</li>
+<li><a href="http://smallcpp01:8088">smallcpp01:8088</a> -- yarn 管理界面</li>
+<li><a href="http://smallcpp01:19888">smallcpp01:19888</a> -- jobhistory 管理界面</li>
 </ul>
 <p><strong>hdfs 管理界面</strong></p>
 <p><img alt="" src="http://i61.tinypic.com/10fcr2s.jpg" /></p>
 <p>hadoop fs -ls /
-hdfs://itcast01:9000</p>
+hdfs://smallcpp01:9000</p>
 <h2 id="71">7.1. 上传文件</h2>
-<p>在 itcast01 (不一定是 itcast01, 可以集群中的任意一台进行测试) 的桌面上准备了一份大文件, 如 <code>ubuntu-16.04-desktop-amd64.iso</code>, 现在把它上传到 Hadoop 的 HDFS 文件系统上去.</p>
-<p><code>hadoop fs -put /home/martin/桌面/ubuntu-16.04-desktop-amd64.iso hdfs://itcast01:9000/ubuntu-amd64.iso</code></p>
-<p>上传文件到 <code>hdfs://itcast01:9000/</code> 并命名为 <code>ubuntu-amd64.iso</code>; 同样功能的命令除了 <code>put</code> 还有 <code>copyFromLocal</code> (过时).</p>
-<p><code>hdfs://itcast01:9000/</code> 表示的是 HDFS 的<strong>根目录</strong>, 可以简写成 <code>/</code>, 如上面的上传文件命令可以写成这样:</p>
+<p>在 smallcpp01 (不一定是 smallcpp01, 可以集群中的任意一台进行测试) 的桌面上准备了一份大文件, 如 <code>ubuntu-16.04-desktop-amd64.iso</code>, 现在把它上传到 Hadoop 的 HDFS 文件系统上去.</p>
+<p><code>hadoop fs -put /home/martin/桌面/ubuntu-16.04-desktop-amd64.iso hdfs://smallcpp01:9000/ubuntu-amd64.iso</code></p>
+<p>上传文件到 <code>hdfs://smallcpp01:9000/</code> 并命名为 <code>ubuntu-amd64.iso</code>; 同样功能的命令除了 <code>put</code> 还有 <code>copyFromLocal</code> (过时).</p>
+<p><code>hdfs://smallcpp01:9000/</code> 表示的是 HDFS 的<strong>根目录</strong>, 可以简写成 <code>/</code>, 如上面的上传文件命令可以写成这样:</p>
 <p><code>hadoop fs -put /home/martin/桌面/ubuntu-16.04-desktop-amd64.iso /ubuntu-amd64.iso</code></p>
 <p>Hadoop 的 <strong>HDFS</strong> 系统使用起来就像是 Linux 的文件系统, 如 <code>hadoop fs -ls /</code> 查看的就是 HDFS 根目录下的列表, 切不要将它们混淆了, HDFS 的根目录可不在 Linux 的根目录 (<code>/</code>) 下, 是两套完全不同的体系.</p>
 <p>上传完毕后可以在 Web 界面的文件管理模块可以看到变化:</p>
@@ -432,7 +432,7 @@ hdfs://itcast01:9000</p>
 <p>不用管它, apache 也给出了说明:</p>
 <p><img alt="" src="http://i61.tinypic.com/344ql4k.jpg" /></p>
 <h2 id="73-mr">7.3. 测试 MR 作业</h2>
-<p>MR 使用 Java 进行开发, Hadoop 预置了一些测试 MR 作业 (就是一些 jar 包), 它们在: <code>/usr/itcast/hadoop-2.7.3/share/hadoop/mapreduce</code> 目录下.</p>
+<p>MR 使用 Java 进行开发, Hadoop 预置了一些测试 MR 作业 (就是一些 jar 包), 它们在: <code>/usr/smallcpp/hadoop-2.7.3/share/hadoop/mapreduce</code> 目录下.</p>
 <p>创建一个文件 <code>vim words.txt</code>, 输入内容:</p>
 <div class="hlcode"><pre><span class="n">hello</span> <span class="n">tom</span>
 <span class="n">hello</span> <span class="n">jerry</span>
@@ -444,8 +444,8 @@ hdfs://itcast01:9000</p>
 
 <p><br>
 所有的 MR 都是执行在 <strong>hdfs</strong> 上的, 所以要先上传文件: <code>hadoop fs -put words.txt /words.txt</code></p>
-<p><code>/usr/itcast/hadoop-2.7.3/share/hadoop/mapreduce</code> 目录下有个 <code>hadoop-mapreduce-examples-2.7.3.jar</code>, 里面有个 <code>wordcount</code> 方法, 可以用来统计单词个数.</p>
-<div class="hlcode"><pre><span class="n">cd</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">itcast</span><span class="o">/</span><span class="n">hadoop</span><span class="o">-</span><span class="mf">2.7.3</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">hadoop</span><span class="o">/</span><span class="n">mapreduce</span>
+<p><code>/usr/smallcpp/hadoop-2.7.3/share/hadoop/mapreduce</code> 目录下有个 <code>hadoop-mapreduce-examples-2.7.3.jar</code>, 里面有个 <code>wordcount</code> 方法, 可以用来统计单词个数.</p>
+<div class="hlcode"><pre><span class="n">cd</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">smallcpp</span><span class="o">/</span><span class="n">hadoop</span><span class="o">-</span><span class="mf">2.7.3</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">hadoop</span><span class="o">/</span><span class="n">mapreduce</span>
 <span class="n">hadoop</span> <span class="n">jar</span> <span class="n">hadoop</span><span class="o">-</span><span class="n">mapreduce</span><span class="o">-</span><span class="n">examples</span><span class="o">-</span><span class="mf">2.7.3</span><span class="p">.</span><span class="n">jar</span> <span class="n">wordcount</span> <span class="o">/</span><span class="n">words</span><span class="p">.</span><span class="n">txt</span> <span class="o">/</span><span class="n">result</span>
 </pre></div>
 
