@@ -172,8 +172,10 @@ maven 中三个仓库的概念: <strong>本地仓库</strong> -> <strong>远程�
 <li><strong>deploy</strong>: 发布到远程 maven 软件包以便其他 maven 项目下载引用</li>
 </ul>
 <p>阶段内的命令是<strong>有序</strong>的, 每个命令的调用会自动调用其前面的阶段命令, 所以大部分情况下, 我们使用 <code>mvn install</code> 就可以了.</p>
-<p>另一个常用的命令是 <code>mvn clean</code> 用来清理项目环境, 如删除项目目录下的 target 目录 (已发布到本地仓库的需要自行控制), 但它属于 Clean Lifecycle 阶段的命令, 和 <code>mvn install</code> 在不同的生命周期, 所以执行 <code>mvn install</code> 时不会主动去执行 <code>mvn clean</code>, 因此, 我们通常和 install 组合使用:</p>
-<div class="hlcode"><pre><span class="n">mvn</span> <span class="n">clean</span> <span class="n">install</span>
+<p>另一个常用的命令是 <code>mvn clean</code> 用来清理项目环境, 如删除项目目录下的 target 目录 (已发布到本地仓库的需要自行控制), 但它属于 Clean Lifecycle 阶段的命令, 和 <code>mvn install</code> 在不同的生命周期, 所以执行 <code>mvn install</code> 时不会主动去执行 <code>mvn clean</code>, 因此, 我们通常和 package/install 组合使用:</p>
+<div class="hlcode"><pre><span class="n">mvn</span> <span class="n">clean</span> <span class="n">package</span>
+<span class="err">或者</span>
+<span class="n">mvn</span> <span class="n">clean</span> <span class="n">install</span>
 </pre></div>
 
 
