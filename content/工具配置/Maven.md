@@ -156,9 +156,11 @@ maven 还提供镜像的配置, 让我们可以为仓库设置**镜像**, 在 `M
 
 阶段内的命令是**有序**的, 每个命令的调用会自动调用其前面的阶段命令, 所以大部分情况下, 我们使用 `mvn install` 就可以了.
 
-另一个常用的命令是 `mvn clean` 用来清理项目环境, 如删除项目目录下的 target 目录 (已发布到本地仓库的需要自行控制), 但它属于 Clean Lifecycle 阶段的命令, 和 `mvn install` 在不同的生命周期, 所以执行 `mvn install` 时不会主动去执行 `mvn clean`, 因此, 我们通常和 install 组合使用:
+另一个常用的命令是 `mvn clean` 用来清理项目环境, 如删除项目目录下的 target 目录 (已发布到本地仓库的需要自行控制), 但它属于 Clean Lifecycle 阶段的命令, 和 `mvn install` 在不同的生命周期, 所以执行 `mvn install` 时不会主动去执行 `mvn clean`, 因此, 我们通常和 package/install 组合使用:
 
 ```
+mvn clean package
+或者
 mvn clean install
 ```
 <br>
