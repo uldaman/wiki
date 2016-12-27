@@ -31,6 +31,7 @@
 <li><a href="#_3">生命周期</a></li>
 <li><a href="#eclipse">Eclipse 插件</a></li>
 <li><a href="#_4">添加依赖</a></li>
+<li><a href="#_5">打包项目</a></li>
 </ul>
 </div>
 <h1 id="_1">介绍</h1>
@@ -229,6 +230,43 @@ maven 中三个仓库的概念: <strong>本地仓库</strong> -> <strong>远程�
 
 
 <p><br></p>
+<h1 id="_5">打包项目</h1>
+<p>正常打包使用下面的命令就可以了:</p>
+<div class="hlcode"><pre><span class="n">mvn</span> <span class="n">clean</span> <span class="n">package</span>
+<span class="err">或者</span>
+<span class="n">mvn</span> <span class="n">clean</span> <span class="n">install</span>
+</pre></div>
+
+
+<p><br>
+但如果想要将依赖的包一起打进去就需要在 <code>pom.xml</code> 中添加如下设置:</p>
+<div class="hlcode"><pre><span class="nt">&lt;plugin&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>maven-assembly-plugin<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;configuration&gt;</span>
+        <span class="nt">&lt;descriptorRefs&gt;</span>
+            <span class="nt">&lt;descriptorRef&gt;</span>jar-with-dependencies<span class="nt">&lt;/descriptorRef&gt;</span>
+        <span class="nt">&lt;/descriptorRefs&gt;</span>
+        <span class="nt">&lt;archive&gt;</span>
+            <span class="nt">&lt;manifest&gt;</span>
+                <span class="nt">&lt;mainClass&gt;&lt;/mainClass&gt;</span>
+            <span class="nt">&lt;/manifest&gt;</span>
+        <span class="nt">&lt;/archive&gt;</span>
+    <span class="nt">&lt;/configuration&gt;</span>
+    <span class="nt">&lt;executions&gt;</span>
+        <span class="nt">&lt;execution&gt;</span>
+            <span class="nt">&lt;id&gt;</span>make-assembly<span class="nt">&lt;/id&gt;</span>
+            <span class="nt">&lt;phase&gt;</span>package<span class="nt">&lt;/phase&gt;</span>
+            <span class="nt">&lt;goals&gt;</span>
+                <span class="nt">&lt;goal&gt;</span>single<span class="nt">&lt;/goal&gt;</span>
+            <span class="nt">&lt;/goals&gt;</span>
+        <span class="nt">&lt;/execution&gt;</span>
+    <span class="nt">&lt;/executions&gt;</span>
+<span class="nt">&lt;/plugin&gt;</span>
+</pre></div>
+
+
+<p><br>
+这样再使用 <code>mvn clean package/install</code> 就可以将项目的所有依赖也一起打进包了.</p>
     </div>
 
     <!-- 多说评论框 start -->
