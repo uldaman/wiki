@@ -248,3 +248,40 @@ jar 包的特征可以在 [mvn repository](https://mvnrepository.com/) 搜索得
 </dependencies>
 ```
 <br>
+# 打包项目
+正常打包使用下面的命令就可以了:
+
+```
+mvn clean package
+或者
+mvn clean install
+```
+<br>
+但如果想要将依赖的包一起打进去就需要在 `pom.xml` 中添加如下设置:
+
+```xml
+<plugin>
+    <artifactId>maven-assembly-plugin</artifactId>
+    <configuration>
+        <descriptorRefs>
+            <descriptorRef>jar-with-dependencies</descriptorRef>
+        </descriptorRefs>
+        <archive>
+            <manifest>
+                <mainClass></mainClass>
+            </manifest>
+        </archive>
+    </configuration>
+    <executions>
+        <execution>
+            <id>make-assembly</id>
+            <phase>package</phase>
+            <goals>
+                <goal>single</goal>
+            </goals>
+        </execution>
+    </executions>
+</plugin>
+```
+<br>
+这样再使用 `mvn clean package/install` 就可以将项目的所有依赖也一起打进包了.
