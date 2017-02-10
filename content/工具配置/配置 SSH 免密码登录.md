@@ -4,7 +4,7 @@ layout: page
 date: 2016-11-03 22:30
 ---
 
-[TOC]
+![](http://wiki.smallcpp.com/static/images/免密码登录原理.jpg)
 
 `cd ~<br>` 进入根目录
 
