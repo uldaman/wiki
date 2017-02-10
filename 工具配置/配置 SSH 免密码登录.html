@@ -25,7 +25,7 @@
     </div>
     <div class="clearfix"></div>
     <div id="content">
-        <p><img alt="" src="http://wiki.smallcpp.com/static/images/免密码登录原理.jpg" /></p>
+        <p><img alt="" src="http://wiki.smallcpp.com/static/images/SSH/免密码登录原理.png" /></p>
 <p><code>cd ~&lt;br&gt;</code> 进入根目录</p>
 <p><code>ls -la&lt;br&gt;</code> 查看下当前目录文件, 可以看到有个隐藏的 <code>.ssh</code> 文件夹 (点开头就是隐藏的)</p>
 <p><code>cd .ssh/&lt;br&gt;</code> 进入 <code>.ssh</code> 目录, <code>ls</code> 一下, 看看该目录下有没有 <code>id_rsa</code>、<code>id_rsa.pub</code> 两个文件, 如果没有, 就生成一对:<br><code>ssh-keygen -t(加密类型) rsa</code><br>--四个回车--<br>然后就会在 <code>.ssh</code> 下生成两个文件 <code>id_rsa</code>、<code>id_rsa.pub</code></p>
