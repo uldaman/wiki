@@ -4,7 +4,7 @@ layout: page
 date: 2016-11-03 22:30
 ---
 
-![](http://wiki.smallcpp.com/static/images/免密码登录原理.png)
+![](http://wiki.smallcpp.com/static/images/SSH/免密码登录原理.png)
 
 `cd ~<br>` 进入根目录
 
