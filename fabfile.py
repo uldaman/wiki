@@ -207,3 +207,9 @@ def commit():
                 pass
         else:
             print('Nothing to commit.')
+
+@task
+def wiki_commit():
+  local('D:/Git/bin/git add .')
+  local('D:/Git/bin/git commit -m "Update Notes"')
+  local('D:/Git/bin/git push')
