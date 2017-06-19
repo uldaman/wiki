@@ -42,12 +42,12 @@
 <p>因为我也是从 C++ 转向 Python 的, 所以总感觉自己在用写 C++ 代码的思维写 Python, 没有真正用到其作为脚本语言的优势, 很像披着 Python 外衣的 C++ 代码.</p>
 <p>所以才有了这篇 wiki, 相当于对之前学过的知识做个小结, 并且收集一些 Pythonic 的代码.</p>
 <blockquote>
-<p>注意, 部分内容收集自互联网;<br>
+<p>注意, 部分内容收集自互联网;<br><br />
 另外推荐本书: <a href="https://yunpan.cn/c6mPavfeDzHYK">&lt;&lt;编写高质量代码 - 改善 Python 程序的 91 个建议&gt;&gt;</a>  <strong>访问密码</strong> 9f75</p>
 </blockquote>
 <h1 id="references">References:<br></h1>
-<p><a href="https://github.com/z351522453/CS_Offer/blob/master/Python/Optimization.md">python 性能调优</a><br>
-<a href="http://wuzhiwei.net/be_pythonic/">让你的Python代码更加pythonic</a><br>
+<p><a href="https://github.com/z351522453/CS_Offer/blob/master/Python/Optimization.md">python 性能调优</a><br><br />
+<a href="http://wuzhiwei.net/be_pythonic/">让你的Python代码更加pythonic</a><br><br />
 <a href="https://github.com/z351522453/interview_python">关于 Python 的最全面试题</a></p>
 <h1 id="_1">列表生成式</h1>
 <p>提供一个可迭代的对象生成一个新列表</p>
@@ -61,7 +61,7 @@
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 参考链接: <a href="http://www.smallcpp.com/python-gao-ji-te-xing-zhi-lie-biao-sheng-cheng-shi.html">Python 高级特性之列表生成式</a></p>
 <h1 id="_2">生成器表达式</h1>
 <p>当列表过长, 而我们也不需要一次性获取全部数据时, 应当考虑使用生成器(generator)表达式而不是列表解析;</p>
@@ -89,14 +89,14 @@
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 倒序:</p>
 <div class="hlcode"><pre><span class="nb">sorted</span><span class="p">([</span><span class="mi">36</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">21</span><span class="p">],</span> <span class="n">reverse</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
 <span class="o">&gt;&gt;&gt;</span><span class="p">[</span><span class="mi">36</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 如果想自己实现倒序排序, 则可以自己写 <strong>cmp</strong> 函数, 然后做为 sorted() 的第二个参数.</p>
 <p>通常规定, 对于两个元素 x 和 y:</p>
 <ul>
@@ -114,14 +114,14 @@
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 传入自定义的比较函数 reversed_cmp, 就可以实现倒序排序:</p>
 <div class="hlcode"><pre><span class="nb">sorted</span><span class="p">([</span><span class="mi">36</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">21</span><span class="p">],</span> <span class="n">reversed_cmp</span><span class="p">)</span>
 <span class="o">&gt;&gt;&gt;</span><span class="p">[</span><span class="mi">36</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 再来看年 sorted() 的 <strong>key</strong> 参数:</p>
 <div class="hlcode"><pre><span class="n">L</span> <span class="o">=</span> <span class="p">[(</span><span class="s">&#39;b&#39;</span><span class="p">,</span><span class="mi">2</span><span class="p">),(</span><span class="s">&#39;a&#39;</span><span class="p">,</span><span class="mi">1</span><span class="p">),(</span><span class="s">&#39;c&#39;</span><span class="p">,</span><span class="mi">3</span><span class="p">),(</span><span class="s">&#39;d&#39;</span><span class="p">,</span><span class="mi">4</span><span class="p">)]</span>
 <span class="k">print</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">key</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
@@ -129,10 +129,10 @@
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 L 中的元素是一个 tupe, key 参数指定用 <code>tupe[1]</code> 做为依据来比较</p>
-<p>参考链接:<br>
-<a href="http://www.smallcpp.com/python-gao-ji-te-xing-zhi-sorted.html">Python 高级特性之 sorted( )</a><br>
+<p>参考链接:<br><br />
+<a href="http://www.smallcpp.com/python-gao-ji-te-xing-zhi-sorted.html">Python 高级特性之 sorted( )</a><br><br />
 <a href="http://www.cnblogs.com/woshitianma/p/3222989.html">Python中sorted()方法的用法</a></p>
 <h1 id="map">map( )</h1>
 <p>map() 函数接收两个参数, 一个是函数, 一个是序列, map() 将传入的函数依次作用到序列的每个元素, 并把结果作为新的 list 返回.</p>
@@ -145,7 +145,7 @@ L 中的元素是一个 tupe, key 参数指定用 <code>tupe[1]</code> 做为依
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 参考链接: <a href="http://www.smallcpp.com/python-gao-ji-te-xing-zhi-map.html">Python 高级特性之 map( )</a></p>
 <h1 id="reduce">reduce( )</h1>
 <p>reduce() 函数接收两个参数, 一个是函数, 一个是序列;</p>
@@ -154,7 +154,7 @@ L 中的元素是一个 tupe, key 参数指定用 <code>tupe[1]</code> 做为依
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 例子, 对序列求和:</p>
 <div class="hlcode"><pre><span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
@@ -164,7 +164,7 @@ L 中的元素是一个 tupe, key 参数指定用 <code>tupe[1]</code> 做为依
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 参考链接: <a href="http://www.smallcpp.com/python-gao-ji-te-xing-zhi-reduce.html">Python 高级特性之 reduce( )</a></p>
 <h1 id="filter">filter( )</h1>
 <p>filter() 函数接收两个参数, 一个是函数, 一个是序列;</p>
@@ -178,7 +178,7 @@ L 中的元素是一个 tupe, key 参数指定用 <code>tupe[1]</code> 做为依
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 参考链接: <a href="http://www.smallcpp.com/python-gao-ji-te-xing-zhi-filter.html">Python 高级特性之 filter( )</a></p>
 <h1 id="lambda">lambda 表达式</h1>
 <p>当我们在传入函数时, 有些时候, 不需要显式地定义函数, 直接传入匿名函数更方便, 匿名函数也叫 lambda 表达式.</p>
@@ -190,21 +190,21 @@ L 中的元素是一个 tupe, key 参数指定用 <code>tupe[1]</code> 做为依
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 用 lambda 表达式还有个好处, 因为函数没有名字, 不必担心函数名冲突, 此外, lambda 表达式也是一个函数对象, 也可以把 lambda 表达式赋值给一个变量, 再利用变量来调用该函数.</p>
 <div class="hlcode"><pre><span class="n">g</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="n">x</span> <span class="o">**</span> <span class="mi">2</span> <span class="c"># x 的平方</span>
 <span class="n">v</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="p">:</span> <span class="n">x</span> <span class="o">**</span> <span class="n">y</span> <span class="c"># x 的 y 次方</span>
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 例子, 求 1 到 100 的合:</p>
 <div class="hlcode"><pre><span class="nb">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">101</span><span class="p">))</span>
 <span class="o">&gt;&gt;&gt;</span><span class="mi">5050</span>
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 lambda 可以配合 map、reduce、filter、sorted 高效操作列表.</p>
 <p>参考链接: <a href="http://www.smallcpp.com/python-gao-ji-te-xing-zhi-lambda.html">Python 高级特性之 lambda</a></p>
 <h1 id="_3">切片</h1>
@@ -244,12 +244,12 @@ lambda 可以配合 map、reduce、filter、sorted 高效操作列表.</p>
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 字符串也是一种序列, 因此利用切片就能极方便地反转字符了, 步长为 -1 即反向、每次递增 1 地从序列中取值.</p>
 <h1 id="_4">用正确的数据结构</h1>
-<p><strong>字典 (dictionary) 与列表 (list)</strong>:<br>
+<p><strong>字典 (dictionary) 与列表 (list)</strong>:<br><br />
 Python 字典中使用了 hash table, 因此查找操作的复杂度为 O(1), 而 list 实际是个数组, 在 list 中, 查找需要遍历整个 list, 其复杂度为 O(n), 因此对成员的查找访问等操作字典要比 list 更快.</p>
-<p><strong>集合 (set) 与列表 (list)</strong>:<br>
+<p><strong>集合 (set) 与列表 (list)</strong>:<br><br />
 set 的 union、ntersection、difference 操作要比 list 的迭代要快, 因此如果涉及到求 list 交集, 并集或者差的问题可以转换为 set 来操作.</p>
 <ul>
 <li>set(list1) | set(list2)：包含 list1 和 list2 所有数据的新集合</li>
@@ -266,17 +266,17 @@ set 的 union、ntersection、difference 操作要比 list 的迭代要快, 因�
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 而是要使用下面这种:</p>
 <div class="hlcode"><pre><span class="n">s</span> <span class="o">=</span> <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">somelist</span><span class="p">)</span>
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 当对字符串可以使用<strong>正则表达式</strong>或者内置函数来处理的时候，选择内置函数, 如 str.isalpha()、str.isdigit()、str.startswith(('x', 'yz'))、str.endswith(('x', 'yz')) 等.</p>
-<p>对字符进行格式化比直接串联读取要快，因此要使用:<br>
-<code>out = '&lt;html&gt;%s%s%s%s&lt;/html&gt;'' % (head, prologue, query, tail)</code><br>
-而不是:<br>
+<p>对字符进行格式化比直接串联读取要快，因此要使用:<br><br />
+<code>out = '&lt;html&gt;%s%s%s%s&lt;/html&gt;'' % (head, prologue, query, tail)</code><br><br />
+而不是:<br><br />
 <code>out = '&lt;html&gt;'' + head + prologue + query + tail + '&lt;/html&gt;'</code></p>
     </div>
 

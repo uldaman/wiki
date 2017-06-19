@@ -61,19 +61,19 @@
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 在安裝完毕, 设置你的登录认证:</p>
 <div class="hlcode"><pre><span class="n">travis</span> <span class="n">login</span> <span class="o">--</span><span class="k">auto</span>
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 会要求输入账号密码, 如此一來, 就能通过 Travis Client 加密 <code>id_rsa</code> 了, Travis Client首先会产生一个新的 <code>id_rsa.enc</code> 文件, 然后在 <code>.travis.yml</code> 的 <code>before_install</code> 中插入解密指令.</p>
 <div class="hlcode"><pre><span class="n">travis</span> <span class="n">encrypt</span><span class="o">-</span><span class="n">file</span> <span class="n">id_rsa</span> <span class="o">--</span><span class="n">add</span>
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 注意要在你的 Simiki 项目路径执行上面的命令, 正常來說 Travis Client 會自動解析目前的 repo (並把 Private key 上傳到相對應的 repo), 但有時可能會秀逗, 這時你必須在指令後加上 -r 選項來指定 repo 名稱, 例如:</p>
 <div class="hlcode"><pre><span class="n">travis</span> <span class="n">encrypt</span><span class="o">-</span><span class="n">file</span> <span class="n">id_rsa</span> <span class="o">--</span><span class="n">add</span> <span class="o">-</span><span class="n">r</span> <span class="n">xxx</span><span class="o">/</span><span class="n">xxx</span>
 </pre></div>
@@ -91,14 +91,14 @@
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 因為剛剛修改了 id_rsa.enc 的位址, 所以我們要順帶修改剛剛 Travis 在 <code>.travis.yml</code> 幫我們插入的那條解密指令:</p>
 <div class="hlcode"><pre><span class="o">-</span> <span class="n">openssl</span> <span class="n">aes</span><span class="o">-</span><span class="mi">256</span><span class="o">-</span><span class="n">cbc</span> <span class="o">-</span><span class="n">K</span> <span class="err">$</span><span class="n">encrypted_06b8e90ac19b_key</span> <span class="o">-</span><span class="n">iv</span> <span class="err">$</span><span class="n">encrypted_06b8e90ac19b_iv</span>
   <span class="o">-</span><span class="n">in</span> <span class="p">.</span><span class="n">travis</span><span class="o">/</span><span class="n">id_rsa</span><span class="p">.</span><span class="n">enc</span> <span class="o">-</span><span class="n">out</span> <span class="o">~/</span><span class="p">.</span><span class="n">ssh</span><span class="o">/</span><span class="n">id_rsa</span> <span class="o">-</span><span class="n">d</span>
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 這條指令會利用 openssl 解密你仓库 <code>.travis/id_rsa.enc</code> 文件, 並把解密後的文件放到 Travis 服务器的 <code>~/.ssh/id_rsa</code>, 这样 Travis 就能利用这个私钥和你的 Github 通信了.</p>
 <p>然后 <code>.travis.yml</code> 中还需要配置一些其他选项, 我的 simiki 完整 <code>.travis.yml</code> 如下:</p>
 <div class="hlcode"><pre><span class="nl">python:</span>
@@ -131,7 +131,7 @@
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 大部分都好理解, 重点解释下 <strong>hack 1</strong> 和 <strong>hack 2</strong>.</p>
 <p><strong>hack 1</strong>, 因为 Travis CI 克隆是用的 <strong>http/https</strong> 协议, 所以在推送时就没法使用 SSH 模式了, 于是克隆下来后要改协议为 <strong>ssh/git</strong>.</p>
 <p><strong>hack 2</strong>, Travis CI 克隆项目指定了 --depth, 这样会只拉出当前 master 分支, 如果没有这条配置, 推送时就会报错, 因为这样相当于新建了 gh-pages 分支, 所以必然会提示冲突...加上 hack 2 从 origin 拉回 gh-pages 分支, 解决下面的错误.</p>
@@ -148,11 +148,11 @@
 
 <p><br></p>
 <h1 id="reference">Reference</h1>
-<p><a href="https://github.com/travis-ci/travis.rb">Travis CI Github</a><br>
-<a href="https://blog.tankywoo.com/2016/02/19/simiki-with-travis-ci.html">Simiki基于Github Pages配合Travis CI做持续集成</a><br>
-<a href="https://xuanwo.org/2015/02/07/Travis-CI-Hexo-Autodeploy/">使用Travis CI自动部署Hexo</a><br>
-<a href="https://gorails.com/setup/ubuntu/14.04">Setup Ruby On Rails on Ubuntu 14.04 Trusty Tahr</a><br>
-<a href="http://www.cnblogs.com/ToDoToTry/p/4422454.html">gem install 出现Errno::ECONNRESET: Connection reset by peer - SSL_connect (https://api.rubygems.org)</a><br>
+<p><a href="https://github.com/travis-ci/travis.rb">Travis CI Github</a><br><br />
+<a href="https://blog.tankywoo.com/2016/02/19/simiki-with-travis-ci.html">Simiki基于Github Pages配合Travis CI做持续集成</a><br><br />
+<a href="https://xuanwo.org/2015/02/07/Travis-CI-Hexo-Autodeploy/">使用Travis CI自动部署Hexo</a><br><br />
+<a href="https://gorails.com/setup/ubuntu/14.04">Setup Ruby On Rails on Ubuntu 14.04 Trusty Tahr</a><br><br />
+<a href="http://www.cnblogs.com/ToDoToTry/p/4422454.html">gem install 出现Errno::ECONNRESET: Connection reset by peer - SSL_connect (https://api.rubygems.org)</a><br><br />
 <a href="https://ruby-china.org/topics/15260">修改 gem sources 后遇到的问题</a><br></p>
     </div>
 

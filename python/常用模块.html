@@ -148,7 +148,7 @@
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 <code>namedtuple</code> 是一个函数, 它用来创建一个自定义的 tuple 对象, 并且规定了 tuple 元素的个数, 并可以用<strong>名称</strong>而不是索引来引用 tuple 的某个元素.</p>
 <p>这样一来, 我们用 <code>namedtuple</code> 可以很方便地定义一种数据类型, 它具备 tuple 的不变性, 又可以根据属性来引用, 使用十分方便.</p>
 <p>可以验证创建的 Point 对象是 tuple 的一种子类:</p>
@@ -173,14 +173,14 @@
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 结果:</p>
 <div class="hlcode"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">c</span>
 <span class="n">Counter</span><span class="p">({</span><span class="sc">&#39;g&#39;</span><span class="o">:</span> <span class="mi">2</span><span class="p">,</span> <span class="sc">&#39;m&#39;</span><span class="o">:</span> <span class="mi">2</span><span class="p">,</span> <span class="sc">&#39;r&#39;</span><span class="o">:</span> <span class="mi">2</span><span class="p">,</span> <span class="sc">&#39;a&#39;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="sc">&#39;i&#39;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="sc">&#39;o&#39;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="sc">&#39;n&#39;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="sc">&#39;p&#39;</span><span class="o">:</span> <span class="mi">1</span><span class="p">})</span>
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 <code>Counter</code> 实际上也是 <code>dict</code> 的一个子类, 上面的结果可以看出, 字符 'g'、'm'、'r' 各出现了两次, 其他字符各出现了一次.</p>
 <h2 id="ordereddict">OrderedDict</h2>
 <p>在 Python 中, <code>dict</code> 这个数据结构由于 hash 的特性, 是无序的, 这在有的时候会给我们带来一些麻烦,  幸运的是, collections 模块为我们提供了 <code>OrderedDict</code>, 当你要获得一个有序的字典对象时, 用它就对了.</p>
@@ -189,27 +189,27 @@
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 结果:</p>
 <div class="hlcode"><pre><span class="n">d</span> <span class="err">#</span> <span class="n">dict</span> <span class="err">的</span><span class="n">Key</span><span class="err">是无序的</span>
 <span class="p">{</span><span class="sc">&#39;a&#39;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="sc">&#39;c&#39;</span><span class="o">:</span> <span class="mi">3</span><span class="p">,</span> <span class="sc">&#39;b&#39;</span><span class="o">:</span> <span class="mi">2</span><span class="p">}</span>
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 改用 OrderedDict:</p>
 <div class="hlcode"><pre><span class="n">od</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">([(</span><span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;c&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)])</span>
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 结果:</p>
 <div class="hlcode"><pre><span class="n">od</span> <span class="err">#</span> <span class="n">OrderedDict</span><span class="err">的</span><span class="n">Key</span><span class="err">是有序的</span>
 <span class="n">OrderedDict</span><span class="p">([(</span><span class="sc">&#39;a&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="sc">&#39;b&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="sc">&#39;c&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)])</span>
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 注意, OrderedDict 的 Key 会按照<strong>插入的顺序</strong>排列, 不是Key本身排序.</p>
 <h2 id="defaultdict">defaultdict</h2>
 <p>使用 <code>dict</code> 时, 如果引用的 Key 不存在, 就会抛出 KeyError. 如果希望 key 不存在时, 返回一个默认值, 就可以用 <code>defaultdict</code>:</p>
@@ -219,7 +219,7 @@
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 结果:</p>
 <div class="hlcode"><pre><span class="n">dd</span><span class="p">[</span><span class="err">&#39;</span><span class="n">key1</span><span class="err">&#39;</span><span class="p">]</span> <span class="err">#</span> <span class="n">key1</span> <span class="err">存在</span>
 <span class="err">&#39;</span><span class="n">abc</span><span class="err">&#39;</span>
@@ -229,7 +229,7 @@
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 注意默认值是调用函数返回的, 而函数在创建 <code>defaultdict</code> 对象时传入.</p>
 <h1 id="docx">docx</h1>
 <p>Python DocX 目前是 Python OpenXML 的一部分, 你可以用它打开 Word 2007 及以后的文档, 而用它保存的文档可以在 Microsoft Office 2007/2010, Microsoft Mac Office 2008, Google Docs, OpenOffice.org 3, and Apple iWork 08 中打开.</p>

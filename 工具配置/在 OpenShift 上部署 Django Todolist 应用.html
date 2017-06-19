@@ -90,7 +90,7 @@
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 然后打开 <code>\todolist\.openshift\action_hooks</code> 目录下的 <code>deploy</code> 文件, 这里面保存的是当 push 到 openshift 后执行的动作, 我们把里面的 <code>myproject</code> 改为 <code>todolist</code>.</p>
 <div class="hlcode"><pre><span class="c">#!/bin/bash</span>
 <span class="c"># This deploy hook gets executed after dependencies are resolved and the</span>
@@ -115,7 +115,7 @@
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 再进入 <code>wsgi</code> 文件夹, 里面有个 <code>application</code> 的文件</p>
 <div class="hlcode"><pre><span class="c">#!/usr/bin/env python</span>
 <span class="kn">import</span> <span class="nn">os</span>
@@ -137,23 +137,23 @@
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 注意这两行:</p>
 <div class="hlcode"><pre><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s">&#39;DJANGO_SETTINGS_MODULE&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;myproject.settings&#39;</span>
 <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s">&#39;OPENSHIFT_REPO_DIR&#39;</span><span class="p">],</span> <span class="s">&#39;wsgi&#39;</span><span class="p">,</span> <span class="s">&#39;myproject&#39;</span><span class="p">))</span>
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 改为:</p>
 <div class="hlcode"><pre><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s">&#39;DJANGO_SETTINGS_MODULE&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;simple_todo.settings&#39;</span>
 <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s">&#39;OPENSHIFT_REPO_DIR&#39;</span><span class="p">],</span> <span class="s">&#39;wsgi&#39;</span><span class="p">,</span> <span class="s">&#39;todolist&#39;</span><span class="p">))</span>
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 <strong>注意</strong>, 别改错了,  第一个是 <code>simple_todo.settings</code>, 别改成 <code>todolist.settings</code> 了.</p>
-<p>最后, 进入 <code>\todolist\wsgi\todolist\simple_todo</code> 目录, 用之前从 <code>myproject</code> 里备份的 <code>settings.py</code> 替换掉 <code>simple_todo</code> 里的 <code>settings.py</code>.<br>
+<p>最后, 进入 <code>\todolist\wsgi\todolist\simple_todo</code> 目录, 用之前从 <code>myproject</code> 里备份的 <code>settings.py</code> 替换掉 <code>simple_todo</code> 里的 <code>settings.py</code>.<br><br />
 但要做下修改, 把 <code>settings.py</code> 里的 <code>myproject</code> 替换成 <code>simple_todo</code>, 然后在 <code>INSTALLED_APPS</code> 里添加一项 <code>todo</code>, 再把 <code>Debug</code> 属性改为 <code>False</code> (如果部署到 openshift 后发现有问题, 可以改为 <code>True</code> 后进行调试, 调试完毕再改为 <code>False</code>), 改完后的 <code>settings.py</code> 如下:</p>
 <div class="hlcode"><pre><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Django settings for simple_todo project.</span>
@@ -272,7 +272,7 @@
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 <strong>静态文件的处理</strong></p>
 <p>比如 CSS、图片等等, 一般 Django 应用的静态文件的目录是在 settings.py 中配置的, 但是 OpenShift 使用了不一样的方式, 所有的静态文件都将被放置在 <code>wsgi/static</code> 目录下.</p>
 <blockquote>

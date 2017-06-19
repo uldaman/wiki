@@ -79,7 +79,7 @@
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 In this example, the default namespace is set to the XHTML namespace, and the namespace for Genshi directives is bound to the prefix “py”.</p>
 <p>All directives can be applied as attributes, and some can also be used as elements. The if directives for conditionals, for example, can be used in both ways:</p>
 <div class="hlcode"><pre><span class="nt">&lt;html</span> <span class="na">xmlns=</span><span class="s">&quot;http://www.w3.org/1999/xhtml&quot;</span>
@@ -94,7 +94,7 @@ In this example, the default namespace is set to the XHTML namespace, and the na
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 This is basically equivalent to the following:</p>
 <div class="hlcode"><pre><span class="nt">&lt;html</span> <span class="na">xmlns=</span><span class="s">&quot;http://www.w3.org/1999/xhtml&quot;</span>
       <span class="na">xmlns:py=</span><span class="s">&quot;http://genshi.edgewall.org/&quot;</span>
@@ -110,7 +110,7 @@ This is basically equivalent to the following:</p>
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 The rationale behind the second form is that directives do not always map naturally to elements in the template. In such cases, the py:strip directive can be used to strip off the unwanted element, or the directive can simply be used as an element.</p>
 <h2 id="11-conditional-sections">1.1 Conditional Sections</h2>
 <h3 id="111-pyif">1.1.1 py:if</h3>
@@ -121,7 +121,7 @@ The rationale behind the second form is that directives do not always map natura
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 Given the data foo=True and bar='Hello' in the template context, this would produce:</p>
 <div class="hlcode"><pre><span class="nt">&lt;div&gt;</span>
   <span class="nt">&lt;b&gt;</span>Hello<span class="nt">&lt;/b&gt;</span>
@@ -129,14 +129,14 @@ Given the data foo=True and bar='Hello' in the template context, this would prod
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 But setting foo=False would result in the following output:</p>
 <div class="hlcode"><pre><span class="nt">&lt;div&gt;</span>
 <span class="nt">&lt;/div&gt;</span>
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 This directive can also be used as an element:</p>
 <div class="hlcode"><pre><span class="nt">&lt;div&gt;</span>
   <span class="nt">&lt;py:if</span> <span class="na">test=</span><span class="s">&quot;foo&quot;</span><span class="nt">&gt;</span>
@@ -158,7 +158,7 @@ This directive can also be used as an element:</p>
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 This would produce the following output:</p>
 <div class="hlcode"><pre><span class="nt">&lt;div&gt;</span>
   <span class="nt">&lt;span&gt;</span>1<span class="nt">&lt;/span&gt;</span>
@@ -166,7 +166,7 @@ This would produce the following output:</p>
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 If the py:choose directive contains an expression the nested py:when directives will be tested for equality to the parent py:choose value:</p>
 <div class="hlcode"><pre><span class="nt">&lt;div</span> <span class="na">py:choose=</span><span class="s">&quot;1&quot;</span><span class="nt">&gt;</span>
   <span class="nt">&lt;span</span> <span class="na">py:when=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>0<span class="nt">&lt;/span&gt;</span>
@@ -176,7 +176,7 @@ If the py:choose directive contains an expression the nested py:when directives 
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 This would produce the following output:</p>
 <div class="hlcode"><pre><span class="nt">&lt;div&gt;</span>
   <span class="nt">&lt;span&gt;</span>1<span class="nt">&lt;/span&gt;</span>
@@ -184,7 +184,7 @@ This would produce the following output:</p>
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 These directives can also be used as elements:</p>
 <div class="hlcode"><pre><span class="nt">&lt;py:choose</span> <span class="na">test=</span><span class="s">&quot;1&quot;</span><span class="nt">&gt;</span>
   <span class="nt">&lt;py:when</span> <span class="na">test=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>0<span class="nt">&lt;/py:when&gt;</span>
@@ -204,7 +204,7 @@ These directives can also be used as elements:</p>
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 Given items=[1, 2, 3] in the context data, this would produce:</p>
 <div class="hlcode"><pre><span class="nt">&lt;ul&gt;</span>
   <span class="nt">&lt;li&gt;</span>1<span class="nt">&lt;/li&gt;&lt;li&gt;</span>2<span class="nt">&lt;/li&gt;&lt;li&gt;</span>3<span class="nt">&lt;/li&gt;</span>
@@ -212,7 +212,7 @@ Given items=[1, 2, 3] in the context data, this would produce:</p>
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 This directive can also be used as an element:</p>
 <div class="hlcode"><pre><span class="nt">&lt;ul&gt;</span>
   <span class="nt">&lt;py:for</span> <span class="na">each=</span><span class="s">&quot;item in items&quot;</span><span class="nt">&gt;</span>
@@ -236,7 +236,7 @@ This directive can also be used as an element:</p>
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 The above would be rendered to:</p>
 <div class="hlcode"><pre><span class="nt">&lt;div&gt;</span>
   <span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">&quot;greeting&quot;</span><span class="nt">&gt;</span>
@@ -249,7 +249,7 @@ The above would be rendered to:</p>
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 If a macro doesn't require parameters, it can be defined without the parenthesis. For example:</p>
 <div class="hlcode"><pre><span class="nt">&lt;div&gt;</span>
   <span class="nt">&lt;p</span> <span class="na">py:def=</span><span class="s">&quot;greeting&quot;</span> <span class="na">class=</span><span class="s">&quot;greeting&quot;</span><span class="nt">&gt;</span>
@@ -260,7 +260,7 @@ If a macro doesn't require parameters, it can be defined without the parenthesis
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 The above would be rendered to:</p>
 <div class="hlcode"><pre><span class="nt">&lt;div&gt;</span>
   <span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">&quot;greeting&quot;</span><span class="nt">&gt;</span>
@@ -270,7 +270,7 @@ The above would be rendered to:</p>
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 This directive can also be used as an element:</p>
 <div class="hlcode"><pre><span class="nt">&lt;div&gt;</span>
   <span class="nt">&lt;py:def</span> <span class="na">function=</span><span class="s">&quot;greeting(name)&quot;</span><span class="nt">&gt;</span>
@@ -293,7 +293,7 @@ This directive can also be used as an element:</p>
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 This would result in the following output:</p>
 <div class="hlcode"><pre><span class="nt">&lt;div&gt;</span>
   <span class="nt">&lt;span&gt;</span>
@@ -303,7 +303,7 @@ This would result in the following output:</p>
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 Inside the body of a py:match directive, the select(path) function is made available so that parts or all of the original element can be incorporated in the output of the match template. See Using XPath for more information about this function.</p>
 <p>Match templates are applied both to the original markup as well to the generated markup. The order in which they are applied depends on the order they are declared in the template source: a match template defined after another match template is applied to the output generated by the first match template. The match templates basically form a pipeline.</p>
 <p>This directive can also be used as an element:</p>
@@ -316,7 +316,7 @@ Inside the body of a py:match directive, the select(path) function is made avail
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 When used this way, the py:match directive can also be annotated with a couple of optimization hints. For example, the following informs the matching engine that the match should only be applied once:</p>
 <div class="hlcode"><pre><span class="nt">&lt;py:match</span> <span class="na">path=</span><span class="s">&quot;body&quot;</span> <span class="na">once=</span><span class="s">&quot;true&quot;</span><span class="nt">&gt;</span>
   <span class="nt">&lt;body</span> <span class="na">py:attrs=</span><span class="s">&quot;select(&#39;@*&#39;)&quot;</span><span class="nt">&gt;</span>
@@ -328,7 +328,7 @@ When used this way, the py:match directive can also be annotated with a couple o
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 The following optimization hints are recognized:</p>
 <table>
 <thead>
@@ -368,7 +368,7 @@ The following optimization hints are recognized:</p>
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 Given x=42 in the context data, this would produce:</p>
 <div class="hlcode"><pre><span class="nt">&lt;div&gt;</span>
   <span class="nt">&lt;span&gt;</span>42 7 52<span class="nt">&lt;/span&gt;</span>
@@ -376,7 +376,7 @@ Given x=42 in the context data, this would produce:</p>
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 This directive can also be used as an element:</p>
 <div class="hlcode"><pre><span class="nt">&lt;div&gt;</span>
   <span class="nt">&lt;py:with</span> <span class="na">vars=</span><span class="s">&quot;y=7; z=x+10&quot;</span><span class="nt">&gt;</span>$x $y $z<span class="nt">&lt;/py:with&gt;</span>
@@ -384,7 +384,7 @@ This directive can also be used as an element:</p>
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 Note that if a variable of the same name already existed outside of the scope of the py:with directive, it will not be overwritten. Instead, it will have the same value it had prior to the py:with assignment. Effectively, this means that variables are immutable in Genshi.</p>
 <h2 id="15-structure-manipulation">1.5 Structure Manipulation</h2>
 <h3 id="151-pyattrs">1.5.1 py:attrs</h3>
@@ -395,7 +395,7 @@ Note that if a variable of the same name already existed outside of the scope of
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 Given foo={'class': 'collapse'} in the template context, this would produce:</p>
 <div class="hlcode"><pre><span class="nt">&lt;ul&gt;</span>
   <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">&quot;collapse&quot;</span><span class="nt">&gt;</span>Bar<span class="nt">&lt;/li&gt;</span>
@@ -403,7 +403,7 @@ Given foo={'class': 'collapse'} in the template context, this would produce:</p>
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 Attributes with the value None are omitted, so given foo={'class': None} in the context for the same template this would produce:</p>
 <div class="hlcode"><pre><span class="nt">&lt;ul&gt;</span>
   <span class="nt">&lt;li&gt;</span>Bar<span class="nt">&lt;/li&gt;</span>
@@ -411,7 +411,7 @@ Attributes with the value None are omitted, so given foo={'class': None} in the 
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 This directive can only be used as an attribute.</p>
 <h3 id="152-pycontent">1.5.2   py:content</h3>
 <p>This directive replaces any nested content with the result of evaluating the expression:</p>
@@ -421,7 +421,7 @@ This directive can only be used as an attribute.</p>
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 Given bar='Bye' in the context data, this would produce:</p>
 <div class="hlcode"><pre><span class="nt">&lt;ul&gt;</span>
   <span class="nt">&lt;li&gt;</span>Bye<span class="nt">&lt;/li&gt;</span>
@@ -429,7 +429,7 @@ Given bar='Bye' in the context data, this would produce:</p>
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 This directive can only be used as an attribute.</p>
 <h3 id="153-pyreplace">1.5.3 py:replace</h3>
 <p>This directive replaces the element itself with the result of evaluating the expression:</p>
@@ -439,7 +439,7 @@ This directive can only be used as an attribute.</p>
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 Given bar='Bye' in the context data, this would produce:</p>
 <div class="hlcode"><pre><span class="nt">&lt;div&gt;</span>
   Bye
@@ -447,7 +447,7 @@ Given bar='Bye' in the context data, this would produce:</p>
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 This directive can also be used as an element (since version 0.5):</p>
 <div class="hlcode"><pre><span class="nt">&lt;div&gt;</span>
   <span class="nt">&lt;py:replace</span> <span class="na">value=</span><span class="s">&quot;title&quot;</span><span class="nt">&gt;</span>Placeholder<span class="nt">&lt;/py:replace&gt;</span>
@@ -464,7 +464,7 @@ This directive can also be used as an element (since version 0.5):</p>
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 This would be rendered as:</p>
 <div class="hlcode"><pre><span class="nt">&lt;div&gt;</span>
   <span class="nt">&lt;b&gt;</span>foo<span class="nt">&lt;/b&gt;</span>
@@ -472,7 +472,7 @@ This would be rendered as:</p>
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 As a shorthand, if the value of the py:strip attribute is empty, that has the same effect as using a truth value (i.e. the element is stripped).</p>
 <h2 id="16-processing-order">1.6 Processing Order</h2>
 <p>It is possible to attach multiple directives to a single element, although not all combinations make sense. When multiple directives are encountered, they are processed in the following order:</p>
@@ -502,7 +502,7 @@ As a shorthand, if the value of the py:strip attribute is empty, that has the sa
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 Include paths are relative to the filename of the template currently being processed. So if the example above was in the file "myapp/index.html" (relative to the template search path), the XInclude processor would look for the included file at "myapp/base.html". You can also use Unix-style relative paths, for example "../base.html" to look in the parent directory.</p>
 <p>Any content included this way is inserted into the generated output instead of the <xi:include> element. The included template sees the same context data. Match templates and macros in the included template are also available to the including template after the point it was included.</p>
 <p>By default, an error will be raised if an included file is not found. If that's not what you want, you can specify fallback content that should be used if the include fails. For example, to to make the include above fail silently, you'd write:</p>

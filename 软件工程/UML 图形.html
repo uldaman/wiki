@@ -208,13 +208,13 @@
 <p><img alt="" src="http://i63.tinypic.com/bdn036.jpg" /></p>
 <p>只有当 "<strong>失书</strong>" 的扩展点发生后, 才会触发补偿的用例.</p>
 <blockquote>
-<p>小技巧:<br>
+<p>小技巧:<br><br />
 当发现线条不规整时, 可选中该线条, 按 <strong>Ctrl + L</strong> 来自动规整.</p>
 </blockquote>
 <p>对于每个图样, 可以在 StarUML <strong>右下方</strong>设置其属性:</p>
 <p><img alt="" src="http://i67.tinypic.com/2le6rnp.jpg" /></p>
 <p>对于用例图来说, 我们只关心它的 Name 和 Stereotype 属性, 后面的 Visibility、IsAbstract、Attributes、Operations 在画类图的时候才会有所体现.</p>
-<p>当然你也可以在 &lt;&lt;<strong>use case view</strong>>> 上右键选择新添加用例图:<br>
+<p>当然你也可以在 &lt;&lt;<strong>use case view</strong>>> 上右键选择新添加用例图:<br><br />
 &lt;&lt;<strong>use case view</strong>>> --> Add Diagram --> Use Case Diagram</p>
 <p><img alt="" src="http://i66.tinypic.com/2zp5n6h.jpg" /></p>
 <p>在 StarUML 左侧, 除了 UseCase 的工具栏外, 还有一个<strong>注释</strong>工具栏 (Annotation), 这个工具栏是所有 UML 图形通用的:</p>
@@ -254,25 +254,25 @@
 </table>
 <p>这里我们常用的是 <strong>Note</strong> 和 <strong>NoteLink</strong>.</p>
 <blockquote>
-<p>小技巧:<br>
-当使用图形时, 可以在工具栏上设置图形的层次.<br>
+<p>小技巧:<br><br />
+当使用图形时, 可以在工具栏上设置图形的层次.<br><br />
 <img alt="" src="http://i63.tinypic.com/ipbcd1.jpg" /></p>
 </blockquote>
-<p><strong>关于删除</strong><br>
+<p><strong>关于删除</strong><br><br />
 如果你在 StarUML 画布上拖入某个图样, 那么直接在画布上删除仅仅是在画布上删除它, 它还是在右边的 Model Explorer 中, 必须要在 Model Explorer 中删除才是真的删除, 或者在画布上 Ctrl + Del 删除.</p>
-<p><strong>关于用例图设计</strong><br>
+<p><strong>关于用例图设计</strong><br><br />
 通常情况下, 一个系统可能会被我们分为几个<strong>模块</strong>, 每个模块都完成独立的功能, 我们把这些模块用 <strong>Package</strong> 表示, 在 <strong>Main</strong> 视图下列出大纲, 然后在每个 <strong>Package</strong> 下画各自的 <strong>UseCase</strong>, 如下图所示:</p>
 <p><img alt="" src="http://i67.tinypic.com/2moa45i.jpg" /></p>
 <h1 id="uml_2">UML 状态图</h1>
 <h2 id="_2">状态图概述</h2>
 <p>状态图是一种"开关", 描述的是<strong>状态变化</strong>的图形, 即<strong>一个</strong>对象<strong>状态</strong>与<strong>状态的转变</strong>, 并且给出了状态变化的<strong>起点</strong>和<strong>终点</strong>, 类比<strong>流程图</strong>.</p>
 <blockquote>
-<p><strong>使用场景</strong><br>
+<p><strong>使用场景</strong><br><br />
 需要描述一个对象的状态跟踪的时候, 比如一个表单在不同环节审批的状态</p>
 </blockquote>
-<p>在 StarUML 中新建状态图:<br>
-打开 StarUML, 选择 <strong>Rational Approach</strong>.<br>
-&lt;&lt;<strong>Logical View</strong>>> --> Add Diagram --> Statechart Diagram<br>
+<p>在 StarUML 中新建状态图:<br><br />
+打开 StarUML, 选择 <strong>Rational Approach</strong>.<br><br />
+&lt;&lt;<strong>Logical View</strong>>> --> Add Diagram --> Statechart Diagram<br><br />
 界面左边就出现了 Statechart 工具栏.</p>
 <table>
 <thead>
@@ -354,11 +354,11 @@
 <li>DoActions, 状态中执行的动作</li>
 <li>ExitActions, 退出状态时触发的动作</li>
 </ul>
-<p>当然, 这三个事件都不是必须的, 根据需求来填写.<br>
+<p>当然, 这三个事件都不是必须的, 根据需求来填写.<br><br />
 例如在上例中, 对象状态转移后的动作(<strong>烧水</strong>), 是显示在箭头线上, 也可以定义<strong>进入动作</strong>(EntryActions)来描述转换激活时的操作</p>
 <p><img alt="" src="http://i64.tinypic.com/fuuwb4.jpg" /></p>
 <h2 id="_5">复合状态</h2>
-<p>另外, 在某些时候, 还可以使用<strong>复合状态</strong>, 它表示在某一状态中, 还维护着其它的状态.<br>
+<p>另外, 在某些时候, 还可以使用<strong>复合状态</strong>, 它表示在某一状态中, 还维护着其它的状态.<br><br />
 如, 在电脑运行的时候, 还会维护一个待机的状态.</p>
 <p><img alt="" src="http://i68.tinypic.com/34qmj9v.jpg" /></p>
 <h2 id="_6">退出/进入节点</h2>
@@ -368,7 +368,7 @@
 <p>再来看看 <strong>SubmachineState</strong>(状态子节点), 它所以表示的是该状态是另一个状态(称之为母状态)的子状态, 母状态中以<strong>引用</strong>的方式把一个已经存在的状态作为自己子状态, 在母状态机中子机状态作为一个子状态, 但它自身仍是一个<strong>完整的状态</strong>.</p>
 <p><img alt="" src="http://i65.tinypic.com/14tylx3.jpg" /></p>
 <h2 id="_8">历史状态</h2>
-<p><strong>ShallowHistory</strong>(历史状态), 为一个状态提供了一种在退出状态时记忆当前活动所处的子状态, 并能够返回到该子状态的机制.<br>
+<p><strong>ShallowHistory</strong>(历史状态), 为一个状态提供了一种在退出状态时记忆当前活动所处的子状态, 并能够返回到该子状态的机制.<br><br />
 例如下图, 当发生暂停时, 记住播放状态, 当继续播放时就直接进入播放状态.</p>
 <p><img alt="" src="http://i63.tinypic.com/15wjlmh.jpg" /></p>
 <blockquote>
@@ -383,17 +383,17 @@
 <p><img alt="" src="http://i68.tinypic.com/2aafsxy.jpg" /></p>
 <h1 id="uml_3">UML 时序图</h1>
 <h2 id="_10">时序图概述</h2>
-<p><strong>何谓时序图</strong>:<br>
-简单的说, 就是描述一个时间段内不同对象之间的业务情况(时间顺序).<br>
+<p><strong>何谓时序图</strong>:<br><br />
+简单的说, 就是描述一个时间段内不同对象之间的业务情况(时间顺序).<br><br />
 时序图的重点在<strong>消息时序</strong>上, 也就是说, 描述<strong>消息</strong>是如何在对象间发送和接收的, 表示了对象之间传递消息的时间顺序.</p>
-<p><strong>时序图与用例图</strong>:<br>
-时序图表示了<strong>系统</strong>与<strong>参与者</strong>互动执行某一个<strong>用例</strong>期间, 系统内部对象间的协作情况.<br>
-对于程序设计来说, 一个用例就对应一个时序图, 时序图是对系统的内部行为进行描述, 用于用例分析和设计阶段.<br>
+<p><strong>时序图与用例图</strong>:<br><br />
+时序图表示了<strong>系统</strong>与<strong>参与者</strong>互动执行某一个<strong>用例</strong>期间, 系统内部对象间的协作情况.<br><br />
+对于程序设计来说, 一个用例就对应一个时序图, 时序图是对系统的内部行为进行描述, 用于用例分析和设计阶段.<br><br />
 在项目的需求阶段, 架构师会根据把<strong>用例图</strong>细化为一个或者更多的时序图.</p>
 <p>虽然在开发者看来, 时序图描述的是模块(类)间的交互, 然而, 现在时序图也常常被<strong>业务人员</strong>用来描述业务的流程.</p>
-<p><strong>在 StarUML 中新建时序图</strong>:<br>
-打开 StarUML, 选择 <strong>Rational Approach</strong>.<br>
-&lt;&lt;<strong>Logical View</strong>>> --> Add Diagram --> Sequence Diagram<br>
+<p><strong>在 StarUML 中新建时序图</strong>:<br><br />
+打开 StarUML, 选择 <strong>Rational Approach</strong>.<br><br />
+&lt;&lt;<strong>Logical View</strong>>> --> Add Diagram --> Sequence Diagram<br><br />
 界面左边就出现了 Sequence 工具栏.</p>
 <table>
 <thead>
@@ -443,7 +443,7 @@
 <p><img alt="" src="http://i63.tinypic.com/2lxi9s1.jpg" /></p>
 <h2 id="stimulus">Stimulus</h2>
 <h3 id="_11">消息类型</h3>
-<p>消息一般分为<strong>同步消息</strong>(Synchronous Message), <strong>异步消息</strong>(Asynchronous Message)和<strong>返回消息</strong>(Return Message).<br>
+<p>消息一般分为<strong>同步消息</strong>(Synchronous Message), <strong>异步消息</strong>(Asynchronous Message)和<strong>返回消息</strong>(Return Message).<br><br />
 如下图所示:</p>
 <p><img alt="" src="http://i66.tinypic.com/euh6hi.jpg" /></p>
 <ul>
@@ -481,9 +481,9 @@
 <p>类图, 豪不夸张的说, 是 UML 里最复杂的图了...</p>
 <p>类图在需求阶段和设计阶段具有不同的含义, 参考我之前的一篇笔记: <a href="http://www.smallcpp.com/15-c-zheng-que-bian-xi-lei-tu-de-liang-chong-cun-zai-xing-shi-zhuan.html">正确辨析类图的两种存在形式</a></p>
 <p>对于我们开发者来说, 我觉得重点还是在设计阶段的类图.</p>
-<p><strong>在 StarUML 中新建类图</strong>:<br>
-打开 StarUML, 选择 <strong>Rational Approach</strong>.<br>
-&lt;&lt;<strong>Logical View</strong>>> --> Add Diagram --> Class Diagram<br>
+<p><strong>在 StarUML 中新建类图</strong>:<br><br />
+打开 StarUML, 选择 <strong>Rational Approach</strong>.<br><br />
+&lt;&lt;<strong>Logical View</strong>>> --> Add Diagram --> Class Diagram<br><br />
 界面左边就出现了 Class 工具栏.</p>
 <table>
 <thead>
@@ -580,8 +580,8 @@
 <p>如果含有依赖关系的构件实例放置在不同节点上, 部署视图可以展示出执行过程中的瓶颈.</p>
 <h1 id="uml_7">UML 组件图</h1>
 <p>描述代码构件的物理结构以及各种组件之间的依赖关系, 在组件图中, 组件可以是一个文件、产品、可执行文件或脚本等.</p>
-<p>在 UML 2 中, 组件被认为是独立的, 在一个系统或子系统中的封装单位, 提供一个或多个接口.<br>
-虽然 UML 2 规范没有严格地声明它, 但组件是呈现事物的更大的设计单元, 这些事物一般将使用可更换的组件来实现.<br>
+<p>在 UML 2 中, 组件被认为是独立的, 在一个系统或子系统中的封装单位, 提供一个或多个接口.<br><br />
+虽然 UML 2 规范没有严格地声明它, 但组件是呈现事物的更大的设计单元, 这些事物一般将使用可更换的组件来实现.<br><br />
 主要思想是, 你能容易地在你的设计中重用或替换一个不同的组件实现, 因为一个组件封装了行为, 实现了特定接口.</p>
 <p>在这里, 初学者很容易将组件图和类图搞混, 那么<strong>组件图和类图</strong>的区别如下:</p>
 <ul>
@@ -596,7 +596,7 @@
 <li>部署图表现组件实例, 偏向于描述组件在节点中运行时的状态, 描述了组件运行的环境</li>
 <li>组件图表现组件类型的定义, 偏向于描述构件之间相互依赖支持的基本关系</li>
 </ul>
-<p>先有部署图还是组件图?
+<p>先有部署图还是组件图?<br />
 依照 top down 原则, 所以是从部署图到构件图, 实际上也应该如此, 因为我们在需求确定后, 一般就会确定大体的技术架构、程序模块划分, 而此时一般系统集成的工作也要相应的启动: 要买主机、网络设备;<br>所以要提供给系统集成人员相应的资料, 那么就需要先把部署图做出来, 然后再细化构件图.</p>
     </div>
 

@@ -103,7 +103,7 @@
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 然后使用 <code>fab deploy</code> 就能自动把 <strong>output</strong> 目录推送到远程 <strong>gh-pages</strong> 分支.</p>
 <p>最后, 由于 Github Project Page 需要用到一个 <code>CNAME</code> 文件, 所以我修改了官方 <code>fabfile.py</code> 文件的 <code>deploy_git</code> 函数, 让部署时自动生成 <code>CNAME</code> 文件:</p>
 <div class="hlcode"><pre><span class="k">def</span> <span class="nf">deploy_git</span><span class="p">(</span><span class="n">deploy_configs</span><span class="p">):</span>

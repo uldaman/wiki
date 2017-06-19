@@ -65,7 +65,7 @@
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 上面的说明我是已经安装过了的, 如果没有安装应该是类似如下的回显:</p>
 <div class="hlcode"><pre><span class="n">abbuggy</span><span class="err">@</span><span class="n">abbuggy</span><span class="o">-</span><span class="n">ubuntu</span><span class="o">:~</span><span class="err">$</span> <span class="n">dpkg</span> <span class="o">-</span><span class="n">s</span> <span class="n">curl</span>
 <span class="err">系统没有安装软件包</span> <span class="n">curl</span><span class="p">,</span> <span class="err">因而没有相关的信息</span><span class="p">.</span>
@@ -74,7 +74,7 @@
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 那么安装就行了 <code>sudo apt-get install curl</code></p>
 <h2 id="rvm">安装 rvm</h2>
 <p>用 rvm 官方推荐的方式安装 <code>curl -L get.rvm.io | bash -s stable</code></p>
@@ -116,18 +116,18 @@
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 应该请把这句话加在 <code>$HOME/.bash_profile</code> 文件中, 以便在开启一个终端会话时候加载 RVM:</p>
 <div class="hlcode"><pre><span class="p">[[</span> <span class="o">-</span><span class="n">s</span> <span class="s">&quot;$HOME/.rvm/scripts/rvm&quot;</span> <span class="p">]]</span> <span class="o">&amp;&amp;</span> <span class="p">.</span> <span class="s">&quot;$HOME/.rvm/scripts/rvm&quot;</span> <span class="err">#</span> <span class="n">This</span> <span class="n">loads</span> <span class="n">RVM</span> <span class="n">into</span> <span class="n">a</span> <span class="n">shell</span> <span class="n">session</span><span class="p">.</span>
 </pre></div>
 
 
-<p><br>
-如果对 shell 不熟悉, 这里简单解释一下这是干什么用的:<br>
-<code>[[condition]]</code> 两层的方括号中间括着条件返回条件是不是真, -s 是判断给定的文件是否存在的命令.<br>
-这样一来, 不就是在 <code>[[ -s "$HOME/.vrm/scripts/vrm"]]</code> 判断刚才安装的 RVM 是否存在吗?<br>
-接下来的&amp;&amp;符号是<strong>"短路的与"</strong>, 当前面的条件是真的时候, 执行后面的语句, 返回这两个语句是不是全是真.<br>
-在这里, 利用了"短路"特性, 也就是说当 RVM 已经安装的话, 执行后面的 <code>$HOME/.rvm/scripts/rvm</code> 命令.<br>
+<p><br><br />
+如果对 shell 不熟悉, 这里简单解释一下这是干什么用的:<br><br />
+<code>[[condition]]</code> 两层的方括号中间括着条件返回条件是不是真, -s 是判断给定的文件是否存在的命令.<br><br />
+这样一来, 不就是在 <code>[[ -s "$HOME/.vrm/scripts/vrm"]]</code> 判断刚才安装的 RVM 是否存在吗?<br><br />
+接下来的&amp;&amp;符号是<strong>"短路的与"</strong>, 当前面的条件是真的时候, 执行后面的语句, 返回这两个语句是不是全是真.<br><br />
+在这里, 利用了"短路"特性, 也就是说当 RVM 已经安装的话, 执行后面的 <code>$HOME/.rvm/scripts/rvm</code> 命令.<br><br />
 这条命令和 <code>source "$HOME/.rvm/scripts/rvm"</code> 是一个意思: 加载 rvm 的启动脚本.</p>
 <p>现在, 通过修改 <code>.bash_profile</code> 增加的内容需要重新打开终端窗口时加载, 或者另一个是在当前窗口执行一遍 <code>$HOME/.rvm/scripts/rvm</code>.</p>
 <h2 id="rvm_1">使用 RVM</h2>
@@ -138,7 +138,7 @@
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 然后通过 <code>rvm requirements</code> 命令, 可以察看安装各版本时候的前提条件, 其中现在这句是需要关注的, 这是安装依赖的第三方包, 没有这个安装不成功岂不是很悲剧?</p>
 <div class="hlcode"><pre><span class="n">Additional</span> <span class="n">Dependencies</span><span class="o">:</span>
 <span class="cp"># For Ruby / Ruby HEAD (MRI, Rubinius, &amp; REE), install the following:</span>
@@ -146,7 +146,7 @@
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 这样一来, 安装 ruby 的准备工作就完成了, 察看当前 RVM中 已经安装的 ruby 版本, 现在应该还没有.</p>
 <div class="hlcode"><pre><span class="n">rvm</span> <span class="n">list</span>
 
@@ -156,7 +156,7 @@
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 察看 RVM 可供安装的 ruby 版本:</p>
 <div class="hlcode"><pre><span class="n">rvm</span> <span class="n">list</span> <span class="n">known</span>
 <span class="cp"># MRI Rubies</span>
@@ -182,13 +182,13 @@
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 例如安装 ruby 1.9.3-head, 在不发生歧义的情况下方括号内的东西可以不必敲.</p>
 <div class="hlcode"><pre><span class="n">rvm</span> <span class="n">install</span> <span class="mf">1.9.3</span><span class="o">-</span><span class="n">head</span>
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 之后等呀等呀自动安装了 1.8.7 和 1.9.3</p>
 <div class="hlcode"><pre><span class="nx">rvm</span> <span class="nb">list</span>
 
@@ -201,21 +201,21 @@
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 选择 1.9.3 作为当前的使用版本, 并且设置为缺省</p>
 <div class="hlcode"><pre><span class="n">rvm</span> <span class="n">use</span> <span class="n">ruby</span><span class="o">-</span><span class="mf">1.9.3</span><span class="o">-</span><span class="n">head</span> <span class="o">--</span><span class="k">default</span>
 <span class="n">Using</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">abbuggy</span><span class="o">/</span><span class="p">.</span><span class="n">rvm</span><span class="o">/</span><span class="n">gems</span><span class="o">/</span><span class="n">ruby</span><span class="o">-</span><span class="mf">1.9.3</span><span class="o">-</span><span class="n">head</span>
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 设置好之后察看ruby版本</p>
 <div class="hlcode"><pre><span class="n">ruby</span> <span class="o">-</span><span class="n">v</span>
 <span class="n">ruby</span> <span class="mf">1.9.3</span><span class="n">p327</span> <span class="p">(</span><span class="mi">2012</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">10</span><span class="p">)</span> <span class="p">[</span><span class="n">i686</span><span class="o">-</span><span class="n">linux</span><span class="p">]</span>
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 察看ruby的路径, 就是 RVM 帮我们安装的</p>
 <div class="hlcode"><pre><span class="n">which</span> <span class="n">ruby</span>
 <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">abbuggy</span><span class="o">/</span><span class="p">.</span><span class="n">rvm</span><span class="o">/</span><span class="n">rubies</span><span class="o">/</span><span class="n">ruby</span><span class="o">-</span><span class="mf">1.9.3</span><span class="o">-</span><span class="n">head</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">ruby</span>
@@ -233,7 +233,7 @@
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 然后安装新版本的 Ruby:</p>
 <div class="hlcode"><pre><span class="n">wget</span> <span class="n">http</span><span class="o">:</span><span class="c1">//ftp.ruby-lang.org/pub/ruby/2.3/ruby-2.3.1.tar.gz</span>
 
@@ -249,7 +249,7 @@
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 安装完查看下版本: <code>ruby -v</code>.</p>
 <h1 id="travis-client">使用 Travis Client 推荐的方法</h1>
 <p>由于我使用第二种方法成功安装了, 因为这种方法我没测试过, 先记录下再说...</p>
@@ -261,7 +261,7 @@
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 然后安装新版本:</p>
 <div class="hlcode"><pre><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">python</span><span class="o">-</span><span class="n">software</span><span class="o">-</span><span class="n">properties</span>
 <span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">add</span><span class="o">-</span><span class="n">repository</span> <span class="n">ppa</span><span class="o">:</span><span class="n">brightbox</span><span class="o">/</span><span class="n">ruby</span><span class="o">-</span><span class="n">ng</span>

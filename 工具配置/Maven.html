@@ -48,7 +48,7 @@
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 主要就是上面的几个参数:</p>
 <ul>
 <li><strong>groupId</strong>: 所述的项目名称, 由于有的项目并不是一个 jar 包构成的, 而是由很多的 jar 包组成的. 因此这个 groupId 就是整个项目的名称.</li>
@@ -64,19 +64,19 @@
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 然后打开 cmd 查看是否设置成功:</p>
 <div class="hlcode"><pre><span class="n">mvn</span> <span class="o">-</span><span class="n">version</span> <span class="err">查看版本</span>
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 上面的介绍中已经提到过了, maven 会自动下载 jar 包, 所以要配置下本地 jar 包的存放目录, maven 的设置文件是 <code>M2_HOME/conf/settings.xml</code>, 我们找到其中的 <code>localRepository</code> 标签, 改成:</p>
 <div class="hlcode"><pre><span class="nt">&lt;localRepository&gt;</span>F:/.m2/repositorys<span class="nt">&lt;/localRepository&gt;</span>
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 maven 中三个仓库的概念: <strong>本地仓库</strong> -> <strong>远程仓库</strong> -> <strong>中央仓库</strong>, maven 查找 jar 包也是按这个顺序.</p>
 <p>本地仓库就是我们上面配置的 <code>localRepository</code>, 当 maven 在这个仓库没有找到想要的 jar 包时, 就会去远程仓库寻找, 远程仓库的地址需要我们自己设置, 如果没有设置 (或者在远程仓库也没找到想要的 jar 包), 就会再去中央仓库中找, 如果还没找到, 就会报错.</p>
 <p><strong>远程仓库</strong> 可以在项目的 <code>pom.xml</code> 中设置, 但由于远程仓库的设置通常是想达到全局的效果, 所以也可以在 <code>M2_HOME/conf/settings.xml</code> 中通过 <strong>profile</strong> 设置 (具体的 profile 详细说明参见: <a href="http://elim.iteye.com/blog/1900568">Maven 简介 —— profile 介绍</a>).</p>
@@ -119,7 +119,7 @@ maven 中三个仓库的概念: <strong>本地仓库</strong> -> <strong>远程�
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 另外, 中央仓库其实就是 maven 默认给我们配好的 <strong>id</strong> 为 <strong>central</strong> 的仓库, 它的配置大概像下面这样 (这个配置在 maven 2.0 版本中位于 <code>${M2_HOME}/lib/maven-2.0.10-uber.jar/pom-4.0.0.xml</code>, 后面的版本我没找到...不过应该也差不多):</p>
 <div class="hlcode"><pre><span class="nt">&lt;repositories&gt;</span>
   <span class="nt">&lt;repository&gt;</span>
@@ -135,7 +135,7 @@ maven 中三个仓库的概念: <strong>本地仓库</strong> -> <strong>远程�
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 可以看到中央仓库的 ID 为 <code>central</code>.</p>
 <p>maven 还提供镜像的配置, 让我们可以为仓库设置<strong>镜像</strong>, 在 <code>M2_HOME/conf/settings.xml</code> 中的 <code>mirror</code> 标签配置 (老实说, 为远程仓库配置镜像并没什么卵用, 反正地址都是我自己配, 给中央仓库设计镜像也没有必要, 还不如将镜像地址当做一个远程仓库设置, 这样镜像中找不到 jar 时还会去中央仓库再找一次, 多好 . . .).</p>
 <div class="hlcode"><pre><span class="nt">&lt;mirrors&gt;</span>
@@ -149,10 +149,10 @@ maven 中三个仓库的概念: <strong>本地仓库</strong> -> <strong>远程�
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 <code>mirrorOf</code> 标签指定要镜像哪个仓库.</p>
 <h1 id="_3">生命周期</h1>
-<p>最开始说到 maven 可以便捷的管理项目生命周期, maven 有三套相互独立的生命周期, 请注意这里说的是 "三套", 而且 "相互独立", 初学者容易将 maven 的生命周期看成一个整体, 其实不然;<br>
+<p>最开始说到 maven 可以便捷的管理项目生命周期, maven 有三套相互独立的生命周期, 请注意这里说的是 "三套", 而且 "相互独立", 初学者容易将 maven 的生命周期看成一个整体, 其实不然;<br><br />
 这三套生命周期分别是：</p>
 <ul>
 <li><strong>Clean Lifecycle</strong> 在进行真正的构建之前进行一些清理工作</li>
@@ -238,7 +238,7 @@ maven 中三个仓库的概念: <strong>本地仓库</strong> -> <strong>远程�
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 但如果想要将依赖的包一起打进去就需要在 <code>pom.xml</code> 中添加如下设置:</p>
 <div class="hlcode"><pre><span class="nt">&lt;plugin&gt;</span>
     <span class="nt">&lt;artifactId&gt;</span>maven-assembly-plugin<span class="nt">&lt;/artifactId&gt;</span>
@@ -265,7 +265,7 @@ maven 中三个仓库的概念: <strong>本地仓库</strong> -> <strong>远程�
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 这样再使用 <code>mvn clean package/install</code> 就可以将项目的所有依赖也一起打进包了.</p>
     </div>
 

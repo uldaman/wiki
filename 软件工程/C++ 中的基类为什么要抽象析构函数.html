@@ -67,7 +67,7 @@
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 输出结果是:</p>
 <div class="hlcode"><pre><span class="n">Do</span> <span class="n">something</span> <span class="n">in</span> <span class="n">class</span> <span class="n">ClxDerived</span><span class="o">!</span>
 
@@ -75,19 +75,19 @@
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 这个很简单, 非常好理解.</p>
 <p><strong>但是,</strong> 如果把类 ClxBase 析构函数前的 virtual 去掉, 那输出结果就是下面的样子了:</p>
 <div class="hlcode"><pre><span class="n">Do</span> <span class="n">something</span> <span class="n">in</span> <span class="n">class</span> <span class="n">ClxDerived</span><span class="o">!</span>
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 也就是说类 ClxDerived 的析构函数根本没有被调用.</p>
 <p>为什么没有被调用, 这也很好理解, 因为 pTest 是 ClxBase 类型, 它的析构不是虚函数的话, 也就不能实现多态.</p>
 <p>一般情况下类的析构函数里面都是释放内存资源, 而析构函数不被调用的话就会造成内存泄漏.</p>
 <p>至于子类没有额外数据成员, 甚至父类也没有任何数据成员的特殊情况下, 析构函数的调用是否必要是语义争论, 从编程设计规范的角度看, 在含有虚函数的父类中, 定义虚析构函数绝对必要.</p>
-<p>当然, 并不是要把所有类的析构函数都写成虚函数. 因为当类里面有虚函数的时候, 编译器会给类添加一个虚函数表, 里面来存放虚函数指针, 这样就会增加类的存储空间.
+<p>当然, 并不是要把所有类的析构函数都写成虚函数. 因为当类里面有虚函数的时候, 编译器会给类添加一个虚函数表, 里面来存放虚函数指针, 这样就会增加类的存储空间.<br />
 所以, 只有当一个类被用来作为基类的时候, 才把析构函数写成虚函数.</p>
     </div>
 

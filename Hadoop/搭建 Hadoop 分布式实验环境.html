@@ -97,7 +97,7 @@
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 初始文件只有前面两行, 后面的是要添加的内容.</p>
 <ul>
 <li>第 <strong>1</strong> 行跟第 <strong>4</strong> 行说明 <code>lo</code> 接口跟 <code>eth0</code> 接口会在系统启动时被自动配置;</li>
@@ -120,7 +120,7 @@
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 第 3 行填 <strong>gateway</strong> (网关) ip;</p>
 <p>改完上面, 如果重启的话, DNS 还是会变为原来的样子;</p>
 <p>网上给出的方法是执行 <code>sudo vim /etc/resolvconf/resolv.conf.d/base</code> 输入和 DNS 解析文件相同的内容.</p>
@@ -154,7 +154,7 @@
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 或者可以先 <code>sudo mkdir /usr/java</code> 创建好目录, 再用 <code>sudo tar -zxvf jdk-8u101-linux-i586.tar.gz -C /usr/java</code> (-z 处理 gzip, x 解压, v 显示详情, f 解压哪个文件) 直接解压到 <code>/usr/java</code> 下.</p>
 <h2 id="22">2.2</h2>
 <p>修改环境变量.</p>
@@ -164,7 +164,7 @@
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 注意, "=" 左右两边不能有空格; 最后刷新下文件.</p>
 <h2 id="23">2.3</h2>
 <p>刷新环境变量.</p>
@@ -172,7 +172,7 @@
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 此时, 不管在哪个目录输入 <code>java -version</code> 都可以找到执行文件.</p>
 <p><img alt="" src="http://wiki.smallcpp.com/static/images/搭建Hadoop分布式实验环境/javaversion.png" /></p>
 <h1 id="3-hadoop">3. 安装 Hadoop</h1>
@@ -209,7 +209,7 @@
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 改成:</p>
 <div class="hlcode"><pre><span class="n">export</span> <span class="n">JAVA_HOME</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">java</span><span class="o">/</span><span class="n">jdk1</span><span class="mf">.8.0</span><span class="n">_101</span> <span class="p">(</span><span class="err">可以在</span> <span class="n">vim</span> <span class="err">的命令模式下</span><span class="p">,</span> <span class="err">通过</span> <span class="n">echo</span> <span class="err">$</span><span class="n">JAVA_HOME</span> <span class="err">查看路径</span><span class="p">)</span>
 </pre></div>
@@ -256,7 +256,7 @@
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 我们这里有 smallcpp02 和 smallcpp03 两台数据节点, 所以 <code>dfs.replication</code> 为 2, 如果是伪分布式系统的话, 这里改为 1 就可以了.</p>
 <h2 id="44-vim-yarn-envsh">4.4. vim yarn-env.sh</h2>
 <p>定位到 23 行左右, 找到 JAVA_HOME, 改为 <code>export JAVA_HOME=/usr/java/jdk1.8.0_101</code></p>
@@ -312,11 +312,11 @@
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 <strong>注意</strong>, 数据节点的域名要在 Hosts 文件中解析了才行!</p>
 <h2 id="48">4.8. 克隆虚拟机</h2>
 <p>关闭当前虚拟机后, 从当前虚拟机上克隆两份.</p>
-<p>修改克隆出来的虚拟机的<strong>固定 IP</strong><strong>、主机名</strong> 和 <strong>Hosts</strong>.</p>
+<p>修改克隆出来的虚拟机的<strong>固定 IP<strong><em>*、主机名</em>* 和 </strong>Hosts</strong>.</p>
 <p><code>sudo vim /etc/network/interfaces</code> 修改固定 IP</p>
 <p><code>sudo vim /etc/hostname</code> 修改主机名.</p>
 <p><code>sudo vim /etc/hosts</code> 修改 [ip 域名] 对应表.</p>
@@ -327,7 +327,7 @@
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 配好后重启, 在三台虚拟机间互 Ping 测试下.</p>
 <h1 id="5-ssh">5. 配置 SSH 免密码登录</h1>
 <p>Ubuntu 默认并没有安装 <strong>ssh</strong> 服务, 需要自己手动安装 <strong>openssh-server</strong>, 可以通过 <code>ssh localhost</code> 判断是否安装 ssh 服务; 如果没有安装则通过 <code>sudo apt-get install openssh-server</code> 安装即可.</p>
@@ -354,7 +354,7 @@
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 格式化成功后就可以通过以下命令启动集群了:</p>
 <div class="hlcode"><pre><span class="p">.</span><span class="o">/</span><span class="n">start</span><span class="o">-</span><span class="n">dfs</span><span class="p">.</span><span class="n">sh</span>
 <span class="p">.</span><span class="o">/</span><span class="n">start</span><span class="o">-</span><span class="n">yarn</span><span class="p">.</span><span class="n">sh</span>
@@ -362,14 +362,14 @@
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 或者:</p>
 <div class="hlcode"><pre><span class="p">.</span><span class="o">/</span><span class="n">start</span><span class="o">-</span><span class="n">all</span><span class="p">.</span><span class="n">sh</span>
 <span class="p">.</span><span class="o">/</span><span class="n">mr</span><span class="o">-</span><span class="n">jobhistory</span><span class="o">-</span><span class="n">daemon</span><span class="p">.</span><span class="n">sh</span> <span class="n">start</span> <span class="n">historyserver</span>
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 集群成功启动后可以在终端用 <code>JPS</code> 查看当前有哪些 Java 进程, NameNode 节点上应该有以下进程:</p>
 <div class="hlcode"><pre><span class="n">NameNode</span>
 <span class="n">SecondaryNameNode</span>
@@ -378,14 +378,14 @@
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 而 DataNode 上应该有以下进程:</p>
 <div class="hlcode"><pre><span class="n">DataNode</span>
 <span class="n">NodeManager</span>
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 停止集群命令如下:</p>
 <div class="hlcode"><pre><span class="n">stop</span><span class="o">-</span><span class="n">yarn</span><span class="p">.</span><span class="n">sh</span>
 <span class="n">stop</span><span class="o">-</span><span class="n">dfs</span><span class="p">.</span><span class="n">sh</span>
@@ -393,14 +393,14 @@
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 或者:</p>
 <div class="hlcode"><pre><span class="n">stop</span><span class="o">-</span><span class="n">all</span><span class="p">.</span><span class="n">sh</span>
 <span class="n">mr</span><span class="o">-</span><span class="n">jobhistory</span><span class="o">-</span><span class="n">daemon</span><span class="p">.</span><span class="n">sh</span> <span class="n">stop</span> <span class="n">historyserver</span>
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 还可以通过 <code>hdfs dfsadmin -report</code> 来查看所有 DataNode 的信息.</p>
 <p><img alt="" src="http://wiki.smallcpp.com/static/images/搭建Hadoop分布式实验环境/dfsadmin.png" /></p>
 <p><strong>Live datanodes</strong> 表示当前集群有几个 DataNode 在运行.</p>
@@ -413,7 +413,7 @@
 </ul>
 <p><strong>hdfs 管理界面</strong></p>
 <p><img alt="" src="http://i61.tinypic.com/10fcr2s.jpg" /></p>
-<p>hadoop fs -ls /
+<p>hadoop fs -ls /<br />
 hdfs://smallcpp01:9000</p>
 <h2 id="71">7.1. 上传文件</h2>
 <p>在 smallcpp01 (不一定是 smallcpp01, 可以集群中的任意一台进行测试) 的桌面上准备了一份大文件, 如 <code>ubuntu-16.04-desktop-amd64.iso</code>, 现在把它上传到 Hadoop 的 HDFS 文件系统上去.</p>
@@ -442,7 +442,7 @@ hdfs://smallcpp01:9000</p>
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 所有的 MR 都是执行在 <strong>hdfs</strong> 上的, 所以要先上传文件: <code>hadoop fs -put words.txt /words.txt</code></p>
 <p><code>/usr/smallcpp/hadoop-2.7.3/share/hadoop/mapreduce</code> 目录下有个 <code>hadoop-mapreduce-examples-2.7.3.jar</code>, 里面有个 <code>wordcount</code> 方法, 可以用来统计单词个数.</p>
 <div class="hlcode"><pre><span class="n">cd</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">smallcpp</span><span class="o">/</span><span class="n">hadoop</span><span class="o">-</span><span class="mf">2.7.3</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">hadoop</span><span class="o">/</span><span class="n">mapreduce</span>
@@ -450,7 +450,7 @@ hdfs://smallcpp01:9000</p>
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 第一个参数是待统计文件, 第二个参数是保存结果的目录.</p>
 <p>执行完毕后, 查看下 hdfs 系统: <code>hadoop fs -ls /</code></p>
 <div class="hlcode"><pre><span class="n">Found</span> <span class="mi">4</span> <span class="n">items</span>
@@ -461,7 +461,7 @@ hdfs://smallcpp01:9000</p>
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 <code>/result</code> 就是刚生成的结果目录, 用 <code>hadoop fs -ls /result</code> 查看下里面的内容:</p>
 <div class="hlcode"><pre><span class="n">Found</span> <span class="mi">2</span> <span class="n">items</span>
 <span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span><span class="n">r</span><span class="o">--</span>   <span class="mi">2</span> <span class="n">martin</span> <span class="n">supergroup</span>          <span class="mi">0</span> <span class="mi">2016</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">16</span> <span class="mi">21</span><span class="o">:</span><span class="mi">36</span> <span class="o">/</span><span class="n">result</span><span class="o">/</span><span class="n">_SUCCESS</span>
@@ -469,7 +469,7 @@ hdfs://smallcpp01:9000</p>
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 其中 <code>_SUCCESS</code> 表示 MR 作业执行成功, <code>part-r-00000</code> 为结果文件, 用 <code>hadoop fs -cat /result/part-r-00000</code> 查看下:</p>
 <div class="hlcode"><pre><span class="n">hello</span>   <span class="mi">5</span>
 <span class="n">jerry</span>   <span class="mi">1</span>
@@ -480,10 +480,10 @@ hdfs://smallcpp01:9000</p>
 </pre></div>
 
 
-<p><br>
+<p><br><br />
 当然也可以直接通过 Web 查看.</p>
 <h1 id="references">References</h1>
-<p><a href="http://www.powerxing.com/install-hadoop/">Hadoop 安装教程_单机/伪分布式配置_Hadoop2.6.0/Ubuntu14.04</a><br>
+<p><a href="http://www.powerxing.com/install-hadoop/">Hadoop 安装教程_单机/伪分布式配置_Hadoop2.6.0/Ubuntu14.04</a><br><br />
 <a href="http://www.powerxing.com/install-hadoop-cluster/">Hadoop 集群安装配置教程_Hadoop2.6.0/Ubuntu14.04</a></p>
     </div>
 
