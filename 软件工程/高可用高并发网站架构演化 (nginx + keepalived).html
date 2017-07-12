@@ -29,15 +29,15 @@
 </div>
 <p>nginx + keepalived 的组合通常被用来实现前端高可用.</p>
 <p>在这个组合中, 利用 <strong>nginx</strong> 的反向代理实现前端的<em>动静分离</em>和<em>负载均衡</em>, 如下图.</p>
-<p><img alt="" src="http://wiki.smallcpp.com/static/images/高可用高并发架构/nginx.jpg" /></p>
+<p><img alt="" src="http://wiki.smallcpp.cn/static/images/高可用高并发架构/nginx.jpg" /></p>
 <p>在以上的体系中, 我们接着将一些通用的服务从动态 Server 上抽离出来单独封装, 动态 Server 通过 <strong>RPC</strong> 远程调用通用服务, 这样就避免升级通用服务时会更改对所有动态 Server 的问题.</p>
-<p><img alt="" src="http://wiki.smallcpp.com/static/images/高可用高并发架构/rpc.jpg" /></p>
+<p><img alt="" src="http://wiki.smallcpp.cn/static/images/高可用高并发架构/rpc.jpg" /></p>
 <p>如上图, 如果 RPC 服务器挂掉了, 那所有的 RPC 请求都会出问题, 为此, 同一个通用服务可以准备多台 RPC 服务器, 通过 <strong>dubbo</strong> 来进行调度, 这样就实现了 RPC 服务器的<em>高并发</em>及<em>高可用</em>.</p>
-<p><img alt="" src="http://wiki.smallcpp.com/static/images/高可用高并发架构/dobbu.jpg" /></p>
+<p><img alt="" src="http://wiki.smallcpp.cn/static/images/高可用高并发架构/dobbu.jpg" /></p>
 <p>那么问题又来了, 如果 nginx 宕掉了怎么办?</p>
 <p>这时就要让 <strong>keepalived</strong> 出场了, 借助 keepalived 实现 nginx 的<em>高可用</em>.</p>
 <p>访问网站即访问 IP, keepalived 在这里就是充当着抢这个被访问 IP 的角色, 如下图所示, 我们准备了两台 nginx 服务器, 都装上 keepalived;</p>
-<p><img alt="" src="http://wiki.smallcpp.com/static/images/高可用高并发架构/keepalived.jpg" /></p>
+<p><img alt="" src="http://wiki.smallcpp.cn/static/images/高可用高并发架构/keepalived.jpg" /></p>
 <p>现在, 我们的网站 IP 被上面那个 keepalived 抢到了, 所以当有 IP 请求时, 是上面的 ngnix 在起作用, 一旦它出问题, 下面那个 keepalived 就会抢到前端网站 IP, 这样就实现了 ngnix 的<em>高可用</em>.</p>
 <p>在 keepalived 中, 可以通过自定义脚本实现监控任意进程, 一旦被监控进程挂掉, 就能让 keepalived 放弃对 IP 的抢占.</p>
 <p>另外, 在数据库层面上, 也有一些优化方案, 如读写分离、缓存系统、分库分表等 (<a href="http://www.jianshu.com/p/ddcc3643aec9">mongodb</a> 作为一个分布式数据库, 支持自动<a href="http://www.ttlsa.com/mongodb/the-architecture-of-mongodb-mongodb-fragment-cluster-and-simple-construction-scheme/">分片</a>); 值得一提的是, 现在有个应用叫 <strong>mycat</strong>.</p>
@@ -68,7 +68,7 @@
     </div>
 
     <!-- 多说评论框 start -->
-    <div class="ds-thread" data-thread-key="高可用高并发网站架构演化 (nginx + keepalived)" data-title="高可用高并发网站架构演化 (nginx + keepalived)" data-url="http://wiki.smallcpp.com/软件工程/高可用高并发网站架构演化 (nginx + keepalived).html"></div>
+    <div class="ds-thread" data-thread-key="高可用高并发网站架构演化 (nginx + keepalived)" data-title="高可用高并发网站架构演化 (nginx + keepalived)" data-url="http://wiki.smallcpp.cn/软件工程/高可用高并发网站架构演化 (nginx + keepalived).html"></div>
     <!-- 多说评论框 end -->
     <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
     <script type="text/javascript">

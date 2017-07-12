@@ -32,24 +32,24 @@
 <p>DFS 根链接到一个或多个根目标, 而根目标则链接到一个文件服务器上的 UNC 共享. 一个 DFS 根可以链接的根目标数量由 DFS 根相关的命名空间类型决定. DFS 命名空间有两个类型: 独立命名空间和基于域的命名空间.</p>
 <p>独立命名空间存储他们在主机服务器注册表中的配置信息. 基于域的命名空间存储在活动目录数据库中的信息. 这个区别影响连接到 DFS 根的根目标数量. 独立 DFS 根只能包含一个单一根目标, 而基于域的 DFS 根只包含通过多个服务器分离的多个根目标.</p>
 <p>下图展示了一个基于域的 DFS 根. 很明显这是基于域的, 因为这个根的名字 <code>(\\lab.com\namespace)</code> 反映了域的名字. 中心方格显示两个 UNC 途径, 并且两个途径都像根目标一样链接到 DFS 根.</p>
-<p><img alt="" src="http://wiki.smallcpp.com/static/images/分布式文件系统命名空间解析/DFS根连接到一个或多个根目标.png" /></p>
+<p><img alt="" src="http://wiki.smallcpp.cn/static/images/分布式文件系统命名空间解析/DFS根连接到一个或多个根目标.png" /></p>
 <h1 id="dfs_1">DFS 命名空间里的文件或链接</h1>
 <p>在分级中的下一个元素是文件或链接 (正如它有时候所指的) . 在 DFS 命名空间中的每个文件都映射到链接目标, 正如 DFS 根映射到根目标. 链接目标指向一个映射到物理文件夹的 UNC 共享.</p>
 <p>在下图中, 三个文件 (文件 1、文件 2 和文件 3) 都被定义在 DFS 根下 (注意, 我已经选了文件 1) . 控制台的中央窗口列出了映射到文件的链接目标.</p>
-<p><img alt="" src="http://wiki.smallcpp.com/static/images/分布式文件系统命名空间解析/每个文件都映射到链接目标.png" /></p>
+<p><img alt="" src="http://wiki.smallcpp.cn/static/images/分布式文件系统命名空间解析/每个文件都映射到链接目标.png" /></p>
 <p>如你所见, 这个链接目标不过是一个映射到共享文件的 UNC 途径. 另外要注意, 在控制台的中央窗口中, 为链接目标展示了各种各样的信息, 包括类型、途径和提交状态.</p>
 <p>由于一个文件可以和不同服务器上的多个链接目标连接, 所以提交状态存在. 这样做了之后, 你可以为链接目标创建一个复制组, 且复制组会保持多种文件内容与其它文件之间的同步. 下图展示的就是一个有多个链接目标的文件.</p>
-<p><img alt="" src="http://wiki.smallcpp.com/static/images/分布式文件系统命名空间解析/多个链接目标.png" /></p>
+<p><img alt="" src="http://wiki.smallcpp.cn/static/images/分布式文件系统命名空间解析/多个链接目标.png" /></p>
 <p>两个链接目标的提交状态都是有效的 (Enabled). 这意味着 DFS 可以向任意一个目标指定资源请求. 因此, 如果一个文件服务器必须离线维修, 这个服务器的提交状态就变成无效, 而 DFS 会停止向该服务器发送请求, 直到提交状态再次变为有效.</p>
 <h1 id="ntfs-dfs">NTFS 级别的 DFS 命名空间</h1>
 <p>上述因素组成了 DFS 命名空间. 在下图中, 你可以看到 NTFS 级别的命名空间是什么样子的.</p>
-<p><img alt="" src="http://wiki.smallcpp.com/static/images/分布式文件系统命名空间解析/驱动C盘上的DFS内容.png" /></p>
+<p><img alt="" src="http://wiki.smallcpp.cn/static/images/分布式文件系统命名空间解析/驱动C盘上的DFS内容.png" /></p>
 <p>注意名为 Dfsroots 的文件, 它下面的那个文件就叫 Namespace (命名空间). 当我创建根时 DFS 自动创建这些文件. Namespace 文件实际上是共享的, 但是文件系统隐藏了该共享.</p>
 <p>最后要注意, 在命名空间下面有到文件 1、文件 2 和文件 3 的快捷键. 这些都是在 DFS 管理控制台中指定的目标文件. 在图的底部是这三个文件夹的另一个列表, 它实际上是在驱动 C 盘上的共享文件. 我刚刚提到的快捷键映射到这些共享文件夹.</p>
     </div>
 
     <!-- 多说评论框 start -->
-    <div class="ds-thread" data-thread-key="转.分布式文件系统命名空间解析" data-title="转.分布式文件系统命名空间解析" data-url="http://wiki.smallcpp.com/Hadoop/转.分布式文件系统命名空间解析.html"></div>
+    <div class="ds-thread" data-thread-key="转.分布式文件系统命名空间解析" data-title="转.分布式文件系统命名空间解析" data-url="http://wiki.smallcpp.cn/Hadoop/转.分布式文件系统命名空间解析.html"></div>
     <!-- 多说评论框 end -->
     <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
     <script type="text/javascript">

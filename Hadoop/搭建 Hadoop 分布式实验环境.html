@@ -35,7 +35,7 @@
 <li>Hadoop 版本: hadoop-2.7.3</li>
 </ul>
 <p>关于虚拟机的网络模式解释下, 推荐的是使用<strong>桥接</strong>模式, 因为桥接模式可以让虚拟机和宿主机处于同一网段, 而 <strong>NAT</strong> 模式则是虚拟机单独分配一个网段;<br>然而我实验时发现<strong>桥接</strong>模式虚拟机能 ping 通局域网内所有其他 ip 及外网 ip, 但就是不能和宿主机互 ping, 搞了好久没搞定, 万般无奈选择了 <strong>NAT</strong> 模式.</p>
-<p>虚拟机的安装参考另一篇 wiki: <a href="http://wiki.smallcpp.com/%E5%B7%A5%E5%85%B7%E9%85%8D%E7%BD%AE/VMware%20%E5%AE%89%E8%A3%85%20Ubuntu.html">使用 VMware 安装 Ubuntu  、VM Tools 和 Fcitx 输入法</a></p>
+<p>虚拟机的安装参考另一篇 wiki: <a href="http://wiki.smallcpp.cn/%E5%B7%A5%E5%85%B7%E9%85%8D%E7%BD%AE/VMware%20%E5%AE%89%E8%A3%85%20Ubuntu.html">使用 VMware 安装 Ubuntu  、VM Tools 和 Fcitx 输入法</a></p>
 <p>安装好后虚拟机后, 开始搭建 Hadoop 分布式实验环境.</p>
 <div class="toc"><span class="toctitle">Table of Contents</span><ul>
 <li><a href="#1-iphosts-iptables">1. 固定 IP、主机名、Hosts 和 iptables</a><ul>
@@ -106,11 +106,11 @@
 <li>第 <strong>6</strong> 行-第 <strong>8</strong> 行分别设置 <code>eth0</code> 接口的 ip、掩码和网关.</li>
 </ul>
 <p>但是需要注意, 并不所有的都是 <code>eth0</code>, 采用的 Ubuntu 版本不同, 也有可能是其他的接口, 如 <code>ens32</code>; 可以先使用 <code>ifconfig</code> 看下系统使用的是哪个接口.</p>
-<p><img alt="" src="http://wiki.smallcpp.com/static/images/搭建Hadoop分布式实验环境/ifconfig.png" /></p>
+<p><img alt="" src="http://wiki.smallcpp.cn/static/images/搭建Hadoop分布式实验环境/ifconfig.png" /></p>
 <p>另外就是 <strong>gateway</strong> (网关), 虚拟机的网关可以通过虚拟网络编辑器查看.</p>
-<p><img alt="" src="http://wiki.smallcpp.com/static/images/搭建Hadoop分布式实验环境/虚拟网络编辑器.png" /></p>
-<p><img alt="" src="http://wiki.smallcpp.com/static/images/搭建Hadoop分布式实验环境/NAT.png" /></p>
-<p><img alt="" src="http://wiki.smallcpp.com/static/images/搭建Hadoop分布式实验环境/gateway.png" /></p>
+<p><img alt="" src="http://wiki.smallcpp.cn/static/images/搭建Hadoop分布式实验环境/虚拟网络编辑器.png" /></p>
+<p><img alt="" src="http://wiki.smallcpp.cn/static/images/搭建Hadoop分布式实验环境/NAT.png" /></p>
+<p><img alt="" src="http://wiki.smallcpp.cn/static/images/搭建Hadoop分布式实验环境/gateway.png" /></p>
 <p>所以上面的第八行的 <strong>gateway</strong> 要填: <code>192.168.142.2</code>.</p>
 <h2 id="dns">DNS</h2>
 <p><strong>sudo vim /etc/resolv.conf</strong>, 编辑 DNS 解析文件.</p>
@@ -174,14 +174,14 @@
 
 <p><br><br />
 此时, 不管在哪个目录输入 <code>java -version</code> 都可以找到执行文件.</p>
-<p><img alt="" src="http://wiki.smallcpp.com/static/images/搭建Hadoop分布式实验环境/javaversion.png" /></p>
+<p><img alt="" src="http://wiki.smallcpp.cn/static/images/搭建Hadoop分布式实验环境/javaversion.png" /></p>
 <h1 id="3-hadoop">3. 安装 Hadoop</h1>
 <h2 id="31">3.1</h2>
 <p>访问: <a href="http://archive.apache.org/dist/">http://archive.apache.org/dist/</a>, apache 的所有项目都在这里.</p>
 <p><img alt="" src="http://i61.tinypic.com/29ustjt.jpg" /></p>
 <p><img alt="" src="http://i60.tinypic.com/33xy72x.jpg" /></p>
 <p><img alt="" src="http://i58.tinypic.com/2nuon4o.jpg" /></p>
-<p><img alt="" src="http://wiki.smallcpp.com/static/images/搭建Hadoop分布式实验环境/hadoopdown.png" /></p>
+<p><img alt="" src="http://wiki.smallcpp.cn/static/images/搭建Hadoop分布式实验环境/hadoopdown.png" /></p>
 <p>下载完成后, 拖到 Ubuntu 桌面.</p>
 <p><code>sudo mkdir /usr/smallcpp</code> 创建一个文件夹.</p>
 <p><code>cd ~/桌面</code>, 进入桌面目录.</p>
@@ -200,7 +200,7 @@
 <h2 id="33">3.3</h2>
 <p>刷新环境变量.</p>
 <p><code>source ~/.bashrc</code> 退回根目录, 测试下 hadoop 命令: <code>hadoop version</code></p>
-<p><img alt="" src="http://wiki.smallcpp.com/static/images/搭建Hadoop分布式实验环境/hadoopversion.png" /></p>
+<p><img alt="" src="http://wiki.smallcpp.cn/static/images/搭建Hadoop分布式实验环境/hadoopversion.png" /></p>
 <h1 id="4-hadoop">4. 配置 Hadoop</h1>
 <p><code>cd /usr/smallcpp/hadoop-2.7.3/etc/hadoop</code> 进入 Hadoop 配置文件所在目录.</p>
 <h2 id="41-vim-hadoop-envsh">4.1. vim hadoop-env.sh</h2>
@@ -402,7 +402,7 @@
 
 <p><br><br />
 还可以通过 <code>hdfs dfsadmin -report</code> 来查看所有 DataNode 的信息.</p>
-<p><img alt="" src="http://wiki.smallcpp.com/static/images/搭建Hadoop分布式实验环境/dfsadmin.png" /></p>
+<p><img alt="" src="http://wiki.smallcpp.cn/static/images/搭建Hadoop分布式实验环境/dfsadmin.png" /></p>
 <p><strong>Live datanodes</strong> 表示当前集群有几个 DataNode 在运行.</p>
 <h1 id="7">7. 测试集群</h1>
 <p>集群启动成功后会提供 Web 界面来管理集群.</p>
@@ -423,8 +423,8 @@ hdfs://smallcpp01:9000</p>
 <p><code>hadoop fs -put /home/martin/桌面/ubuntu-16.04-desktop-amd64.iso /ubuntu-amd64.iso</code></p>
 <p>Hadoop 的 <strong>HDFS</strong> 系统使用起来就像是 Linux 的文件系统, 如 <code>hadoop fs -ls /</code> 查看的就是 HDFS 根目录下的列表, 切不要将它们混淆了, HDFS 的根目录可不在 Linux 的根目录 (<code>/</code>) 下, 是两套完全不同的体系.</p>
 <p>上传完毕后可以在 Web 界面的文件管理模块可以看到变化:</p>
-<p><img alt="" src="http://wiki.smallcpp.com/static/images/搭建Hadoop分布式实验环境/hadoopfile.png" /></p>
-<p><img alt="" src="http://wiki.smallcpp.com/static/images/搭建Hadoop分布式实验环境/hadoopinfo.png" /></p>
+<p><img alt="" src="http://wiki.smallcpp.cn/static/images/搭建Hadoop分布式实验环境/hadoopfile.png" /></p>
+<p><img alt="" src="http://wiki.smallcpp.cn/static/images/搭建Hadoop分布式实验环境/hadoopinfo.png" /></p>
 <h2 id="72">7.2. 下载文件</h2>
 <p><code>hadoop fs -get /ubuntu-amd64.iso /home/martin/桌面/ubuntu-amd64.iso</code></p>
 <p>下载文件到 Linux 系统.</p>
@@ -488,7 +488,7 @@ hdfs://smallcpp01:9000</p>
     </div>
 
     <!-- 多说评论框 start -->
-    <div class="ds-thread" data-thread-key="搭建 Hadoop 分布式实验环境" data-title="搭建 Hadoop 分布式实验环境" data-url="http://wiki.smallcpp.com/Hadoop/搭建 Hadoop 分布式实验环境.html"></div>
+    <div class="ds-thread" data-thread-key="搭建 Hadoop 分布式实验环境" data-title="搭建 Hadoop 分布式实验环境" data-url="http://wiki.smallcpp.cn/Hadoop/搭建 Hadoop 分布式实验环境.html"></div>
     <!-- 多说评论框 end -->
     <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
     <script type="text/javascript">
