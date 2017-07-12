@@ -1,0 +1,506 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <title>NodeJs 随笔 - Wiki | Small Cpp</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            
+            <a href="/">Home</a> » <a href="/#NodeJs">NodeJs</a> » NodeJs 随笔
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <p>https://nodejs.org/api/</p>
+<p>回调<br />
+事件触发回调</p>
+<p>让 JavaScripte 运行在服务端的开发平台</p>
+<p>异步式 I/O 与事件驱动的架构设计 (传统是多线程模型)</p>
+<p>这种方式充分利用 CPU 资源, 因为线程不会被阻塞, 而多线程的话, 如果遇到 IO 操作, 发生 IO 操作的线程是会被阻塞的, 如果有新任务又会新开线程...<br><br />
+这种异步的方式, 并不是说只能有一个线程, 也是可以创建多线程的, 它可以将单线程绑定到单个 CPU, 充分利用 CPU 资源.</p>
+<p>console.log("你好")<br />
+你好  -- 输出<br />
+undefined -- 返回值</p>
+<p>node -v 版本<br />
+node -e "xxx" eval ecript 解析字符串</p>
+<p>创建一个 server:</p>
+<div class="hlcode"><pre><span class="s2">&quot;use strict&quot;</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">http</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">&quot;http&quot;</span><span class="p">);</span>
+
+<span class="nx">http</span><span class="p">.</span><span class="nx">createServer</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nx">writeHead</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;Content-Type&#39;</span><span class="o">:</span> <span class="s1">&#39;text/html&#39;</span><span class="p">});</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="s1">&#39;&lt;h1&gt;Node.js 已经运行了服务&lt;/h1&gt;&#39;</span><span class="p">);</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="s1">&#39;&lt;p&gt;视频出外: PCAT&lt;/p&gt;&#39;</span><span class="p">);</span>
+<span class="p">}).</span><span class="nx">listen</span><span class="p">(</span><span class="mi">5586</span><span class="p">);</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;http://127.0.0.1:5586&quot;</span><span class="p">);</span>
+</pre></div>
+
+
+<p><br></p>
+<p>调试代码: npm install -g supervisor<br />
+使用 supervisor xxx.js 启动</p>
+<div class="hlcode"><pre><span class="n">supervisor</span> <span class="n">sss</span><span class="p">.</span><span class="n">js</span>
+
+<span class="n">Running</span> <span class="n">node</span><span class="o">-</span><span class="n">supervisor</span> <span class="n">with</span>
+  <span class="n">program</span> <span class="err">&#39;</span><span class="n">sss</span><span class="p">.</span><span class="n">js</span><span class="err">&#39;</span>
+  <span class="o">--</span><span class="n">watch</span> <span class="sc">&#39;.&#39;</span>
+  <span class="o">--</span><span class="n">extensions</span> <span class="err">&#39;</span><span class="n">node</span><span class="p">,</span><span class="n">js</span><span class="err">&#39;</span>
+  <span class="o">--</span><span class="n">exec</span> <span class="err">&#39;</span><span class="n">node</span><span class="err">&#39;</span>
+
+<span class="n">Starting</span> <span class="n">child</span> <span class="n">process</span> <span class="n">with</span> <span class="err">&#39;</span><span class="n">node</span> <span class="n">sss</span><span class="p">.</span><span class="n">js</span><span class="err">&#39;</span>
+<span class="n">Watching</span> <span class="n">directory</span> <span class="err">&#39;</span><span class="n">C</span><span class="o">:</span><span class="err">\</span><span class="n">Users</span><span class="err">\</span><span class="n">chaoqun</span><span class="p">.</span><span class="n">zhu</span><span class="err">\</span><span class="n">Desktop</span><span class="err">\</span><span class="n">testjs</span><span class="err">&#39;</span> <span class="k">for</span> <span class="n">changes</span><span class="p">.</span>
+<span class="n">Press</span> <span class="n">rs</span> <span class="k">for</span> <span class="n">restarting</span> <span class="n">the</span> <span class="n">process</span><span class="p">.</span>
+<span class="nl">http:</span><span class="c1">//127.0.0.1:5586</span>
+<span class="n">crashing</span> <span class="n">child</span>
+<span class="n">Starting</span> <span class="n">child</span> <span class="n">process</span> <span class="n">with</span> <span class="err">&#39;</span><span class="n">node</span> <span class="n">sss</span><span class="p">.</span><span class="n">js</span><span class="err">&#39;</span>
+<span class="nl">http:</span><span class="c1">//127.0.0.1:5586</span>
+<span class="n">crashing</span> <span class="n">child</span>
+<span class="n">Starting</span> <span class="n">child</span> <span class="n">process</span> <span class="n">with</span> <span class="err">&#39;</span><span class="n">node</span> <span class="n">sss</span><span class="p">.</span><span class="n">js</span><span class="err">&#39;</span>
+<span class="nl">http:</span><span class="c1">//127.0.0.1:5586</span>
+<span class="n">crashing</span> <span class="n">child</span>
+<span class="n">Starting</span> <span class="n">child</span> <span class="n">process</span> <span class="n">with</span> <span class="err">&#39;</span><span class="n">node</span> <span class="n">sss</span><span class="p">.</span><span class="n">js</span><span class="err">&#39;</span>
+<span class="nl">http:</span><span class="c1">//127.0.0.1:5586</span>
+</pre></div>
+
+
+<p><br></p>
+<p>异步读文件</p>
+<div class="hlcode"><pre><span class="kd">var</span> <span class="nx">fs</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;fs&#39;</span><span class="p">);</span>
+<span class="nx">fs</span><span class="p">.</span><span class="nx">readFile</span><span class="p">(</span><span class="s1">&#39;file.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;utf8&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;End . . .&#39;</span><span class="p">);</span>
+</pre></div>
+
+
+<p><br><br />
+同步读文件</p>
+<div class="hlcode"><pre><span class="kd">var</span> <span class="nx">fs</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;fs&#39;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="nx">fs</span><span class="p">.</span><span class="nx">readFileSync</span><span class="p">(</span><span class="s1">&#39;file.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;utf8&#39;</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;End . . .&#39;</span><span class="p">);</span>
+</pre></div>
+
+
+<p><br><br />
+关键就在于异步是通过回调的机制, NodeJs 会响应 I/O 事件.</p>
+<p>自定义事件</p>
+<div class="hlcode"><pre><span class="c1">// 声明事件对象</span>
+<span class="kd">var</span> <span class="nx">events</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;events&#39;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">eventEmitter</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">events</span><span class="p">.</span><span class="nx">EventEmitter</span><span class="p">();</span>
+
+<span class="c1">// 注册事件</span>
+<span class="nx">eventEmitter</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;some_event&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;事件触发成功.&#39;</span><span class="p">);</span>
+<span class="p">});</span>
+
+<span class="c1">// 触发事件</span>
+<span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">event</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span><span class="s1">&#39;some_event&#39;</span><span class="p">);</span>
+<span class="p">},</span> <span class="mi">1000</span><span class="p">);</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;程序执行完毕.&#39;</span><span class="p">);</span>
+</pre></div>
+
+
+<p><br><br />
+输出结果:</p>
+<div class="hlcode"><pre><span class="err">程序执行完毕</span><span class="p">.</span>
+<span class="err">事件触发成功</span><span class="p">.</span>
+</pre></div>
+
+
+<p><br><br />
+可以看到事件是异步的, 先打印 <code>程序执行完毕.</code> 再打印 <code>事件触发成功.</code>.</p>
+<p>模块, 一个 Node.js 文件就是一个模块</p>
+<p>require 导入其他模块<br />
+exports 导出模块</p>
+<p>暴露接口 set_name.js:</p>
+<div class="hlcode"><pre><span class="kd">var</span> <span class="nx">g_name</span><span class="p">;</span>
+
+<span class="nx">exports</span><span class="p">.</span><span class="nx">setName</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">_name</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">g_name</span> <span class="o">=</span> <span class="nx">_name</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p><br><br />
+使用接口:</p>
+<div class="hlcode"><pre><span class="kd">var</span> <span class="nx">test</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./set_name.js&#39;</span><span class="p">);</span>
+<span class="nx">test</span><span class="p">.</span><span class="nx">setName</span><span class="p">(</span><span class="s1">&#39;金三顺&#39;</span><span class="p">;)</span>
+</pre></div>
+
+
+<p><br><br />
+还能定义可调用模块, 类似 python 中的 <code>__call__</code></p>
+<p>暴露接口 set_name.js:</p>
+<div class="hlcode"><pre><span class="kd">var</span> <span class="nx">g_name</span><span class="p">;</span>
+
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">_name</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">g_name</span> <span class="o">=</span> <span class="nx">_name</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p><br><br />
+使用接口:</p>
+<div class="hlcode"><pre><span class="kd">var</span> <span class="nx">test</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./set_name.js&#39;</span><span class="p">);</span>
+<span class="nx">test</span><span class="p">(</span><span class="s1">&#39;金三顺&#39;</span><span class="p">;)</span>
+</pre></div>
+
+
+<p><br><br />
+还可以把对象封装到模块中.</p>
+<p>暴露接口 set_name.js:</p>
+<div class="hlcode"><pre><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">m_name</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">setName</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">_name</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">m_name</span> <span class="o">=</span> <span class="nx">_name</span><span class="p">;</span>
+    <span class="p">};</span>
+
+    <span class="k">this</span><span class="p">.</span><span class="nx">sayHello</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Hello &#39;</span> <span class="o">+</span> <span class="nx">m_name</span><span class="p">);</span>
+    <span class="p">};</span>
+<span class="p">};</span>
+</pre></div>
+
+
+<p><br><br />
+使用接口:</p>
+<div class="hlcode"><pre><span class="kd">var</span> <span class="nx">test</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./1.js&#39;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">hello</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">test</span><span class="p">();</span>
+<span class="nx">hello</span><span class="p">.</span><span class="nx">setName</span><span class="p">(</span><span class="s1">&#39;11&#39;</span><span class="p">);</span>
+<span class="nx">hello</span><span class="p">.</span><span class="nx">sayHello</span><span class="p">();</span>
+</pre></div>
+
+
+<p><br><br />
+这就有点像面向对象的类概念了.</p>
+<p>包, 概念上和 Java 的包差不多, 就是将功能相关的模块打包.</p>
+<p>包规范<br />
+package.json 必须在顶层目录<br />
+二进制文件应该在 bin 目录<br />
+js 文件应该在 lib 目录<br />
+文档应该在 doc 目录<br />
+单元测试应该在 test 目录</p>
+<p>通过定制 package.json 可以创建更复杂、更完善、更符合规范的包.<br />
+Node.js 在调用包时, 首先会检查包中的 package.json 文件的 main 字段, 将其作为包的接口模块, 如果 package.json 文件的 main 字段不存在, 那么 Node.js 会尝试寻找 index.js 或 index.node 作为包的接口.</p>
+<p>package.json 文件是 CommonJS 规范用于描述包的文件, 完全符合规范的 package.json 文件应该包含以下字段:</p>
+<ul>
+<li>name: 包名. 包名是唯一的, 由小写字母、数字和下划线组成, 不能含空格.</li>
+<li>description: 包说明. 对包进行简要描述.</li>
+<li>version: 版本号. 满足《语义化版本识别》规范的版本字符串.</li>
+<li>keywords: 关键字数组, 通常用于搜索.</li>
+<li>maintainers: 维护者数组. 每个元素包含 name、email(可选)、web(可选) 字段.</li>
+<li>contributors: 贡献者数组. 格式与maintainer数组相同.包作者应该是贡献者数组的第一个元素.</li>
+<li>bugs: 提交bug的地址, 可以是网址或电邮地址.</li>
+<li>licenses: 许可证数组. 每个元素要包含type(许可证名称)和url(链接到许可证文本的地址)字段.</li>
+<li>repositories: 仓库托管地址数组. 每个元素要包含type(仓库的类型, 如Git)、url(仓库地址)和path(相对于仓库的路径, 可选)字段.</li>
+<li>dependencies: 包依赖. 是一个关联数组, 由包名和版本号组成.</li>
+</ul>
+<p>包管理器 npm</p>
+<p>本地安装: 将模块下载到当前命令行所在目录的 node_modules 中, 可在当前包中 require<br />
+全局安装: 安装到系统的 node_modules, windows 默认是 <code>用户/AppData/Roaming/npm/node_modules</code>, 不能在当前包中 require, 但可在命令行下直接运行</p>
+<p>npm config get prefix 来获取当前设置的全局目录<br />
+npm config set prefix 设置全局目录</p>
+<p>初始化包<br />
+npm init</p>
+<p>安装<br />
+npm install/i [-g] package_name</p>
+<p>卸载<br />
+npm uninstall package_name [-g]</p>
+<p>查看当前包<br />
+npm list [-g] --depth 0</p>
+<p>查看某个模块<br />
+npm view package_name</p>
+<p>代码调试<br />
+http://www.cnblogs.com/moonz-wu/archive/2012/01/15/2322120.html<br />
+http://www.cnblogs.com/kumbayaco/p/3439142.html</p>
+<p>JavaScript 中有一个特殊的对象, 称为全局对象 (Global Object), 它及其所有属性都可以在程序的任何地方访问, 即全局变量.</p>
+<p>在浏览器 JavaScript 中, 通常 window 是全局对象,  而 Node.js 中的全局对象是 global, 所有全局变量 (除了 global 本身以外) 都是 global 对象的属性.</p>
+<p>在 Node.js 我们可以直接访问到 global 的属性, 而不需要在应用中包含它.</p>
+<p>global 最根本的作用是作为全局变量的宿主. 按照 ECMAScript 的定义, 满足以下条 件的变量是全局变量:</p>
+<ul>
+<li>在最外层定义的变量 (永远不可能成立, 看下面说明)</li>
+<li>全局对象的属性</li>
+<li>隐式定义的变量 (未定义直接赋值的变量)</li>
+</ul>
+<p>当你定义一个全局变量时, 这个变量同时也会成为全局对象的属性, 反之亦然;</p>
+<p>需要<strong>注意</strong>的是, 在 Node.js 中你<strong>不可能</strong>在最外层定义变量, 因为所有用户代码都是属于当前模块的,  而模块本身不是最外层上下文.</p>
+<p><strong>注意</strong>: 永远使用 var 定义变量以避免引入全局变量, 因为全局变量会污染命名空间, 提高代码的耦合风险.</p>
+<p>process.nextTick(callback) 将一个耗时的操作放到队列时, 下次执行.</p>
+<p>console.log();<br />
+console.error();<br />
+console.trace(); 输出当前的调用栈</p>
+<p>util 全局变量<br />
+util.inherits(child, TestParent)<br />
+对象间原型继承</p>
+<p>js 中, 是没有类 (Class) 关键字的, 都用 function, 但 js 严格模式中, 通过函数名的大小写来规定是类还是函数, 如下面代码:</p>
+<div class="hlcode"><pre><span class="kd">function</span> <span class="nx">testParent</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="s1">&#39;test&#39;</span><span class="p">;</span>  <span class="c1">// 会报提示 Possible strict violation</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p><br><br />
+js 规范认为小写字母开头是方法, 所以是没有 this 的, 改成大写字母开头就好了:</p>
+<div class="hlcode"><pre><span class="kd">function</span> <span class="nx">TestParent</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="s1">&#39;test&#39;</span><span class="p">;</span>  <span class="c1">// 不报错</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p><br><br />
+js 好像没有我理解的传统意义上的继承, 但它通过 util.inherits(child, TestParent) 可以实现原型链继承, 原型链是对象的 prototype 属性, 如:</p>
+<div class="hlcode"><pre><span class="s2">&quot;use strict&quot;</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">util</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;util&#39;</span><span class="p">);</span>
+
+<span class="kd">function</span> <span class="nx">TestParent</span><span class="p">()</span> <span class="p">{</span>
+
+<span class="p">}</span>
+
+<span class="nx">TestParent</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">test_out</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;继承原型函数&#39;</span><span class="p">);</span>
+<span class="p">};</span>  <span class="c1">// 原型</span>
+
+<span class="kd">function</span> <span class="nx">TestChild</span><span class="p">()</span> <span class="p">{</span>
+
+<span class="p">}</span>
+
+<span class="nx">util</span><span class="p">.</span><span class="nx">inherits</span><span class="p">(</span><span class="nx">TestChild</span><span class="p">,</span> <span class="nx">TestParent</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">child</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">TestChild</span><span class="p">();</span>
+
+<span class="nx">child</span><span class="p">.</span><span class="nx">test_out</span><span class="p">();</span>
+</pre></div>
+
+
+<p><br><br />
+冒号的作用</p>
+<p>js 中, 冒号可以用来声明直接量对象的成员 (直接量 我理解就是 var 定义的变量), 如:</p>
+<div class="hlcode"><pre><span class="kd">var</span> <span class="nx">test_colon</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">test_val</span> <span class="o">:</span> <span class="s1">&#39;value1&#39;</span><span class="p">,</span>
+    <span class="nx">test_func</span> <span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">consol</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;this is test.&#39;</span><span class="p">);</span>
+    <span class="p">},</span>
+<span class="p">};</span>
+</pre></div>
+
+
+<p><br><br />
+<code>util.inspect(object, [showHidden, [depth], [colors]])</code> 将任意对象转换成字符串.</p>
+<p>showHidden true 会输出更多隐藏信息<br />
+depth 最大递归对象层数<br />
+colors 染色</p>
+<p>events 是 node.js 最重要的模块, 没有之一.<br />
+events.EventEmitter 事件发射与监听的封装</p>
+<p>EventEmitter 有个特殊事件  error, 它包含了错误的定义, 程序异常通常就会发射 error 事件, 如果没有相应的处理器, node.js 会把它当作异常处理, 退出程序并打印调用栈.</p>
+<p>fs 模块是文件操作的封装<br />
+fs 的所有操作都提供了同步和异步两个版本.</p>
+<p>fs.open fs.close 要对应<br />
+fs.openSync fs.closeSync</p>
+<p>http 模块, 封装了一个高效的 http 服务器, 和一个简易的 http 客户端<br />
+http.server 基于事件的 HTTP 服务器.<br />
+http.request 则是 HTTP 客户端工具, 向服务器发送请求.</p>
+<p>http.creaeServer 创建一个 http.server 的实例</p>
+<p>http.server 基于事件, 所有请求都被封装到独立的事件.</p>
+<p>request 当客户端请求到来时事件, 参数: req, res, 分别是 http.ServerRequest (现在好像是 http.IncomingMessage) 和 http.ServerResponse 的实例.</p>
+<p>connection 当 tcp 连接建立时事件, 提供参数 socket, 是 net.Socket 的实例</p>
+<p>close 服务器关闭时事件</p>
+<p>还有 ckeckContiune, upgrade, clientErrot, 等事件</p>
+<p>http 提供一个绑定 request 事件的捷径, 即 http.creaeServer 时就会绑定, 它相当于:</p>
+<div class="hlcode"><pre><span class="kd">var</span> <span class="nx">http</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;http&#39;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">server</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">http</span><span class="p">.</span><span class="nx">Server</span><span class="p">();</span>
+<span class="nx">server</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;request&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="s1">&#39;响应.&#39;</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+
+
+<p><br><br />
+http.IncomingMessage 主要属性:<br />
+method 是 post 还是 get<br />
+url 请求地址, 通过以下方法可以解析 url 地址:</p>
+<p><code>require('querystring').parse(url)</code> or <code>require('url').parse(url, true)</code>.</p>
+<div class="hlcode"><pre><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;url&#39;</span><span class="p">).</span><span class="nx">parse</span><span class="p">(</span><span class="s1">&#39;/status?name=ryan&#39;</span><span class="p">,</span> <span class="kc">true</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="nx">href</span><span class="o">:</span> <span class="s1">&#39;/status?name=ryan&#39;</span><span class="p">,</span>
+  <span class="nx">search</span><span class="o">:</span> <span class="s1">&#39;?name=ryan&#39;</span><span class="p">,</span>
+  <span class="nx">query</span><span class="o">:</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;ryan&#39;</span><span class="p">},</span>
+  <span class="nx">pathname</span><span class="o">:</span> <span class="s1">&#39;/status&#39;</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p><br><br />
+通过 http.IncomingMessage 获取不取 post 的参数, node.js 将请求头和请求体分开处理了..<br />
+所以如果是 post 的话, 需要单独处理了:</p>
+<p>首先要知道请求体的三个事件:</p>
+<p>data 事件, 当请求体到来时触发<br />
+end 事件, 数据传输完成时触发<br />
+close 事件, 客户请求结果时触发, 包括用户强制终止</p>
+<div class="hlcode"><pre><span class="cm">/**</span>
+<span class="cm"> * 因为 post 方式的数据不太一样可能很庞大复杂，</span>
+<span class="cm"> * 所以要添加监听来获取传递的数据</span>
+<span class="cm"> * 也可写作 req.on(&#39;data&#39;,function(data){});</span>
+<span class="cm"> */</span>
+ <span class="kd">var</span> <span class="nx">qs</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;querystring&#39;</span><span class="p">);</span>
+ <span class="kd">var</span> <span class="nx">util</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;util&#39;</span><span class="p">);</span>
+
+ <span class="kd">var</span> <span class="nx">postData</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+
+<span class="nx">req</span><span class="p">.</span><span class="nx">addListener</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">postData</span> <span class="o">+=</span> <span class="nx">data</span><span class="p">;</span>
+<span class="p">});</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * 这个是如果数据读取完毕就会执行的监听方法</span>
+<span class="cm"> */</span>
+<span class="nx">req</span><span class="p">.</span><span class="nx">addListener</span><span class="p">(</span><span class="s1">&#39;end&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">query</span> <span class="o">=</span> <span class="nx">qs</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">postData</span><span class="p">);</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="nx">util</span><span class="p">.</span><span class="nx">inspect</span><span class="p">(</span><span class="nx">query</span><span class="p">));</span>
+<span class="p">});</span>
+</pre></div>
+
+
+<p><br></p>
+<p>http.ServerResponse 响应对象<br />
+<code>writeHead(statusCode, [headers])</code><br />
+<code>write(deta, [encoding])</code><br />
+<code>end([data], [encoding])</code> 必须调用</p>
+<p>http 客户端, 提供两个函数, http.request, http.get, 向 http 发起请求.</p>
+<p>http.request 可以指定 method, http.get 是对 http.request(method=get) 的封装.</p>
+<p>要注意一下, path 参数要包含 '/' 根路径, 如 '/search?query=martin'.</p>
+<p>这两个函数返回 http.ClientRequest 实例.</p>
+<div class="hlcode"><pre><span class="kd">var</span> <span class="nx">postData</span> <span class="o">=</span> <span class="nx">querystring</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span>
+  <span class="s1">&#39;msg&#39;</span> <span class="o">:</span> <span class="s1">&#39;Hello World!&#39;</span>
+<span class="p">});</span>
+
+<span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nx">hostname</span><span class="o">:</span> <span class="s1">&#39;www.google.com&#39;</span><span class="p">,</span>
+  <span class="nx">port</span><span class="o">:</span> <span class="mi">80</span><span class="p">,</span>
+  <span class="nx">path</span><span class="o">:</span> <span class="s1">&#39;/upload&#39;</span><span class="p">,</span>
+  <span class="nx">method</span><span class="o">:</span> <span class="s1">&#39;POST&#39;</span><span class="p">,</span>
+  <span class="nx">headers</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s1">&#39;Content-Type&#39;</span><span class="o">:</span> <span class="s1">&#39;application/x-www-form-urlencoded&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Content-Length&#39;</span><span class="o">:</span> <span class="nx">Buffer</span><span class="p">.</span><span class="nx">byteLength</span><span class="p">(</span><span class="nx">postData</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="kd">var</span> <span class="nx">req</span> <span class="o">=</span> <span class="nx">http</span><span class="p">.</span><span class="nx">request</span><span class="p">(</span><span class="nx">options</span><span class="p">,</span> <span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="err">`</span><span class="nx">STATUS</span><span class="o">:</span> <span class="nx">$</span><span class="p">{</span><span class="nx">res</span><span class="p">.</span><span class="nx">statusCode</span><span class="p">}</span><span class="err">`</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="err">`</span><span class="nx">HEADERS</span><span class="o">:</span> <span class="nx">$</span><span class="p">{</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">res</span><span class="p">.</span><span class="nx">headers</span><span class="p">)}</span><span class="err">`</span><span class="p">);</span>
+  <span class="nx">res</span><span class="p">.</span><span class="nx">setEncoding</span><span class="p">(</span><span class="s1">&#39;utf8&#39;</span><span class="p">);</span>
+  <span class="nx">res</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">chunk</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="err">`</span><span class="nx">BODY</span><span class="o">:</span> <span class="nx">$</span><span class="p">{</span><span class="nx">chunk</span><span class="p">}</span><span class="err">`</span><span class="p">);</span>
+  <span class="p">});</span>
+  <span class="nx">res</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;end&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;No more data in response.&#39;</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+
+<span class="nx">req</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="err">`</span><span class="nx">problem</span> <span class="kd">with</span> <span class="nx">request</span><span class="o">:</span> <span class="nx">$</span><span class="p">{</span><span class="nx">e</span><span class="p">.</span><span class="nx">message</span><span class="p">}</span><span class="err">`</span><span class="p">);</span>
+<span class="p">});</span>
+
+<span class="c1">// write data to request body</span>
+<span class="nx">req</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">postData</span><span class="p">);</span>
+<span class="nx">req</span><span class="p">.</span><span class="nx">end</span><span class="p">();</span>
+</pre></div>
+
+
+<p><br></p>
+<p>http.ClientRequest, 表示一个已经产生而且正在进行的 http 请求.<br />
+<code>request.write(chunk[, encoding][, callback])</code><br />
+请求必须调用 <code>request.end([data][, encoding][, callback])</code> 方法显示地结束请求.<br />
+它还有个常用的方法 <code>request.setTimeout(timeout[, callback])</code></p>
+<p>http.ClientResponse (好像也没了, 改成 http.IncomingMessage, 即 ServerRequest 和 ClientResponse 都是 http.IncomingMessage, 它是 stream.Readable 的实现, 都具有 data, end, close 等事件)</p>
+<p>还有个常用的方法 res.pause() 暂停接受数据和发送事件, 主要用来实现下载功能. res.resume() 恢复传输.</p>
+<p>Express<br />
+npm install -g express<br />
+npm install -g express-generator<br />
+express -V</p>
+<p>express -e 项目名 (-e 使用 ejs engine, 默认 jade)<br />
+cd 项目名 &amp;&amp; npm install<br />
+SET DEBUG=项目名:* &amp;&amp; npm start</p>
+<p>使用工具生成 express-generator</p>
+<p>手动生成:<br />
+app.js<br />
+cd myapp %% npm install express</p>
+<div class="hlcode"><pre><span class="kd">var</span> <span class="nx">http</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;http&#39;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">express</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express&#39;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">express</span><span class="p">();</span>
+<span class="nx">http</span><span class="p">.</span><span class="nx">creareServer</span><span class="p">(</span><span class="nx">app</span><span class="p">);</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/demo&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="s1">&#39;hello server.&#39;</span><span class="p">);</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">();</span>
+<span class="p">});</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">listern</span><span class="p">(</span><span class="mi">3000</span><span class="p">);</span>
+</pre></div>
+
+
+<p><br><br />
+Express 中间件<br />
+http://blog.fens.me/nodejs-connect/<br />
+http://www.expressjs.com.cn/resources/middleware.html<br />
+http://www.expressjs.com.cn/guide//routing.html</p>
+<p>(前 Connect)<br />
+包装 request response<br />
+body-parser POST 请求体解析<br />
+query Get 请求体解析<br />
+static 静态资源<br />
+cookie<br />
+cookieSession<br />
+logger</p>
+<p><strong>dirname</strong> 当前 js 目录</p>
+<p>自定义中间件, 就是个匿名函数<br />
+req, res, next<br />
+next() -- 调用下一个中间件</p>
+    </div>
+
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="NodeJs 随笔" data-title="NodeJs 随笔" data-url="http://wiki.smallcpp.cn/NodeJs/NodeJs 随笔.html"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:"smallwiki"};
+        (function() {
+            var ds = document.createElement('script');
+            ds.type = 'text/javascript';ds.async = true;
+            ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+            ds.charset = 'UTF-8';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+    </script>
+    <!-- 多说公共JS代码 end -->
+
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2017 <a href="http://www.samllcpp.com/" target="_blank">Martin</a> Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+              </p>
+        </div>
+    </body>
+</html>

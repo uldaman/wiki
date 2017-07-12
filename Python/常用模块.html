@@ -1,0 +1,501 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <title>常用模块 - Wiki | Small Cpp</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            
+            <a href="/">Home</a> » <a href="/#Python">Python</a> » 常用模块
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#glob">glob</a><ul>
+<li><a href="#globglob">glob.glob</a></li>
+<li><a href="#globiglob">glob.iglob</a></li>
+</ul>
+</li>
+<li><a href="#shutil">shutil</a></li>
+<li><a href="#collections">collections</a><ul>
+<li><a href="#namedtuple">namedtuple</a></li>
+<li><a href="#deque">deque</a></li>
+<li><a href="#counter">Counter</a></li>
+<li><a href="#ordereddict">OrderedDict</a></li>
+<li><a href="#defaultdict">defaultdict</a></li>
+</ul>
+</li>
+<li><a href="#docx">docx</a></li>
+<li><a href="#xlrdxlwt">xlrd/xlwt</a><ul>
+<li><a href="#xlrd">xlrd</a></li>
+<li><a href="#xlwt">xlwt</a></li>
+</ul>
+</li>
+<li><a href="#tablib">tablib</a></li>
+<li><a href="#calendar">calendar</a></li>
+</ul>
+</div>
+<h1 id="glob">glob</h1>
+<p>glob 模块是最简单的模块之一, 内容非常少, 用它可以查找符合特定规则的文件路径名, 就像在 windows 下使用文件搜索功能一样, 查找文件只用到三个匹配符: <code>*</code>, <code>?</code>, <code>[]</code>, <code>*</code> 匹配 0 个或多个字符, <code>?</code> 匹配单个字符, <code>[]</code> 匹配指定范围内的字符 (如 [0-9]匹配数字).</p>
+<h2 id="globglob">glob.glob</h2>
+<p>返回所有匹配的文件路径列表, 它只有一个参数 pathname, 定义了文件路径匹配规则, 这里可以是绝对路径, 也可以是相对路径, 下面是使用 glob.glob 的例子:</p>
+<div class="hlcode"><pre><span class="kn">import</span> <span class="nn">glob</span>
+
+<span class="c"># 获取指定目录下的所有图片</span>
+<span class="k">print</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s">r&quot;E:\Picture\*\*.jpg&quot;</span><span class="p">)</span>
+
+<span class="c"># 获取上级目录的所有.py文件</span>
+<span class="k">print</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s">r&#39;../*.py&#39;</span><span class="p">)</span>  <span class="c"># 相对路径</span>
+</pre></div>
+
+
+<p><br></p>
+<h2 id="globiglob">glob.iglob</h2>
+<p>与 glob.glob 类似, 但它获取的是一个可迭代对象, 使用它可以逐个获取匹配的文件路径名 (类似 rang 与 xrang 的区别).</p>
+<p>下面是一个简单的例子:</p>
+<div class="hlcode"><pre><span class="kn">import</span> <span class="nn">glob</span>
+<span class="c"># 父目录中的.py文件</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">iglob</span><span class="p">(</span><span class="s">r&#39;../*.py&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">f</span>  <span class="c"># &lt;generator object iglob at 0x00B9FF80&gt;</span>
+
+<span class="k">for</span> <span class="n">py</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">py</span>
+</pre></div>
+
+
+<p><br></p>
+<h1 id="shutil">shutil</h1>
+<p>High-level file operations  高级的文件操作模块, 提供了一些易操作的文件<strong>移动</strong>、<strong>复制</strong>、<strong>打包</strong>、<strong>压缩</strong>、<strong>解压</strong>API.</p>
+<table>
+<thead>
+<tr>
+<th>API</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>copyfileobj(fsrc, fdst[, length=16*1024])</td>
+<td>copy 文件内容到另一个文件, 可以 copy 指定大小的内容</td>
+</tr>
+<tr>
+<td>copyfile(src, dst)</td>
+<td>copy 文件内容, 是不是感觉上面的文件复制很麻烦? 还需要自己手动用 open 函数打开文件, 在这里就不需要了, 事实上, copyfile 调用了 copyfileobj</td>
+</tr>
+<tr>
+<td>copymode(src,dst)</td>
+<td>仅 copy 权限, 不更改文件内容, 组和用户</td>
+</tr>
+<tr>
+<td>copystat(src,dst)</td>
+<td>复制所有的状态信息, 包括权限, 组, 用户, 时间等</td>
+</tr>
+<tr>
+<td>copy(src,dst)</td>
+<td>复制文件的内容以及权限, 先 copyfile 后 copymode</td>
+</tr>
+<tr>
+<td>copy2(src,dst)</td>
+<td>复制文件的内容以及文件的所有状态信息, 先 copyfile 后 copystat</td>
+</tr>
+<tr>
+<td>copytree(src, dst, symlinks=False, ignore=None, copy_function=copy2,ignore_dangling_symlinks=False)</td>
+<td>递归的复制文件内容及状态信息</td>
+</tr>
+<tr>
+<td>rmtree(path, ignore_errors=False, onerror=None)</td>
+<td>递归地删除文件</td>
+</tr>
+<tr>
+<td>move(src, dst)</td>
+<td>递归的移动文件</td>
+</tr>
+<tr>
+<td>make_archive(base_name, format, root_dir=None, base_dir=None, verbose=0, dry_run=0, owner=None, group=None, logger=None)</td>
+<td>压缩打包<br>base_name: 压缩打包后的文件名或者路径名<br>format: 压缩或者打包格式 "zip"、"tar"、"bztar"、"gztar"<br>root_dir: 将哪个目录或者文件打包 (也就是源文件)</td>
+</tr>
+</tbody>
+</table>
+<h1 id="collections">collections</h1>
+<p>collections 是 Python 内置的一个集合模块, 在 Python 内置数据类型的基础上, 又提供了几个额外的数据类型供我们使用.</p>
+<ul>
+<li><code>namedtuple</code>: 生成可以使用名字来访问元素内容的 tuple 子类</li>
+<li><code>deque</code>: 双端队列, 可以快速的从另外一侧追加和推出对象</li>
+<li><code>Counter</code>: 计数器, 主要用来计数</li>
+<li><code>OrderedDict</code>: 有序字典</li>
+<li><code>defaultdict</code>: 带有默认值的字典</li>
+</ul>
+<h2 id="namedtuple">namedtuple</h2>
+<p>如果看到一个 tuple <code>(1, 2)</code>, 很难看出这是用来表示一个坐标的, 这时, <code>namedtuple</code> 就派上了用场:</p>
+<div class="hlcode"><pre><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">namedtuple</span>
+<span class="n">Point</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s">&#39;Point&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;x&#39;</span><span class="p">,</span> <span class="s">&#39;y&#39;</span><span class="p">])</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+
+
+<p><br><br />
+<code>namedtuple</code> 是一个函数, 它用来创建一个自定义的 tuple 对象, 并且规定了 tuple 元素的个数, 并可以用<strong>名称</strong>而不是索引来引用 tuple 的某个元素.</p>
+<p>这样一来, 我们用 <code>namedtuple</code> 可以很方便地定义一种数据类型, 它具备 tuple 的不变性, 又可以根据属性来引用, 使用十分方便.</p>
+<p>可以验证创建的 Point 对象是 tuple 的一种子类:</p>
+<div class="hlcode"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">isinstance</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">Point</span><span class="p">)</span>
+<span class="n">True</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">isinstance</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">tuple</span><span class="p">)</span>
+<span class="n">True</span>
+</pre></div>
+
+
+<p><br></p>
+<h2 id="deque">deque</h2>
+<p>使用 <code>list</code> 存储数据时, 按索引访问元素很快, 但是插入和删除元素就很慢了, 因为 list 是线性存储, 数据量大的时候, 插入和删除效率很低; 而 <code>deque</code> 是为了高效实现插入和删除操作的双向列表.</p>
+<p>deque 其实是 double-ended queue 的缩写, 翻译过来就是双端队列, 它最大的好处就是实现了从队列头部快速增加和取出对象: <code>popleft()</code>、<code>appendleft()</code>.</p>
+<p>关于 <code>deque</code> 和 <code>list</code> 的差别参考 wiki: <a href="http://wiki.smallcpp.cn/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/vector%E3%80%81deque%E3%80%81list%20%E4%B8%89%E8%80%85%E7%9A%84%E5%8C%BA%E5%88%AB.html">vector、deque、list 三者的区别</a></p>
+<h2 id="counter">Counter</h2>
+<p><code>Counter</code> 是一个简单的计数器, 例如, 统计字符出现的个数:</p>
+<div class="hlcode"><pre><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">ch</span> <span class="ow">in</span> <span class="s">&#39;programming&#39;</span><span class="p">:</span>
+    <span class="n">c</span><span class="p">[</span><span class="n">ch</span><span class="p">]</span> <span class="o">=</span> <span class="n">c</span><span class="p">[</span><span class="n">ch</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
+</pre></div>
+
+
+<p><br><br />
+结果:</p>
+<div class="hlcode"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">c</span>
+<span class="n">Counter</span><span class="p">({</span><span class="sc">&#39;g&#39;</span><span class="o">:</span> <span class="mi">2</span><span class="p">,</span> <span class="sc">&#39;m&#39;</span><span class="o">:</span> <span class="mi">2</span><span class="p">,</span> <span class="sc">&#39;r&#39;</span><span class="o">:</span> <span class="mi">2</span><span class="p">,</span> <span class="sc">&#39;a&#39;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="sc">&#39;i&#39;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="sc">&#39;o&#39;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="sc">&#39;n&#39;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="sc">&#39;p&#39;</span><span class="o">:</span> <span class="mi">1</span><span class="p">})</span>
+</pre></div>
+
+
+<p><br><br />
+<code>Counter</code> 实际上也是 <code>dict</code> 的一个子类, 上面的结果可以看出, 字符 'g'、'm'、'r' 各出现了两次, 其他字符各出现了一次.</p>
+<h2 id="ordereddict">OrderedDict</h2>
+<p>在 Python 中, <code>dict</code> 这个数据结构由于 hash 的特性, 是无序的, 这在有的时候会给我们带来一些麻烦,  幸运的是, collections 模块为我们提供了 <code>OrderedDict</code>, 当你要获得一个有序的字典对象时, 用它就对了.</p>
+<div class="hlcode"><pre><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">OrderedDict</span>
+<span class="n">d</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">([(</span><span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;c&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)])</span>
+</pre></div>
+
+
+<p><br><br />
+结果:</p>
+<div class="hlcode"><pre><span class="n">d</span> <span class="err">#</span> <span class="n">dict</span> <span class="err">的</span><span class="n">Key</span><span class="err">是无序的</span>
+<span class="p">{</span><span class="sc">&#39;a&#39;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="sc">&#39;c&#39;</span><span class="o">:</span> <span class="mi">3</span><span class="p">,</span> <span class="sc">&#39;b&#39;</span><span class="o">:</span> <span class="mi">2</span><span class="p">}</span>
+</pre></div>
+
+
+<p><br><br />
+改用 OrderedDict:</p>
+<div class="hlcode"><pre><span class="n">od</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">([(</span><span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;c&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)])</span>
+</pre></div>
+
+
+<p><br><br />
+结果:</p>
+<div class="hlcode"><pre><span class="n">od</span> <span class="err">#</span> <span class="n">OrderedDict</span><span class="err">的</span><span class="n">Key</span><span class="err">是有序的</span>
+<span class="n">OrderedDict</span><span class="p">([(</span><span class="sc">&#39;a&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="sc">&#39;b&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="sc">&#39;c&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)])</span>
+</pre></div>
+
+
+<p><br><br />
+注意, OrderedDict 的 Key 会按照<strong>插入的顺序</strong>排列, 不是Key本身排序.</p>
+<h2 id="defaultdict">defaultdict</h2>
+<p>使用 <code>dict</code> 时, 如果引用的 Key 不存在, 就会抛出 KeyError. 如果希望 key 不存在时, 返回一个默认值, 就可以用 <code>defaultdict</code>:</p>
+<div class="hlcode"><pre><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+<span class="n">dd</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="s">&#39;N/A&#39;</span><span class="p">)</span>
+<span class="n">dd</span><span class="p">[</span><span class="s">&#39;key1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;abc&#39;</span>
+</pre></div>
+
+
+<p><br><br />
+结果:</p>
+<div class="hlcode"><pre><span class="n">dd</span><span class="p">[</span><span class="err">&#39;</span><span class="n">key1</span><span class="err">&#39;</span><span class="p">]</span> <span class="err">#</span> <span class="n">key1</span> <span class="err">存在</span>
+<span class="err">&#39;</span><span class="n">abc</span><span class="err">&#39;</span>
+
+<span class="n">dd</span><span class="p">[</span><span class="err">&#39;</span><span class="n">key2</span><span class="err">&#39;</span><span class="p">]</span> <span class="err">#</span> <span class="n">key2</span><span class="err">不存在</span><span class="p">,</span> <span class="err">返回默认值</span>
+<span class="err">&#39;</span><span class="n">N</span><span class="o">/</span><span class="n">A</span><span class="err">&#39;</span>
+</pre></div>
+
+
+<p><br><br />
+注意默认值是调用函数返回的, 而函数在创建 <code>defaultdict</code> 对象时传入.</p>
+<h1 id="docx">docx</h1>
+<p>Python DocX 目前是 Python OpenXML 的一部分, 你可以用它打开 Word 2007 及以后的文档, 而用它保存的文档可以在 Microsoft Office 2007/2010, Microsoft Mac Office 2008, Google Docs, OpenOffice.org 3, and Apple iWork 08 中打开.</p>
+<div class="hlcode"><pre><span class="kn">from</span> <span class="nn">docx</span> <span class="kn">import</span> <span class="n">Document</span>
+<span class="kn">from</span> <span class="nn">docx.shared</span> <span class="kn">import</span> <span class="n">Inches</span>
+
+<span class="n">document</span> <span class="o">=</span> <span class="n">Document</span><span class="p">()</span>
+
+<span class="n">document</span><span class="o">.</span><span class="n">add_heading</span><span class="p">(</span><span class="s">&#39;Document Title&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">document</span><span class="o">.</span><span class="n">add_paragraph</span><span class="p">(</span><span class="s">&#39;A plain paragraph having some &#39;</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">add_run</span><span class="p">(</span><span class="s">&#39;bold&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">bold</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="n">p</span><span class="o">.</span><span class="n">add_run</span><span class="p">(</span><span class="s">&#39; and some &#39;</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">add_run</span><span class="p">(</span><span class="s">&#39;italic.&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">italic</span> <span class="o">=</span> <span class="bp">True</span>
+
+<span class="n">document</span><span class="o">.</span><span class="n">add_heading</span><span class="p">(</span><span class="s">&#39;Heading, level 1&#39;</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">document</span><span class="o">.</span><span class="n">add_paragraph</span><span class="p">(</span><span class="s">&#39;Intense quote&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s">&#39;IntenseQuote&#39;</span><span class="p">)</span>
+
+<span class="n">document</span><span class="o">.</span><span class="n">add_paragraph</span><span class="p">(</span>
+    <span class="s">&#39;first item in unordered list&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s">&#39;ListBullet&#39;</span>
+<span class="p">)</span>
+<span class="n">document</span><span class="o">.</span><span class="n">add_paragraph</span><span class="p">(</span>
+    <span class="s">&#39;first item in ordered list&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s">&#39;ListNumber&#39;</span>
+<span class="p">)</span>
+
+<span class="n">document</span><span class="o">.</span><span class="n">add_picture</span><span class="p">(</span><span class="s">&#39;monty-truth.png&#39;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="n">Inches</span><span class="p">(</span><span class="mf">1.25</span><span class="p">))</span>
+
+<span class="n">table</span> <span class="o">=</span> <span class="n">document</span><span class="o">.</span><span class="n">add_table</span><span class="p">(</span><span class="n">rows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">cols</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">hdr_cells</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">rows</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">cells</span>
+<span class="n">hdr_cells</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s">&#39;Qty&#39;</span>
+<span class="n">hdr_cells</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s">&#39;Id&#39;</span>
+<span class="n">hdr_cells</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s">&#39;Desc&#39;</span>
+<span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">recordset</span><span class="p">:</span>
+    <span class="n">row_cells</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">add_row</span><span class="p">()</span><span class="o">.</span><span class="n">cells</span>
+    <span class="n">row_cells</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">qty</span><span class="p">)</span>
+    <span class="n">row_cells</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+    <span class="n">row_cells</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">desc</span>
+
+<span class="n">document</span><span class="o">.</span><span class="n">add_page_break</span><span class="p">()</span>
+
+<span class="n">document</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s">&#39;demo.docx&#39;</span><span class="p">)</span>
+</pre></div>
+
+
+<p><br></p>
+<h1 id="xlrdxlwt">xlrd/xlwt</h1>
+<p>传说中 python 操作 ms office 功能最强大的是 win32com (据说只要人工能操作的它都能实现, 未尝试尚不知道真假), 不过对于比较简单的需求显得有些小题大作. 那么来看下简单的, 分别是 xlrd 和 xlwt 模块.</p>
+<h2 id="xlrd">xlrd</h2>
+<div class="hlcode"><pre><span class="c"># 导入</span>
+<span class="kn">import</span> <span class="nn">xlrd</span>
+<span class="c"># 打开 excel</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">xlrd</span><span class="o">.</span><span class="n">open_workbook</span><span class="p">(</span><span class="s">&#39;demo.xls&#39;</span><span class="p">)</span>  <span class="c"># 注意这里的 workbook 首字母是小写</span>
+<span class="c"># 查看文件中包含sheet的名称</span>
+<span class="n">data</span><span class="o">.</span><span class="n">sheet_names</span><span class="p">()</span>
+<span class="c"># 得到第一个工作表, 或者通过索引顺序 或 工作表名称</span>
+<span class="n">table</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">sheets</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">table</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">sheet_by_index</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">table</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">sheet_by_name</span><span class="p">(</span><span class="s">u&#39;Sheet1&#39;</span><span class="p">)</span>
+<span class="c"># 获取行数和列数</span>
+<span class="n">nrows</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">nrows</span>
+<span class="n">ncols</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">ncols</span>
+<span class="c"># 获取整行和整列的值 (数组)</span>
+<span class="n">table</span><span class="o">.</span><span class="n">row_values</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+<span class="n">table</span><span class="o">.</span><span class="n">col_values</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+<span class="c"># 循环行,得到索引的列表</span>
+<span class="k">for</span> <span class="n">rownum</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">nrows</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">table</span><span class="o">.</span><span class="n">row_values</span><span class="p">(</span><span class="n">rownum</span><span class="p">)</span>
+<span class="c"># 单元格</span>
+<span class="n">cell_A1</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">cell</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">value</span>
+<span class="n">cell_C4</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">cell</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">value</span>
+<span class="c"># 分别使用行列索引</span>
+<span class="n">cell_A1</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">row</span><span class="p">(</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
+<span class="n">cell_A2</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
+</pre></div>
+
+
+<p><br></p>
+<h2 id="xlwt">xlwt</h2>
+<div class="hlcode"><pre><span class="c"># 导入 xlwt</span>
+<span class="kn">import</span> <span class="nn">xlwt</span>
+<span class="c"># 新建一个 excel 文件</span>
+<span class="nb">file</span> <span class="o">=</span> <span class="n">xlwt</span><span class="o">.</span><span class="n">Workbook</span><span class="p">()</span>  <span class="c"># 注意这里的Workbook首字母是大写, 无语吧</span>
+<span class="c"># 新建一个 sheet</span>
+<span class="n">table</span> <span class="o">=</span> <span class="nb">file</span><span class="o">.</span><span class="n">add_sheet</span><span class="p">(</span><span class="s">&#39;sheet name&#39;</span><span class="p">)</span>
+<span class="c"># 写入数据 table.write(行, 列, value)</span>
+<span class="n">table</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&#39;test&#39;</span><span class="p">)</span>
+<span class="c"># 如果对一个单元格重复操作, 会引发</span>
+<span class="c"># returns error:</span>
+<span class="c"># Exception: Attempt to overwrite cell:</span>
+<span class="c"># sheetname=u&#39;sheet 1&#39; rowx=0 colx=0</span>
+<span class="c"># 所以在打开时加 cell_overwrite_ok=True 解决</span>
+<span class="n">table</span> <span class="o">=</span> <span class="nb">file</span><span class="o">.</span><span class="n">add_sheet</span><span class="p">(</span><span class="s">&#39;sheet name&#39;</span><span class="p">,</span> <span class="n">cell_overwrite_ok</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="c"># 保存文件</span>
+<span class="nb">file</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s">&#39;demo.xls&#39;</span><span class="p">)</span>
+<span class="c"># 另外, 使用 style</span>
+<span class="n">style</span> <span class="o">=</span> <span class="n">xlwt</span><span class="o">.</span><span class="n">XFStyle</span><span class="p">()</span>  <span class="c"># 初始化样式</span>
+<span class="n">font</span> <span class="o">=</span> <span class="n">xlwt</span><span class="o">.</span><span class="n">Font</span><span class="p">()</span>  <span class="c"># 为样式创建字体</span>
+<span class="n">font</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&#39;Times New Roman&#39;</span>
+<span class="n">font</span><span class="o">.</span><span class="n">bold</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="n">style</span><span class="o">.</span><span class="n">font</span> <span class="o">=</span> <span class="n">font</span>  <span class="c"># 为样式设置字体</span>
+<span class="n">table</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&#39;some bold Times text&#39;</span><span class="p">,</span> <span class="n">style</span><span class="p">)</span>  <span class="c"># 使用样式</span>
+<span class="c"># xlwt 允许单元格或者整行地设置格式. 还可以添加链接以及公式. 可以阅读源代码, 那里有例子:</span>
+<span class="c"># dates.py, 展示如何设置不同的数据格式</span>
+<span class="c"># hyperlinks.py, 展示如何创建超链接 (hint: you need to use a formula)</span>
+<span class="c"># merged.py, 展示如何合并格子</span>
+<span class="c"># row_styles.py, 展示如何应用Style到整行格子中.</span>
+</pre></div>
+
+
+<p><br></p>
+<h1 id="tablib">tablib</h1>
+<p><a href="http://docs.python-tablib.org/en/latest/">tablib</a> 也可以用来导出 xls、csv、yaml 等格式, 部分功能依赖于 xlwt, 基本上可以认为 tablib 是对 xlwt 的再封装.</p>
+<blockquote>
+<p>Tablib is partially dependent on the pyyaml, simplejson, and xlwt modules. To reduce installation issues, fully integrated versions of all required libraries are included in Tablib.</p>
+</blockquote>
+<div class="hlcode"><pre><span class="kn">import</span> <span class="nn">tablib</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="c"># 创建 dataset, 方法 1</span>
+<span class="n">dataset1</span> <span class="o">=</span> <span class="n">tablib</span><span class="o">.</span><span class="n">Dataset</span><span class="p">()</span>
+<span class="n">header1</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;ID&#39;</span><span class="p">,</span> <span class="s">&#39;Name&#39;</span><span class="p">,</span> <span class="s">&#39;Tel&#39;</span><span class="p">,</span> <span class="s">&#39;Age&#39;</span><span class="p">)</span>
+<span class="n">dataset1</span><span class="o">.</span><span class="n">headers</span> <span class="o">=</span> <span class="n">header1</span>
+<span class="n">dataset1</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#39;zhangsan&#39;</span><span class="p">,</span> <span class="mi">13711111111</span><span class="p">,</span> <span class="mi">16</span><span class="p">])</span>
+<span class="n">dataset1</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="s">&#39;lisi&#39;</span><span class="p">,</span>     <span class="mi">13811111111</span><span class="p">,</span> <span class="mi">18</span><span class="p">])</span>
+<span class="n">dataset1</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="s">&#39;wangwu&#39;</span><span class="p">,</span>   <span class="mi">13911111111</span><span class="p">,</span> <span class="mi">20</span><span class="p">])</span>
+<span class="n">dataset1</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="s">&#39;zhaoliu&#39;</span><span class="p">,</span>  <span class="mi">15811111111</span><span class="p">,</span> <span class="mi">25</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&#39;dataset1:&#39;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">linesep</span><span class="p">,</span> <span class="n">dataset1</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">linesep</span><span class="p">)</span>
+
+<span class="c"># 创建 dataset, 方法 2</span>
+<span class="n">header2</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;ID&#39;</span><span class="p">,</span> <span class="s">&#39;Name&#39;</span><span class="p">,</span> <span class="s">&#39;Tel&#39;</span><span class="p">,</span> <span class="s">&#39;Age&#39;</span><span class="p">)</span>
+<span class="n">data2</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#39;zhangsan&#39;</span><span class="p">,</span> <span class="mi">13711111111</span><span class="p">,</span> <span class="mi">16</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="s">&#39;lisi&#39;</span><span class="p">,</span>     <span class="mi">13811111111</span><span class="p">,</span> <span class="mi">18</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="s">&#39;wangwu&#39;</span><span class="p">,</span>   <span class="mi">13911111111</span><span class="p">,</span> <span class="mi">20</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="s">&#39;zhaoliu&#39;</span><span class="p">,</span>  <span class="mi">15811111111</span><span class="p">,</span> <span class="mi">25</span><span class="p">]</span>
+<span class="p">]</span>
+<span class="n">dataset2</span> <span class="o">=</span> <span class="n">tablib</span><span class="o">.</span><span class="n">Dataset</span><span class="p">(</span><span class="o">*</span><span class="n">data2</span><span class="p">,</span> <span class="n">headers</span> <span class="o">=</span> <span class="n">header2</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&#39;dataset2: &#39;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">linesep</span><span class="p">,</span> <span class="n">dataset2</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">linesep</span><span class="p">)</span>
+
+<span class="c"># 增加行</span>
+<span class="n">dataset1</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="mi">5</span><span class="p">,</span> <span class="s">&#39;sunqi&#39;</span><span class="p">,</span> <span class="mi">15911111111</span><span class="p">,</span> <span class="mi">30</span><span class="p">])</span>  <span class="c"># 添加到最后一行的下面</span>
+<span class="n">dataset1</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s">&#39;liuyi&#39;</span><span class="p">,</span> <span class="mi">18211111111</span><span class="p">,</span> <span class="mi">35</span><span class="p">])</span>  <span class="c"># 在指定位置添加行</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&#39;增加行后的 dataset1: &#39;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">linesep</span><span class="p">,</span> <span class="n">dataset1</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">linesep</span><span class="p">)</span>
+
+<span class="c"># 删除行</span>
+<span class="n">dataset1</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>  <span class="c"># 删除最后一行</span>
+<span class="n">dataset1</span><span class="o">.</span><span class="n">lpop</span><span class="p">()</span>  <span class="c"># 删除第一行</span>
+<span class="k">del</span> <span class="n">dataset1</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span>  <span class="c"># 删除第 [0,2) 行数据</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&#39;删除行后的 dataset1:&#39;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">linesep</span><span class="p">,</span> <span class="n">dataset1</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">linesep</span><span class="p">)</span>
+
+<span class="c"># 增加列</span>
+<span class="c"># 现在 dataset1 就剩两行数据了</span>
+<span class="n">dataset1</span><span class="o">.</span><span class="n">append_col</span><span class="p">((</span><span class="s">&#39;beijing&#39;</span><span class="p">,</span> <span class="s">&#39;shenzhen&#39;</span><span class="p">),</span> <span class="n">header</span><span class="o">=</span><span class="s">&#39;city&#39;</span><span class="p">)</span>  <span class="c"># 增加列到最后一列</span>
+<span class="n">dataset1</span><span class="o">.</span><span class="n">insert_col</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="s">&#39;male&#39;</span><span class="p">,</span> <span class="s">&#39;female&#39;</span><span class="p">),</span> <span class="n">header</span><span class="o">=</span><span class="s">&#39;sex&#39;</span><span class="p">)</span>  <span class="c"># 在指定位置添加列</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&#39;增加列后的 dataset1: &#39;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">linesep</span><span class="p">,</span> <span class="n">dataset1</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">linesep</span><span class="p">)</span>
+
+<span class="c"># 删除列</span>
+<span class="k">del</span> <span class="n">dataset1</span><span class="p">[</span><span class="s">&#39;Tel&#39;</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&#39;删除列后的 dataset1: &#39;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">linesep</span><span class="p">,</span> <span class="n">dataset1</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">linesep</span><span class="p">)</span>
+
+<span class="c"># 获取各种格式的数据</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&#39;yaml format: &#39;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">linesep</span> <span class="p">,</span><span class="n">dataset1</span><span class="o">.</span><span class="n">yaml</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">linesep</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&#39;csv format: &#39;</span> <span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">linesep</span> <span class="p">,</span><span class="n">dataset1</span><span class="o">.</span><span class="n">csv</span> <span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">linesep</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&#39;tsv format: &#39;</span> <span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">linesep</span> <span class="p">,</span><span class="n">dataset1</span><span class="o">.</span><span class="n">tsv</span> <span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">linesep</span><span class="p">)</span>
+
+<span class="c"># 导出到Excel表格中</span>
+<span class="n">dataset1</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="s">&#39;dataset1&#39;</span>  <span class="c"># 设置Excel中表单的名称</span>
+<span class="n">dataset2</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="s">&#39;dataset2&#39;</span>
+<span class="n">myfile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;mydata.xlsx&#39;</span><span class="p">,</span> <span class="s">&#39;wb&#39;</span><span class="p">)</span>
+<span class="n">myfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">dataset1</span><span class="o">.</span><span class="n">xlsx</span><span class="p">)</span>
+<span class="n">myfile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="c"># 如果有多个 sheet 表单, 使用 DataBook 就可以了</span>
+<span class="n">myDataBook</span> <span class="o">=</span> <span class="n">tablib</span><span class="o">.</span><span class="n">Databook</span><span class="p">((</span><span class="n">dataset1</span><span class="p">,</span> <span class="n">dataset2</span><span class="p">))</span>
+<span class="n">myfile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">myfile</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s">&#39;wb&#39;</span><span class="p">)</span>  <span class="c"># excel 表有二进制数据, 所以必须要用二进制模式打开文件, 即 &#39;wb&#39;</span>
+<span class="n">myfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">myDataBook</span><span class="o">.</span><span class="n">xlsx</span><span class="p">)</span>
+<span class="n">myfile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+
+
+<p><br></p>
+<h1 id="calendar">calendar</h1>
+<p><a href="https://docs.python.org/2/library/calendar.html">calendar</a> 模块的函数都是日历相关的, 例如打印某月的字符月历.</p>
+<p>星期一是默认的每周第一天, 星期天是默认的最后一天. 更改设置需调用 <code>calendar.setfirstweekday()</code> 函数. 模块包含了以下内置函数:</p>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>calendar.calendar(year, w=2, l=1, c=6)</td>
+<td>返回一个多行字符串格式的 year 年年历;<br>3 个月一行, 间隔距离为 c.<br>每日宽度间隔为 w 字符.<br>每行长度为 21*w+18+2*c.<br>l 是每星期行数.</td>
+</tr>
+<tr>
+<td>calendar.firstweekday( )</td>
+<td>返回当前每周起始日期的设置.<br>默认情况下, 首次载入 caendar 模块时返回 0, 即星期一.</td>
+</tr>
+<tr>
+<td>calendar.isleap(year)</td>
+<td>是闰年返回 True, 否则为 false.</td>
+</tr>
+<tr>
+<td>calendar.leapdays(y1, y2)</td>
+<td>返回在 Y1, Y2 两年之间的闰年总数.</td>
+</tr>
+<tr>
+<td>calendar.month(year, month, w=2, l=1)</td>
+<td>返回一个多行字符串格式的 year 年 month 月日历;<br>两行标题, 一周一行.<br>每日宽度间隔为 w 字符.<br>每行的长度为 7*w+6. l 是每星期的行数.</td>
+</tr>
+<tr>
+<td>calendar.monthcalendar(year, month)</td>
+<td>返回一个整数的单层嵌套列表.<br>每个子列表装载代表一个星期的整数.<br>year 年 month 月外的日期都设为 0;<br>范围内的日子都由该月第几日表示, 从 1 开始.</td>
+</tr>
+<tr>
+<td>calendar.monthrange(year, month)</td>
+<td>返回两个整数.<br>第一个是该月的星期几的日期码;<br>第二个是该月的日期码.<br>日从 0 (星期一) 到 6 (星期日); 月从 1 到 12.</td>
+</tr>
+<tr>
+<td>calendar.prcal(year, w=2, l=1, c=6)</td>
+<td>相当于 print calendar.calendar(year,w,l,c).</td>
+</tr>
+<tr>
+<td>calendar.prmonth(year, month, w=2, l=1)</td>
+<td>相当于 print calendar.calendar (year, w, l, c).</td>
+</tr>
+<tr>
+<td>calendar.setfirstweekday(weekday)</td>
+<td>设置每周的起始日期码. 0 (星期一) 到 6 (星期日).</td>
+</tr>
+<tr>
+<td>calendar.timegm(tupletime)</td>
+<td>和 time.gmtime 相反: 接受一个时间元组形式,<br>返回该时刻的时间辍 (1970纪元后经过的浮点秒数).</td>
+</tr>
+<tr>
+<td>calendar.weekday(year, month, day)</td>
+<td>返回给定日期的日期码. 0 (星期一) 到6 (星期日).<br>月份为 1 (一月) 到 12 (12月).</td>
+</tr>
+</tbody>
+</table>
+    </div>
+
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="常用模块" data-title="常用模块" data-url="http://wiki.smallcpp.cn/Python/常用模块.html"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:"smallwiki"};
+        (function() {
+            var ds = document.createElement('script');
+            ds.type = 'text/javascript';ds.async = true;
+            ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+            ds.charset = 'UTF-8';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+    </script>
+    <!-- 多说公共JS代码 end -->
+
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2017 <a href="http://www.samllcpp.com/" target="_blank">Martin</a> Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+              </p>
+        </div>
+    </body>
+</html>
