@@ -73,7 +73,7 @@ def deploy_git(deploy_configs):
                     'run: `pip install ghp-import`')
     output_dir = configs['destination']
     with lcd(output_dir):
-        local('echo wiki.smallcpp.com > CNAME')
+        local('echo wiki.smallcpp.cn > CNAME')
     remote = deploy_configs.get('remote', 'origin')
     branch = deploy_configs.get('branch', 'gh-pages')
     # commit gh-pages branch and push to remote

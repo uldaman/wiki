@@ -10,15 +10,15 @@ nginx + keepalived 的组合通常被用来实现前端高可用.
 
 在这个组合中, 利用 **nginx** 的反向代理实现前端的*动静分离*和*负载均衡*, 如下图.
 
-![](http://wiki.smallcpp.com/static/images/高可用高并发架构/nginx.jpg)
+![](http://wiki.smallcpp.cn/static/images/高可用高并发架构/nginx.jpg)
 
 在以上的体系中, 我们接着将一些通用的服务从动态 Server 上抽离出来单独封装, 动态 Server 通过 **RPC** 远程调用通用服务, 这样就避免升级通用服务时会更改对所有动态 Server 的问题.
 
-![](http://wiki.smallcpp.com/static/images/高可用高并发架构/rpc.jpg)
+![](http://wiki.smallcpp.cn/static/images/高可用高并发架构/rpc.jpg)
 
 如上图, 如果 RPC 服务器挂掉了, 那所有的 RPC 请求都会出问题, 为此, 同一个通用服务可以准备多台 RPC 服务器, 通过 **dubbo** 来进行调度, 这样就实现了 RPC 服务器的*高并发*及*高可用*.
 
-![](http://wiki.smallcpp.com/static/images/高可用高并发架构/dobbu.jpg)
+![](http://wiki.smallcpp.cn/static/images/高可用高并发架构/dobbu.jpg)
 
 那么问题又来了, 如果 nginx 宕掉了怎么办?
 
@@ -26,7 +26,7 @@ nginx + keepalived 的组合通常被用来实现前端高可用.
 
 访问网站即访问 IP, keepalived 在这里就是充当着抢这个被访问 IP 的角色, 如下图所示, 我们准备了两台 nginx 服务器, 都装上 keepalived;
 
-![](http://wiki.smallcpp.com/static/images/高可用高并发架构/keepalived.jpg)
+![](http://wiki.smallcpp.cn/static/images/高可用高并发架构/keepalived.jpg)
 
 现在, 我们的网站 IP 被上面那个 keepalived 抢到了, 所以当有 IP 请求时, 是上面的 ngnix 在起作用, 一旦它出问题, 下面那个 keepalived 就会抢到前端网站 IP, 这样就实现了 ngnix 的*高可用*.
 

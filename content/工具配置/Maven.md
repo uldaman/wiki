@@ -141,7 +141,7 @@ maven 还提供镜像的配置, 让我们可以为仓库设置**镜像**, 在 `M
 
 **Default Lifecycle** 定义了真正构建时所需要执行的大部分步骤, 它是生命周期中最核心的部分, 它大概如下图这样:
 
-![](http://wiki.smallcpp.com/static/images/MAVEN/Default阶段.png)
+![](http://wiki.smallcpp.cn/static/images/MAVEN/Default阶段.png)
 
 在每段生命周期内 maven 都提供了 mvn **命令**来维护该阶段, 对于 Default Lifecycle:
 
@@ -169,70 +169,70 @@ Eclipse 提供了 maven 插件来方便我们使用, 该插件可以让我们在
 
 新版本的 Eclipse 已集成了 maven 插件, 无须再手动下载, 我们只需配置一下, 主要设置三样: 是否自动下载源码、本地 maven 环境 (Eclipse 有内置的, 不过建议用我们下载的 3.0.5) 以及配置文件目录.
 
-![](http://wiki.smallcpp.com/static/images/MAVEN/MAVEN插件设置1.png)
+![](http://wiki.smallcpp.cn/static/images/MAVEN/MAVEN插件设置1.png)
 
-![](http://wiki.smallcpp.com/static/images/MAVEN/MAVEN插件设置2.png)
+![](http://wiki.smallcpp.cn/static/images/MAVEN/MAVEN插件设置2.png)
 
-![](http://wiki.smallcpp.com/static/images/MAVEN/MAVEN插件设置3.png)
+![](http://wiki.smallcpp.cn/static/images/MAVEN/MAVEN插件设置3.png)
 
 我们可以新建 maven 项目, 也可以从现有的 java 项目转换:
 
 从现有项目**转换**:
 
-![](http://wiki.smallcpp.com/static/images/MAVEN/现有项目转换MAVEN.png)
+![](http://wiki.smallcpp.cn/static/images/MAVEN/现有项目转换MAVEN.png)
 
 或者**新建** maven 项目:
 
-![](http://wiki.smallcpp.com/static/images/MAVEN/新建MAVEN.png)
+![](http://wiki.smallcpp.cn/static/images/MAVEN/新建MAVEN.png)
 
-![](http://wiki.smallcpp.com/static/images/MAVEN/简单项目.png)
+![](http://wiki.smallcpp.cn/static/images/MAVEN/简单项目.png)
 
-![](http://wiki.smallcpp.com/static/images/MAVEN/创建POM.png)
+![](http://wiki.smallcpp.cn/static/images/MAVEN/创建POM.png)
 
 maven 项目的左上角有个 **m** 标记, 并且项目下有 `pom.xml` 文件:
 
-![](http://wiki.smallcpp.com/static/images/MAVEN/MAVEN项目结构.png)
+![](http://wiki.smallcpp.cn/static/images/MAVEN/MAVEN项目结构.png)
 
 并且项目右键多了个一些 maven 选项:
 
-![](http://wiki.smallcpp.com/static/images/MAVEN/常用MAVEN菜单.png)
+![](http://wiki.smallcpp.cn/static/images/MAVEN/常用MAVEN菜单.png)
 
-![](http://wiki.smallcpp.com/static/images/MAVEN/MAVENRUNAS.png)
+![](http://wiki.smallcpp.cn/static/images/MAVEN/MAVENRUNAS.png)
 
 说下 `mvn build` 这个选项, mvn 是没有这个命令的, 这个命令菜单是 Eclipse 提供一个接口, 选择该菜单就能通过配置来执行任意 mvn 命令, 如 `mvn clean install`:
 
-![](http://wiki.smallcpp.com/static/images/MAVEN/RUNCONFIG.png)
+![](http://wiki.smallcpp.cn/static/images/MAVEN/RUNCONFIG.png)
 
 如果配置错了, 可以在下面这里进行修改:
 
-![](http://wiki.smallcpp.com/static/images/MAVEN/RUNCONFIG0.png)
+![](http://wiki.smallcpp.cn/static/images/MAVEN/RUNCONFIG0.png)
 
-![](http://wiki.smallcpp.com/static/images/MAVEN/RUNCONFIG1.png)
+![](http://wiki.smallcpp.cn/static/images/MAVEN/RUNCONFIG1.png)
 
 使用了 Eclipse 插件后, 构建项目时会根据 `pom.xml` 的配置自动下载依赖包, 但由于我们关闭了 Eclipse 的**自动构建**, 所以需要手动触发下 maven 去下载 jar 依赖, 执行 Default Lifecycle 阶段的任意命令都能触发下载, 也可以通过下面图示的菜单去触发下载:
 
-![](http://wiki.smallcpp.com/static/images/MAVEN/JAR下载.png)
+![](http://wiki.smallcpp.cn/static/images/MAVEN/JAR下载.png)
 
 然后就能在 **progress** 视图看到 Eclipse 进行了下载操作:
 
-![](http://wiki.smallcpp.com/static/images/MAVEN/DOWNLOADJAR.png)
+![](http://wiki.smallcpp.cn/static/images/MAVEN/DOWNLOADJAR.png)
 
 或者
 
-![](http://wiki.smallcpp.com/static/images/MAVEN/DOWNLOADJAR1.png)
+![](http://wiki.smallcpp.cn/static/images/MAVEN/DOWNLOADJAR1.png)
 
 # 添加依赖
 在 Eclipse 中双击打开 `pom.xml` 可以以可视化的方式添加依赖 (也可以在项目右键的 maven 菜单中使用该方式):
 
-![](http://wiki.smallcpp.com/static/images/MAVEN/添加依赖0.png)
+![](http://wiki.smallcpp.cn/static/images/MAVEN/添加依赖0.png)
 
 打开添加依赖窗口后, 在下图中红框处输入内容可以检索本地仓库, 如果本地仓库没有则检索不到:
 
-![](http://wiki.smallcpp.com/static/images/MAVEN/添加依赖1.png)
+![](http://wiki.smallcpp.cn/static/images/MAVEN/添加依赖1.png)
 
 检索不到时候就需要手动填写所依赖 jar 包的 maven 特征:
 
-![](http://wiki.smallcpp.com/static/images/MAVEN/添加依赖2.png)
+![](http://wiki.smallcpp.cn/static/images/MAVEN/添加依赖2.png)
 
 jar 包的特征可以在 [mvn repository](https://mvnrepository.com/) 搜索得到.
 

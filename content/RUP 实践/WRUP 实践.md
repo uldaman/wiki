@@ -861,7 +861,7 @@ SOLID 的解释为:
 - Interface segregation principle (接口隔离原则)
 - Dependency inversion principle (依赖倒置原则)
 
-> 关于这几个原则的定义, 参考我另一篇笔记: [六大设计原则](http://blog.smallcpp.com/6-cliu-da-she-ji-yuan-ze.html)
+> 关于这几个原则的定义, 参考我另一篇笔记: [六大设计原则](http://blog.smallcpp.cn/6-cliu-da-she-ji-yuan-ze.html)
 
 **GRASP**, 全称为General Responsibility Assignment Software Pattern, 即**通用职责分配软件模式**, 它由《UML 和模式应用》 (Applying UML and Patterns) 一书作者 Craig Larman 提出.
 
@@ -879,7 +879,7 @@ GRASP 包括以下内容:
 - Indirection (中介模式)
 - Protected Variations (受保护变化模式)
 
-> 关于这几个模式的定义, 参考我另一篇笔记: [设计模式与 GRASP](http://blog.smallcpp.com/3-cshe-ji-mo-shi-yu-grasp.html)
+> 关于这几个模式的定义, 参考我另一篇笔记: [设计模式与 GRASP](http://blog.smallcpp.cn/3-cshe-ji-mo-shi-yu-grasp.html)
 
 GRASP 与 SOLID 是有相通的地方的:
 

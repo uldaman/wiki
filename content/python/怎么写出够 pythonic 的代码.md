@@ -35,7 +35,7 @@ L = ['Hello', 'World', 'IBM', 'Apple']
 >>> ['hello', 'world', 'ibm', 'apple']
 ```
 <br>
-参考链接: [Python 高级特性之列表生成式](http://www.smallcpp.com/python-gao-ji-te-xing-zhi-lie-biao-sheng-cheng-shi.html)
+参考链接: [Python 高级特性之列表生成式](http://www.smallcpp.cn/python-gao-ji-te-xing-zhi-lie-biao-sheng-cheng-shi.html)
 
 # 生成器表达式
 当列表过长, 而我们也不需要一次性获取全部数据时, 应当考虑使用生成器(generator)表达式而不是列表解析;
@@ -48,7 +48,7 @@ L = ['Hello', 'World', 'IBM', 'Apple']
 
 生成器表达式使用了 "惰性计算" (lazy evaluation, 也有翻译为 "延迟求值", 我以为这种按需调用 call by need 的方式翻译为惰性更好一些), 只有在检索时才被赋值 (evaluated), 所以在列表比较长的情况下使用更有效 (节省内存).
 
-参考链接: [Python 高级特性之生成器表达式](http://www.smallcpp.com/python-gao-ji-te-xing-zhi-sheng-cheng-qi-biao-da-shi.html)
+参考链接: [Python 高级特性之生成器表达式](http://www.smallcpp.cn/python-gao-ji-te-xing-zhi-sheng-cheng-qi-biao-da-shi.html)
 
 # sorted( )
 sorted 语法如下:
@@ -114,7 +114,7 @@ print sorted(L, key = lambda x : x[1])
 L 中的元素是一个 tupe, key 参数指定用 `tupe[1]` 做为依据来比较
 
 参考链接:<br>
-[Python 高级特性之 sorted( )](http://www.smallcpp.com/python-gao-ji-te-xing-zhi-sorted.html)<br>
+[Python 高级特性之 sorted( )](http://www.smallcpp.cn/python-gao-ji-te-xing-zhi-sorted.html)<br>
 [Python中sorted()方法的用法](http://www.cnblogs.com/woshitianma/p/3222989.html)
 
 # map( )
@@ -130,7 +130,7 @@ map(fun, range(1, 11))
 >>>[1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
 ```
 <br>
-参考链接: [Python 高级特性之 map( )](http://www.smallcpp.com/python-gao-ji-te-xing-zhi-map.html)
+参考链接: [Python 高级特性之 map( )](http://www.smallcpp.cn/python-gao-ji-te-xing-zhi-map.html)
 
 # reduce( )
 reduce() 函数接收两个参数, 一个是函数, 一个是序列;
@@ -151,7 +151,7 @@ reduce(add, [1, 3, 5, 7, 9])
 >>>25
 ```
 <br>
-参考链接: [Python 高级特性之 reduce( )](http://www.smallcpp.com/python-gao-ji-te-xing-zhi-reduce.html)
+参考链接: [Python 高级特性之 reduce( )](http://www.smallcpp.cn/python-gao-ji-te-xing-zhi-reduce.html)
 
 # filter( )
 filter() 函数接收两个参数, 一个是函数, 一个是序列;
@@ -168,7 +168,7 @@ filter(is_odd, range(1, 11))
 >>>[1, 3, 5, 7, 9]
 ```
 <br>
-参考链接: [Python 高级特性之 filter( )](http://www.smallcpp.com/python-gao-ji-te-xing-zhi-filter.html)
+参考链接: [Python 高级特性之 filter( )](http://www.smallcpp.cn/python-gao-ji-te-xing-zhi-filter.html)
 
 # lambda 表达式
 当我们在传入函数时, 有些时候, 不需要显式地定义函数, 直接传入匿名函数更方便, 匿名函数也叫 lambda 表达式.
@@ -200,7 +200,7 @@ reduce(lambda x, y : x + y, range(1, 101))
 <br>
 lambda 可以配合 map、reduce、filter、sorted 高效操作列表.
 
-参考链接: [Python 高级特性之 lambda](http://www.smallcpp.com/python-gao-ji-te-xing-zhi-lambda.html)
+参考链接: [Python 高级特性之 lambda](http://www.smallcpp.cn/python-gao-ji-te-xing-zhi-lambda.html)
 
 # 切片
 对于具有序列结构的数据来说, 切片操作的语法是:

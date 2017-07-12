@@ -26,7 +26,7 @@ date: 2016-05-28 21:04
 
 # 设置 SSH
 ## 生成密钥
-在前面说过 Travis CI 可以通过配置来决定构建完成后是否推送回 Github, 由于我们需要把 Travis CI 的构建结果, 也就是 wiki 生成文件推送回 Github Project 的 **gh-page** 分支 (参考: [折腾 Simiki](http://wiki.smallcpp.com/%E5%B7%A5%E5%85%B7%E9%85%8D%E7%BD%AE/%E6%8A%98%E8%85%BE%20Simiki.html)), 所以需要把 Travis CI 的公钥添加到 Simiki 项目的 **Deploy Key** 中 (**注意**, 你添加的是应该是项目的单独 **Deploy Key**, 而不是你 Github 账户的全局 Key).
+在前面说过 Travis CI 可以通过配置来决定构建完成后是否推送回 Github, 由于我们需要把 Travis CI 的构建结果, 也就是 wiki 生成文件推送回 Github Project 的 **gh-page** 分支 (参考: [折腾 Simiki](http://wiki.smallcpp.cn/%E5%B7%A5%E5%85%B7%E9%85%8D%E7%BD%AE/%E6%8A%98%E8%85%BE%20Simiki.html)), 所以需要把 Travis CI 的公钥添加到 Simiki 项目的 **Deploy Key** 中 (**注意**, 你添加的是应该是项目的单独 **Deploy Key**, 而不是你 Github 账户的全局 Key).
 
 在本地的 Simiki 项目中生成一对单独密钥: `ssh-keygen -t rsa -C "youremail@example.com"` (因为这是 simiki 项目的单独密钥, 所以不要生成到系统的 .ssh 目录中去了).
 
@@ -35,9 +35,9 @@ date: 2016-05-28 21:04
 ## 加密密钥
 因为上一步生成的 `id_rsa` 私钥是要发布到 Github 仓库供 Travis CI 拉回服务器的 (Travis CI 需要这个私钥来和 Github 通信), 为了安全, Travis CI 提供了一种加密手段, 也就是说这个私钥只有你的 Travis CI 账户才能解密使用, 就算被别人拿到了也没用, 除非他也拿到了你的 Travis CI 账户.
 
-此时需要使用到 [Travis Client](https://github.com/travis-ci/travis.rb) 了, Travis Client 基于 **Ruby**(>=1.9.3), 所以先检查下你的 Ruby 版本...Windows 用户直接用 [rubyinstaller](http://rubyinstaller.org/) 就好了, ubuntu 用户参考另一 wiki [ubuntu 升级 ruby 版本](http://wiki.smallcpp.com/%E5%B7%A5%E5%85%B7%E9%85%8D%E7%BD%AE/ubuntu%20%E5%8D%87%E7%BA%A7%20ruby%20%E7%89%88%E6%9C%AC.html)
+此时需要使用到 [Travis Client](https://github.com/travis-ci/travis.rb) 了, Travis Client 基于 **Ruby**(>=1.9.3), 所以先检查下你的 Ruby 版本...Windows 用户直接用 [rubyinstaller](http://rubyinstaller.org/) 就好了, ubuntu 用户参考另一 wiki [ubuntu 升级 ruby 版本](http://wiki.smallcpp.cn/%E5%B7%A5%E5%85%B7%E9%85%8D%E7%BD%AE/ubuntu%20%E5%8D%87%E7%BA%A7%20ruby%20%E7%89%88%E6%9C%AC.html)
 
-确认好 Ruby 版本后, 首先要打磨下 **gem** 工具 [打磨 gem](http://wiki.smallcpp.com/%E5%B7%A5%E5%85%B7%E9%85%8D%E7%BD%AE/%E6%89%93%E7%A3%A8%20gem.html).
+确认好 Ruby 版本后, 首先要打磨下 **gem** 工具 [打磨 gem](http://wiki.smallcpp.cn/%E5%B7%A5%E5%85%B7%E9%85%8D%E7%BD%AE/%E6%89%93%E7%A3%A8%20gem.html).
 
 然后, 安裝 Travis Client:
 

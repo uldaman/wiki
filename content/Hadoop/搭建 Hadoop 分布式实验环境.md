@@ -15,7 +15,7 @@ date: 2016-10-16 11:42
 
 关于虚拟机的网络模式解释下, 推荐的是使用**桥接**模式, 因为桥接模式可以让虚拟机和宿主机处于同一网段, 而 **NAT** 模式则是虚拟机单独分配一个网段;<br>然而我实验时发现**桥接**模式虚拟机能 ping 通局域网内所有其他 ip 及外网 ip, 但就是不能和宿主机互 ping, 搞了好久没搞定, 万般无奈选择了 **NAT** 模式.
 
-虚拟机的安装参考另一篇 wiki: [使用 VMware 安装 Ubuntu  、VM Tools 和 Fcitx 输入法](http://wiki.smallcpp.com/%E5%B7%A5%E5%85%B7%E9%85%8D%E7%BD%AE/VMware%20%E5%AE%89%E8%A3%85%20Ubuntu.html)
+虚拟机的安装参考另一篇 wiki: [使用 VMware 安装 Ubuntu  、VM Tools 和 Fcitx 输入法](http://wiki.smallcpp.cn/%E5%B7%A5%E5%85%B7%E9%85%8D%E7%BD%AE/VMware%20%E5%AE%89%E8%A3%85%20Ubuntu.html)
 
 安装好后虚拟机后, 开始搭建 Hadoop 分布式实验环境.
 
@@ -45,15 +45,15 @@ gateway 192.168.31.2
 
 但是需要注意, 并不所有的都是 `eth0`, 采用的 Ubuntu 版本不同, 也有可能是其他的接口, 如 `ens32`; 可以先使用 `ifconfig` 看下系统使用的是哪个接口.
 
-![](http://wiki.smallcpp.com/static/images/搭建Hadoop分布式实验环境/ifconfig.png)
+![](http://wiki.smallcpp.cn/static/images/搭建Hadoop分布式实验环境/ifconfig.png)
 
 另外就是 **gateway** (网关), 虚拟机的网关可以通过虚拟网络编辑器查看.
 
-![](http://wiki.smallcpp.com/static/images/搭建Hadoop分布式实验环境/虚拟网络编辑器.png)
+![](http://wiki.smallcpp.cn/static/images/搭建Hadoop分布式实验环境/虚拟网络编辑器.png)
 
-![](http://wiki.smallcpp.com/static/images/搭建Hadoop分布式实验环境/NAT.png)
+![](http://wiki.smallcpp.cn/static/images/搭建Hadoop分布式实验环境/NAT.png)
 
-![](http://wiki.smallcpp.com/static/images/搭建Hadoop分布式实验环境/gateway.png)
+![](http://wiki.smallcpp.cn/static/images/搭建Hadoop分布式实验环境/gateway.png)
 
 所以上面的第八行的 **gateway** 要填: `192.168.142.2`.
 
@@ -133,7 +133,7 @@ source ~/.bashrc
 <br>
 此时, 不管在哪个目录输入 `java -version` 都可以找到执行文件.
 
-![](http://wiki.smallcpp.com/static/images/搭建Hadoop分布式实验环境/javaversion.png)
+![](http://wiki.smallcpp.cn/static/images/搭建Hadoop分布式实验环境/javaversion.png)
 
 # 3. 安装 Hadoop
 ## 3.1
@@ -145,7 +145,7 @@ source ~/.bashrc
 
 ![](http://i58.tinypic.com/2nuon4o.jpg)
 
-![](http://wiki.smallcpp.com/static/images/搭建Hadoop分布式实验环境/hadoopdown.png)
+![](http://wiki.smallcpp.cn/static/images/搭建Hadoop分布式实验环境/hadoopdown.png)
 
 下载完成后, 拖到 Ubuntu 桌面.
 
@@ -173,7 +173,7 @@ export PATH=$PATH:$JAVA_HOME/bin:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
 
 `source ~/.bashrc` 退回根目录, 测试下 hadoop 命令: `hadoop version`
 
-![](http://wiki.smallcpp.com/static/images/搭建Hadoop分布式实验环境/hadoopversion.png)
+![](http://wiki.smallcpp.cn/static/images/搭建Hadoop分布式实验环境/hadoopversion.png)
 
 # 4. 配置 Hadoop
 `cd /usr/smallcpp/hadoop-2.7.3/etc/hadoop` 进入 Hadoop 配置文件所在目录.
@@ -393,7 +393,7 @@ mr-jobhistory-daemon.sh stop historyserver
 <br>
 还可以通过 `hdfs dfsadmin -report` 来查看所有 DataNode 的信息.
 
-![](http://wiki.smallcpp.com/static/images/搭建Hadoop分布式实验环境/dfsadmin.png)
+![](http://wiki.smallcpp.cn/static/images/搭建Hadoop分布式实验环境/dfsadmin.png)
 
 **Live datanodes** 表示当前集群有几个 DataNode 在运行.
 
@@ -427,9 +427,9 @@ Hadoop 的 **HDFS** 系统使用起来就像是 Linux 的文件系统, 如 `hado
 
 上传完毕后可以在 Web 界面的文件管理模块可以看到变化:
 
-![](http://wiki.smallcpp.com/static/images/搭建Hadoop分布式实验环境/hadoopfile.png)
+![](http://wiki.smallcpp.cn/static/images/搭建Hadoop分布式实验环境/hadoopfile.png)
 
-![](http://wiki.smallcpp.com/static/images/搭建Hadoop分布式实验环境/hadoopinfo.png)
+![](http://wiki.smallcpp.cn/static/images/搭建Hadoop分布式实验环境/hadoopinfo.png)
 
 ## 7.2. 下载文件
 `hadoop fs -get /ubuntu-amd64.iso /home/martin/桌面/ubuntu-amd64.iso`

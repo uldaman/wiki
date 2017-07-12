@@ -56,7 +56,7 @@ date: 2016-10-22 20:09
 
 ![](http://i59.tinypic.com/2ibyxyx.jpg)
 
-![](http://wiki.smallcpp.com/static/images/Eclipse配置Java开发环境/eclipsev.png)
+![](http://wiki.smallcpp.cn/static/images/Eclipse配置Java开发环境/eclipsev.png)
 
 可以看到我的是 Mars 版本.
 

@@ -116,7 +116,7 @@ date: 2016-10-18 22:19
 ```
 <br>
 # 代码调试
-参考另篇 wiki: [NodeJs 调试技巧](http://wiki.smallcpp.com/%E5%B7%A5%E5%85%B7%E9%85%8D%E7%BD%AE/NodeJs%20%E8%B0%83%E8%AF%95%E6%8A%80%E5%B7%A7.html#node-inspector)
+参考另篇 wiki: [NodeJs 调试技巧](http://wiki.smallcpp.cn/%E5%B7%A5%E5%85%B7%E9%85%8D%E7%BD%AE/NodeJs%20%E8%B0%83%E8%AF%95%E6%8A%80%E5%B7%A7.html#node-inspector)
 
 # 代码高亮
 Sublime 自带了 JS 的高亮, 但有个插件叫 JavaScriptNext, 它对 JS 的渲染更好看些, 可以尝试使用.

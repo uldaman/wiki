@@ -4,4 +4,4 @@ layout: page
 date: 2016-11-13 18:38
 ---
 
-![](http://wiki.smallcpp.com/static/images/JMSAMQP对比表/jmsamqp.png)
+![](http://wiki.smallcpp.cn/static/images/JMSAMQP对比表/jmsamqp.png)

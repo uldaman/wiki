@@ -6,7 +6,7 @@ date: 2016-10-26 15:03
 
 [TOC]
 
-如何使用 Shell 操作 HDFS 参考 Blog: [使用 Shell 操作 HDFS](http://blog.smallcpp.com/04-shi-yong-shell-cao-zuo-hdfs.html)
+如何使用 Shell 操作 HDFS 参考 Blog: [使用 Shell 操作 HDFS](http://blog.smallcpp.cn/04-shi-yong-shell-cao-zuo-hdfs.html)
 
 # 常用命令
 get == copyToLocal

@@ -4,7 +4,7 @@ layout: page
 date: 2016-10-22 22:08
 ---
 
-先在 windows 7 下搭建好 eclipse 项目环境, 参考 [Eclipse 配置 Java 开发环境](http://wiki.smallcpp.com/%E5%B7%A5%E5%85%B7%E9%85%8D%E7%BD%AE/Eclipse%20%E9%85%8D%E7%BD%AE%20Java%20%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83.html)
+先在 windows 7 下搭建好 eclipse 项目环境, 参考 [Eclipse 配置 Java 开发环境](http://wiki.smallcpp.cn/%E5%B7%A5%E5%85%B7%E9%85%8D%E7%BD%AE/Eclipse%20%E9%85%8D%E7%BD%AE%20Java%20%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83.html)
 
 [TOC]
 
@@ -25,11 +25,11 @@ date: 2016-10-22 22:08
 # 关联源码
 先去 [Hadoop](http://archive.apache.org/dist/) 下载源码包:
 
-![](http://wiki.smallcpp.com/static/images/使用Eclipse开发HDFS/hdfssrc.png)
+![](http://wiki.smallcpp.cn/static/images/使用Eclipse开发HDFS/hdfssrc.png)
 
 然后在 Eclipase 上按 `ctrl` 追踪源码时, 就可以设置关联刚下载的 Hadoop 源码了.
 
-![](http://wiki.smallcpp.com/static/images/使用Eclipse开发HDFS/associatedsrc.png)
+![](http://wiki.smallcpp.cn/static/images/使用Eclipse开发HDFS/associatedsrc.png)
 
 # 关于权限
 当我们远程上传文件时, 可能会报权限不足的错误, 此时有两种处理办法:

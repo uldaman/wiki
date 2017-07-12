@@ -96,7 +96,7 @@ def deploy_git(deploy_configs):
                     'run: `pip install ghp-import`')
     output_dir = configs['destination']
     with lcd(output_dir):  # 添加 CNAME 文件
-        local('echo wiki.smallcpp.com > CNAME')
+        local('echo wiki.smallcpp.cn > CNAME')
     remote = deploy_configs.get('remote', 'origin')
     branch = deploy_configs.get('branch', 'gh-pages')
     # commit gh-pages branch and push to remote
@@ -115,4 +115,4 @@ def deploy_git(deploy_configs):
     + `title: Simiki [折腾]` => 正确
 
 # 补充
-推荐使用 [Travis-ci](http://wiki.smallcpp.com/%E5%B7%A5%E5%85%B7%E9%85%8D%E7%BD%AE/%E6%8A%98%E8%85%BE%20Travis%20CI.html) 自动化部署 Simiki 项目.
+推荐使用 [Travis-ci](http://wiki.smallcpp.cn/%E5%B7%A5%E5%85%B7%E9%85%8D%E7%BD%AE/%E6%8A%98%E8%85%BE%20Travis%20CI.html) 自动化部署 Simiki 项目.

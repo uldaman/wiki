@@ -30,7 +30,7 @@ JDBC 中注册驱动为什么使用 `Class.forName("com.mysql.jdbc.Driver")` 而
 - **使用** (即实例化)
 - **卸载**
 
-> 关于类的加载参考 blog: [018、代码块和类加载](http://blog.smallcpp.com/018-dai-ma-kuai-he-lei-jia-zai.html)
+> 关于类的加载参考 blog: [018、代码块和类加载](http://blog.smallcpp.cn/018-dai-ma-kuai-he-lei-jia-zai.html)
 
 类的加载指的是 **装载** \-\> **链接** \-\> **初始化** 这**三**个阶段, 而使用 `Class.forName()` 方法就是完成类的加载、执行 Driver 中的静态代码块.
 

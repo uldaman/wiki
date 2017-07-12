@@ -11,9 +11,9 @@ date: 2016-10-19 13:27
 
 我常用的大部分插件在之前的几篇 Wiki 都介绍配置过了.
 
-[Sublime 配置 Markdown 写作环境](http://wiki.smallcpp.com/%E5%B7%A5%E5%85%B7%E9%85%8D%E7%BD%AE/Sublime%20%E9%85%8D%E7%BD%AE%20Markdown%20%E5%86%99%E4%BD%9C%E7%8E%AF%E5%A2%83.html) <br>
-[Sublime 配置 Python 开发环境](http://wiki.smallcpp.com/%E5%B7%A5%E5%85%B7%E9%85%8D%E7%BD%AE/Sublime%20%E9%85%8D%E7%BD%AE%20Python%20%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83.html) <br>
-[Sublime 配置 Nodejs 开发环境](http://wiki.smallcpp.com/%E5%B7%A5%E5%85%B7%E9%85%8D%E7%BD%AE/Sublime%20%E9%85%8D%E7%BD%AE%20Nodejs%20%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83.html)
+[Sublime 配置 Markdown 写作环境](http://wiki.smallcpp.cn/%E5%B7%A5%E5%85%B7%E9%85%8D%E7%BD%AE/Sublime%20%E9%85%8D%E7%BD%AE%20Markdown%20%E5%86%99%E4%BD%9C%E7%8E%AF%E5%A2%83.html) <br>
+[Sublime 配置 Python 开发环境](http://wiki.smallcpp.cn/%E5%B7%A5%E5%85%B7%E9%85%8D%E7%BD%AE/Sublime%20%E9%85%8D%E7%BD%AE%20Python%20%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83.html) <br>
+[Sublime 配置 Nodejs 开发环境](http://wiki.smallcpp.cn/%E5%B7%A5%E5%85%B7%E9%85%8D%E7%BD%AE/Sublime%20%E9%85%8D%E7%BD%AE%20Nodejs%20%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83.html)
 
 
 以下还有一些其他挺好用的插件也是我常用的.
@@ -205,7 +205,7 @@ Preferences \-\> package settings \-\> Bracket Highlighter \-\> Bracket Settings
 <br>
 配好后的效果如下图:
 
-![](http://wiki.smallcpp.com/static/images/Sublime常用插件与快捷键/BracketHighlighter.png)
+![](http://wiki.smallcpp.cn/static/images/Sublime常用插件与快捷键/BracketHighlighter.png)
 
 ## 代码提示、自动补全和代码跳转
 **Update**:<br>Forget about *SublimeCodeIntel* and use the new [CodeComplice](https://johnblackbourn.com/sublimecodeintel-st3) package instead.
@@ -264,7 +264,7 @@ SublimeLinter 支持全语言, 但不能单独使用, 需要额外下载插件�
 
 同时系统中也需要安装对应的 lint, 如 `npm install -g jshint`.
 
-如果只想使用某个单独语言的代码规范检查, 可以单独安装, 如在 [Sublime 配置 Python 开发环境](http://wiki.smallcpp.com/%E5%B7%A5%E5%85%B7%E9%85%8D%E7%BD%AE/Sublime%20%E9%85%8D%E7%BD%AE%20Python%20%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83.html) 及 [Sublime 配置 Nodejs 开发环境](http://wiki.smallcpp.com/%E5%B7%A5%E5%85%B7%E9%85%8D%E7%BD%AE/Sublime%20%E9%85%8D%E7%BD%AE%20Nodejs%20%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83.html) 中介绍过的 **Pylint** 和 **JSHint**.
+如果只想使用某个单独语言的代码规范检查, 可以单独安装, 如在 [Sublime 配置 Python 开发环境](http://wiki.smallcpp.cn/%E5%B7%A5%E5%85%B7%E9%85%8D%E7%BD%AE/Sublime%20%E9%85%8D%E7%BD%AE%20Python%20%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83.html) 及 [Sublime 配置 Nodejs 开发环境](http://wiki.smallcpp.cn/%E5%B7%A5%E5%85%B7%E9%85%8D%E7%BD%AE/Sublime%20%E9%85%8D%E7%BD%AE%20Nodejs%20%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83.html) 中介绍过的 **Pylint** 和 **JSHint**.
 
 ## 符号对齐
 **Update**:<br>[AlignTab](https://github.com/randy3k/AlignTab): A much more powerful version of the *Alignment* package. Supports regexes and table mode.
