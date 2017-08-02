@@ -1,0 +1,116 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <title>classmethod 使用场景 - Wiki | Small Cpp</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            
+            <a href="/">Home</a> » <a href="/#Python">Python</a> » classmethod 使用场景
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <p>[TOD]</p>
+<h1 id="_1">场景一</h1>
+<div class="hlcode"><pre><span class="k">class</span> <span class="nc">Data_test</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="n">day</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">month</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">year</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">year</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">month</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">day</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">day</span><span class="o">=</span><span class="n">day</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">month</span><span class="o">=</span><span class="n">month</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">year</span><span class="o">=</span><span class="n">year</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">get_date</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">data_as_string</span><span class="p">):</span>
+        <span class="c"># 这里第一个参数是 cls,  表示调用当前的类名</span>
+        <span class="n">year</span><span class="p">,</span> <span class="n">month</span><span class="p">,</span> <span class="n">day</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">string_date</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;-&#39;</span><span class="p">))</span>
+        <span class="n">date</span> <span class="o">=</span> <span class="n">cls</span><span class="p">(</span><span class="n">year</span><span class="p">,</span> <span class="n">month</span><span class="p">,</span> <span class="n">day</span><span class="p">)</span>
+        <span class="c"># 返回的是一个初始化后的类</span>
+        <span class="k">return</span> <span class="n">date</span>
+
+    <span class="k">def</span> <span class="nf">out_date</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&quot;year :&quot;</span>
+        <span class="k">print</span> <span class="bp">self</span><span class="o">.</span><span class="n">year</span>
+        <span class="k">print</span> <span class="s">&quot;month :&quot;</span>
+        <span class="k">print</span> <span class="bp">self</span><span class="o">.</span><span class="n">month</span>
+        <span class="k">print</span> <span class="s">&quot;day :&quot;</span>
+        <span class="k">print</span> <span class="bp">self</span><span class="o">.</span><span class="n">day</span>
+</pre></div>
+
+
+<p><br><br />
+在 Date_test 类里面创建一个成员函数, 前面用了 <code>@classmethod</code> 装饰. 它的作用就是有点像静态类, 比静态类不一样的就是它可以传进来一个当前类作为第一个参数 (注意是当前类, 不是当前实例), 另外, 这个参数也是多态的, 即如果是子类调用, 那么这个参数就是子类.</p>
+<p>调用:</p>
+<div class="hlcode"><pre><span class="n">r</span> <span class="o">=</span> <span class="n">Data_test</span><span class="o">.</span><span class="n">get_date</span><span class="p">(</span><span class="s">&#39;2016-8-6&#39;</span><span class="p">)</span>
+<span class="n">r</span><span class="o">.</span><span class="n">out_date</span><span class="p">()</span>
+</pre></div>
+
+
+<p><br><br />
+输出:</p>
+<div class="hlcode"><pre><span class="n">year</span> <span class="o">:</span>
+<span class="mi">2016</span>
+<span class="n">month</span> <span class="o">:</span>
+<span class="mi">8</span>
+<span class="n">day</span> <span class="o">:</span>
+<span class="mi">1</span>
+</pre></div>
+
+
+<p><br><br />
+这样子等于先调用 <code>get_date()</code> 对字符串进行出来, 然后才使用 <code>Data_test</code> 的构造函数初始化.</p>
+<p>这样的好处就是你以后重构类的时候不必要修改构造函数, 只需要额外添加你要处理的函数, 然后使用装饰符 <code>@classmethod</code> 就可以了.</p>
+<h1 id="_2">场景二</h1>
+<p>例如一个 User 类对应数据库中的 user 表. 并且有一个 where 方法, 其作用相当于 sql 的 <code>select * from table where ...</code>, 此时, 这个 where 方法就可以作为 <code>@classmethod</code>:</p>
+<div class="hlcode"><pre><span class="k">class</span> <span class="nc">User</span><span class="p">():</span>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">where</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
+        <span class="k">pass</span>
+</pre></div>
+
+
+<p><br><br />
+这样, 就可以直接通过调用 <code>User.where()</code> 来取得数据库中的所有用户对象, 而不需要新建一个 <code>User</code> 类的对象之后再调用这个方法.</p>
+    </div>
+
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="classmethod 使用场景" data-title="classmethod 使用场景" data-url="http://wiki.smallcpp.cn/Python/classmethod 使用场景.html"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:"smallwiki"};
+        (function() {
+            var ds = document.createElement('script');
+            ds.type = 'text/javascript';ds.async = true;
+            ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+            ds.charset = 'UTF-8';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+    </script>
+    <!-- 多说公共JS代码 end -->
+
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2017 <a href="http://www.samllcpp.com/" target="_blank">Martin</a> Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+              </p>
+        </div>
+    </body>
+</html>
