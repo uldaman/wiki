@@ -1,0 +1,163 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <title>需求分析 (定义用例) - Wiki | Small Cpp</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            
+            <a href="/">Home</a> » <a href="/#软件工程">软件工程</a> » 需求分析 (定义用例)
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <p>在 AUP 中, 需求也不是一次性分析完的, 会是一个不断迭代精化的过程.</p>
+<h1 id="_1">迭代过程</h1>
+<ol>
+<li>先进行高阶需求分析, 仅仅确定用例的名称, 以及关键的非功能性需求</li>
+<li>从高阶需求列表中选取 10% 的列表项进行详细的分析<ol>
+<li>核心架构</li>
+<li>高业务价值</li>
+<li>高风险</li>
+</ol>
+</li>
+<li>结合早期时间定量的迭代开发, 进行迭代和进化式需求分析, 并且引入频繁的涉众参与、评估和对局部结果的反馈</li>
+<li>根据第 3 步的反馈, 返回第 1 步进行下一轮迭代</li>
+</ol>
+<h1 id="furps">需求分类 (FURPS+)</h1>
+<ul>
+<li>功能性 (Functional): 特性、功能、安全性</li>
+<li>可用性 (Usability): 人性化因素、帮助、文档</li>
+<li>可靠性 (Reliability): 故障频率、可恢复性、可预测性</li>
+<li>性能 (Performance): 响应时间、吞吐量、准确性、有效性、资源利用率</li>
+<li>可支持性 (Supportability): 适应性、可维护性、国际化、可配置性</li>
+<li>辅助性及次要的因素 (+):<ul>
+<li>实现 (Implementation): 资源限制、语言和工具、硬件等</li>
+<li>接口 (Interface): 强加于外部系统接口之上的约束</li>
+<li>操作 (Operation): 对其操作设置的系统管理</li>
+<li>包装 (Packaging): 例如物理的包装盒</li>
+<li>授权 (Legal): 许可证或其它方式</li>
+</ul>
+</li>
+</ul>
+<h1 id="_2">如何管理?</h1>
+<p>需求分析会通常会有两个产出:</p>
+<ul>
+<li>用例模型: 管理功能需求</li>
+<li>补充性规格说明: 管理所有非功能需求</li>
+</ul>
+<h1 id="_3">用例模型</h1>
+<blockquote>
+<p>用例模型并不是特指 UML 用例图, 用例图只是用例模型的一种方式.</p>
+</blockquote>
+<h2 id="_4">什么是用例?</h2>
+<ul>
+<li>用例就是功能性需求, 或者说是用来描述系统的功能性需求</li>
+<li>通过编写使用系统实现用户目标的情节 (流程) 来发现和记录功能性需求 (强调的是 FURPS+ 中的 F)</li>
+<li>用例的本质是<strong>文本</strong>形式的情节描述, UML 只是辅助工具, 用例的重点是用文本描述出用户如何使用系统, 而不是 UML 图形, 但并不是 UML 用例图毫无用处, 在用例收集阶段, 可以用来快速构建用例语境图. 参考: ## 如何记录?</li>
+<li>三种常用形式<ul>
+<li>摘要: 简洁的一段式概要, 通常用于主成功场景, 可用 UML 用例图替代 (目标: 用于早期需求分析, 快速了解主题和范围)</li>
+<li>非正式: 非正式的段落格式, 用段落覆盖不能场景 (目标和摘要一样)</li>
+<li>详述: 详细的所有步骤及各种变化 (事件流), 包含补充部分, 如前置条件和成功保证 (目标: 用于详细描述下一次迭代的 10 %~20% 用例)</li>
+</ul>
+</li>
+</ul>
+<p><a href="http://wiki.smallcpp.cn/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%AF%A6%E8%BF%B0%E7%94%A8%E4%BE%8B%E6%A8%A1%E6%9D%BF.html">详述用例模板参考</a></p>
+<p><img alt="" src="http://wiki.smallcpp.cn/static/images/如何进行用例分析/主成功场景.png" /></p>
+<h2 id="_5">用例元素</h2>
+<ul>
+<li>参与者: 具有行为的事物, 可以是人、另一个系统等<ul>
+<li>主要参与者: 具有用户目标, 并通过使用系统功能来完成 (目标: 发现驱动用例的用户目标, 主要是人)</li>
+<li>协助参与者: 为系统提供服务 (目标: 为了明确外部接口和协议, 主要是另一个系统)</li>
+<li>幕后参与者: 在用例行为中具有影响或利益, 但又不是主要或协助参与者, 如政府税收机构 (目标: 为了确保确定并满足所有必要的重要事物)</li>
+</ul>
+</li>
+<li>场景: 参与者与系统间的交互, 简单的说就是用户操作了什么</li>
+<li>用例: 场景的集合, 描述参与者如何使用系统来实现其目标</li>
+</ul>
+<h2 id="_6">如何发现用例 (功能性需求)?</h2>
+<p>识别出主要参与者, 然后分析其目标. 用例强调参与者的目标和观点, 所以提问总是围绕参与者目标而不是用例本身.</p>
+<ol>
+<li>谁来使用系统?</li>
+<li>谁来启动和停止系统?</li>
+<li>谁来完成用户管理和安全管理?</li>
+<li>谁来完全系统管理?</li>
+<li>时间是参与者吗? 即需要定时任务吗?</li>
+<li>当系统失败时, 是否存在监控进程将系统重新启动?</li>
+<li>软件升级是如何处理的? 是推模式, 还是拉模式?</li>
+<li>除了人作为主要参与者外, 还有其他外部的软件或系统调用该系统的服务吗?</li>
+<li>谁来考察系统活动或性能?</li>
+<li>谁来考察日志? 是否可以远程检索?</li>
+<li>系统发生错误或故障时应通知谁?</li>
+</ol>
+<h2 id="_7">如何记录?</h2>
+<p>发现用例后, 有两种记录方式:</p>
+<ol>
+<li><strong>UML 用例图</strong> (推荐)</li>
+<li><strong>参与者 - 目标</strong> 列表, 如果使用这种方式, 该表可做为设想制品的一部分</li>
+</ol>
+<p>用例的本质虽然是<strong>文本</strong>形式的情节描述, 但并不是每一次迭代都需要详述所有的用例, 可以用 UML 用例图快速收集需求, 从而产出用例语境图. 迭代时, 从语境图中选取一部分进行详述.</p>
+<p><img alt="" src="http://wiki.smallcpp.cn/static/images/如何进行用例分析/用例图.png" /></p>
+<p>UML 用例图虽然也可以绘制出用户在系统上实现目标的情节 (流程), 但 AUP 不建议这么做, 因为 UML 比较专业, 为了让用户早期参与项目, 所以<strong>建议</strong>用文本形式进行详述. 当场景工作流复杂到文本无法描述时, <strong>UML 活动图</strong>是很好的选择.</p>
+<h2 id="_8">准则</h2>
+<ul>
+<li>以本质风格编写用例, 摒除用户界面并且关注参与者的意图<ul>
+<li>本质风格: 摒除 UI 细节并集中于用户真实意图的用例风格</li>
+<li>并不是说关注 UI 不好, 只是这并不是早期的需求分析工作</li>
+</ul>
+</li>
+<li>用语应尽量简洁, 以动词开头, 删除没必要的词汇</li>
+<li>编写黑盒用例<ul>
+<li>不对系统内部工作、构件或设计进行描述</li>
+<li>只通过职责来描述系统</li>
+<li>规定系统必须做什么, 而不是如何去做 (这也正是分析与设计的区别)</li>
+</ul>
+</li>
+<li>采用参与者和参与者目标的视点<ul>
+<li>关注系统的用户或参与者来编写需求, 询问其目标和典型情况</li>
+<li>关注理解参与者所考虑的有价值结果</li>
+</ul>
+</li>
+</ul>
+<p>总结: 用例应产生对特定参与者具有价值的可观察结果</p>
+    </div>
+
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="需求分析 (定义用例)" data-title="需求分析 (定义用例)" data-url="http://wiki.smallcpp.cn/软件工程/需求分析 (定义用例).html"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:"smallwiki"};
+        (function() {
+            var ds = document.createElement('script');
+            ds.type = 'text/javascript';ds.async = true;
+            ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+            ds.charset = 'UTF-8';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+    </script>
+    <!-- 多说公共JS代码 end -->
+
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2017 <a href="http://www.samllcpp.com/" target="_blank">Martin</a> Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+              </p>
+        </div>
+    </body>
+</html>
