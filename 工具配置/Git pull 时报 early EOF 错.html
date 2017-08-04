@@ -31,8 +31,8 @@ fatal: early EOF<br />
 fatal: unpack-objects failed</p>
 <p>解决方案一:<br />
 1. 先启动 git bash<br />
-2. 打开一个 cmd, 启动 git 守护进程 sh.exe --login -i -c 'git.exe daemon --verbose  '<br />
-3. 在 cmd 中标记一些文本, 注意要保持标记状态, 然后回去 git bash 执行 git reset --hard HEAD 和 git pull/clone</p>
+2. 打开一个 cmd, 启动 git 守护进程 <code>sh.exe --login -i -c 'git.exe daemon --verbose  '</code><br />
+3. 在 cmd 中标记一些文本, 注意要保持标记状态, 然后回去 git bash 执行 <code>git reset --hard HEAD</code> 和 <code>git pull/clone</code></p>
 <p>解决方案二:<br />
 另外还有一个<a href="https://stackoverflow.com/questions/21277806/fatal-early-eof-fatal-index-pack-failed">解决方案</a>没试, 因为上面的方案成功了..</p>
     </div>
