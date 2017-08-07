@@ -8,16 +8,16 @@ date: 2017-08-07 13:00
 
 rebase 比较复杂, 应该是 git 中的高级应用了, 所以单独拿出来做篇 wiki, 转自: [ihower blog](https://ihower.tw/blog).
 
-# 使用 git `rebase` 避免無謂的 `merge`
+# 使用 git rebase 避免無謂的 merge
 `git pull` 預設的行為是將遠端的 repo. 與本地的 repo. 合併, 這也是 DVCS 的初衷, 將兩個 branch 合併. 但是, 很多時候會發生以下這種情形:
 
 ![](http://wiki.smallcpp.cn/static/images/gitRebase/git-`merge`.jpg)
 
 這是因為, 我們團隊的開發模式是本地的 branch 和遠端的 branch 會同步地非常頻繁(通常就是同名稱的 branch, 例如 master), 這兩個 branch 幾乎是完全同步. 這時候就會發現這些 `merge` 動作其實沒有必要, 會造成線圖無謂的複雜. 這時候, 會推薦使用以下這個指令:
 
-``
+```
 git pull --`rebase`
-``
+```
 <br>
 加上 `rebase` 的意思是:
 
@@ -29,25 +29,25 @@ git pull --`rebase`
 
 畫圖說明一下好了, 假設合併前是這樣:
 
-``
+```
       D---E master
      /
 A---B---C---F origin/master
-``
+```
 <br>
 使用 `merge` 合併後:
 
-``
+```
       D--------E
      /          \
 A---B---C---F----G   master, origin/master
-``
+```
 <br>
 如果是 `rebase` 的方式, 就不會有 `G` 合併點:
 
-``
+```
 A---B---C---F---D'---E'   master, origin/master
-``
+```
 <br>
 注意到, 其中 `D’`, `E’` 的 commit SHA 序號跟本來 `D`, `E` 是不同的, 因為算是砍掉重新 `commit` 了.
 
@@ -62,19 +62,19 @@ A---B---C---F---D'---E'   master, origin/master
 
 如果想要把 `rebase` 當做 `git pull` 的預設值, 可以在專案的 `.git/config` 加上:
 
-``
+```
 [branch "master"]
   remote = origin
   merge = refs/heads/master
   rebase = true
-``
+```
 <br>
 也可以直接加到 `~/.gitconfig` 讓所有的 tracked branches 都自動套用這個設定:
 
-``
+```
 [branch]
   autosetuprebase = always
-``
+```
 <br>
 # 重建 commit
 `rebase` 的真正潛力是, 我們可以從指定的版號之後, 重新隨你意 commit 一次來重建 history, 超威的. 首先輸入 `git rebase -i` 版號 就會可以跳出 editor 可以編輯, 我們可以:
