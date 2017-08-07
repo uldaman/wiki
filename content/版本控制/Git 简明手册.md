@@ -14,7 +14,7 @@ date: 2016-03-13 13:00
 - git config \-\-global core.autocrlf  false // 关闭换行符检测, windows 的换行有点问题
 
 ## 2. 初始化版本库
-打开 git bash, 进入目标目录, 执行 __git init__, 在目标目录下就会生成 __.git__ 目录, 它存放的就是 git 版本库信息.
+打开 git bash, 进入目标目录, 执行 **git init**, 在目标目录下就会生成 **.git** 目录, 它存放的就是 git 版本库信息.
 
 ## 3. 正常工作流程
 edit file (工作区) \-\> git add (暂存区/index/stage) \-\> git commit (commit)
@@ -59,41 +59,43 @@ edit file (工作区) \-\> git add (暂存区/index/stage) \-\> git commit (comm
 ## 5. 撤销
 撤销的情况比较复杂
 
-首先是 __reset \-\-参数 commit id__ 命令, 这个命令有三个参数:
+首先是 **reset \-\-参数 commit id** 命令, 这个命令有三个参数:
 
 - \-\-mixed：此为默认方式, 回退到某个版本, 只保留工作区, 回退 commit 和 index
 - \-\-soft：回退到某个版本, 只回退了 commit, 保留工作区和 index
 - \-\-hard：彻底回退到某个版本, 工作区、commit 和 index 都会改变
 
-再就是 __HEAD__ '指针', HEAD 表示当前版本, 上一个版本就是 HEAD^, 上上一个版本就是 HEAD^^, 当然往上100个版本写 100 个 ^ 比较容易数不过来, 所以写成 HEAD~100;
+再就是 **HEAD** '指针', HEAD 表示当前版本, 上一个版本就是 HEAD^, 上上一个版本就是 HEAD^^, 当然往上100个版本写 100 个 ^ 比较容易数不过来, 所以写成 HEAD~100;
 
-另外还有个 __ORIG_HEAD__ 指针, 它指向的是 HEAD 上一次所在的位置.
+另外还有个 **ORIG_HEAD** 指针, 它指向的是 HEAD 上一次所在的位置.
 
-使用 __reset__ 命令, 就可以在各个版本之间穿梭了.<br>穿梭前, 用 __git log__ 可以查看提交历史, 以便确定要回退到哪个版本, 使用 __\-\-pretty=oneline__ 参数可以比较清晰的看到 log, 不过要注意, 一但回到某个版本, 那该版本之后的那些版本通过 git log 就看不到了, 如果还想要重返未来, 可以用 __git reflog__ 查看命令历史, 就可以得到'未来'的 commit id 了.
+使用 **reset** 命令, 就可以在各个版本之间穿梭了.<br>穿梭前, 用 **git log** 可以查看提交历史, 以便确定要回退到哪个版本, 使用 **\-\-pretty=oneline** 参数可以比较清晰的看到 log, 不过要注意, 一但回到某个版本, 那该版本之后的那些版本通过 git log 就看不到了, 如果还想要重返未来, 可以用 **git reflog** 查看命令历史, 就可以得到'未来'的 commit id 了.
 
-### 未提交前的撤销
+### 未 commit
 #### --版本层面上
-如果你修改了工作区, 甚至已经提交到 index, 只要你还没 commit, 就可以通过 __git reset \-\-hard HEAD__ 可以回退到当前版本的初始状态.
+如果你修改了工作区, 甚至已经提交到 index, 只要你还没 commit, 就可以通过 **git reset \-\-hard HEAD** 可以回退到当前版本的初始状态.
 
 #### --文件层面上
-还有一种情况, 就是修改了工作区, 提交到了 index, 然后又修改了工作区, 然后, 只需要撤掉第二次工作区的修改, 如果使用 git reset \-\-hard HEAD 命令, 那就会把工作区和 index 都给撤掉了, 我们可以使用 __checkout__ 命令.
+还有一种情况, 就是修改了工作区, 提交到了 index, 然后又修改了工作区, 然后, 只需要撤掉第二次工作区的修改, 如果使用 git reset \-\-hard HEAD 命令, 那就会把工作区和 index 都给撤掉了, 我们可以使用 **checkout** 命令.
 
-命令 __git checkout \-\- readme.txt__ 意思就是, 把 readme.txt 文件在工作区的修改全部撤销, 它可以让这个文件回到最近一次 git commit 或 git add 时的状态.
+命令 **git checkout \-\- readme.txt** 意思就是, 把 readme.txt 文件在工作区的修改全部撤销, 它可以让这个文件回到最近一次 git commit 或 git add 时的状态.
 
-### 已提交后的撤销
+### 已 commit
 #### --版本层面上
-如果已经 commit, 有__两种__方式来撤销.
+如果已经 commit, 有**两种**方式来撤销.
 
-##### a. 删除一个提交
-通过 __git reset \-\-hard ORIG\_HEAD__ 或者 __git reset \-\-hard HEAD^__ 来恢复到上一个版本.
+##### a. 修改或删除一个提交 (未 push)
+使用 `git commit --amend` 可以将本次修改追加到上一次的提交, 还可以通过 `-c` 指定要追加的 `commit id`.
 
-##### b. 创建一个撤销了上次提交的新提交(推荐使用)
-这个听起来有点绕口, 命令为 __git revert commit id__, 这个命令将 commit id 的提交撤销(即回退到上一个版本), 然后创建一个新的提交, 这是一种比较安全的作法, 推荐使用.
+如果确实要删除, 可以通过 **git reset \-\-hard ORIG\_HEAD** 或者 **git reset \-\-hard HEAD^** 来恢复到上一个版本.
+
+##### b. 创建一个撤销了上次提交的新提交 (已 push)
+**git revert commit id**, 这个命令将 commit id 的提交撤销(即回退到上一个版本), 然后创建一个新的提交, 这是一种比较安全的作法, 推荐使用.
 
 所以这里要注意下, 假设现在有两个版本, A 版本 和 B 版本, A 是刚提交的版本, B 是上一个版本, 如果想撤销 A 的提交.
 
-- 用 __reset__ 的话, 直接指定 B 版本的 commit id, 它会直接回退到 B 版本
-- 用 __revert__ 的话, 指定的是 A 版本的 commit id, 它会将 A 版本的上一个版本做为一个新提交
+- 用 **reset** 的话, 直接指定 B 版本的 commit id, 它会直接回退到 B 版本
+- 用 **revert** 的话, 指定的是 A 版本的 commit id, 它会将 A 版本的上一个版本做为一个新提交
 
 注意, revert 后其实并不会直接 commit, 而是保存在 index 中, 需要执行 git commit 才是真正的提交.
 
@@ -104,7 +106,7 @@ edit file (工作区) \-\> git add (暂存区/index/stage) \-\> git commit (comm
 
 记录下需要恢复的 commit 版本号, 如: 9aa51d89799716aa68cff3f30c26f8815408e926
 
-恢复该文件: __git reset \-\-hard 9aa51d89799716aa68cff3f30c26f8815408e926 default.txt__
+恢复该文件: **git reset \-\-hard 9aa51d89799716aa68cff3f30c26f8815408e926 default.txt**
 
 提交git: git commit \-m "恢复单个文件"
 
@@ -231,7 +233,7 @@ git remote add origin git@github.com:xxx/yyy.git
 git push -u origin master:master
 ```
 
-推送到远程, 用 __git push__ 命令.
+推送到远程, 用 **git push** 命令.
 
 ```
 git push <远程主机名> <本地分支名>:<远程分支名>
@@ -239,7 +241,7 @@ git push <远程主机名> <本地分支名>:<远程分支名>
 
 如果省略远程分支名, 则表示将本地分支推送与之存在”追踪关系”的远程分支, 通常两者同名, 如果该远程分支不存在, 则会被新建;
 
-__-u__ 参数相当于建立关联(追踪)关系, 将远程主机(这里是 origin)的 master 分支和本地仓库的 master 分支关联起来, 以后进行推送/拉取操作时就可以简化命令.<br>__如果你使用 branch \-a 来查看当前所有分支, 则会看到这个关联(追踪)关系__.
+**-u** 参数相当于建立关联(追踪)关系, 将远程主机(这里是 origin)的 master 分支和本地仓库的 master 分支关联起来, 以后进行推送/拉取操作时就可以简化命令.<br>**如果你使用 branch \-a 来查看当前所有分支, 则会看到这个关联(追踪)关系**.
 
 ```
 $ git branch -a
@@ -271,14 +273,14 @@ $ git clone git@github.com:xxx/yyy.git
 
 如果是 clone 的方式, 那么, 我们就不需要手动去设置远程仓库的简名以及关联(追踪)关系了, 它会自动给它设置好, 我们可以通过 git config --list 查看.
 
-当然, 推送修改时, 你依然可以用 __-u__ 参数来指定关联:
+当然, 推送修改时, 你依然可以用 **-u** 参数来指定关联:
 
 ```
 git push -u origin master:master
 ```
 
 ### 8.2 拉取更新(pull)
-该操作取回远程主机某个分支的更新, 再__与本地的指定分支合并__.
+该操作取回远程主机某个分支的更新, 再**与本地的指定分支合并**.
 
 [参考链接](http://www.yiibai.com/git/git_pull.html)
 
@@ -286,10 +288,10 @@ git push -u origin master:master
 git pull <远程主机名> <远程分支名>:<本地分支名>
 ```
 
-如果我们设置了关联(追踪)关系(参考 8.1.1), 则可以省略命令, 直接写: __git pull__ 就可以了.
+如果我们设置了关联(追踪)关系(参考 8.1.1), 则可以省略命令, 直接写: **git pull** 就可以了.
 
 ### 8.3 获取更新(fetch)
-该操作取回远程主机某个分支的更新, 但并__不与本地分支进行合并__.
+该操作取回远程主机某个分支的更新, 但并**不与本地分支进行合并**.
 
 [参考链接](http://www.yiibai.com/git/git_fetch.html)
 
@@ -297,7 +299,7 @@ git pull <远程主机名> <远程分支名>:<本地分支名>
 git fetch <远程主机名> <分支名>
 ```
 
-所取回的更新, 在本地主机上要用 "__远程主机名/分支名__" 的形式读取, 比如 origin 主机的 master, 就要用 origin/master 读取.
+所取回的更新, 在本地主机上要用 "**远程主机名/分支名**" 的形式读取, 比如 origin 主机的 master, 就要用 origin/master 读取.
 
 git branch -a 查看所有分支:
 
@@ -336,7 +338,7 @@ SourceTree:<br>[https://yunpan.cn/cYR2i2zBPbzce](https://yunpan.cn/cYR2i2zBPbzce
 
 > 除了 SourceTree 外也还有其他的选择, 如 TortoiseGit, 然而试用过后, 还是 SourceTree 比较好.
 
-Git For Windows(Msysgit) 自带一个 __git bash__ 和 __git gui__, 哦, 对了, 还有一个 __gitk__.
+Git For Windows(Msysgit) 自带一个 **git bash** 和 **git gui**, 哦, 对了, 还有一个 **gitk**.
 
 - git bash 就是一个模拟 linux 的终端
 - git gui 是一个轻量级的图形操作界面
@@ -344,7 +346,7 @@ Git For Windows(Msysgit) 自带一个 __git bash__ 和 __git gui__, 哦, 对了,
 
 Msysgit 的图形化界面, 虽然能满足日常需求, 但确实比较粗糙, 而 SourceTree 就是一个很好的替代方案, 日常操作就用 SourceTree, 需要用到命令行时就用 git bash.
 
-其实 SourceTree 也可以自动下载 git, 只不过速度不敢恭维, 还是我们自己手动下载、安装好了, 安装好 SourceTree 后, 首次运行, 会让你进行一个__初始化设置__, 请__直接跳过__;<br>因为我们已经安装好 Git 客服端了, 如果让 SourceTree 进行初始化, 它会给你重新下载一个 Git 还有 Mercurial.
+其实 SourceTree 也可以自动下载 git, 只不过速度不敢恭维, 还是我们自己手动下载、安装好了, 安装好 SourceTree 后, 首次运行, 会让你进行一个**初始化设置**, 请**直接跳过**;<br>因为我们已经安装好 Git 客服端了, 如果让 SourceTree 进行初始化, 它会给你重新下载一个 Git 还有 Mercurial.
 
 SourceTree 参考资料:
 
@@ -355,15 +357,15 @@ SourceTree 参考资料:
 假设已经有了 GitHub 上自己的远程仓库.
 
 ### 10.1 创建 SSH Key
-首先, 到用户目录下(C:/Users/Administrator), 看看有没有 .ssh 目录, 如果有, 则进入这个目录, 看看有没有 __id\_rsa__(私钥) 和 __id\_rsa.pub__(公钥) 这两个文件, 如果有, 就可以跳过 10.1 后面的操作了, 直接开始 10.2, 如果没有, 则打开 gui bash, 运行下面的命令, 创建一个密钥对:
+首先, 到用户目录下(C:/Users/Administrator), 看看有没有 .ssh 目录, 如果有, 则进入这个目录, 看看有没有 **id\_rsa**(私钥) 和 **id\_rsa.pub**(公钥) 这两个文件, 如果有, 就可以跳过 10.1 后面的操作了, 直接开始 10.2, 如果没有, 则打开 gui bash, 运行下面的命令, 创建一个密钥对:
 ```
 $ ssh-keygen -t rsa -C "youremail@example.com" // 后面的 -C 邮件 是注释, 也可以省略
 ```
 
-一路回车后, 就在刚才的目录下面生成了 __id\_rsa__(私钥) 和 __id\_rsa.pub__(公钥) 两个文件.
+一路回车后, 就在刚才的目录下面生成了 **id\_rsa**(私钥) 和 **id\_rsa.pub**(公钥) 两个文件.
 
 ### 10.2 设置 GitHub
-登录 GitHub 后, 设置 GitHub 的 "SSH Keys", 就是刚才生成的 __id\_rsa.pub__(公钥) 里面的内容, 直接复制进去就可以了.
+登录 GitHub 后, 设置 GitHub 的 "SSH Keys", 就是刚才生成的 **id\_rsa.pub**(公钥) 里面的内容, 直接复制进去就可以了.
 
 设置完后, 可以在 git bash 中执行下面的命令看看有没有设置成功:
 ```
@@ -371,7 +373,7 @@ ssh git@github.com
 ```
 
 ### 10.3 设置 SourceTree
-打开 "工具"->"创建/导入SSH密钥", 打开 PuTTY 后, 点击 "Load" 按钮, 选择 9.1 中生成的 __id\_rsa__(私钥) 文件, 然后点击 "Save private key" 按钮, 保存为 __id\_rsa.ppk__.
+打开 "工具"->"创建/导入SSH密钥", 打开 PuTTY 后, 点击 "Load" 按钮, 选择 9.1 中生成的 **id\_rsa**(私钥) 文件, 然后点击 "Save private key" 按钮, 保存为 **id\_rsa.ppk**.
 
 ### 10.4 克隆项目
 到你的 GitHub 上拷贝一个项目的 SSH 下来, 打开 SourceTree, 点击 "克隆/新建", 填写好相关信息后, 点击 "克隆", 首次使用, 可能会克隆不下来, SourceTree 会报个错.
@@ -389,30 +391,30 @@ connection.
 
 > 其实这里是让你输 yes / no, 可惜 sourcetree 中输入不了,  得我们手动在 cmd 中操作
 
-这是因为首次连接一个使用 SSH 协议的 Git 服务器的时候, 因为远程 SSH 服务器的公钥没有经过确认而导致 git 命令执行失败, 解决方法是在__命令行__下找到 SourceTree 安装目录里的 PuTTy 工具, 例如 "C:/Program Files (x86)/Atlassian/SourceTree/tools/putty/plink.exe", 然后执行命令
+这是因为首次连接一个使用 SSH 协议的 Git 服务器的时候, 因为远程 SSH 服务器的公钥没有经过确认而导致 git 命令执行失败, 解决方法是在**命令行**下找到 SourceTree 安装目录里的 PuTTy 工具, 例如 "C:/Program Files (x86)/Atlassian/SourceTree/tools/putty/plink.exe", 然后执行命令
 ```
 plink.exe git@github.com
 ```
 
 它会继续报刚才的错误, 我们在 cmd 中输入 yes 就可以了.
 
-然后重新在 SourceTree 中克隆项目, 然后它就会提示你, 让你选择私钥 key 文件, 点击桌面右下角任务栏的 "Pageant", 点击 "add key" 按钮, 选择 9.3 中生成的 __id\_rsa.ppk__ 即可.
+然后重新在 SourceTree 中克隆项目, 然后它就会提示你, 让你选择私钥 key 文件, 点击桌面右下角任务栏的 "Pageant", 点击 "add key" 按钮, 选择 9.3 中生成的 **id\_rsa.ppk** 即可.
 
 > 每次重新启动电脑后, Pageant 都会清空, 又要重新选择 key 文件 . . . , 等找到解决方法后再来更新笔记.
 
-已经找到解决方法:<br>点击 "工具"->"选项"->"一般", 在 SSH 密钥那一栏里选择我们的 __id\_rsa.ppk__, 就不需要每次都要 "add key" 了.
+已经找到解决方法:<br>点击 "工具"->"选项"->"一般", 在 SSH 密钥那一栏里选择我们的 **id\_rsa.ppk**, 就不需要每次都要 "add key" 了.
 
 ## 11. git stash 贮藏
 git stash 的功能是保存当前工作目录和暂存区, 并 reset --hard HEAD, 即恢复成最新 commit 时的状态.
 
-需要恢复的时候, 使用 __git stash apply__ 就将过去贮藏(stashed)的工作区快照恢复了, 和 merge 一样，git stash apply 之前要保证当前目录是干净的(没有未提交的改变), 否则会保错:
+需要恢复的时候, 使用 **git stash apply** 就将过去贮藏(stashed)的工作区快照恢复了, 和 merge 一样，git stash apply 之前要保证当前目录是干净的(没有未提交的改变), 否则会保错:
 ```
 error: Your local changes to the following files would be overwritten by merge: Please, commit your changes or stash them before you can merge.
 ```
 
 如果工作区在贮藏之后发生了变化(即更改过 file 并 commit 了), 恢复时就有可能产生冲突(conflict), 这种情况下 git stash apply 会对工作目录进行 merge 操作.
 
-git stash apply 只能恢复工作目录, 如果想把暂存区也按照贮藏时的暂存区恢复的话, 可以加上 __--index__ 参数, 如果暂存区恢复时发生冲突了会怎么办呢? 它可不会让你进行 merge, 而是直接报错不允许你这么做:
+git stash apply 只能恢复工作目录, 如果想把暂存区也按照贮藏时的暂存区恢复的话, 可以加上 **--index** 参数, 如果暂存区恢复时发生冲突了会怎么办呢? 它可不会让你进行 merge, 而是直接报错不允许你这么做:
 ```
 Conflicts in index. Try without --index.
 ```
