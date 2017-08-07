@@ -31,15 +31,15 @@
 <li><a href="#3">3. 正常工作流程</a></li>
 <li><a href="#4">4. 分支</a></li>
 <li><a href="#5">5. 撤销</a><ul>
-<li><a href="#_1">未提交前的撤销</a><ul>
+<li><a href="#commit">未 commit</a><ul>
 <li><a href="#-">--版本层面上</a></li>
 <li><a href="#-_1">--文件层面上</a></li>
 </ul>
 </li>
-<li><a href="#_2">已提交后的撤销</a><ul>
+<li><a href="#commit_1">已 commit</a><ul>
 <li><a href="#-_2">--版本层面上</a><ul>
-<li><a href="#a">a. 删除一个提交</a></li>
-<li><a href="#b">b. 创建一个撤销了上次提交的新提交(推荐使用)</a></li>
+<li><a href="#a-push">a. 修改或删除一个提交 (未 push)</a></li>
+<li><a href="#b-push">b. 创建一个撤销了上次提交的新提交 (已 push)</a></li>
 </ul>
 </li>
 <li><a href="#-_3">-- 文件层面上</a></li>
@@ -165,19 +165,20 @@
 <p>再就是 <strong>HEAD</strong> '指针', HEAD 表示当前版本, 上一个版本就是 HEAD^, 上上一个版本就是 HEAD^^, 当然往上100个版本写 100 个 ^ 比较容易数不过来, 所以写成 HEAD~100;</p>
 <p>另外还有个 <strong>ORIG_HEAD</strong> 指针, 它指向的是 HEAD 上一次所在的位置.</p>
 <p>使用 <strong>reset</strong> 命令, 就可以在各个版本之间穿梭了.<br>穿梭前, 用 <strong>git log</strong> 可以查看提交历史, 以便确定要回退到哪个版本, 使用 <strong>--pretty=oneline</strong> 参数可以比较清晰的看到 log, 不过要注意, 一但回到某个版本, 那该版本之后的那些版本通过 git log 就看不到了, 如果还想要重返未来, 可以用 <strong>git reflog</strong> 查看命令历史, 就可以得到'未来'的 commit id 了.</p>
-<h3 id="_1">未提交前的撤销</h3>
+<h3 id="commit">未 commit</h3>
 <h4 id="-">--版本层面上</h4>
 <p>如果你修改了工作区, 甚至已经提交到 index, 只要你还没 commit, 就可以通过 <strong>git reset --hard HEAD</strong> 可以回退到当前版本的初始状态.</p>
 <h4 id="-_1">--文件层面上</h4>
 <p>还有一种情况, 就是修改了工作区, 提交到了 index, 然后又修改了工作区, 然后, 只需要撤掉第二次工作区的修改, 如果使用 git reset --hard HEAD 命令, 那就会把工作区和 index 都给撤掉了, 我们可以使用 <strong>checkout</strong> 命令.</p>
 <p>命令 <strong>git checkout -- readme.txt</strong> 意思就是, 把 readme.txt 文件在工作区的修改全部撤销, 它可以让这个文件回到最近一次 git commit 或 git add 时的状态.</p>
-<h3 id="_2">已提交后的撤销</h3>
+<h3 id="commit_1">已 commit</h3>
 <h4 id="-_2">--版本层面上</h4>
-<p>如果已经 commit, 有__两种__方式来撤销.</p>
-<h5 id="a">a. 删除一个提交</h5>
-<p>通过 <strong>git reset --hard ORIG_HEAD</strong> 或者 <strong>git reset --hard HEAD^</strong> 来恢复到上一个版本.</p>
-<h5 id="b">b. 创建一个撤销了上次提交的新提交(推荐使用)</h5>
-<p>这个听起来有点绕口, 命令为 <strong>git revert commit id</strong>, 这个命令将 commit id 的提交撤销(即回退到上一个版本), 然后创建一个新的提交, 这是一种比较安全的作法, 推荐使用.</p>
+<p>如果已经 commit, 有<strong>两种</strong>方式来撤销.</p>
+<h5 id="a-push">a. 修改或删除一个提交 (未 push)</h5>
+<p>使用 <code>git commit --amend</code> 可以将本次修改追加到上一次的提交, 还可以通过 <code>-c</code> 指定要追加的 <code>commit id</code>.</p>
+<p>如果确实要删除, 可以通过 <strong>git reset --hard ORIG_HEAD</strong> 或者 <strong>git reset --hard HEAD^</strong> 来恢复到上一个版本.</p>
+<h5 id="b-push">b. 创建一个撤销了上次提交的新提交 (已 push)</h5>
+<p><strong>git revert commit id</strong>, 这个命令将 commit id 的提交撤销(即回退到上一个版本), 然后创建一个新的提交, 这是一种比较安全的作法, 推荐使用.</p>
 <p>所以这里要注意下, 假设现在有两个版本, A 版本 和 B 版本, A 是刚提交的版本, B 是上一个版本, 如果想撤销 A 的提交.</p>
 <ul>
 <li>用 <strong>reset</strong> 的话, 直接指定 B 版本的 commit id, 它会直接回退到 B 版本</li>
@@ -338,7 +339,7 @@ mac 系统的 git-diff-wrapper.sh</p>
 
 
 <h3 id="82-pull">8.2 拉取更新(pull)</h3>
-<p>该操作取回远程主机某个分支的更新, 再__与本地的指定分支合并__.</p>
+<p>该操作取回远程主机某个分支的更新, 再<strong>与本地的指定分支合并</strong>.</p>
 <p><a href="http://www.yiibai.com/git/git_pull.html">参考链接</a></p>
 <div class="hlcode"><pre><span class="n">git</span> <span class="n">pull</span> <span class="o">&lt;</span><span class="err">远程主机名</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="err">远程分支名</span><span class="o">&gt;:&lt;</span><span class="err">本地分支名</span><span class="o">&gt;</span>
 </pre></div>
@@ -346,7 +347,7 @@ mac 系统的 git-diff-wrapper.sh</p>
 
 <p>如果我们设置了关联(追踪)关系(参考 8.1.1), 则可以省略命令, 直接写: <strong>git pull</strong> 就可以了.</p>
 <h3 id="83-fetch">8.3 获取更新(fetch)</h3>
-<p>该操作取回远程主机某个分支的更新, 但并__不与本地分支进行合并__.</p>
+<p>该操作取回远程主机某个分支的更新, 但并<strong>不与本地分支进行合并</strong>.</p>
 <p><a href="http://www.yiibai.com/git/git_fetch.html">参考链接</a></p>
 <div class="hlcode"><pre><span class="n">git</span> <span class="n">fetch</span> <span class="o">&lt;</span><span class="err">远程主机名</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="err">分支名</span><span class="o">&gt;</span>
 </pre></div>
@@ -390,7 +391,7 @@ mac 系统的 git-diff-wrapper.sh</p>
 <li>gitk  是一个 git 浏览器, 主要用于用户查看仓库的各类信息(更改信息、提交信息、版本信息、图形显示等)</li>
 </ul>
 <p>Msysgit 的图形化界面, 虽然能满足日常需求, 但确实比较粗糙, 而 SourceTree 就是一个很好的替代方案, 日常操作就用 SourceTree, 需要用到命令行时就用 git bash.</p>
-<p>其实 SourceTree 也可以自动下载 git, 只不过速度不敢恭维, 还是我们自己手动下载、安装好了, 安装好 SourceTree 后, 首次运行, 会让你进行一个__初始化设置__, 请__直接跳过__;<br>因为我们已经安装好 Git 客服端了, 如果让 SourceTree 进行初始化, 它会给你重新下载一个 Git 还有 Mercurial.</p>
+<p>其实 SourceTree 也可以自动下载 git, 只不过速度不敢恭维, 还是我们自己手动下载、安装好了, 安装好 SourceTree 后, 首次运行, 会让你进行一个<strong>初始化设置</strong>, 请<strong>直接跳过</strong>;<br>因为我们已经安装好 Git 客服端了, 如果让 SourceTree 进行初始化, 它会给你重新下载一个 Git 还有 Mercurial.</p>
 <p>SourceTree 参考资料:</p>
 <ul>
 <li><a href="http://www.myexception.cn/other/1997033.html">用SourceTree轻巧Git项目图解</a></li>
@@ -431,7 +432,7 @@ mac 系统的 git-diff-wrapper.sh</p>
 <blockquote>
 <p>其实这里是让你输 yes / no, 可惜 sourcetree 中输入不了,  得我们手动在 cmd 中操作</p>
 </blockquote>
-<p>这是因为首次连接一个使用 SSH 协议的 Git 服务器的时候, 因为远程 SSH 服务器的公钥没有经过确认而导致 git 命令执行失败, 解决方法是在__命令行__下找到 SourceTree 安装目录里的 PuTTy 工具, 例如 "C:/Program Files (x86)/Atlassian/SourceTree/tools/putty/plink.exe", 然后执行命令</p>
+<p>这是因为首次连接一个使用 SSH 协议的 Git 服务器的时候, 因为远程 SSH 服务器的公钥没有经过确认而导致 git 命令执行失败, 解决方法是在<strong>命令行</strong>下找到 SourceTree 安装目录里的 PuTTy 工具, 例如 "C:/Program Files (x86)/Atlassian/SourceTree/tools/putty/plink.exe", 然后执行命令</p>
 <div class="hlcode"><pre><span class="n">plink</span><span class="p">.</span><span class="n">exe</span> <span class="n">git</span><span class="err">@</span><span class="n">github</span><span class="p">.</span><span class="n">com</span>
 </pre></div>
 

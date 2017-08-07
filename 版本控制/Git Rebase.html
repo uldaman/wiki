@@ -1,0 +1,119 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <title>Git Rebase - Wiki | Small Cpp</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            
+            <a href="/">Home</a> » <a href="/#版本控制">版本控制</a> » Git Rebase
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#git-rebase-merge">使用 git rebase 避免無謂的 merge</a></li>
+<li><a href="#commit">重建 commit</a></li>
+</ul>
+</div>
+<p>rebase 比较复杂, 应该是 git 中的高级应用了, 所以单独拿出来做篇 wiki, 转自: <a href="https://ihower.tw/blog">ihower blog</a>.</p>
+<h1 id="git-rebase-merge">使用 git <code>rebase</code> 避免無謂的 <code>merge</code></h1>
+<p><code>git pull</code> 預設的行為是將遠端的 repo. 與本地的 repo. 合併, 這也是 DVCS 的初衷, 將兩個 branch 合併. 但是, 很多時候會發生以下這種情形:</p>
+<p><img alt="" src="http://wiki.smallcpp.cn/static/images/gitRebase/git-merge.jpg" /></p>
+<p>這是因為, 我們團隊的開發模式是本地的 branch 和遠端的 branch 會同步地非常頻繁(通常就是同名稱的 branch, 例如 master), 這兩個 branch 幾乎是完全同步. 這時候就會發現這些 <code>merge</code> 動作其實沒有必要, 會造成線圖無謂的複雜. 這時候, 會推薦使用以下這個指令:</p>
+<p><code>git pull --`rebase`</code><br />
+<br><br />
+加上 <code>rebase</code> 的意思是:</p>
+<ol>
+<li>把本地 repo. 從上次 pull 之後的變更暫存起來</li>
+<li>回復到上次 pull 時的情況</li>
+<li>套用遠端的變更</li>
+<li>最後再套用剛暫存下來的本地變更</li>
+</ol>
+<p>畫圖說明一下好了, 假設合併前是這樣:</p>
+<p><code>D---E master
+     /
+A---B---C---F origin/master</code><br />
+<br><br />
+使用 <code>merge</code> 合併後:</p>
+<p><code>D--------E
+     /          \
+A---B---C---F----G   master, origin/master</code><br />
+<br><br />
+如果是 <code>rebase</code> 的方式, 就不會有 <code>G</code> 合併點:</p>
+<p><code>A---B---C---F---D'---E'   master, origin/master</code><br />
+<br><br />
+注意到, 其中 <code>D’</code>, <code>E’</code> 的 commit SHA 序號跟本來 <code>D</code>, <code>E</code> 是不同的, 因為算是砍掉重新 <code>commit</code> 了.</p>
+<p>你會問說, 有 <strong>conflict</strong> 怎麼辦?</p>
+<p><code>rebase</code> 跟 <code>merge</code> 類似, 出現 conflict 一會暫停 <code>rebase</code> 動作, 需要你手動修復後, 然後才可以繼續動作. 這也是 <code>rebase</code> 比 <code>merge</code> 複雜一點的地方:</p>
+<ul>
+<li><code>merge</code> 如果發生 conflict, 你只需要解決衝突一次, 然後 commit 出去就完成了.</li>
+<li><code>rebase</code> 的 conflict 可能會發生在上述步驟 4 的每一次重新套用上, 所以可能需要解決衝突好幾次 (<code>rebase</code> 時所謂的解決衝突, 其實是直接修改你之前的變更內容, 所以上圖中變成 <code>D’</code> 跟 <code>E’</code>).</li>
+</ul>
+<p>所以到底何時該用 <code>merge</code>? 何時可以 <code>rebase</code>? 你可能心理也有答案了, 如果你修改比較多, 預期會有較多的 conflict, 建議用 <code>merge</code> (不過, 如果是多次大範圍的主題式修改, 那是不是應該一開始就多開一個 branch 來做呢?). 如果修改範圍較小, 不太預期有 conflict, 則建議可以加上 <code>rebase</code> 參數.</p>
+<p>如果想要把 <code>rebase</code> 當做 <code>git pull</code> 的預設值, 可以在專案的 <code>.git/config</code> 加上:</p>
+<p><code>[branch "master"]
+  remote = origin
+  merge = refs/heads/master
+  rebase = true</code><br />
+<br><br />
+也可以直接加到 <code>~/.gitconfig</code> 讓所有的 tracked branches 都自動套用這個設定:</p>
+<p><code>[branch]
+  autosetuprebase = always</code><br />
+<br></p>
+<h1 id="commit">重建 commit</h1>
+<p><code>rebase</code> 的真正潛力是, 我們可以從指定的版號之後, 重新隨你意 commit 一次來重建 history, 超威的. 首先輸入 <code>git rebase -i</code> 版號 就會可以跳出 editor 可以編輯, 我們可以:</p>
+<ol>
+<li>變更 commit 順序</li>
+<li>將多個 commit 合併 squash</li>
+<li>將一個 commit 打散 (edit 會停著讓你可以 <code>git reset HEAD^</code> 打散重新 commit, 完成後 <code>git rebase –continue</code>)</li>
+</ol>
+<p>另一種 <code>rebase</code> 用法是不需要打 <code>-i</code>, 直接指定另一個 branch 或 tag, 這樣就會重新 commit 另一個 branch 的東西, 然後才 commit 自己的 (也就是上面那段的用法).</p>
+<p><code>git rebase</code> 若有 conflict 就會停下來, 跟 <code>merge</code> 一樣處理完 add, 然後 <code>git rebase –continue</code> 就會繼續 commit (也可以 <code>–skip</code> 或 <code>–abort</code> 放棄啦)</p>
+<p><code>rebase</code> 有個 onto 參數用法, 使用的情境是: 假設你有三個有 dependency 的 branch 分別叫做 master/contact/search, 後來發現 search branch 只有 depend on matser, 於是你可以輸入 <code>git rebase –onto master contact search</code> 這樣就會讓 search branch 從 master 的地方開始重新 commit.</p>
+<p>再次提醒, <code>rebase</code> 千萬只能適合東西還沒 push 的情境, 或是你自己的 local 專用私人 branch. <code>rebase</code> 一個已經 push 出去的 repository, 然後你又把修改的 history push 出去, 是會造成超級大災難的.</p>
+<p>在學習 <code>rebase</code> 的過程中, 很容易拿來跟 <code>merge</code> 比較一下. 我發現一個有趣的不同點: 如果有檔案在要被 merged 的 branch 中被刪除, 如果用 <code>rebase</code> 檔案最後會不存在, 但是用 <code>merge</code> 的話檔案最後還在.</p>
+<p>另外, 在 <code>rebase</code> branch 之後, 如果再做 <code>merge</code>, 就會發現因為 master 直接就是被 <code>merge</code> 的祖先, 所以線圖直接變成一條線, 而有這種 parent 關係的 <code>merge</code> 就叫做 fast-forward. 換句話說, 因為沒有發生任何 <code>merge commit</code>, 也不會發生 conflict, Git 內部單純只是變更 reference 參照, 所以謂之 fast-forward.</p>
+<p>好心提醒, 因為開 local branch 是如此便宜無害, 所以要做 <code>rebase</code> 時建議您可以先開一個 local branch 來實驗 <code>rebase</code>. 老實說, <code>rebase</code> 還挺危險的.</p>
+<p>最後, <code>rebase</code> 我認為算是 Git 初學者最難理解的功能吧, 但是如果不知道什麼是 <code>rebase</code>, 就不能說是懂 Git 啊.</p>
+    </div>
+
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="Git Rebase" data-title="Git Rebase" data-url="http://wiki.smallcpp.cn/版本控制/Git Rebase.html"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:"smallwiki"};
+        (function() {
+            var ds = document.createElement('script');
+            ds.type = 'text/javascript';ds.async = true;
+            ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+            ds.charset = 'UTF-8';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+    </script>
+    <!-- 多说公共JS代码 end -->
+
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2017 <a href="http://www.samllcpp.com/" target="_blank">Martin</a> Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+              </p>
+        </div>
+    </body>
+</html>
