@@ -29,7 +29,7 @@
 <li><a href="#_1">正则基础</a><ul>
 <li><a href="#_2">常用符号</a></li>
 <li><a href="#_3">贪婪? 非贪婪?</a></li>
-<li><a href="#x-x-x-x">(x*?)、 (x*)、 x*?、 x*</a></li>
+<li><a href="#x42-x42-x42-x42">(x*?)、 (x*)、 x*?、 x*</a></li>
 </ul>
 </li>
 <li><a href="#ptyhon">ptyhon</a></li>
@@ -59,7 +59,7 @@
 <li>非贪婪匹配: 趋向于最长度匹配. 如上面使用模式 p 匹配字符串 str, 结果就是匹配到: abc (ab*c).</li>
 </ul>
 <p>默认情况下, <code>*</code>、 <code>+</code>、 <code>?</code> 都是贪婪匹配, 在后面加上 <code>?</code> 后, 即: <code>*?</code>、 <code>+?</code>、 <code>??</code> 为非贪婪匹配.</p>
-<h2 id="x-x-x-x"><code>(x*?)</code>、 <code>(x*)</code>、 <code>x*?</code>、 <code>x*</code></h2>
+<h2 id="x42-x42-x42-x42">(x*?)、 (x*)、 x*?、 x*</h2>
 <p>表达式中的 <code>x</code> 表示可以用 <code>.</code>、 <code>\d</code>、 <code>\w</code> 等符号代替, 表示要匹配的内容:</p>
 <ul>
 <li><code>(x*)</code>, 表示贪婪式匹配 <code>x</code>, 例如以<code>'(.*)r'</code>能从<code>'colorcolorcolor'</code>匹配到 <code>'colorcolorcolo'</code></li>
