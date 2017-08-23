@@ -1,0 +1,112 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <title>正则表达式 - Wiki | Small Cpp</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            
+            <a href="/">Home</a> » <a href="/#工具配置">工具配置</a> » 正则表达式
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#_1">正则基础</a><ul>
+<li><a href="#_2">常用符号</a></li>
+<li><a href="#_3">贪婪? 非贪婪?</a></li>
+<li><a href="#x-x-x-x">(x*?)、 (x*)、 x*?、 x*</a></li>
+</ul>
+</li>
+<li><a href="#ptyhon">ptyhon</a></li>
+</ul>
+</div>
+<h1 id="_1">正则基础</h1>
+<h2 id="_2">常用符号</h2>
+<p>比较常用的是:</p>
+<ul>
+<li><code>?</code>, 代表前面的字符能出现 0 次或 1 次, 比如 <code>colou?r</code> 表示在目标串中找到 <code>color</code> 或 <code>colour</code> 并返回, 即 <code>u</code> 可以出现 0 次或 1 次</li>
+<li><code>*</code>, 代表前面的字符能出现 0 次或无限次, 比如 <code>colou*r</code> 表示在目标串中找到 <code>color</code>、 <code>colour</code>、 <code>colouur</code>、 <code>colouuur</code> 等并返回, 即 <code>u</code> 可以出现 0 次或无限次</li>
+<li><code>+</code>, 代表前面的字符能出现 1 次或无限次, 比如 <code>colou+r</code> 表示在目标串中找到 <code>colour</code>、 <code>colouur</code>、 <code>colouuur</code> 等并返回, 即 <code>u</code> 可以出现 1 次或无限次</li>
+<li><code>()</code>, 代表以正则表达式匹配到目标后只返回括起来的内容, 比如 <code>(colou*)r</code>, 其匹配规则与 <code>colou*r</code> 一致, 但只返回 <code>colo</code>、 <code>colou</code>、 <code>colouu</code> 等</li>
+</ul>
+<p>这里准备了一张表(来自小甲鱼), 列出了正则表达式中常用的符号, 有需要注意的地方将在表下方说明.</p>
+<p><img alt="" src="http://i61.tinypic.com/5jtavs.jpg" /></p>
+<h2 id="_3">贪婪? 非贪婪?</h2>
+<p><code>?</code> 还有个作用是让匹配模式变为<strong>非贪婪匹配</strong>. 什么是贪婪? 非贪婪?</p>
+<p>如：</p>
+<div class="hlcode"><pre><span class="n">String</span> <span class="n">str</span> <span class="o">=</span> <span class="s">&quot;abcaxc&quot;</span><span class="p">;</span>
+<span class="n">Patter</span> <span class="n">p</span> <span class="o">=</span> <span class="s">&quot;ab*c&quot;</span><span class="p">;</span>
+</pre></div>
+
+
+<ul>
+<li>贪婪匹配: 趋向于最大长度匹配. 如上面使用模式 p 匹配字符串 str, 结果就是匹配到: abcaxc (ab*c).</li>
+<li>非贪婪匹配: 趋向于最长度匹配. 如上面使用模式 p 匹配字符串 str, 结果就是匹配到: abc (ab*c).</li>
+</ul>
+<p>默认情况下, <code>*</code>、 <code>+</code>、 <code>?</code> 都是贪婪匹配, 在后面加上 <code>?</code> 后, 即: <code>*?</code>、 <code>+?</code>、 <code>??</code> 为非贪婪匹配.</p>
+<h2 id="x-x-x-x"><code>(x*?)</code>、 <code>(x*)</code>、 <code>x*?</code>、 <code>x*</code></h2>
+<p>表达式中的 <code>x</code> 表示可以用 <code>.</code>、 <code>\d</code>、 <code>\w</code> 等符号代替, 表示要匹配的内容:</p>
+<ul>
+<li><code>(x*)</code>, 表示贪婪式匹配 <code>x</code>, 例如以<code>'(.*)r'</code>能从<code>'colorcolorcolor'</code>匹配到 <code>'colorcolorcolo'</code></li>
+<li><code>x*</code>, 表示贪婪式匹配 <code>x</code>, 例如以<code>'.*r'</code>能从<code>'colorcolorcolor'</code>匹配到 <code>'colorcolorcolor'</code></li>
+<li><code>(x*?)</code>, 表示非贪婪式匹配 <code>x</code>, 例如以<code>'(.*?)r'</code>能从<code>'colorcolorcolor'</code>匹配到 <code>['colo', 'colo', 'colo']</code></li>
+<li><code>x*?</code>, 表示非贪婪式匹配 <code>x</code>, 例如以<code>'.*?r'</code>能从<code>'colorcolorcolor'</code>匹配到 <code>['color', 'color', 'color']</code></li>
+</ul>
+<h1 id="ptyhon">ptyhon</h1>
+<p>python 中支持正则表达式的模块是 <code>re</code>, 使用时 <code>import re</code> 即可.</p>
+<ul>
+<li><code>search</code>: 匹配第一个符合规律的内容, 返回一个正则表达式对象</li>
+<li><code>match</code>: 只有当开头就能匹配到模式的时候, 才返回一个正则表达式对象</li>
+<li><code>findall</code>: 匹配所有符合规律的内容, 返回包含结果的列表</li>
+<li><code>sub</code>: 替换符合规律的内容, 返回替换后的值</li>
+</ul>
+<p><code>search</code> 与 <code>match</code> 返回的是一个正则表达式对象, 需要通过 <code>group(index)</code> 去获取内容, <code>index</code> 与正则表达式中使用的 <code>( )</code> 有关:</p>
+<p>index 指出获取正则表达式中第几个括号的返回结果, 0 (或者省略 index) 表示获取无括号的结果, 即 <code>(x*?)</code> 和  <code>x*?</code> 通过 <code>group(0)</code> 返回的结果是一样的, 如果 index 大于括号的数量则会报错;<br><br />
+比如 <code>r = re.match(r'(.*?)r(.*?)r', 'xxxryyyr')</code>:</p>
+<ul>
+<li><code>r.group()</code> 返回 <code>xxxryyyr</code></li>
+<li><code>r.group(1)</code> 返回 <code>xxx</code></li>
+<li><code>r.group(2)</code> 返回 <code>yyy</code></li>
+</ul>
+    </div>
+
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="正则表达式" data-title="正则表达式" data-url="http://wiki.smallcpp.cn/工具配置/正则表达式.html"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:"smallwiki"};
+        (function() {
+            var ds = document.createElement('script');
+            ds.type = 'text/javascript';ds.async = true;
+            ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+            ds.charset = 'UTF-8';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+    </script>
+    <!-- 多说公共JS代码 end -->
+
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2017 <a href="http://www.samllcpp.com/" target="_blank">Martin</a> Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+              </p>
+        </div>
+    </body>
+</html>
