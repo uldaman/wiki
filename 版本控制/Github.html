@@ -1,0 +1,87 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <title>github 常用功能 - Wiki | Small Cpp</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            
+            <a href="/">Home</a> » <a href="/#版本控制">版本控制</a> » github 常用功能
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <h1 id="watchstarfork">watch、star、fork</h1>
+<p><img alt="" src="http://wiki.smallcpp.cn/static/images/github/watch.png" /></p>
+<p>如上图所示, 每个 github 项目的右上角, 都有三个按钮: <code>watch</code>、<code>star</code>、<code>fork</code>.</p>
+<h2 id="watch">watch</h2>
+<p>这个单词在调试程序时经常遇到, 意为监视, 当把某个变量添加到监视后, 就看实时看到变量的变化.</p>
+<p>Github 中的 <code>watch</code> 也是类似的功能, 当你监视某个项目后, 如果项目发生变动, 如被别人提交了 pull request、发起了 issue 等等情况, 都会在自己的个人通知中心收到一条通知消息, 如果设置了个人邮箱, 那么还可能收到相应的邮件.</p>
+<p>点击 <code>watch</code> 按钮后会出现三个选项:</p>
+<ul>
+<li>Not <code>watch</code>ing, 不监视, 将不会收到与我无关的通知, 只会收到与我有关的 (我发起的、主动参与的或被 @ 的) 讨论的动态通知</li>
+<li><code>watch</code>ing, 监视, 关注这个项目的所有动态</li>
+<li>Ignoring, 彻底忽略这个项目的动态, 那意味着连与我有关的重要消息也收不到了</li>
+</ul>
+<p>通常只会在 <code>Not</code>watch<code>ing</code> 和 <code>watch</code>ing` 中选择.</p>
+<h2 id="star">star</h2>
+<p>集<code>点赞</code>与<code>收藏</code>功能于一体...</p>
+<p>点击 github 个人头像, 选择 <code>your</code>star<code>s</code> 可以查看 <code>star</code> 过的列表.</p>
+<p>然后就没啥好说的了...</p>
+<h2 id="fork">fork</h2>
+<p>当对别人的项目进行 <code>fork</code> 后, 就会在自己的仓库生成一份源项目的拷贝, 当然这个拷贝只是 <code>fork</code> 发生时的项目文件, 如果后续源项目文件发生改变, 必须通过其他的方式去同步. (具体操作看后面的 pull request)</p>
+<p><code>fork</code> 应该只在需要对开源项目做贡献时才使用, 很多人会把 <code>fork</code> 当成收藏，这是不对的, 收藏应该使用 <code>star</code> 功能.</p>
+<h1 id="issue">issue</h1>
+<p><img alt="" src="http://wiki.smallcpp.cn/static/images/github/issues.png" /></p>
+<p>问题列表</p>
+<h1 id="pull-request">Pull Request</h1>
+<p><img alt="" src="http://wiki.smallcpp.cn/static/images/github/newrequest.png" /></p>
+<p>点击 <code>New pull request</code> 按钮创建一个新请求.</p>
+<p><img alt="" src="http://wiki.smallcpp.cn/static/images/github/comparing.png" /></p>
+<p>该请求是<strong>双向</strong>的:</p>
+<ul>
+<li>如上图所示的 <code>base fork</code> 选择自己的项目而 <code>head fork</code> 选择 fork 的源项目时, 创建的请求是从源项目更新到 -> 自己的项目</li>
+<li>反过来, 如果 <code>base fork</code> 选择 fork 的源项目而 <code>head fork</code> 选择自己的项目时, 创建的请求是把自己项目的更新推送到 -> 源项目.</li>
+<li>如果无法选择 <code>base fork</code> 和 <code>head fork</code>, 可以点击 <code>compare across forks</code> 试试.</li>
+</ul>
+    </div>
+
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="github 常用功能" data-title="github 常用功能" data-url="http://wiki.smallcpp.cn/版本控制/github 常用功能.html"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:"smallwiki"};
+        (function() {
+            var ds = document.createElement('script');
+            ds.type = 'text/javascript';ds.async = true;
+            ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+            ds.charset = 'UTF-8';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+    </script>
+    <!-- 多说公共JS代码 end -->
+
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2017 <a href="http://www.samllcpp.com/" target="_blank">Martin</a> Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+              </p>
+        </div>
+    </body>
+</html>
