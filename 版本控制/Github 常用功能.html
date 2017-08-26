@@ -1,0 +1,120 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <title>Github 常用功能 - Wiki | Small Cpp</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            
+            <a href="/">Home</a> » <a href="/#版本控制">版本控制</a> » Github 常用功能
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#watchstarfork">Watch、star、fork</a><ul>
+<li><a href="#watch">Watch</a></li>
+<li><a href="#star">star</a></li>
+<li><a href="#fork">fork</a></li>
+</ul>
+</li>
+<li><a href="#issue">issue</a></li>
+<li><a href="#pull-request">Pull Request</a></li>
+</ul>
+</div>
+<h1 id="watchstarfork">Watch、star、fork</h1>
+<p><img alt="" src="http://wiki.smallcpp.cn/static/images/github/Watch.png" /></p>
+<p>如上图所示, 每个 github 项目的右上角, 都有三个按钮: <code>Watch</code>、<code>star</code>、<code>fork</code>.</p>
+<h2 id="watch">Watch</h2>
+<p>这个单词在调试程序时经常遇到, 意为监视, 当把某个变量添加到监视后, 就可以实时看到变量的值的变化.</p>
+<p>Github 中的 <code>Watch</code> 也是类似的功能, 当你监视某个项目后, 如果项目发生变动, 如被别人提交了 pull request、发起了 issue 等等情况, 都会在自己的个人通知中心收到一条通知消息, 如果设置了个人邮箱, 那么还可能收到相应的邮件.</p>
+<p>点击 <code>Watch</code> 按钮后会出现三个选项:</p>
+<ul>
+<li>Not watching, 不监视, 将不会收到与我无关的通知, 只会关注与我有关的动态 (我发起的、主动参与的或被 @ 的)</li>
+<li>Watching, 监视, 关注这个项目的所有动态</li>
+<li>Ignoring, 彻底忽略这个项目的动态, 那意味着连与我有关的重要消息也收不到了</li>
+</ul>
+<p>通常只会在 <code>Not watching</code> 和 <code>Watching</code> 中选择.</p>
+<h2 id="star">star</h2>
+<p>集<code>点赞</code>与<code>收藏</code>功能于一体...</p>
+<p>点击 github 个人头像, 选择 <code>your stars</code> 可以查看 <code>star</code> 过的列表.</p>
+<p>然后就没啥好说的了...</p>
+<h2 id="fork">fork</h2>
+<p>当对别人的项目进行 <code>fork</code> 后, 就会在自己的仓库生成一份源项目的拷贝, 当然这个拷贝只是 <code>fork</code> 发生时的项目文件, 如果后续源项目文件发生改变, 必须通过 <a href="http://wiki.smallcpp.cn/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6/Github.html#pull-request">pull request</a> 去同步.</p>
+<p><code>fork</code> 应该只在需要对开源项目做贡献时才使用, 很多人会把 <code>fork</code> 当成收藏，这是不对的, 收藏应该使用 <a href="http://wiki.smallcpp.cn/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6/Github.html#star">star</a> 功能.</p>
+<p><code>fork</code> 别人的源项目后, 应该谨遵 <a href="http://wiki.smallcpp.cn/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6/Github.html#pull-request">pull request</a> 的建议去贡献自己的代码.</p>
+<h1 id="issue">issue</h1>
+<p><img alt="" src="http://wiki.smallcpp.cn/static/images/github/issues.png" /></p>
+<p>问题列表, 可当该项目的 <strong>todolist</strong> 使用, 可以选择 issue 的类型, 如 feature、bug 等.</p>
+<p>另外，在 commit 中可以通过 <code>#issue_id</code> 与某个 issue 关联, 比如 <code>commit message title, #1</code>, 还可以指定对 issue 的操作:</p>
+<ul>
+<li><code>commit message title, closed #1</code></li>
+<li><code>commit message title, fixed #1</code></li>
+<li><code>commit message title, resolved #1</code></li>
+</ul>
+<p>如果这是一个团队项目, 通过指定 <code>Assignee</code> 则可以将 issue 分配到某位项目成员身上, 为团队协作提供可能.</p>
+<p>最后, issue 是开放的, 作为一个路人, 你可以通过 issue 给别人的项目提 bug.</p>
+<h1 id="pull-request">Pull Request</h1>
+<blockquote>
+<p>首先, 要注意一点, 对于 fork 的项目, 最好永远不要直接在 master 分支上进行修改, 因为 fork 的源项目随时会发生更改, 当收到这样的动态通知时, 需要发起一个同步的 Pull Request, 如果之前直接在 master 上修改了代码, 此时就会出现冲突问题. 所以在 master 分支上应该只用来发起同步的 Pull Request.</p>
+</blockquote>
+<p>当 <a href="http://wiki.smallcpp.cn/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6/Github.html#fork">fork</a> 了一个开源项目后, 应该:</p>
+<ul>
+<li>clone 自己仓库的项目到本地</li>
+<li>在本地仓库中新建一个专门的开发分支进行修改</li>
+<li>push 开发分支的修改到自己的 github 仓库</li>
+<li>从开发分支向 fork 源的 master 分支发起一个推送 Pull Request</li>
+<li>fork 源项目维护者合并功能到他的 master 后</li>
+<li>从 fork 源的 master 分支发起一个同步 Pull Request 到自己仓库项目的 master 分支</li>
+<li>删除开发分支, Pull Request 工作流结束</li>
+</ul>
+<p><img alt="" src="http://wiki.smallcpp.cn/static/images/github/newrequest.png" /></p>
+<p>点击 <code>New pull request</code> 按钮创建一个新请求.</p>
+<p><img alt="" src="http://wiki.smallcpp.cn/static/images/github/comparing.png" /></p>
+<p>该请求是<strong>双向</strong>的:</p>
+<ul>
+<li>当如上图所示, <code>base fork</code> 选择 fork 的源项目而 <code>head fork</code> 选择自己的项目时, 创建的请求是把自己项目的更新推送到 -> 源项目.</li>
+<li>反过来, 如果 <code>base fork</code> 选择自己的项目而 <code>head fork</code> 选择 fork 的源项目时, 创建的请求是从源项目更新到 -> 自己的项目</li>
+<li>如果无法选择 <code>base fork</code> 和 <code>head fork</code>, 可以点击 <code>compare across forks</code> 试试.</li>
+</ul>
+    </div>
+
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="Github 常用功能" data-title="Github 常用功能" data-url="http://wiki.smallcpp.cn/版本控制/Github 常用功能.html"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:"smallwiki"};
+        (function() {
+            var ds = document.createElement('script');
+            ds.type = 'text/javascript';ds.async = true;
+            ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+            ds.charset = 'UTF-8';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+    </script>
+    <!-- 多说公共JS代码 end -->
+
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2017 <a href="http://www.samllcpp.com/" target="_blank">Martin</a> Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+              </p>
+        </div>
+    </body>
+</html>
