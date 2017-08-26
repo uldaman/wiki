@@ -70,16 +70,16 @@
 <p>最后, issue 是开放的, 作为一个路人, 你可以通过 issue 给别人的项目提 bug.</p>
 <h1 id="pull-request">Pull Request</h1>
 <blockquote>
-<p>首先, 要注意一点, 对于 fork 的项目, 最好永远不要直接在 master 分支上进行修改, 因为 fork 的源项目随时会发生更改, 当收到这样的动态通知时, 需要发起一个同步的 Pull Request, 如果之前直接在 master 上修改了代码, 此时就会出现冲突问题. 所以在 master 分支上应该只用来发起同步的 Pull Request.</p>
+<p>首先, 要注意一点, 对于 fork 的项目, 最好永远不要直接在 master 分支上进行修改, 因为 fork 的源项目随时会发生更改, 当收到 fork 源更新的通知时, 需要在自己的仓库发起同步 Pull Request, 如果之前直接在 master 上修改了代码, 此时就会出现冲突问题. 所以在 master 分支上应该只用来发起同步 Pull Request.</p>
 </blockquote>
 <p>当 <a href="http://wiki.smallcpp.cn/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6/Github%20%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD.html#fork">fork</a> 了一个开源项目后, 应该:</p>
 <ul>
 <li>clone 自己仓库的项目到本地</li>
 <li>在本地仓库中新建一个专门的开发分支进行修改</li>
 <li>push 开发分支的修改到自己的 github 仓库</li>
-<li>从开发分支向 fork 源的 master 分支发起一个推送 Pull Request</li>
-<li>fork 源项目维护者合并功能到他的 master 后</li>
-<li>从 fork 源的 master 分支发起一个同步 Pull Request 到自己仓库项目的 master 分支</li>
+<li>从开发分支向 fork 源的 master 分支发起推送 Pull Request</li>
+<li>fork 源项目的维护者合并功能到他的 master 分支</li>
+<li>从 fork 源的 master 分支发起同步 Pull Request 到自己仓库项目的 master 分支</li>
 <li>删除开发分支, Pull Request 工作流结束</li>
 </ul>
 <p><img alt="" src="http://wiki.smallcpp.cn/static/images/github/newrequest.png" /></p>
