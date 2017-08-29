@@ -66,7 +66,16 @@
 <li><code>commit message title, fixed #1</code></li>
 <li><code>commit message title, resolved #1</code></li>
 </ul>
-<p>如果这是一个团队项目, 通过指定 <code>Assignee</code> 则可以将 issue 分配到某位项目成员身上, 为团队协作提供可能.</p>
+<p>不过在此之前, 需要检查下你的 Github 的注册邮箱与 <code>git config --list</code> 中设置的 <code>user.email</code> 是否一致, <strong>只有一致了才能通过 commit 操作 issue</strong>, 如果不一致, 需要设置下:</p>
+<div class="hlcode"><pre><span class="n">git</span> <span class="n">config</span> <span class="o">--</span><span class="n">global</span> <span class="n">user</span><span class="p">.</span><span class="n">email</span> <span class="s">&quot;email@example.com&quot;</span>
+
+<span class="cp"># 如果设置了 config --local, 则需要再检查下</span>
+<span class="n">git</span> <span class="n">config</span> <span class="o">--</span><span class="n">local</span> <span class="n">user</span><span class="p">.</span><span class="n">email</span> <span class="s">&quot;email@example.com&quot;</span>
+</pre></div>
+
+
+<p><br><br />
+issue 中还可以通过指定 <code>Assignee</code> 则可以将 issue 分配到某位项目成员身上, 为<strong>团队协作</strong>提供可能.</p>
 <p>最后, issue 是开放的, 作为一个路人, 你可以通过 issue 给别人的项目提 bug.</p>
 <h1 id="pull-request">Pull Request</h1>
 <blockquote>
