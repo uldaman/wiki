@@ -49,7 +49,16 @@ Github 中的 `Watch` 也是类似的功能, 当你监视某个项目后, 如果
 - `commit message title, fixed #1`
 - `commit message title, resolved #1`
 
-如果这是一个团队项目, 通过指定 `Assignee` 则可以将 issue 分配到某位项目成员身上, 为团队协作提供可能.
+不过在此之前, 需要检查下你的 Github 的注册邮箱与 `git config --list` 中设置的 `user.email` 是否一致, **只有一致了才能通过 commit 操作 issue**, 如果不一致, 需要设置下:
+
+```
+git config --global user.email "email@example.com"
+
+# 如果设置了 config --local, 则需要再检查下
+git config --local user.email "email@example.com"
+```
+<br>
+issue 中还可以通过指定 `Assignee` 则可以将 issue 分配到某位项目成员身上, 为**团队协作**提供可能.
 
 最后, issue 是开放的, 作为一个路人, 你可以通过 issue 给别人的项目提 bug.
 
