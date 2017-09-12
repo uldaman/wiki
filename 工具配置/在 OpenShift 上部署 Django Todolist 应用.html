@@ -70,11 +70,11 @@
 <li>数据库保存在 $OPENSHIFT_DATA_DIR/db.sqlite3 ($OPENSHIFT_DATA_DIR 是一个 Link, 指向 app-root/data)</li>
 <li>初次使用, 必须创建/修改 admin 的密码<ul>
 <li><code>python $OPENSHIFT_REPO_DIR/wsgi/myproject/manage.py createsuperuser</code> ($OPENSHIFT_REPO_DIR 是一个 Link, 指向 app-root/runtime/repo)</li>
-<li>登录地址: <a href="https://todolist-smallcpp.rhcloud.com/admin">https://todolist-smallcpp.rhcloud.com/admin</a></li>
+<li>登录地址: <a href="https://todolist-smallcpp.rhcloud.com/admin">https://todolist-smallcpp.rhcloud.com/admin</a> (已被修改为 <a href="https://todolist-smallcpp.rhcloud.com/todos">https://todolist-smallcpp.rhcloud.com/todos</a>)</li>
 </ul>
 </li>
 <li>要注意使用 <code>python $OPENSHIFT_REPO_DIR/wsgi/myproject/manage.py syncdb</code> 同步数据库<ul>
-<li>由于 <code>syncdb</code> 的尿性, 如果修改了数据库结构, 需要先执行 <code>rm -f $OPENSHIFT\_DATA\_DIR/db.sqlite3</code></li>
+<li>由于 <code>syncdb</code> 的尿性, 如果修改了数据库结构, 需要先执行 <code>rm -f $OPENSHIFT_DATA_DIR/db.sqlite3</code></li>
 <li>关于 <code>syncdb</code> 的说明参考我另一篇笔记 <code>44. Django migration vs syncdb</code></li>
 </ul>
 </li>
