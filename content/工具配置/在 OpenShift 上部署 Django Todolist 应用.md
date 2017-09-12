@@ -50,9 +50,9 @@ Authenticating with public key "imported-openssh-key"
 - 数据库保存在 $OPENSHIFT\_DATA\_DIR/db.sqlite3 ($OPENSHIFT\_DATA\_DIR 是一个 Link, 指向 app\-root/data)
 - 初次使用, 必须创建/修改 admin 的密码
     + `python $OPENSHIFT_REPO_DIR/wsgi/myproject/manage.py createsuperuser` ($OPENSHIFT\_REPO\_DIR 是一个 Link, 指向 app\-root/runtime/repo)
-    + 登录地址: [https://todolist-smallcpp.rhcloud.com/admin](https://todolist-smallcpp.rhcloud.com/admin)
+    + 登录地址: [https://todolist-smallcpp.rhcloud.com/admin](https://todolist-smallcpp.rhcloud.com/admin) (已被修改为 [https://todolist-smallcpp.rhcloud.com/todos](https://todolist-smallcpp.rhcloud.com/todos))
 - 要注意使用 `python $OPENSHIFT_REPO_DIR/wsgi/myproject/manage.py syncdb` 同步数据库
-    + 由于 `syncdb` 的尿性, 如果修改了数据库结构, 需要先执行 `rm -f $OPENSHIFT\_DATA\_DIR/db.sqlite3`
+    + 由于 `syncdb` 的尿性, 如果修改了数据库结构, 需要先执行 `rm -f $OPENSHIFT_DATA_DIR/db.sqlite3`
     + 关于 `syncdb` 的说明参考我另一篇笔记 `44. Django migration vs syncdb`
 
 # 三、安装 todolist 项目
