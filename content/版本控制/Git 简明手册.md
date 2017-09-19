@@ -448,13 +448,22 @@ SourceTree 的 stash 操作会让选择一个选项 -- "保存暂存的更改"
 
 提交为空，但是存在尚未跟踪的文件（使用 "git add" 建立跟踪）
 ```
-
+<br>
 解决方式：
 
-```
+```sh
 git config --global core.quotepath false
 ```
 <br>
+另外, 还会出现 commit 信息乱码:
+
+```sh
+git config --global i18n.commitencoding utf-8
+git config --global i18n.logoutputencoding gbk
+git config --global gui.encoding utf-8
+git config --global svn.pathnameencoding GB2312
+```
+
 ## 13. 区分文件大小写
 默认的 Git 监控是**不区分**文件大小写的 ~
 
