@@ -480,12 +480,21 @@ mac 系统的 git-diff-wrapper.sh</p>
 </pre></div>
 
 
-<p>解决方式：</p>
-<div class="hlcode"><pre><span class="n">git</span> <span class="n">config</span> <span class="o">--</span><span class="n">global</span> <span class="n">core</span><span class="p">.</span><span class="n">quotepath</span> <span class="nb">false</span>
+<p><br><br />
+解决方式：</p>
+<div class="hlcode"><pre>git config --global core.quotepath <span class="nb">false</span>
 </pre></div>
 
 
-<p><br></p>
+<p><br><br />
+另外, 还会出现 commit 信息乱码:</p>
+<div class="hlcode"><pre>git config --global i18n.commitencoding utf-8
+git config --global i18n.logoutputencoding gbk
+git config --global gui.encoding utf-8
+git config --global svn.pathnameencoding GB2312
+</pre></div>
+
+
 <h2 id="13">13. 区分文件大小写</h2>
 <p>默认的 Git 监控是<strong>不区分</strong>文件大小写的 ~</p>
 <p>Git 控制是否忽略大小的选项是 <code>core.ignorecase</code> (true: 不区分, false: 区分), 但是这个选项在每个 Git 项目的配置里都是默认 true 的, 所以就算配了全局的 <code>core.ignorecase</code> 为 <code>false</code>, 也会被项目的配置给覆盖掉.</p>
