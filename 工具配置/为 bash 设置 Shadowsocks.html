@@ -1,0 +1,85 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
+        <title>为 bash 设置 Shadowsocks - Wiki | Small Cpp</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            
+            <a href="/">Home</a> » <a href="/#工具配置">工具配置</a> » 为 bash 设置 Shadowsocks
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#polipo">安装 polipo</a></li>
+<li><a href="#parentproxy">设置 parentProxy</a></li>
+<li><a href="#polipo_1">启动 polipo</a></li>
+<li><a href="#_1">验证</a></li>
+<li><a href="#_2">当前会话全局设置</a></li>
+<li><a href="#git">设置 Git 代理</a></li>
+</ul>
+</div>
+<p>Shadowsocks 是常用的代理工具, 它使用 socks5 协议, 而终端很多工具目前只支持 http 和 https 等协议, 对 socks5 协议支持不够好, 所以为终端设置 shadowsocks 的思路就是将 socks 协议转换成 http 协议, 然后为终端设置即可. 可以采用比较知名的 polipo 来实现, polipo 是一个轻量级的缓存 web 代理程序. </p>
+<h1 id="polipo">安装 polipo</h1>
+<p><code>brew install polipo</code></p>
+<h1 id="parentproxy">设置 parentProxy</h1>
+<p><code>vim /usr/local/opt/polipo/*.plist</code></p>
+<p>打开 <code>/usr/local/opt/polipo/homebrew.mxcl.polipo.plist</code></p>
+<p>在 array 标签组里添加 <code>&lt;string&gt;socksParentProxy=localhost:1086&lt;/string&gt;</code>, 端口是 Shadowsocks 中设置的 socks5 端口.</p>
+<h1 id="polipo_1">启动 polipo</h1>
+<p><code>brew services start(/restart) polipo</code></p>
+<h1 id="_1">验证</h1>
+<p>先用正常模式看下当前网络: <code>cur ip.gs</code>.</p>
+<p>再用代理模式看下: <code>http_proxy=http://localhost:8123 curl ip.gs</code>.</p>
+<p>为某个命令设置代理, 前面加上 <code>http_proxy=http://localhost:8123</code> 后接命令即可 (该方式对 Git 无效).</p>
+<blockquote>
+<p>8123 是 polipo 的默认端口, 如有需要, 可以修改成其他有效端口. </p>
+</blockquote>
+<h1 id="_2">当前会话全局设置</h1>
+<p>如果嫌每次为每一个命令设置代理比较麻烦, 可以为当前会话设置全局的代理: <code>export http_proxy=http://localhost:8123</code>.  如果想撤销当前会话的 http_proxy 代理, 使用 <code>unset http_proxy</code>. </p>
+<p>如果想长久设置, 将 export 命令加入 <code>.bashrc</code> 或者 <code>.bash_profile</code> 文件.</p>
+<h1 id="git">设置 Git 代理</h1>
+<p>使用上面的方式对 Git 无效, Git 走代理需要使用 config.</p>
+<p><code>git clone xxxx --config http.proxy=localhost:8123</code></p>
+    </div>
+
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="为 bash 设置 Shadowsocks" data-title="为 bash 设置 Shadowsocks" data-url="http://wiki.smallcpp.cn/工具配置/为 bash 设置 Shadowsocks.html"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:"smallwiki"};
+        (function() {
+            var ds = document.createElement('script');
+            ds.type = 'text/javascript';ds.async = true;
+            ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+            ds.charset = 'UTF-8';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+    </script>
+    <!-- 多说公共JS代码 end -->
+
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2017 <a href="http://www.samllcpp.com/" target="_blank">Martin</a> Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+              </p>
+        </div>
+    </body>
+</html>
