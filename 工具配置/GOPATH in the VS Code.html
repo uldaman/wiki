@@ -7,7 +7,7 @@
         <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
         <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon">
         <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
-        <title>vscode 中为每个 go 项目单独设置 gopath - Wiki | Small Cpp</title>
+        <title>GOPATH in the VS Code - Wiki | Small Cpp</title>
         <meta name="keywords" content=""/>
         <meta name="description" content=""/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -19,20 +19,27 @@
     <div id="header">
         <div id="post-nav">
             
-            <a href="/">Home</a> » <a href="/#工具配置">工具配置</a> » vscode 中为每个 go 项目单独设置 gopath
+            <a href="/">Home</a> » <a href="/#工具配置">工具配置</a> » GOPATH in the VS Code
             
         </div>
     </div>
     <div class="clearfix"></div>
     <div id="content">
-        <ol>
-<li>另存工作区</li>
-<li>打开用户设置 (首选项 -&gt; 设置): <code>"go.gopath": "${workspaceRoot}:${workspaceRoot}/build/_workspace"</code></li>
-</ol>
+        <p>打开用户设置 (首选项 -&gt; 设置): </p>
+<div class="hlcode"><pre><span class="p">{</span>
+    <span class="nt">&quot;go.inferGopath&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="nt">&quot;go.toolsGopath&quot;</span><span class="p">:</span> <span class="s2">&quot;/Users/hanxiao/Desktop/commonGoPath&quot;</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p><br><br />
+<strong>inferGopath</strong> 让编辑器自动推断 Gopath, 规则是沿着当前文件向上找到 src 目录, 并将其设为 Gopath (该结果会覆盖 go.gopath 的设置). 所以我们的项目必须满足 Go 推荐的结构, 即源码要位于 <code>gopath/src</code> 目录下.</p>
+<p><strong>toolsGopath</strong> 选项建议设置成全局的一个目录, 它被用来存放一些 VSCode 依赖的 go package, 这样还可以避免项目代码直接引用到这些工具的 src.</p>
     </div>
 
     <!-- 多说评论框 start -->
-    <div class="ds-thread" data-thread-key="vscode 中为每个 go 项目单独设置 gopath" data-title="vscode 中为每个 go 项目单独设置 gopath" data-url="http://wiki.smallcpp.cn/工具配置/vscode 中为每个 go 项目单独设置 gopath.html"></div>
+    <div class="ds-thread" data-thread-key="GOPATH in the VS Code" data-title="GOPATH in the VS Code" data-url="http://wiki.smallcpp.cn/工具配置/GOPATH in the VS Code.html"></div>
     <!-- 多说评论框 end -->
     <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
     <script type="text/javascript">
