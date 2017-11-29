@@ -60,20 +60,14 @@ A---B---C---F---D'---E'   master, origin/master
 
 所以到底何時該用 `merge`? 何時可以 `rebase`? 你可能心理也有答案了, 如果你修改比較多, 預期會有較多的 conflict, 建議用 `merge` (不過, 如果是多次大範圍的主題式修改, 那是不是應該一開始就多開一個 branch 來做呢?). 如果修改範圍較小, 不太預期有 conflict, 則建議可以加上 `rebase` 參數.
 
-如果想要把 `rebase` 當做 `git pull` 的預設值, 可以在專案的 `.git/config` 加上:
+如果想要把 `rebase` 當做 `git pull` 的預設值, 可以:
 
 ```
-[branch "master"]
-  remote = origin
-  merge = refs/heads/master
-  rebase = true
-```
-<br>
-也可以直接加到 `~/.gitconfig` 讓所有的 tracked branches 都自動套用這個設定:
+In git >= 1.7.9:
+git config --global/local pull.rebase true
 
-```
-[branch]
-  autosetuprebase = always
+In git < 1.7.9:
+git config --global/local branch.autosetuprebase always
 ```
 <br>
 # 重建 commit
