@@ -77,18 +77,12 @@
 <li><code>rebase</code> 的 conflict 可能會發生在上述步驟 4 的每一次重新套用上, 所以可能需要解決衝突好幾次 (<code>rebase</code> 時所謂的解決衝突, 其實是直接修改你之前的變更內容, 所以上圖中變成 <code>D’</code> 跟 <code>E’</code>).</li>
 </ul>
 <p>所以到底何時該用 <code>merge</code>? 何時可以 <code>rebase</code>? 你可能心理也有答案了, 如果你修改比較多, 預期會有較多的 conflict, 建議用 <code>merge</code> (不過, 如果是多次大範圍的主題式修改, 那是不是應該一開始就多開一個 branch 來做呢?). 如果修改範圍較小, 不太預期有 conflict, 則建議可以加上 <code>rebase</code> 參數.</p>
-<p>如果想要把 <code>rebase</code> 當做 <code>git pull</code> 的預設值, 可以在專案的 <code>.git/config</code> 加上:</p>
-<div class="hlcode"><pre><span class="k">[branch &quot;master&quot;]</span>
-  <span class="na">remote</span> <span class="o">=</span> <span class="s">origin</span>
-<span class="s">  merge = refs/heads/master</span>
-<span class="s">  rebase = true</span>
-</pre></div>
+<p>如果想要把 <code>rebase</code> 當做 <code>git pull</code> 的預設值, 可以:</p>
+<div class="hlcode"><pre><span class="n">In</span> <span class="n">git</span> <span class="o">&gt;=</span> <span class="mf">1.7.9</span><span class="o">:</span>
+<span class="n">git</span> <span class="n">config</span> <span class="o">--</span><span class="n">global</span><span class="o">/</span><span class="n">local</span> <span class="n">pull</span><span class="p">.</span><span class="n">rebase</span> <span class="nb">true</span>
 
-
-<p><br><br />
-也可以直接加到 <code>~/.gitconfig</code> 讓所有的 tracked branches 都自動套用這個設定:</p>
-<div class="hlcode"><pre><span class="k">[branch]</span>
-  <span class="na">autosetuprebase</span> <span class="o">=</span> <span class="s">always</span>
+<span class="n">In</span> <span class="n">git</span> <span class="o">&lt;</span> <span class="mf">1.7.9</span><span class="o">:</span>
+<span class="n">git</span> <span class="n">config</span> <span class="o">--</span><span class="n">global</span><span class="o">/</span><span class="n">local</span> <span class="n">branch</span><span class="p">.</span><span class="n">autosetuprebase</span> <span class="n">always</span>
 </pre></div>
 
 
