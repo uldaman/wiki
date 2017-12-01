@@ -1,5 +1,5 @@
 ---
-title: GOPATH in the VS Code
+title: GOPATH in VSCode
 layout: page
 date: 2017-11-22 16:58
 ---

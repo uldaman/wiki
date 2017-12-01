@@ -1,5 +1,5 @@
 ---
-title: PlantUML for VSCode
+title: PlantUML in VSCode
 layout: page
 date: 2017-12-01 13:00
 ---
