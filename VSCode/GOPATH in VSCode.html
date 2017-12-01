@@ -7,7 +7,7 @@
         <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
         <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon">
         <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
-        <title>PlantUML for VSCode - Wiki | Small Cpp</title>
+        <title>GOPATH in VSCode - Wiki | Small Cpp</title>
         <meta name="keywords" content=""/>
         <meta name="description" content=""/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -19,26 +19,27 @@
     <div id="header">
         <div id="post-nav">
             
-            <a href="/">Home</a> » <a href="/#VSCode">VSCode</a> » PlantUML for VSCode
+            <a href="/">Home</a> » <a href="/#VSCode">VSCode</a> » GOPATH in VSCode
             
         </div>
     </div>
     <div class="clearfix"></div>
     <div id="content">
-        <p><a href="https://marketplace.visualstudio.com/items?itemName=jebbs.plantuml">PlantUML for VSCode</a></p>
-<ol>
-<li>在 VSCode 的插件中安装 plantuml</li>
-<li><code>brew install graphviz</code></li>
-<li><code>brew cask install java</code></li>
-</ol>
-<p>plantuml 文件后缀是 <code>.wsd</code>.</p>
-<p>Use References:<br><br />
-<a href="http://www.jianshu.com/p/e92a52770832">使用 Sublime + PlantUML 高效地画图</a><br><br />
-<a href="http://archive.3zso.com/archives/plantuml-quickstart.html#orgec32f74">PlantUML 快速指南</a></p>
+        <p>打开用户设置 (首选项 -&gt; 设置): </p>
+<div class="hlcode"><pre><span class="p">{</span>
+    <span class="nt">&quot;go.inferGopath&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="nt">&quot;go.toolsGopath&quot;</span><span class="p">:</span> <span class="s2">&quot;/Users/hanxiao/Desktop/commonGoPath&quot;</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p><br><br />
+<strong>inferGopath</strong> 让编辑器自动推断 Gopath, 规则是沿着当前文件向上找到 src 目录, 并将其设为 Gopath (该结果会覆盖 go.gopath 的设置). 所以我们的项目必须满足 Go 推荐的结构, 即源码要位于 <code>gopath/src</code> 目录下.</p>
+<p><strong>toolsGopath</strong> 选项建议设置成全局的一个目录, 它被用来存放一些 VSCode 依赖的 go package, 这样还可以避免项目代码直接引用到这些工具的 src.</p>
     </div>
 
     <!-- 多说评论框 start -->
-    <div class="ds-thread" data-thread-key="PlantUML for VSCode" data-title="PlantUML for VSCode" data-url="http://wiki.smallcpp.cn/VSCode/PlantUML for VSCode.html"></div>
+    <div class="ds-thread" data-thread-key="GOPATH in VSCode" data-title="GOPATH in VSCode" data-url="http://wiki.smallcpp.cn/VSCode/GOPATH in VSCode.html"></div>
     <!-- 多说评论框 end -->
     <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
     <script type="text/javascript">
