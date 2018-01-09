@@ -22,7 +22,7 @@ Shadowsocks 是常用的代理工具, 它使用 socks5 协议, 而终端很多�
 `brew services start(/restart) polipo`
 
 # 验证
-先用正常模式看下当前网络: `cur ip.gs`.
+先用正常模式看下当前网络: `curl ip.gs`.
 
 再用代理模式看下: `http_proxy=http://localhost:8123 curl ip.gs`.
 
