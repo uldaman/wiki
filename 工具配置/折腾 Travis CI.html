@@ -51,7 +51,7 @@
 <h2 id="_2">生成密钥</h2>
 <p>在前面说过 Travis CI 可以通过配置来决定构建完成后是否推送回 Github, 由于我们需要把 Travis CI 的构建结果, 也就是 wiki 生成文件推送回 Github Project 的 <strong>gh-page</strong> 分支 (参考: <a href="http://wiki.smallcpp.cn/%E5%B7%A5%E5%85%B7%E9%85%8D%E7%BD%AE/%E6%8A%98%E8%85%BE%20Simiki.html">折腾 Simiki</a>), 所以需要把 Travis CI 的公钥添加到 Simiki 项目的 <strong>Deploy Key</strong> 中 (<strong>注意</strong>, 你添加的是应该是项目的单独 <strong>Deploy Key</strong>, 而不是你 Github 账户的全局 Key).</p>
 <p>在本地的 Simiki 项目中生成一对单独密钥: <code>ssh-keygen -t rsa -C "youremail@example.com"</code> (因为这是 simiki 项目的单独密钥, 所以不要生成到系统的 .ssh 目录中去了).</p>
-<p>把生成的 <code>id_rsa.pub</code> 添加到你 Github 仓库上 Simiki 项目的 <strong>Deploy Key</strong> 中, 然后这个公钥就可以删掉了...</p>
+<p>把生成的 <code>id_rsa.pub</code> 添加到你 Github 仓库上 Simiki 项目的 <strong>Deploy Key</strong> 中, 注意要开启 <code>Allow write access</code>, 然后这个公钥就可以删掉了...</p>
 <h2 id="_3">加密密钥</h2>
 <p>因为上一步生成的 <code>id_rsa</code> 私钥是要发布到 Github 仓库供 Travis CI 拉回服务器的 (Travis CI 需要这个私钥来和 Github 通信), 为了安全, Travis CI 提供了一种加密手段, 也就是说这个私钥只有你的 Travis CI 账户才能解密使用, 就算被别人拿到了也没用, 除非他也拿到了你的 Travis CI 账户.</p>
 <p>此时需要使用到 <a href="https://github.com/travis-ci/travis.rb">Travis Client</a> 了, Travis Client 基于 <strong>Ruby</strong>(&gt;=1.9.3), 所以先检查下你的 Ruby 版本...Windows 用户直接用 <a href="http://rubyinstaller.org/">rubyinstaller</a> 就好了, ubuntu 用户参考另一 wiki <a href="http://wiki.smallcpp.cn/%E5%B7%A5%E5%85%B7%E9%85%8D%E7%BD%AE/ubuntu%20%E5%8D%87%E7%BA%A7%20ruby%20%E7%89%88%E6%9C%AC.html">ubuntu 升级 ruby 版本</a></p>
