@@ -30,7 +30,7 @@ date: 2016-05-28 21:04
 
 在本地的 Simiki 项目中生成一对单独密钥: `ssh-keygen -t rsa -C "youremail@example.com"` (因为这是 simiki 项目的单独密钥, 所以不要生成到系统的 .ssh 目录中去了).
 
-把生成的 `id_rsa.pub` 添加到你 Github 仓库上 Simiki 项目的 **Deploy Key** 中, 然后这个公钥就可以删掉了...
+把生成的 `id_rsa.pub` 添加到你 Github 仓库上 Simiki 项目的 **Deploy Key** 中, 注意要开启 `Allow write access`, 然后这个公钥就可以删掉了...
 
 ## 加密密钥
 因为上一步生成的 `id_rsa` 私钥是要发布到 Github 仓库供 Travis CI 拉回服务器的 (Travis CI 需要这个私钥来和 Github 通信), 为了安全, Travis CI 提供了一种加密手段, 也就是说这个私钥只有你的 Travis CI 账户才能解密使用, 就算被别人拿到了也没用, 除非他也拿到了你的 Travis CI 账户.
